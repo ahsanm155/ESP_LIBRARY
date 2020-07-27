@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/esp_lib_color_view_bg"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+
+
+        <LinearLayout
+            android:id="@+id/detail_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/esp_lib_gradienttoolbar"/>
+
+
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:shimmer_auto_start="true"
+                app:shimmer_base_alpha="1"
+                app:shimmer_clip_to_children="true"
+                app:shimmer_colored="false"
+                app:shimmer_direction="left_to_right"
+                app:shimmer_highlight_alpha="0.1"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <!-- Adding 5 rows of placeholders -->
+                <LinearLayout
+                    android:id="@+id/shimmerlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                    <include layout="@layout/esp_lib_definition_filters_list_placeholder" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedscrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/esp_lib_color_white"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/esp_lib_color_white"
+
+
+                >
+
+               <LinearLayout
+                   android:id="@+id/status_row"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:gravity="center"
+                   android:padding="@dimen/margin_15dp"
+                   >
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/ic_filter_status"
+                       />
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_weight="1"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       android:layout_marginStart="@dimen/margin_10dp"
+
+                       >
+
+                       <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                           android:id="@+id/txtbystatus"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text="@string/esp_lib_text_by_status"
+                           style="@style/Esp_Lib_Style_TextSmallGray"
+                           android:gravity="start"
+                           />
+                       <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                           android:id="@+id/statuses"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:text=""
+                           style="@style/Esp_Lib_Style_TextSmallGreen"
+                           android:layout_marginTop="@dimen/margin_5dp"
+                           />
+                   </LinearLayout>
+                   <ImageView
+                       android:id="@+id/status_btn"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:background="@drawable/ic_arrow_down"
+                       />
+               </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/status_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:visibility="gone"
+
+                    >
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lldivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="vertical"
+                android:background="@color/esp_lib_color_very_light_grey"
+                >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@color/esp_lib_color_white">
+
+            <LinearLayout
+                android:id="@+id/definition_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="@dimen/margin_15dp"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_filter_status"
+                    />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/margin_10dp"
+
+                    >
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtbydefinitions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/esp_lib_text_by_definition"
+                        style="@style/Esp_Lib_Style_TextSmallGray"
+                        android:gravity="start"
+                        />
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtdefinitionstatuses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        style="@style/Esp_Lib_Style_TextSmallGreen"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        />
+
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/definition_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_arrow_down"
+                    />
+            </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvdefintionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:animationCache="true"
+                    android:clipToPadding="false"
+                    android:keepScreenOn="true" />
+
+
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="vertical"
+                android:background="@color/esp_lib_color_very_light_grey"
+                >
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/esp_lib_color_white">
+
+            <LinearLayout
+                android:id="@+id/sort_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="@dimen/margin_15dp"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_filter_status"
+                    />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/margin_10dp"
+
+                    >
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtsortby"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/esp_lib_text_sortby"
+                        style="@style/Esp_Lib_Style_TextSmallGray"
+                        android:gravity="start"
+                        />
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtsortbystatuses"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        style="@style/Esp_Lib_Style_TextSmallGreen"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        />
+
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/sort_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_arrow_down"
+                    />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvsortbyList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/_3sdp"
+                android:animationCache="true"
+                android:clipToPadding="false"
+                android:keepScreenOn="true" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+
+    </RelativeLayout>

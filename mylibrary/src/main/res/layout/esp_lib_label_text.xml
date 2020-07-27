@@ -1,0 +1,9 @@
+<com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/txtlabel"
+    style="@style/Esp_Lib_Style_TextHeading3Black"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:padding="@dimen/_8sdp"
+    android:text="@string/esp_lib_text_details"/>

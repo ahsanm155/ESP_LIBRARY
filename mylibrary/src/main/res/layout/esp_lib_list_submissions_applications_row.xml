@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+  <!--  <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:orientation="vertical">-->
+
+
+
+        <RelativeLayout
+            android:id="@+id/cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/esp_lib_drawable_draw_bg_grey30_stroke">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_minus2sdp"
+                android:background="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_15sdp">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_minus5sdp">
+
+                        <ImageButton
+                            android:id="@+id/ibRemoveCard"
+                            style="?actionButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_minus12sdp"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:background="@android:color/transparent"
+                            android:layout_alignParentEnd="true"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/esp_lib_drawable_ic_vertical_dots"
+                            android:visibility="gone"/>
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/definitionName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Esp_Lib_Style_TextHeading5Black"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginEnd="@dimen/_15sdp" />
+
+                    </RelativeLayout>
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlsubmitteddate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/submittedOntext"
+                            style="@style/Esp_Lib_Style_TextSmallGray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/esp_lib_text_submittedoncolon" />
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/submittedOn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_toEndOf="@+id/submittedOntext"
+                            style="@style/Esp_Lib_Style_TextSmallBlack"/>
+
+                        <include
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_9sdp"
+                            android:layout_alignParentEnd="true"
+                            android:maxWidth="@dimen/_80sdp"
+                            layout="@layout/esp_lib_statuswithicon"/>
+
+
+                    </RelativeLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/status_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginBottom="@dimen/_minus2sdp"
+                        android:animationCache="true"
+                        android:clipToPadding="false" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+   <!-- </androidx.cardview.widget.CardView>-->
+
+</LinearLayout>

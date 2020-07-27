@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/llfeedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/esp_lib_feedback_add_section"/>
+
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/rlbuttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_centerHorizontal="true"
+        android:background="@color/esp_lib_color_white"
+        android:layout_below="@+id/llfeedback">
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+            android:id="@+id/btcancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:text="@string/esp_lib_text_cancel"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:gravity="center_horizontal|center_vertical"
+            style="@style/Esp_Lib_Style_TextHeading3Green"
+            android:background="@drawable/esp_lib_drawable_draw_bg_green_stroke"/>
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+            android:id="@+id/btconfirm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/esp_lib_text_accept"
+            android:gravity="center_horizontal|center_vertical"
+            android:background="@drawable/esp_lib_drawable_draw_bg_green"
+            style="@style/Esp_Lib_Style_TextHeading3White"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.esp.test.app.MainActivity"
+    >
+
+  <item
+      android:id="@+id/action_resubmit"
+      android:icon="@drawable/esp_lib_drawable_ic_resubmit"
+      android:title="@string/esp_lib_text_resubmitapplication"
+      app:showAsAction="always"
+
+      />
+
+  <item
+      android:id="@+id/action_delete_request"
+      android:icon="@drawable/esp_lib_drawable_ic_delete"
+      android:title="@string/esp_lib_text_deleterequest"
+      app:showAsAction="always"
+
+      />
+
+
+</menu>

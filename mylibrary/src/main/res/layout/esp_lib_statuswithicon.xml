@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/rlstatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_3sdp">
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/txtstatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            style="@style/Esp_Lib_Style_TextLinkBlue" />
+
+        <ImageView
+            android:id="@+id/ivsign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/txtstatus"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/esp_lib_drawable_ic_icon_green_signed"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

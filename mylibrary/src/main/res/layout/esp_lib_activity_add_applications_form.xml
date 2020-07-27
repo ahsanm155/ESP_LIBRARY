@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/esp_lib_color_white"
+    android:orientation="vertical">
+
+
+   <include
+       android:id="@+id/lltoolbar"
+       layout="@layout/esp_lib_gradienttoolbar"/>
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llsubmitbtn"
+        android:layout_below="@+id/lltoolbar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/esp_lib_color_white"
+            android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"
+            android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingStart="@dimen/_17sdp"
+            android:paddingEnd="@dimen/_17sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:background="@color/esp_lib_color_white"
+            android:orientation="vertical">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/definitionNameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Esp_Lib_Style_TextHeading1Black"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/definitionDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_13ssp"
+                android:layout_marginTop="@dimen/_7sdp"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+        </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/request_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/esp_lib_color_white"></FrameLayout>
+
+
+    </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+<LinearLayout
+    android:id="@+id/llsubmitbtn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/esp_lib_color_white"
+    android:orientation="vertical">
+    <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+        android:id="@+id/submit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/esp_lib_drawable_draw_bg_green"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/esp_lib_text_submit"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:textAllCaps="false"
+        style="@style/Esp_Lib_Style_TextHeading3WhiteHeavy"/>
+</LinearLayout>
+</RelativeLayout>

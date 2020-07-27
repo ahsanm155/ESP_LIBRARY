@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_above="@+id/btsave"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_3sdp"
+        style="@style/Esp_Lib_Style_TextParagraphBlack"
+        android:text="@string/esp_lib_text__sig_customize_description"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilFieldname"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:hint="@string/esp_lib_text_your_name"
+        app:hintTextAppearance="@style/Esp_Lib_Style_AddApplicationTextLabel">
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyEditText
+            android:id="@+id/etxtname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:inputType="textEmailAddress"
+            android:maxLength="50"
+            android:textColor="@color/esp_lib_color_black"
+            android:textSize="@dimen/_13ssp"
+            android:theme="@style/Esp_Lib_Style_AddApplicationEditTextField"
+            custom:customfont="regular" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <RelativeLayout
+        android:id="@+id/framelayout"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Spinner
+            android:id="@+id/msStyles"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:hint="@string/esp_lib_text_defaultt"
+            custom:customfont="bold"
+            android:spinnerMode="dropdown"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilfontlabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:background="@color/esp_lib_color_white"
+            android:hint="@string/esp_lib_text_Style"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:hintTextAppearance="@style/Esp_Lib_Style_AddApplicationTextLabel">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyEditText
+                android:id="@+id/etxtfontValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:textAlignment="viewStart"
+                android:focusable="false"
+                android:drawableEnd="@drawable/esp_lib_drawable_ic_arrow_down"
+                custom:customfont="bold"
+                android:textColor="@color/esp_lib_color_black"
+                android:textSize="@dimen/_13ssp"
+                android:theme="@style/Esp_Lib_Style_AddApplicationEditTextField" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:id="@+id/txtpreview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:visibility="gone"
+        style="@style/Esp_Lib_Style_TextHeading6Black"
+        android:text="@string/esp_lib_text_preview"/>
+
+    <include
+        android:id="@+id/rlincludesignatue"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        layout="@layout/esp_lib_criteriasignature"/>
+
+
+    <LinearLayout
+        android:id="@+id/llsignature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:background="@drawable/esp_lib_drawable_draw_bg_sign"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:visibility="gone"
+        android:padding="@dimen/_5sdp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivsignature"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:scaleType="fitXY"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+        android:id="@+id/btsave"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:background="@drawable/esp_lib_drawable_draw_bg_green"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal|center_vertical"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/esp_lib_text_save"
+        android:textAllCaps="false"
+        style="@style/Esp_Lib_Style_TextHeading5White"/>
+</RelativeLayout>

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/esp_lib_color_pale_grey"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/detail_view"
+        android:layout_above="@+id/addsub_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/curvetoolbar"
+            layout="@layout/esp_lib_gradienttoolbar"
+            />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedscrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@color/esp_lib_color_white"
+                    android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+
+
+                <include
+                    android:id="@+id/topcardview"
+                    layout="@layout/esp_lib_application_detail_view"/>
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/llrows"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:orientation="vertical">
+
+
+                    <include
+                        android:id="@+id/linkcard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:visibility="gone"
+                        layout="@layout/esp_lib_link_definition_card" />
+
+                <RelativeLayout
+                    android:id="@+id/rldetailrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:foreground="?attr/selectableItemBackground">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:background="@drawable/esp_lib_drawable_draw_bg_white">
+
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtdetailrowtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/esp_lib_text_details"
+                        android:layout_centerVertical="true"
+                        android:background="@color/esp_lib_color_white"
+                        style="@style/Esp_Lib_Style_TextHeading3BlackHeavy"/>
+
+
+                    <ImageView
+                        android:id="@+id/ivdetailarrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/esp_lib_color_grey"
+                        android:src="@drawable/ic_arrow_down"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llmaindetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:id="@+id/lldetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_45sdp"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:visibility="visible"
+                            android:orientation="vertical">
+
+                            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                                android:id="@+id/txtrequestdetail"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingStart="@dimen/_13sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:text="@string/esp_lib_text_submissiondetails"
+                                android:background="@color/esp_lib_color_white"
+                                style="@style/Esp_Lib_Style_TextHeading3BlackHeavy" />
+
+                            <!--<View
+                                android:id="@+id/vsperator"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:visibility="visible"
+                                android:background="@color/very_light_grey_dim"/>-->
+                        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/app_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_13sdp"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:animationCache="true"
+                            android:clipToPadding="false"
+                            android:keepScreenOn="true">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:background="@android:color/white">
+                <RelativeLayout
+                    android:id="@+id/rlsubmissionrow"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_45sdp"
+                    android:visibility="gone"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingEnd="@dimen/_11sdp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:background="@drawable/esp_lib_drawable_draw_bg_white">
+
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtsubmissions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/esp_lib_text_submissionszero"
+                        android:layout_centerVertical="true"
+                        android:background="@color/esp_lib_color_white"
+                        style="@style/Esp_Lib_Style_TextHeading3BlackHeavy" />
+
+
+                    <ImageView
+                        android:id="@+id/ivsubmissionrowarrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/esp_lib_color_grey"
+                        android:src="@drawable/ic_arrow_down"/>
+
+
+
+
+
+                </RelativeLayout>
+                    <View
+                        android:id="@+id/dividersubmission"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:visibility="gone"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:background="@color/esp_lib_color_very_light_grey_dim"/>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlotherexperts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:background="@android:color/white">
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlexpertvalues"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:padding="@dimen/_15sdp"
+                        android:visibility="gone"
+                        android:background="@drawable/esp_lib_drawable_draw_bg_grey30_stroke">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/txtexperts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Esp_Lib_Style_TextHeading5Black"
+                            android:text="@string/esp_lib_text_other_experts"/>
+
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/txtexpertssubmitted"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_toEndOf="@+id/txtexperts"
+                            style="@style/Esp_Lib_Style_TextParagraphBlack"
+                            android:text="@string/esp_lib_text_other_experts_submitted"/>
+
+                    </RelativeLayout>
+
+
+                        <RelativeLayout
+                            android:id="@+id/rlnosubmission"
+                            android:layout_below="@+id/rlexpertvalues"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_130sdp"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:visibility="gone"
+                            android:padding="@dimen/_15sdp"
+                            android:background="@drawable/esp_lib_drawable_draw_bg_grey30_stroke">
+
+
+                            <ImageView
+                                android:id="@+id/ivnosub"
+                                android:layout_width="@dimen/_60sdp"
+                                android:layout_height="@dimen/_60sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/esp_lib_drawable_no_submissions"/>
+
+
+                            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_below="@+id/ivnosub"
+                                android:layout_centerHorizontal="true"
+                                style="@style/Esp_Lib_Style_TextHeading5Gray"
+                                android:text="@string/esp_lib_text_no_submissions"/>
+
+
+                        </RelativeLayout>
+
+                        </RelativeLayout>
+
+            </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/llsubmission_app_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:background="@android:color/white"
+                        android:layout_marginBottom="@dimen/_13sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:orientation="vertical">
+
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/submission_app_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:animationCache="true"
+                            android:clipToPadding="false"
+                            android:keepScreenOn="true">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_view_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:shimmer_auto_start="true"
+                    app:shimmer_base_alpha="1"
+                    app:shimmer_clip_to_children="true"
+                    app:shimmer_colored="false"
+                    app:shimmer_direction="left_to_right"
+                    app:shimmer_highlight_alpha="0.1"
+                    android:visibility="visible"
+                    android:orientation="vertical">
+
+                    <!-- Adding 5 rows of placeholders -->
+                    <LinearLayout
+                        android:id="@+id/shimmerlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                        <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                        <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                        <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                        <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                        <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                        <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                        <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    </LinearLayout>
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+        android:id="@+id/addsub_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/esp_lib_drawable_draw_bg_green"
+        android:text="@string/esp_lib_text_addsub"
+        android:layout_margin="@dimen/_10sdp"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_alignParentBottom="true"
+        android:textAllCaps="false"
+        android:textColor="@color/esp_lib_color_white"
+        android:textSize="@dimen/_14ssp"
+        custom:customfont="regular" />
+
+</RelativeLayout>

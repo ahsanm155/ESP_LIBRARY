@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.esp.test.app.MainActivity"
+    >
+
+  <item
+      android:id="@+id/action_accept"
+      android:orderInCategory="1"
+      android:icon="@drawable/esp_lib_drawable_ic_menu_approve_green"
+      android:title="@string/esp_lib_text_approve"
+      app:showAsAction="always"
+
+      />
+
+  <item
+      android:id="@+id/action_reject"
+      android:orderInCategory="2"
+      android:icon="@drawable/esp_lib_drawable_ic_menu_reject_red"
+      android:title="@string/esp_lib_text_reject"
+      app:showAsAction="always"
+      />
+
+</menu>

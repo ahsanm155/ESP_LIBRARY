@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+
+    <string name="app_name">ESP</string>
+
+    <string name="esp_lib_text_welcometoesp">مرحبًا بكم في ESP</string>
+
+    <string name="esp_lib_text_signout">خروج</string>
+
+    <string name="esp_lib_text_email">البريد الإلكتروني</string>
+
+    <string name="esp_lib_text_login_password_label">كلمه السر</string>
+
+    <string name="esp_lib_text_sign_in">تسجيل الدخول</string>
+
+    <string name="esp_lib_text_forgotpassword">هل نسيت كلمة المرور؟</string>
+
+    <string name="esp_lib_text_language">لغة:</string>
+
+    <string name="esp_lib_text_enteremailandpassword">الرجاء إدخال البريد الإلكتروني وكلمة المرور لتسجيل الدخول</string>
+
+    <string name="esp_lib_text_password">كلمه السر</string>
+
+    <string name="esp_lib_text_acceptcriteri">قبول المعايير</string>
+
+    <string name="esp_lib_text_acceptancecriteria">قبول. المعايير</string>
+
+    <string name="esp_lib_text_action_menu_remove">إزالة</string>
+
+    <string name="esp_lib_text_add">"إضافة "</string>
+
+    <string name="esp_lib_text_add_comment">"أضف تعليق "</string>
+
+    <string name="esp_lib_text_added">وأضاف</string>
+
+    <string name="esp_lib_text_admin">مشرف</string>
+
+    <string name="esp_lib_text_adminsmall">applicantsmall</string>
+
+    <string name="esp_lib_text_alert">محزر</string>
+
+    <string name="esp_lib_text_all">الكل</string>
+
+    <string name="esp_lib_text_and">و</string>
+
+    <string name="esp_lib_text_any">أي</string>
+
+    <string name="esp_lib_text_by_status">حسب الحالة</string>
+
+    <string name="esp_lib_text_applicant_error">أنت لست مقدم طلب.</string>
+
+    <string name="esp_lib_text_appnotavailable">افتح هذا الملف ، التطبيق غير متاح</string>
+
+    <string name="esp_lib_text_cancel">إلغاء</string>
+
+    <string name="esp_lib_text_category">الفئة</string>
+
+    <string name="esp_lib_text_categorysmall">الفئة</string>
+
+    <string name="esp_lib_text_characters">الشخصيات</string>
+
+    <string name="esp_lib_text_choose">أختر</string>
+
+    <string name="esp_lib_text_choose_file">حدد ملف</string>
+
+    <string name="esp_lib_text_choose_organization">يرجى اختيار الحساب من أدناه</string>
+
+    <string name="esp_lib_text_completed">منجز</string>
+
+    <string name="esp_lib_text_condition">شرط</string>
+
+    <string name="esp_lib_text_criteria_feedback">معايير التقييم</string>
+
+    <string name="esp_lib_text_criterias">المقاييس</string>
+
+    <string name="esp_lib_text_currency">دقة</string>
+
+    <string name="esp_lib_text_data_available">البيانات المتاحة!</string>
+
+    <string name="esp_lib_text_day">يوم</string>
+
+    <string name="esp_lib_text_defaultt">افتراضي</string>
+
+    <string name="esp_lib_text_definition">فريف</string>
+
+    <string name="esp_lib_text_discard">تجاهل</string>
+
+    <string name="esp_lib_text_draft">مشروع</string>
+
+    <string name="esp_lib_text_edit_comment">تعديل التعليق</string>
+
+    <string name="esp_lib_text_edit_comments">تعديل التعليق</string>
+
+    <string name="esp_lib_text_empty_directory">دليل فارغ</string>
+
+    <string name="esp_lib_text_enterbaseurl">أدخل عنوان url الأساسي</string>
+
+    <string name="esp_lib_text_enterprise_submission_platform">منصة تقديم المشاريع</string>
+
+    <string name="esp_lib_text_invoice_submission_platform">منصة تقديم الفاتورة</string>
+
+    <string name="esp_lib_text_enterurl">إدخال عنوان الموقع</string>
+
+    <string name="esp_lib_text_entervalidurl">أدخل عنوان URL الأساسي صالح</string>
+
+    <string name="esp_lib_text_error">خطأ</string>
+
+    <string name="esp_lib_text_error_selecting_file">خطأ في اختيار ملف</string>
+
+    <string name="esp_lib_text_errorclosingthumbnail">خطأ في إغلاق الصورة المصغرة</string>
+
+    <string name="esp_lib_text_errorcreatingnewfile">خطأ في إنشاء ملف جديد</string>
+
+    <string name="esp_lib_text_errorwritingthumbnail">خطأ في كتابة الصورة المصغرة</string>
+
+    <string name="esp_lib_text_expired">تم رفض التفويض لهذا الطلب.</string>
+
+    <string name="esp_lib_text_feedback">ردود الفعل</string>
+
+    <string name="esp_lib_text_filter">منقي</string>
+
+    <string name="esp_lib_text_filter_error">مرشح غير مطبق</string>
+
+    <string name="esp_lib_text_filters">مرشحات</string>
+
+    <string name="esp_lib_text_forgot_password">هل نسيت كلمة المرور</string>
+
+    <string name="esp_lib_text_found">وجدت</string>
+
+    <string name="esp_lib_text_gender">جنس</string>
+
+    <string name="esp_lib_text_hidden">مخفي</string>
+
+    <string name="esp_lib_text_internal_storage">التخزين الداخلي</string>
+
+    <string name="esp_lib_text_internet_connection_error">يرجى التحقق من اتصالك بالإنترنت</string>
+
+    <string name="esp_lib_text_internet_error_heading">لا يوجد اتصال بالإنترنت ، يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى</string>
+
+    <string name="esp_lib_text_invalidemail">البريد الإلكتروني غير صالح</string>
+
+    <string name="esp_lib_text_invalidlink">الرجاء إدخال رابط صالح</string>
+
+    <string name="esp_lib_text_invalidnumber">الرجاء إدخال رقم صحيح</string>
+
+    <string name="esp_lib_text_itseasy">. من السهل يستغرق أقل من دقيقتين ، نحن نعد!</string>
+
+    <string name="esp_lib_text_label_currency">دقة</string>
+
+    <string name="esp_lib_text_length_password_error">يجب أن تحتوي كلمة المرور على 6 أحرف كحد أدنى</string>
+
+    <string name="esp_lib_text_loadingmore">تحميل المزيد ..</string>
+
+    <string name="esp_lib_text_locked">مقفل</string>
+
+    <string name="esp_lib_text_login_email_error">الرجاء إدخال البريد الإلكتروني</string>
+
+    <string name="esp_lib_text_login_email_label">البريد الإلكتروني</string>
+
+    <string name="esp_lib_text_login_error">معرف تسجيل الدخول أو كلمة المرور غير صحيحة!</string>
+
+    <string name="esp_lib_text_login_error_account_locked">حسابك مغلق.</string>
+
+    <string name="esp_lib_text_login_error_locked">بيانات الاعتماد غير صالحة. تم قفل حسابك لمدة 30 دقيقة بسبب محاولات تسجيل دخول فاشلة متعددة</string>
+
+    <string name="esp_lib_text_login_error_remaining1">بيانات الاعتماد غير صالحة. لديك محاولة واحدة أخرى قبل إغلاق حسابك.</string>
+
+    <string name="esp_lib_text_login_error_remaining2">بيانات الاعتماد غير صالحة. لديك محاولتان أخريان قبل إغلاق حسابك.</string>
+
+    <string name="esp_lib_text_login_error_remaining3">بيانات الاعتماد غير صالحة. لديك 3 محاولات أخرى قبل إغلاق حسابك.</string>
+
+    <string name="esp_lib_text_login_label">تسجيل الدخول</string>
+
+    <string name="esp_lib_text_login_valid_email_error">يرجى إدخال البريد الإلكتروني الصحيح</string>
+
+    <string name="esp_lib_text_login_valid_password_error">الرجاء إدخال كلمة المرور</string>
+
+    <string name="esp_lib_text_my">لي</string>
+
+    <string name="esp_lib_text_my_space">بلدي الفضاء</string>
+
+    <string name="esp_lib_text_navigation_drawer_close">إغلاق مرشح</string>
+
+    <string name="esp_lib_text_navigation_drawer_open">مرشح مفتوح</string>
+
+    <string name="esp_lib_text_no">لا</string>
+
+    <string name="esp_lib_text_no_cat_error">لم يتم العثور على الفئة!</string>
+
+    <string name="esp_lib_text_no_criteria_feedback_comments">لا يوجد أي ملاحظات المعايير.</string>
+
+    <string name="esp_lib_text_no_defination_error">لم يتم العثور على تعريف!</string>
+
+    <string name="esp_lib_text_nocomments">لا تعليقات!</string>
+
+    <string name="esp_lib_text_nocriteriaavailable">لا توجد معايير متاحة!</string>
+
+    <string name="esp_lib_text_nofeedbackavailable">لا توجد ردود فعل متاحة!</string>
+
+    <string name="esp_lib_text_nolookuphere">لا بحث هنا!</string>
+
+    <string name="esp_lib_text_nostageavaialable">لا المرحلة المتاحة!</string>
+
+    <string name="esp_lib_text_ok">حسنا</string>
+
+    <string name="esp_lib_text_open">افتح</string>
+    <string name="esp_lib_text_opencaps">افتح</string>
+
+    <string name="esp_lib_text_please_add_comment">يرجى إضافة تعليق</string>
+
+    <string name="esp_lib_text_pleasetryagain">حاول مرة اخرى</string>
+
+    <string name="esp_lib_text_pleasewait">ارجوك انتظر…</string>
+
+    <string name="esp_lib_text_profile">الملف الشخصي</string>
+    <string name="esp_lib_text_settings">االإعدادات</string>
+
+    <string name="esp_lib_text_profile_error_cancel">إلغاء</string>
+
+    <string name="esp_lib_text_profile_error_desc">اه ، لا يمكنك تقديم طلب حتى تملأ ملفك الشخصي!</string>
+
+    <string name="esp_lib_text_profile_error_desc_admin">اه ، لا يمكنك تقديم الطلب ، يرجى الاتصال بالمشرف!</string>
+
+    <string name="esp_lib_text_profile_error_heading">ملف تعريف غير كامل</string>
+
+    <string name="esp_lib_text_profile_error_ok">خذني إلى الملف الشخصي</string>
+
+    <string name="esp_lib_text_reject">رفض</string>
+
+    <string name="esp_lib_text_reject_comments_hints_one_comment">يرجى تقديم تعليق واحد على الأقل لـ</string>
+
+    <string name="esp_lib_text_reject_title">هل ترفض هذه المعايير؟</string>
+
+    <string name="esp_lib_text_rejectcriteria">رفض المعايير</string>
+
+    <string name="esp_lib_text_request">طلب</string>
+
+    <string name="esp_lib_text_request_reject_error">تم رفض هذا الطلب تذكرة غير صحيحة. يرجى تقديم طلب جديد مع المعلومات الصحيحة.</string>
+
+    <string name="esp_lib_text_reset">إعادة تعيين</string>
+
+    <string name="esp_lib_text_resubmitapp">هل تريد إعادة التقديم</string>
+
+    <string name="esp_lib_text_result">نتيجة</string>
+
+    <string name="esp_lib_text_results">نتيجة</string>
+
+    <string name="esp_lib_text_save">حفظ</string>
+
+    <string name="esp_lib_text_save_draft">حفظ المسودة</string>
+
+    <string name="esp_lib_text_save_draft_ok">حفظ كمسودة</string>
+
+    <string name="esp_lib_text_savedraft">حفظ المسودة</string>
+
+    <string name="esp_lib_text_search_">بحث</string>
+
+    <string name="esp_lib_text_selectafile">حدد ملف</string>
+
+    <string name="esp_lib_text_sequence">تسلسل</string>
+
+    <string name="esp_lib_text_shown">أظهرت</string>
+
+    <string name="esp_lib_text_sizeshouldbelessthen">يجب أن يكون الحجم أقل من ذلك</string>
+
+    <string name="esp_lib_text_some_thing_went_wrong">حدث خطأ ما. أعد المحاولة من فضلك</string>
+
+    <string name="esp_lib_text_stages">مراحل</string>
+
+    <string name="esp_lib_text_startsubmittingapp">ابدأ بتقديم الأول</string>
+
+    <string name="esp_lib_text_storage_removed">تمت إزالة التخزين أو إلغاء تحميله.</string>
+
+    <string name="esp_lib_text_submit">خضع</string>
+
+    <string name="esp_lib_text_submitted_on">تم إرساله</string>
+
+    <string name="esp_lib_text_submittedon">تم إرساله</string>
+
+    <string name="esp_lib_text_successfailed">فشل النجاح</string>
+
+    <string name="esp_lib_text_thumbnail">المصغرات</string>
+
+    <string name="esp_lib_text_valuebetween">يجب أن تكون القيمة بين</string>
+
+    <string name="esp_lib_text_valuegreater">يجب أن تكون القيمة أكبر من</string>
+
+    <string name="esp_lib_text_valuegreaterequalto">يجب أن تكون القيمة أكبر أو تساوي</string>
+
+    <string name="esp_lib_text_valueless">يجب أن تكون القيمة أقل من</string>
+
+    <string name="esp_lib_text_valuelessequalto">يجب أن تكون القيمة أقل أو تساوي</string>
+
+    <string name="esp_lib_text_wasnotsubmitted">لم يقدم بعد.</string>
+
+    <string name="esp_lib_text_welcome">أهلا بك</string>
+
+    <string name="esp_lib_text_yes">نعم فعلا</string>
+
+    <string name="esp_lib_text_youaredevelopernow">أنت مطور الآن</string>
+
+    <string name="esp_lib_text_your">ك</string>
+
+    <string name="esp_lib_text_zerorecordfound">تم العثور على 0 سجل</string>
+    <string name="esp_lib_text_logineithidenedi">تسجيل الدخول باستخدام IDENEDI</string>
+    <string name="esp_lib_text_norecordstofilter">لا توجد سجلات لتصفية</string>
+    <string name="esp_lib_text_notacceptrequest">لا نقبل حاليًا الطلبات لـ</string>
+    <string name="esp_lib_text_contactadministrator">يرجى المحاولة مرة أخرى لاحقًا أو اتصل بمسؤول النظام للحصول على مزيد من التفاصيل.</string>
+    <string name="esp_lib_text_closingdatepassed">انقضى تاريخ إغلاق قبول الطلبات</string>
+    <string name="esp_lib_text_newversionavailable">يتوفر إصدار جديد</string>
+    <string name="esp_lib_text_updatenow">تحديث الان</string>
+    <string name="esp_lib_text_newversionavailabletext">يتوفر إصدار جديد من هذا التطبيق في متجر Play ، يرجى تنزيل إصدار جديد من هذا التطبيق.</string>
+    <string name="esp_lib_text_requestedby">بتوصية من:</string>
+    <string name="esp_lib_text_requests">الطلبات</string>
+    <string name="esp_lib_text_by_definition">حسب التعريفات</string>
+    <string name="esp_lib_text_sortby">ترتيب حسب</string>
+    <string name="esp_lib_text_closed">مغلق</string>
+    <string name="esp_lib_text_closedsmall">مغلق</string>
+    <string name="esp_lib_text_parentapplication">التطبيق الأصلي:</string>
+    <string name="esp_lib_text_definition_filter_error">يرجى تحديد مرشح تعريف واحد على الأقل للمتابعة</string>
+    <string name="esp_lib_text_under_satus">قيد الانتظار</string>
+    <string name="esp_lib_text_approved">وافق</string>
+    <string name="esp_lib_text_rejected">مرفوض</string>
+    <string name="esp_lib_text_addcommenttoproceed">يرجى إضافة تعليق للمتابعة</string>
+    <string name="esp_lib_text_categories">التصنيفات</string>
+    <string name="esp_lib_text_assessor">مخمن</string>
+    <string name="esp_lib_text_applicant">طالب وظيفة</string>
+    <string name="esp_lib_text_applicants">المتقدمين</string>
+    <string name="esp_lib_text_applications">التطبيقات</string>
+    <string name="esp_lib_text_application">تطبيق</string>
+    <string name="esp_lib_text_applicantcolon">طالب وظيفة:</string>
+    <string name="esp_lib_text_applicantsmall">طالب وظيفة</string>
+    <string name="esp_lib_text_yesdelete">نعم ، احذف</string>
+    <string name="esp_lib_text_criteria">المعايير</string>
+    <string name="esp_lib_text_durationcolon">المدة الزمنية:</string>
+    <string name="esp_lib_text_ownercolon">صاحب:</string>
+    <string name="esp_lib_text_pending">قيد الانتظار</string>
+    <string name="esp_lib_text_inprogress">في تقدم</string>
+    <string name="esp_lib_text_current">تيار</string>
+    <string name="esp_lib_text_accepted">قبلت</string>
+    <string name="esp_lib_text_acceptedsmall">قبلت</string>
+    <string name="esp_lib_text_logintolink">تسجيل الدخول للربط</string>
+    <string name="esp_lib_text_idenedinotlinkedtext">حساب IDENEDI غير مرتبط بـ ESP. لربط حساب IDENEDI الخاص بك بـ ESP ، يرجى تسجيل الدخول أدناه باستخدام بيانات اعتماد ESP \"Exceeders\" أو الاتصال بالإدارة.</string>
+    <string name="esp_lib_text_resubmit">إعادة التقديم</string>
+    <string name="esp_lib_text_resubmitapplication">إعادة تقديم الطلب</string>
+    <string name="esp_lib_text_addcomment">أضف تعليق</string>
+    <string name="esp_lib_text_areyousure">هل أنت متأكد أنك تريد حذف</string>
+    <string name="esp_lib_text_cancelled">ألغيت</string>
+    <string name="esp_lib_text_beforereject">قبل رفض</string>
+    <string name="esp_lib_text_accept_title">هل أنت متأكد أنك تريد قبول هذه المعايير؟</string>
+    <string name="esp_lib_text_yourcomment">تعليقك</string>
+    <string name="esp_lib_text_post_comment">أضف تعليقا</string>
+    <string name="esp_lib_text_edit_feedback">تعديل التعليقات</string>
+    <string name="esp_lib_text_edit">تعديل</string>
+    <string name="esp_lib_text_member">عضو</string>
+    <string name="esp_lib_text_submitrequest">تقديم الطلب</string>
+    <string name="esp_lib_text_addperiod">أضف فترة</string>
+    <string name="esp_lib_text_acceptedon">مقبولة في:</string>
+    <string name="esp_lib_text_rejectedon">تم الرفض في:</string>
+    <string name="esp_lib_text_emailcolon">البريد الإلكتروني:</string>
+    <string name="esp_lib_text_profiletype">نوع الملف الشخصي</string>
+    <string name="esp_lib_text_or">أو</string>
+    <string name="esp_lib_text_loading">جار التحميل...</string>
+    <string name="esp_lib_text_user">المستعمل</string>
+    <string name="esp_lib_text_accept">قبول</string>
+    <string name="esp_lib_text_actioncenter">مركز التحكم</string>
+    <string name="esp_lib_text_approve">يوافق</string>
+    <string name="esp_lib_text_clearfilter">مرشح واضح</string>
+    <string name="esp_lib_text_applyfilter">تطبيق عامل التصفية</string>
+    <string name="esp_lib_text_days">أيام</string>
+    <string name="esp_lib_text_definitions">تعريفات</string>
+    <string name="esp_lib_text_mb">ميغابايت</string>
+    <string name="esp_lib_text_draftcaps">مشروع</string>
+    <string name="esp_lib_text_submissionrequest">طلبات التقديم</string>
+    <string name="esp_lib_text_version">الإصدار:</string>
+    <string name="esp_lib_text_neww">جديد</string>
+    <string name="esp_lib_text_rejectedsmall">مرفوض</string>
+    <string name="esp_lib_text_pendingsmall">قيد الانتظار</string>
+    <string name="esp_lib_text_value">القيمة</string>
+    <string name="esp_lib_text_feedbackdetail">سيكون لديك القدرة على ترك تعليق عندما سيتم إغلاق الطلب.</string>
+    <string name="esp_lib_text_active">نشيط</string>
+    <string name="esp_lib_text_activecaps">نشيط</string>
+    <string name="esp_lib_text_reassigned">أعيد تعيينه</string>
+    <string name="esp_lib_text_complete">اكتمال</string>
+    <string name="esp_lib_text_completedcaps">اكتمال</string>
+    <string name="esp_lib_text_link">حلقة الوصل</string>
+    <string name="esp_lib_text_base">يتمركز</string>
+    <string name="esp_lib_text_completeprofile">أكمل ملفك الشخصي</string>
+    <string name="esp_lib_text_completeprofiletext">من أجل تقديم الطلب ، تحتاج إلى إكمال ملف التعريف الخاص بك.</string>
+    <string name="esp_lib_text_continuee">استمر</string>
+    <string name="esp_lib_text_next">التالى</string>
+    <string name="esp_lib_text_addyourpicture">أضف صورتك</string>
+    <string name="esp_lib_text_addyourpicturetext">يرجى تحميل صورتك وانقر فوق التالي</string>
+    <string name="esp_lib_text_fullnamee">الاسم بالكامل</string>
+    <string name="esp_lib_text_lastupdatedon">تاريخ آخر تحديث</string>
+    <string name="esp_lib_text_camera">الة تصوير</string>
+    <string name="esp_lib_text_gallery">صالة عرض</string>
+    <string name="esp_lib_text_addmore">أضف المزيد</string>
+    <string name="esp_lib_text_name">اسم</string>
+    <string name="esp_lib_text_delete">حذف</string>
+    <string name="esp_lib_text_deleterequest">حذف طلب</string>
+    <string name="esp_lib_text_accounts">حسابات</string>
+    <string name="esp_lib_text_invited">مدعو</string>
+    <string name="esp_lib_text_attachfile">أرفق ملف</string>
+    <string name="esp_lib_text_new_satus">أجديد</string>
+    <string name="esp_lib_text_takemetoprofile">خذني إلى الملف الشخصي</string>
+    <string name="esp_lib_text_employee">موظف</string>
+    <string name="esp_lib_text_additemlist">أضف قائمة العناصر</string>
+    <string name="esp_lib_text_searchlookupitem">بحث عن عنصر بحث ...</string>
+    <string name="esp_lib_text_emptyitemlist">عذرًا ، ليس لديك أي عناصر قائمة</string>
+    <string name="esp_lib_text_details">تفاصيل</string>
+    <string name="esp_lib_text_submissiondetails">تفاصيل التقديم</string>
+    <string name="esp_lib_text_requestdetails">طلب تفاصيل</string>
+    <string name="esp_lib_text_subapplications">تطبيقات فرعية</string>
+    <string name="esp_lib_text_subdefinition">التعريف الفرعي:</string>
+    <string name="esp_lib_text_norecord">لا يوجد سجلات!</string>
+    <string name="esp_lib_text_requestnumber">رقم الطلب:</string>
+    <string name="esp_lib_text_confirmfeedback">تأكيد الملاحظات</string>
+    <string name="esp_lib_text_rejectfeedback">تأكيد الرفض</string>
+    <string name="esp_lib_text_confirmacceptance">تأكيد القبول</string>
+    <string name="esp_lib_text_confirm">تؤكد</string>
+    <string name="esp_lib_text_selectitemfeedbacktext">يرجى تحديد العنصر الذي تريد جعله مرئيًا للموظفين</string>
+    <string name="esp_lib_text_reasonfordecline">سبب الرفض:</string>
+    <string name="esp_lib_text_categorycolon">الفئة:</string>
+    <string name="esp_lib_text_idenediid">معرف iDENEDi:</string>
+    <string name="esp_lib_text_submittedoncolon">تم إرساله:</string>
+    <string name="esp_lib_text_pendingfor">معلقة ل:</string>
+    <string name="esp_lib_text_submitted">قدمت</string>
+    <string name="esp_lib_text_submissions">التقديمات</string>
+    <string name="esp_lib_text_submissionszero">التقديمات (0)</string>
+    <string name="esp_lib_text_approvalstages">مراحل الموافقة</string>
+    <string name="esp_lib_text_approvalstage">مرحلة الموافقة</string>
+    <string name="esp_lib_text_requestcolon">طلب:</string>
+    <string name="esp_lib_text_selectapplication">حدد التطبيق</string>
+    <string name="esp_lib_text_linkdefinition">تعريف الارتباط</string>
+    <string name="esp_lib_text_definition_name">اسم التعريف</string>
+    <string name="esp_lib_text_submissionsallowed">يسمح التقديم</string>
+    <string name="esp_lib_text_submissionsstopped">تم إيقاف التقديمات</string>
+    <string name="esp_lib_text_viewapplications">عرض التطبيقات</string>
+    <string name="esp_lib_text_stopsubmission">أوقف التقديم</string>
+    <string name="esp_lib_text_requesttoaction">طلب العمل</string>
+    <string name="esp_lib_text_seeall">اظهار الكل</string>
+    <string name="esp_lib_text_allowsubmission">السماح بالتقديم</string>
+    <string name="esp_lib_text_stopsubmissiontext">هل أنت متأكد من أنك تريد التوقف عن السماح بتقديم هذا التعريف؟</string>
+    <string name="esp_lib_text_allowsubmissiontext">هل أنت متأكد من أنك تريد السماح بتقديم هذا التعريف؟</string>
+    <string name="esp_lib_text_moreinformation">معلومات اكثر</string>
+    <string name="esp_lib_text_lessinformation">معلومات أقل</string>
+    <string name="esp_lib_text_formisempty">النموذج فارغ</string>
+    <string name="esp_lib_text_form">شكل</string>
+    <string name="esp_lib_text_reassign">إعادة تعيين</string>
+    <string name="esp_lib_text_selectusers">اختر المستخدم</string>
+    <string name="esp_lib_text_nousersfound">لم يتم العثور على مستخدمين!</string>
+    <string name="esp_lib_text_nofilesattached">لم يتم إرفاق أي ملفات</string>
+    <string name="esp_lib_text_attachedfiles">الملفات المرفقة</string>
+    <string name="esp_lib_text_suboldestfirst">المقدمة: الأقدم أولاً</string>
+    <string name="esp_lib_text_assignoldestfirst">المعين: الأقدم أولاً</string>
+    <string name="esp_lib_text_subnewestfirst">المقدمة: الأحدث أولاً</string>
+    <string name="esp_lib_text_assignnewestfirst">المعين: الأحدث أولاً</string>
+    <string name="esp_lib_text_duefirst">تاريخ الاستحقاق: أولاً</string>
+    <string name="esp_lib_text_duelast">تاريخ الاستحقاق: الأخير</string>
+    <string name="esp_lib_text_arabic">العربية</string>
+
+</resources>

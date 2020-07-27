@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/llparent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:foreground="?attr/selectableItemBackground"
+        android:padding="@dimen/_15sdp"
+        android:orientation="vertical">
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Esp_Lib_Style_TextHeading3BlackHeavy"/>
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:ellipsize="end"
+            android:layout_below="@+id/name"
+            android:maxLines="3"
+            style="@style/Esp_Lib_Style_TextParagraphBlack" />
+
+
+        <RelativeLayout
+            android:id="@+id/rlparentapplication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/description"
+            android:layout_marginTop="@dimen/_7sdp">
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtparentnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/esp_lib_text_parentapplication"
+                android:maxLines="3"
+                style="@style/Esp_Lib_Style_TextParagraphCoolGray" />
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtparentnumvalue"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/txtparentnum"
+                android:ellipsize="end"
+                android:maxLines="3" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rlparentapplication"
+            android:layout_marginTop="@dimen/_2sdp">
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtrequestedby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="@string/esp_lib_text_requestedby"
+                android:maxLines="3"
+                style="@style/Esp_Lib_Style_TextParagraphCoolGray" />
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtrequestedbyvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/txtrequestedby"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                style="@style/Esp_Lib_Style_TextParagraphBlack" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</LinearLayout>

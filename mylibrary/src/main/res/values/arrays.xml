@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="status">
+        <item>@string/esp_lib_text_all</item>
+        <item>@string/esp_lib_text_new_satus</item>
+        <item>@string/esp_lib_text_under_satus</item>
+        <item>@string/esp_lib_text_accepted</item>
+        <item>@string/esp_lib_text_rejected</item>
+        <item>@string/esp_lib_text_cancelled</item>
+    </array>
+
+    <array name="fontStylesName">
+        <item>@string/esp_lib_text_font_default_name</item>
+        <!--<item>@string/esp_lib_text_font_lato_regular_name</item>
+        <item>@string/esp_lib_text_font_lato_medium_name</item>
+        <item>@string/esp_lib_text_font_lato_bold_name</item>
+        <item>@string/esp_lib_text_font_lato_heavy_name</item>-->
+    </array>
+
+    <array name="fontStyles">
+        <item>@string/esp_lib_text_font_default</item>
+        <item>@string/esp_lib_text_font_lato_regular</item>
+        <item>@string/esp_lib_text_font_lato_medium</item>
+        <item>@string/esp_lib_text_font_lato_bold</item>
+        <item>@string/esp_lib_text_font_lato_heavy</item>
+    </array>
+
+    <array name="signature_tabs">
+        <item>@string/esp_lib_text_select_Style</item>
+        <item>@string/esp_lib_text_draw</item>
+        <item>@string/esp_lib_text_upload</item>
+    </array>
+
+    <array name="status_enum">
+        <item>@string/esp_lib_text_all_enum</item>
+        <!-- <item>@string/new_satus</item>
+         <item>@string/under_satus</item>-->
+        <item>@string/esp_lib_text_accepted_enum</item>
+        <item>@string/esp_lib_text_rejected_enum</item>
+        <item>@string/esp_lib_text_cancelled_enum</item>
+    </array>
+
+</resources>

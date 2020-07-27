@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llFilterCont"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/_25sdp"
+    android:layout_marginEnd="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_5sdp"
+    android:background="@drawable/esp_lib_drawable_draw_bg_solid_green"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/_7sdp"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_5sdp">
+
+    <ImageView
+        android:id="@+id/ivChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:src="@drawable/esp_lib_drawable_ic_check_tick"
+        android:visibility="gone" />
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:id="@+id/tvMultiSelectionFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_9sdp"
+        android:lines="1"
+        style="@style/Esp_Lib_Style_TextHeading6White"/>
+
+
+</LinearLayout>

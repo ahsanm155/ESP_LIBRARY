@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/esp_lib_color_white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextColor="@color/esp_lib_color_mid_grey"
+            app:tabSelectedTextColor="@color/esp_lib_color_black"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
+            app:tabIndicatorHeight="@dimen/_3sdp"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:shimmer_auto_start="true"
+        app:shimmer_base_alpha="1"
+        app:shimmer_clip_to_children="true"
+        app:shimmer_colored="false"
+        app:shimmer_direction="left_to_right"
+        app:shimmer_highlight_alpha="0.1">
+
+        <!-- Adding 5 rows of placeholders -->
+        <LinearLayout
+            android:id="@+id/shimmerlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+            <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+            <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+            <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+            <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+            <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+            <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_CustomViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addaccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_plus"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:tint="@color/esp_lib_color_white"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        android:visibility="gone"
+        app:layout_anchorGravity="bottom|end"
+        />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

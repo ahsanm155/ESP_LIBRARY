@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/esp_lib_color_pale_grey"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/esp_lib_gradienttoolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/esp_lib_color_white"
+    android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"
+            android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+</LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/lldetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_17sdp"
+        android:layout_toEndOf="@+id/txtline"
+        android:background="@color/esp_lib_color_white"
+        android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtStagename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_7sdp"
+                android:text="@string/esp_lib_text_stages"
+                style="@style/Esp_Lib_Style_TextHeading1Black"/>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlcondition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/conditiontext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/esp_lib_text_condition"
+                style="@style/Esp_Lib_Style_TextParagraphGray" />
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/conditiontextvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_toEndOf="@+id/conditiontext"
+                android:text="@string/esp_lib_text_condition"
+                style="@style/Esp_Lib_Style_TextParagraphBlack" />
+        </RelativeLayout>
+
+
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/sequencetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/esp_lib_text_sequence"
+                style="@style/Esp_Lib_Style_TextParagraphGray" />
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/sequencetextvalue"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_toEndOf="@+id/sequencetext"
+                android:text="@string/esp_lib_text_sequence" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlacceptreject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/acceptencetext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/esp_lib_text_acceptancecriteria"
+                style="@style/Esp_Lib_Style_TextParagraphGray" />
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/acceptencetextvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_toEndOf="@+id/acceptencetext"
+                android:text="1"
+                style="@style/Esp_Lib_Style_TextParagraphBlack" />
+
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+            <include
+                layout="@layout/esp_lib_statuswithicon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_83sdp"
+                android:layout_marginEnd="@dimen/_17sdp" />
+
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/esp_lib_color_pale_grey"
+            android:orientation="vertical">
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:id="@+id/txtcriteria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/esp_lib_text_criteria"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        style="@style/Esp_Lib_Style_TextSmallGray" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCrietrias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:animationCache="true"
+        android:clipToPadding="false"
+        android:keepScreenOn="true" />
+
+    </LinearLayout>
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

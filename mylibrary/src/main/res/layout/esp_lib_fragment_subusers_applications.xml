@@ -1,0 +1,164 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/esp_lib_color_view_bg"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/curvetoolbar"
+        layout="@layout/esp_lib_gradienttoolbar"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/no_subapplication_available_div"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_no_application" />
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/ttxnorecord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_error_text"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:gravity="center"
+                android:text="@string/esp_lib_text_norecord"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/_20ssp"
+                custom:customfont="regular" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_10sdp"
+            android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/application_list_div"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/esp_lib_color_view_bg">
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/txtrequests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/esp_lib_color_mid_grey"
+            android:textSize="@dimen/_12ssp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            custom:customfont="regular"
+
+            />
+
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerview_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:shimmer_auto_start="true"
+            app:shimmer_base_alpha="1"
+            app:shimmer_clip_to_children="true"
+            app:shimmer_colored="false"
+            app:shimmer_direction="left_to_right"
+            app:shimmer_highlight_alpha="0.1"
+            android:layout_gravity="center"
+            android:layout_below="@+id/txtrequests"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <!-- Adding 5 rows of placeholders -->
+            <LinearLayout
+                android:id="@+id/shimmerlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+                <include layout="@layout/esp_lib_definition_list_placeholder_layout" />
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/app_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_below="@+id/txtrequests"
+                android:animationCache="true"
+                android:clipToPadding="false">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        <RelativeLayout
+            android:id="@+id/load_more_div"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_15sdp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:visibility="gone">
+
+
+            <ProgressBar
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:padding="@dimen/_7sdp"
+                android:elevation="@dimen/_5sdp"
+                android:background="@drawable/esp_lib_drawable_draw_bg_white_circle"/>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

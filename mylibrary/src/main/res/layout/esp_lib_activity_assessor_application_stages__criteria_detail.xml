@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/esp_lib_color_white"
+    >
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:paddingTop="@dimen/_15sdp"
+            android:background="@drawable/esp_lib_drawable_draw_toolbar"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                    android:id="@+id/definitionName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Esp_Lib_Style_TextHeading3White"
+                    android:layout_gravity="center_horizontal"
+                    />
+                <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                    android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_10ssp"
+                    custom:customfont="regular"
+                    android:textColor="@color/esp_lib_color_white"
+                    android:layout_gravity="center_horizontal"
+                    />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <FrameLayout
+        android:id="@+id/request_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/esp_lib_color_white"
+        >
+    </FrameLayout>
+
+</LinearLayout>

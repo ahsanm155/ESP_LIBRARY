@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.esp.test.app.MainActivity"
+    >
+
+  <item
+      android:id="@+id/action_filter"
+      android:icon="@drawable/ic_nav_filter"
+      android:visible="false"
+      app:showAsAction="always"
+      android:title="@string/esp_lib_text_filter"/>
+
+  <item
+      android:id="@+id/action_search"
+      android:icon="@drawable/esp_lib_drawable_search_icon"
+      app:showAsAction="always|collapseActionView"
+      app:actionViewClass="androidx.appcompat.widget.SearchView"
+      android:title="@string/esp_lib_text_search_"/>
+
+
+
+</menu>

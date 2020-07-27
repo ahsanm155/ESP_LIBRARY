@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+
+    <RelativeLayout
+        android:id="@+id/rlfilterbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_7sdp"
+        android:paddingEnd="@dimen/_7sdp"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_3sdp"
+        android:background="@drawable/esp_lib_drawable_draw_bg_solid_green">
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/txtcatName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_centerVertical="true"
+            style="@style/Esp_Lib_Style_TextSmallWhite"/>
+
+
+        <ImageView
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_toEndOf="@+id/txtcatName"
+            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:src="@drawable/esp_lib_drawable_ic_icons_close_white"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

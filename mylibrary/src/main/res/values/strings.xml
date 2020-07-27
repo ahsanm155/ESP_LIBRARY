@@ -1,0 +1,429 @@
+<resources>
+    <string name="app_name">ESP</string>
+
+
+    <!--<string name="base_url">http://qaesp.azurewebsites.net/webapi/</string>-->
+
+    <string name="esp_lib_text_light" translatable="false">light</string>
+    <string name="esp_lib_text_regular" translatable="false">regular</string>
+    <string name="esp_lib_text_bold" translatable="false">bold</string>
+    <string name="esp_lib_text_semibold" translatable="false">semibold</string>
+    <string name="esp_lib_text_heavy" translatable="false">heavy</string>
+    <string name="esp_lib_text_flaticon" translatable="false">flaticon.ttf</string>
+
+    <string name="esp_lib_text_font_medium" translatable="false">lato/lato_medium.ttf</string>
+    <string name="esp_lib_text_font_regular" translatable="false">lato/lato_regular.ttf</string>
+    <string name="esp_lib_text_font_bold" translatable="false">lato/lato_bold.ttf</string>
+    <string name="esp_lib_text_font_heavy" translatable="false">lato/lato_heavy.ttf</string>
+    <string name="esp_lib_text_font_semibold" translatable="false">lato/lato_semibold.ttf</string>
+
+
+    <string name="esp_lib_text_font_light_dubai" translatable="false">dubai/dubai_medium.ttf</string>
+    <string name="esp_lib_text_font_regular_dubai" translatable="false">dubai/dubai_regular.ttf</string>
+    <string name="esp_lib_text_font_bold_dubai" translatable="false">dubai/dubai_bold.ttf</string>
+
+    <string name="esp_lib_text_font_default_name" translatable="false">Default</string>
+    <string name="esp_lib_text_font_lato_medium_name" translatable="false">Lato medium</string>
+    <string name="esp_lib_text_font_lato_bold_name" translatable="false">Lato bold</string>
+    <string name="esp_lib_text_font_lato_heavy_name" translatable="false">Lato Heavy</string>
+    <string name="esp_lib_text_font_lato_regular_name" translatable="false">Lato regular</string>
+
+
+    <string name="esp_lib_text_font_default" translatable="false">greatvibes_regular.otf</string>
+    <string name="esp_lib_text_font_lato_medium" translatable="false">lato_medium.ttf</string>
+    <string name="esp_lib_text_font_lato_bold" translatable="false">lato_bold.ttf</string>
+    <string name="esp_lib_text_font_lato_heavy" translatable="false">lato_heavy.ttf</string>
+    <string name="esp_lib_text_font_lato_regular" translatable="false">lato_regular.ttf</string>
+
+
+    <string name="esp_lib_text_sign_in">Sign In</string>
+    <string name="esp_lib_text_login" translatable="false">Login</string>
+    <string name="esp_lib_text_logineithidenedi">Login with IDENEDI</string>
+    <string name="esp_lib_text_login_email_label">Email</string>
+    <string name="esp_lib_text_login_valid_email_error">Please enter a valid email</string>
+    <string name="esp_lib_text_login_email_error">Please enter email</string>
+    <string name="esp_lib_text_login_password_label">Password</string>
+    <string name="esp_lib_text_login_valid_password_error">Please enter password</string>
+    <string name="esp_lib_text_length_password_error">Password must contain minimum 6 characters</string>
+    <string name="esp_lib_text_internet_error_heading">No internet</string>
+    <string name="esp_lib_text_internet_connection_error">No internet connectivity, please check your internet connection and try again</string>
+    <string name="esp_lib_text_login_label">Login</string>
+    <string name="esp_lib_text_choose_organization">Please select account from below</string>
+    <string name="esp_lib_text_some_thing_went_wrong">Something went wrong, please try again </string>
+    <string name="esp_lib_text_need_to_verify" translatable="false">We need to verify your identity to further proceed</string>
+    <string name="esp_lib_text_norecordstofilter">No records to filter</string>
+    <string name="esp_lib_text_notacceptrequest">We are currently not accepting applications for </string>
+    <string name="esp_lib_text_contactadministrator">Please try again later or contact your system administrator for more details.</string>
+    <string name="esp_lib_text_closingdatepassed">The closing date for accepting applications has passed</string>
+    <string name="esp_lib_text_login_error">Incorrect Login ID or Password!</string>
+    <string name="esp_lib_text_login_error_account_locked">Your account is locked.</string>
+    <string name="esp_lib_text_login_error_remaining3">Invalid credentials. You have 3 more attempts before your account gets locked out.</string>
+    <string name="esp_lib_text_login_error_remaining2">Invalid credentials. You have 2 more attempts before your account gets locked out.</string>
+    <string name="esp_lib_text_login_error_remaining1">Invalid credentials. You have 1 more attempt before your account gets locked out.</string>
+    <string name="esp_lib_text_login_error_locked">Invalid credentials. Your account has been locked out for 30 minutes due to multiple failed login attempts</string>
+    <string name="esp_lib_text_applicant_error">You are not an Applicant.</string>
+    <string name="esp_lib_text_welcome">Welcome</string>
+    <string name="esp_lib_text_navigation_drawer_open">Open filter</string>
+    <string name="esp_lib_text_navigation_drawer_close">Close filter</string>
+    <string name="esp_lib_text_no">No</string>
+    <string name="esp_lib_text_font" translatable="false">Font</string>
+    <string name="esp_lib_text_upload" translatable="false">Upload</string>
+    <string name="esp_lib_text_select_font_style" translatable="false">Select Font style</string>
+    <string name="esp_lib_text_added">Added</string>
+    <string name="esp_lib_text_startsubmittingapp">Start by submitting your first </string>
+    <string name="esp_lib_text_itseasy">. Its easy and take less than 2 minutes, we promise!</string>
+    <string name="esp_lib_text_my">My</string>
+    <string name="esp_lib_text_my_space">My Space</string>
+    <string name="esp_lib_text_search_">Search</string>
+
+    <string name="esp_lib_text_profile_error_heading">Incomplete Profile</string>
+    <string name="esp_lib_text_profile_error_desc">Uh-oh, you can\'t submit request until you fill your profile!</string>
+    <string name="esp_lib_text_profile_error_desc_admin">Uh-oh, you can\'t submit request, Please contact admin!</string>
+    <string name="esp_lib_text_profile_error_cancel">CANCEL</string>
+    <string name="esp_lib_text_profile_complete" translatable="false">COMPLETE</string>
+    <string name="esp_lib_text_verified" translatable="false">Your face is Verified</string>
+    <string name="esp_lib_text_upload_profile_image" translatable="false">Please upload profile image to continue</string>
+    <string name="esp_lib_text_not_verified" translatable="false">Your face is not Verified, please try again</string>
+    <string name="esp_lib_text_profile_incomplete" translatable="false">IN-COMPLETE</string>
+    <string name="esp_lib_text_profile_incomplete_admin" translatable="false">IN-COMPLETE-BY-ADMIN</string>
+    <string name="esp_lib_text_forgot_password">Forgot Password</string>
+    <string name="esp_lib_text_request_reject_error">This request has been rejected incorrect ticket. Please submit a new request with the correct information.</string>
+    <string name="esp_lib_text_submitted_on">Submitted on</string>
+    <string name="esp_lib_text_request">Request </string>
+    <string name="esp_lib_text_newversionavailable">New Version Available</string>
+    <string name="esp_lib_text_updatenow">Update now</string>
+    <string name="esp_lib_text_newversionavailabletext">A new version of this app is available in the Play Store, Please download new version of this App.</string>
+    <string name="esp_lib_text_requestedby">Requested By:</string>
+    <string name="esp_lib_text_feed" translatable="false">Feed</string>
+    <string name="esp_lib_text_feeds" translatable="false">Feeds</string>
+    <string name="esp_lib_text_mine" translatable="false">Mine</string>
+    <string name="esp_lib_text_requests">Requests</string>
+    <string name="esp_lib_text_open_requests" translatable="false">Open Requests</string>
+    <string name="esp_lib_text_closed_requests" translatable="false">Closed Requests</string>
+    <string name="esp_lib_text_by_status">By Status</string>
+    <string name="esp_lib_text_by_definition">By Definitions</string>
+    <string name="esp_lib_text_sortby">Sort By</string>
+    <string name="esp_lib_text_filters">Filters</string>
+    <string name="esp_lib_text_close" translatable="false">Close</string>
+    <string name="esp_lib_text_closed">Closed</string>
+    <string name="esp_lib_text_closedsmall">closed</string>
+    <string name="esp_lib_text_assigned" translatable="false">Assigned</string>
+    <string name="esp_lib_text_filter">Filter</string>
+    <string name="esp_lib_text_parentapplication">Parent Application:</string>
+    <string name="esp_lib_text_filter_error">Please select atleast one status filter to proceed</string>
+    <string name="esp_lib_text_definition_filter_error">Please select atleast one definition filter to proceed</string>
+    <string name="esp_lib_text_reset">Reset</string>
+    <string name="esp_lib_text_invited">Invited</string>
+    <string name="esp_lib_text_attachfile">Attach File</string>
+    <string name="esp_lib_text_upload_an_attachment" translatable="false">Upload an Attachment</string>
+    <string name="esp_lib_text_new_satus">New</string>
+    <string name="esp_lib_text_under_satus">Pending</string>
+    <string name="esp_lib_text_approved">Approved</string>
+    <string name="esp_lib_text_approvedby"  translatable="false">Approved By</string>
+    <string name="esp_lib_text_rejectedby"  translatable="false">Rejected By</string>
+    <string name="esp_lib_text_rejected">Rejected</string>
+    <string name="esp_lib_text_rejected_enum" translatable="false">4</string>
+    <string name="esp_lib_text_addcommenttoproceed">Please add comment to proceed</string>
+    <string name="esp_lib_text_enterprise_submission_platform">Enterprise Submission Platform</string>
+    <string name="esp_lib_text_invoice_submission_platform">Invoice Submission Platform</string>
+    <string name="esp_lib_text_app_version" translatable="false">0.3.1</string>
+    <string name="esp_lib_text_no_cat_error">No Category found!</string>
+
+    <string name="esp_lib_text_no_defination_error">No Definition found!</string>
+    <string name="esp_lib_text_add">Add</string>
+    <string name="esp_lib_text_category">Category</string>
+    <string name="esp_lib_text_categories">Categories</string>
+    <string name="esp_lib_text_categorysmall">category</string>
+    <string name="esp_lib_text_yes">Yes</string>
+
+
+
+    <string name="esp_lib_text_empty_directory">Empty Directory</string>
+    <string name="esp_lib_text_storage_removed">Storage was removed or unmounted.</string>
+    <string name="esp_lib_text_choose_file">Select a file</string>
+    <string name="esp_lib_text_error_selecting_file">Error selecting File</string>
+    <string name="esp_lib_text_internal_storage">Internal storage</string>
+
+    <string name="esp_lib_text_save_draft">Save Draft</string>
+    <string name="esp_lib_text_your">Your</string>
+    <string name="esp_lib_text_wasnotsubmitted">was not submitted yet.</string>
+    <string name="esp_lib_text_save_draft_ok">SAVE AS DRAFT</string>
+    <string name="esp_lib_text_discard">Discard</string>
+    <string name="esp_lib_text_assessor">Assessor</string>
+    <string name="esp_lib_text_applicant">Applicant</string>
+    <string name="esp_lib_text_applicants">Applicants</string>
+    <string name="esp_lib_text_applications">Applications</string>
+    <string name="esp_lib_text_application">Application</string>
+    <string name="esp_lib_text_applicantcolon">Applicant:</string>
+    <string name="esp_lib_text_applicantsmall">applicant</string>
+    <string name="esp_lib_text_yesdelete">Yes, Delete</string>
+    <string name="esp_lib_text_expired">Authorization has been denied for this request.</string>
+    <string name="esp_lib_text_criterias">Criterias</string>
+    <string name="esp_lib_text_criteria">Criteria</string>
+    <string name="esp_lib_text_other_experts" translatable="false">other experts</string>
+    <string name="esp_lib_text_other_experts_submitted" translatable="false">have submitted to the request</string>
+    <string name="esp_lib_text_no_submissions" translatable="false">You do not have any submissions yet.</string>
+    <string name="esp_lib_text_durationcolon">Duration:</string>
+    <string name="esp_lib_text_ownercolon">Owner:</string>
+    <string name="esp_lib_text_criteria_feedback">Criteria Feedback</string>
+    <string name="esp_lib_text_pending">Pending</string>
+    <string name="esp_lib_text_inprogress">In Progress</string>
+    <string name="esp_lib_text_current">Current</string>
+    <string name="esp_lib_text_accepted">Accepted</string>
+    <string name="esp_lib_text_accepted_enum" translatable="false">3</string>
+    <string name="esp_lib_text_acceptedsmall">accepted</string>
+    <string name="esp_lib_text_logintolink">Login to link</string>
+    <string name="esp_lib_text_idenedinotlinkedtext">Your IDENEDI account is not linked with ESP. To link your IDENEDI account with ESP please login below with ESP \'Exceeders\' credentials or contact administration.</string>
+    <string name="esp_lib_text_please_add_comment">Please add comment</string>
+    <string name="esp_lib_text_resubmitapp">Do you want to resubmit</string>
+    <string name="esp_lib_text_data_available">data available!</string>
+    <string name="esp_lib_text_edit_comments">Edit Comment</string>
+    <string name="esp_lib_text_save">Save</string>
+    <string name="esp_lib_text_resubmit">Resubmit</string>
+    <string name="esp_lib_text_resubmitapplication">Resubmit Application</string>
+    <string name="esp_lib_text_addcomment">Add comment</string>
+    <string name="esp_lib_text_areyousure">Are you sure you want to delete</string>
+    <string name="esp_lib_text_cancel">Cancel</string>
+    <string name="esp_lib_text_cancel_request" translatable="false">Cancel Request</string>
+    <string name="esp_lib_text_cancelled">Cancelled</string>
+    <string name="esp_lib_text_cancelled_enum" translatable="false">5</string>
+    <string name="esp_lib_text_reject_comments_hints_one_comment">Please provide at least one comment for the</string>
+    <string name="esp_lib_text_beforereject">before reject the</string>
+    <string name="esp_lib_text_reject_title">Are you sure you want to reject this criteria?</string>
+    <string name="esp_lib_text_accept_title">Are you sure you want to accept this criteria?</string>
+    <string name="esp_lib_text_add_comment">Add Comment</string>
+    <string name="esp_lib_text_add_criteria" translatable="false">Add Criteria</string>
+    <string name="esp_lib_text_add_a_comment" translatable="false">Add a comment</string>
+    <string name="esp_lib_text_comment" translatable="false">Comment</string>
+    <string name="esp_lib_text_attached_files" translatable="false">Attached Files</string>
+    <string name="esp_lib_text_visible_to_applicant" translatable="false">visibile to applicant</string>
+    <string name="esp_lib_text_yourcomment">Your comment</string>
+    <string name="esp_lib_text_edit_comment">Edit Comment</string>
+    <string name="esp_lib_text_post_comment">Post Comment</string>
+    <string name="esp_lib_text_edit_feedback">Edit feedback</string>
+    <string name="esp_lib_text_edit">Edit</string>
+    <string name="esp_lib_text_no_criteria_feedback_comments">There is no criteria feedback yet.</string>
+
+
+    <string name="esp_lib_text_action_menu_remove">Remove</string>
+    <string name="esp_lib_text_label_currency">currency</string>
+    <string name="esp_lib_text_savedraft">Save draft</string>
+    <string name="esp_lib_text_hidden">hidden</string>
+    <string name="esp_lib_text_shown">shown</string>
+    <string name="esp_lib_text_all">All</string>
+    <string name="esp_lib_text_all_enum" translatable="false">0</string>
+    <string name="esp_lib_text_select_Style" translatable="false">Select Style</string>
+    <string name="esp_lib_text_Style" translatable="false">Style</string>
+    <string name="esp_lib_text_draw" translatable="false">Draw</string>
+    <string name="esp_lib_text_your_name" translatable="false">Your Name*</string>
+    <string name="esp_lib_text_member">Member</string>
+    <string name="esp_lib_text_allwithfeedback" translatable="false">ALLWITHFEEDBACK</string>
+    <string name="esp_lib_text_alert">alert</string>
+    <string name="esp_lib_text_ok">Ok</string>
+    <string name="esp_lib_text_submitrequest">Submit Request</string>
+    <string name="esp_lib_text_addsub" translatable="false">Add a Submission</string>
+    <string name="esp_lib_text_submit">Submit</string>
+    <string name="esp_lib_text_addperiod">Add Period</string>
+    <string name="esp_lib_text_nolookuphere">No lookup here!</string>
+    <string name="esp_lib_text_nofeedbackavailable">No feedback available!</string>
+    <string name="esp_lib_text_nocomments">No Comments!</string>
+    <string name="esp_lib_text_condition">Condition:</string>
+    <string name="esp_lib_text_acceptedon">Accepted On:</string>
+    <string name="esp_lib_text_rejectedon">Rejected On:</string>
+    <string name="esp_lib_text_sequence">Sequence:</string>
+    <string name="esp_lib_text_nocriteriaavailable">no action available!</string>
+    <string name="esp_lib_text_acceptancecriteria">Acceptance Criteria:</string>
+    <string name="esp_lib_text_nostageavaialable">No stage available!</string>
+    <string name="esp_lib_text_enterurl">Enter URL</string>
+    <string name="esp_lib_text_welcometoesp">Welcome to ESP</string>
+    <string name="esp_lib_text_language">Language:</string>
+    <string name="esp_lib_text_enteremailandpassword">Please enter email and password to login</string>
+    <string name="esp_lib_text_email">Email</string>
+    <string name="esp_lib_text_emailcolon">Email:</string>
+    <string name="esp_lib_text_profiletype">Profile type</string>
+    <string name="esp_lib_text_password">Password</string>
+    <string name="esp_lib_text_forgotpassword">Forgot password?</string>
+    <string name="esp_lib_text_signout">Signout</string>
+    <string name="esp_lib_text_or">Or</string>
+    <string name="esp_lib_text_loadingmore">Loading more..</string>
+    <string name="esp_lib_text_loading">Loading...</string>
+    <string name="esp_lib_text_select" translatable="false">Select</string>
+    <string name="esp_lib_text_zerorecordfound">0 record found</string>
+    <string name="esp_lib_text_admin">Admin</string>
+    <string name="esp_lib_text_user">User</string>
+    <string name="esp_lib_text_adminsmall">admin</string>
+    <string name="esp_lib_text_accept">Accept</string>
+    <string name="esp_lib_text_comment_visible_to_applicant" translatable="false">Make this comment visibile to applicant</string>
+    <string name="esp_lib_text_actioncenter">Action center</string>
+    <string name="esp_lib_text_approve">Approve</string>
+    <string name="esp_lib_text_clearfilter">Clear Filter</string>
+    <string name="esp_lib_text_clear" translatable="false">Clear</string>
+    <string name="esp_lib_text_draw_here" translatable="false">Draw Here</string>
+    <string name="esp_lib_text_applyfilter">Apply Filter</string>
+    <string name="esp_lib_text_reject">Reject</string>
+    <string name="esp_lib_text_dismiss" translatable="false">Dismiss</string>
+    <string name="esp_lib_text_view_details" translatable="false">View Details</string>
+    <string name="esp_lib_text_pleasewait">Please wait...</string>
+    <string name="esp_lib_text_defaultt">Default</string>
+    <string name="esp_lib_text_required" translatable="false">Required</string>
+    <string name="esp_lib_text_submittedon">Submitted on</string>
+    <string name="esp_lib_text_any">Any</string>
+    <string name="esp_lib_text_day">Day</string>
+    <string name="esp_lib_text_days">Days</string>
+    <string name="esp_lib_text_found">found</string>
+    <string name="esp_lib_text_definition">definition</string>
+    <string name="esp_lib_text_definitions">definitions</string>
+    <string name="esp_lib_text_selectafile">Select a file</string>
+    <string name="esp_lib_text_pleasetryagain">Please try again</string>
+    <string name="esp_lib_text_sizeshouldbelessthen">Size should be less then</string>
+    <string name="esp_lib_text_mb">MB</string>
+    <string name="esp_lib_text_error">Error</string>
+    <string name="esp_lib_text_signature_success" translatable="false">Your Signature has been uploaded successfully</string>
+    <string name="esp_lib_text_draft">draft</string>
+    <string name="esp_lib_text_draftcaps">Draft</string>
+    <string name="esp_lib_text_profile">Profile</string>
+    <string name="esp_lib_text_settings">Settings</string>
+    <string name="esp_lib_text_mysignature" translatable="false">My Signature</string>
+    <string name="esp_lib_text_signature" translatable="false">Signature</string>
+    <string name="esp_lib_text_preview" translatable="false">Preview</string>
+    <string name="esp_lib_text_customize_mysignature" translatable="false">Customize My Signature</string>
+    <string name="esp_lib_text_mysignature_description" translatable="false">app generates this signature for you. With this signature you can sign all important requests, submissions, applications etc.\n\n\nDo you want to create you custom signature?</string>
+    <string name="esp_lib_text__sig_customize_description" translatable="false">Confirm your name that will be used in your signature.</string>
+    <string name="esp_lib_text_submissionrequest">Submission Requests</string>
+    <string name="esp_lib_text_version">Version: </string>
+    <string name="esp_lib_text_neww">new</string>
+    <string name="esp_lib_text_rejectedsmall">rejected</string>
+    <string name="esp_lib_text_successfailed">Success failed</string>
+    <string name="esp_lib_text_pendingsmall">pending</string>
+    <string name="esp_lib_text_valuebetween">Value must be between</string>
+    <string name="esp_lib_text_and">and</string>
+    <string name="esp_lib_text_value">Value</string>
+    <string name="esp_lib_text_characters">characters</string>
+    <string name="esp_lib_text_valuegreater">Value must be greater or equal to </string>
+    <string name="esp_lib_text_valueless">Value must be less or equal to</string>
+    <string name="esp_lib_text_invalidemail">Email is invalid</string>
+    <string name="esp_lib_text_invalidlink">Please enter valid Link</string>
+    <string name="esp_lib_text_invalidnumber">Please enter valid Number</string>
+    <string name="esp_lib_text_valuegreaterequalto">Value must be greater or equal to</string>
+    <string name="esp_lib_text_valuelessequalto">Value must be less or equal to</string>
+    <string name="esp_lib_text_currency">Currency</string>
+    <string name="esp_lib_text_appnotavailable">Open this file, Application is not available</string>
+    <string name="esp_lib_text_choose">Choose</string>
+    <string name="esp_lib_text_stages">STAGES</string>
+    <string name="esp_lib_text_feedback">Feedback</string>
+    <string name="esp_lib_text_feedbackdetail">You will have the ability to leave a feedback when the request will be closed.</string>
+    <string name="esp_lib_text_acceptcriteri">Accept Criteria</string>
+    <string name="esp_lib_text_reason_cancelling" translatable="false">Reason of Cancelling*</string>
+    <string name="esp_lib_text_notify" translatable="false">Please select who to notify:</string>
+    <string name="esp_lib_text_close_request_cancel" translatable="false">Close Request as Cancel</string>
+    <string name="esp_lib_text_close_request_text" translatable="false">Before closing the request, please provide the reason of cancelling</string>
+    <string name="esp_lib_text_rejectcriteria">Reject Criteria</string>
+    <string name="esp_lib_text_gender">gender</string>
+    <string name="esp_lib_text_active">active</string>
+    <string name="esp_lib_text_activecaps">Active</string>
+    <string name="esp_lib_text_reassigned">ReAssigned</string>
+    <string name="esp_lib_text_completed">completed</string>
+    <string name="esp_lib_text_close_request_as" translatable="false">Close request as</string>
+    <string name="esp_lib_text_close_request" translatable="false">Close request</string>
+    <string name="esp_lib_text_complete">Complete</string>
+    <string name="esp_lib_text_completedcaps">Completed</string>
+    <string name="esp_lib_text_locked">locked</string>
+    <string name="esp_lib_text_link">link</string>
+    <string name="esp_lib_text_open">open</string>
+    <string name="esp_lib_text_opencaps">Open</string>
+    <string name="esp_lib_text_errorcreatingnewfile">Error creating new file</string>
+    <string name="esp_lib_text_thumbnail">thumbnail</string>
+    <string name="esp_lib_text_errorwritingthumbnail">Error writing thumbnail</string>
+    <string name="esp_lib_text_errorclosingthumbnail">Error closing thumbnail</string>
+    <string name="esp_lib_text_enterbaseurl">Enter base url</string>
+    <string name="esp_lib_text_base">Base</string>
+    <string name="esp_lib_text_entervalidurl">Enter valid base URL</string>
+    <string name="esp_lib_text_youaredevelopernow">You are developer now</string>
+    <string name="esp_lib_text_result">result</string>
+    <string name="esp_lib_text_results">results</string>
+    <string name="esp_lib_text_english" translatable="false">English</string>
+
+    <string name="esp_lib_text_completeprofile">Complete your profile</string>
+    <string name="esp_lib_text_completeprofiletext">In order to submit application, you need to complete your profile.</string>
+    <string name="esp_lib_text_continuee">Continue</string>
+    <string name="esp_lib_text_next">Next</string>
+    <string name="esp_lib_text_addyourpicture">Add your picture</string>
+    <string name="esp_lib_text_addyourpicturetext">Please upload your picture and click next</string>
+    <string name="esp_lib_text_fullnamee">Full Name</string>
+    <string name="esp_lib_text_lastupdatedon">Last Updated on</string>
+    <string name="esp_lib_text_camera">Camera</string>
+    <string name="esp_lib_text_gallery">Gallery</string>
+    <string name="esp_lib_text_addmore">Add more</string>
+    <string name="esp_lib_text_name">Name</string>
+    <string name="esp_lib_text_delete">Delete</string>
+    <string name="esp_lib_text_deleterequest">Delete Request</string>
+    <string name="esp_lib_text_accounts">Accounts</string>
+    <string name="esp_lib_text_takemetoprofile">Take me to profile</string>
+    <string name="esp_lib_text_employee">Employee</string>
+    <string name="esp_lib_text_additemlist">Add item list</string>
+    <string name="esp_lib_text_searchlookupitem">Search lookup item...</string>
+    <string name="esp_lib_text_emptyitemlist">Uh oh you don\'t have any list items</string>
+    <string name="esp_lib_text_details">Details</string>
+    <string name="esp_lib_text_submissiondetails">Submission Details</string>
+    <string name="esp_lib_text_requestdetails">Request Details</string>
+    <string name="esp_lib_text_subapplications">Sub Applications</string>
+    <string name="esp_lib_text_subdefinition">Sub Definition:</string>
+    <string name="esp_lib_text_norecord">No record found!</string>
+    <string name="esp_lib_text_requestnumber">Request #:</string>
+    <string name="esp_lib_text_confirmfeedback">Confirm feedback</string>
+    <string name="esp_lib_text_rejectfeedback">Confirm Rejection</string>
+    <string name="esp_lib_text_confirmacceptance">Confirm Acceptance</string>
+    <string name="esp_lib_text_confirm">Confirm</string>
+    <string name="esp_lib_text_selectitemfeedbacktext">Please select the item you want to make visible to employee</string>
+    <string name="esp_lib_text_reasonfordecline">Reason for the decline:</string>
+    <string name="esp_lib_text_categorycolon">Category:</string>
+    <string name="esp_lib_text_idenediid">iDENEDi ID:</string>
+    <string name="esp_lib_text_submittedoncolon">Submitted On:</string>
+    <string name="esp_lib_text_requestedoncolon" translatable="false">Requested On:</string>
+    <string name="esp_lib_text_ola" translatable="false">OLA:</string>
+    <string name="esp_lib_text_pendingfor">Pending For:</string>
+    <string name="esp_lib_text_submitted">Submitted</string>
+    <string name="esp_lib_text_submissions">Submissions</string>
+    <string name="esp_lib_text_submissionscolon" translatable="false">Submissions:</string>
+    <string name="esp_lib_text_submissionszero">Submissions (0)</string>
+    <string name="esp_lib_text_approvalstages">Approval Stages</string>
+    <string name="esp_lib_text_approvalstage">Approval Stage</string>
+    <string name="esp_lib_text_requestcolon">Request:</string>
+    <string name="esp_lib_text_selectapplication">Select Application</string>
+    <string name="esp_lib_text_linkdefinition">Link Definition</string>
+    <string name="esp_lib_text_definition_name">Definition Name</string>
+    <string name="esp_lib_text_submissionsallowed">Submissions allowed</string>
+    <string name="esp_lib_text_submissionsstopped">Submissions Stopped</string>
+    <string name="esp_lib_text_viewapplications">View Applications</string>
+    <string name="esp_lib_text_stopsubmission">Stop Submission</string>
+    <string name="esp_lib_text_requesttoaction">Requests to action</string>
+    <string name="esp_lib_text_seeall">See All</string>
+    <string name="esp_lib_text_allowsubmission">Allow Submission</string>
+    <string name="esp_lib_text_closesubmission" translatable="false">Close Submission</string>
+    <string name="esp_lib_text_stopsubmissiontext">Are you sure you want to stop allowing submissions for this definition?</string>
+    <string name="esp_lib_text_completesubmissiontext" translatable="false">Are you sure you want to close submissions for this definition?</string>
+    <string name="esp_lib_text_allowsubmissiontext">Are you sure you want to allow submissions for this definition?</string>
+    <string name="esp_lib_text_moreinformation">More Information</string>
+    <string name="esp_lib_text_lessinformation">Less Information</string>
+    <string name="esp_lib_text_formisempty">Form is empty</string>
+    <string name="esp_lib_text_form">Form</string>
+    <string name="esp_lib_text_reassign">Reassign</string>
+    <string name="esp_lib_text_warning" translatable="false">Warning!</string>
+    <string name="esp_lib_text_preview_description" translatable="false">Your preview is not updated still you want to continue?</string>
+    <string name="esp_lib_text_selectusers">Select User</string>
+    <string name="esp_lib_text_nousersfound">No Users found!</string>
+    <string name="esp_lib_text_nofilesattached">No Files Attached</string>
+    <string name="esp_lib_text_attachedfiles">Attached Files</string>
+
+
+    <string name="esp_lib_text_suboldestfirst">Submitted: Oldest First</string>
+    <string name="esp_lib_text_assignoldestfirst">Assigned: Oldest First</string>
+    <string name="esp_lib_text_subnewestfirst">Submitted: Newest First</string>
+    <string name="esp_lib_text_assignnewestfirst">Assigned: Newest First</string>
+    <string name="esp_lib_text_duefirst">Due: First</string>
+    <string name="esp_lib_text_duelast">Due: Last</string>
+    <string name="esp_lib_text_profile_error_ok">Take me to my profile</string>
+    <string name="esp_lib_text_arabic">العربية</string>
+
+
+</resources>

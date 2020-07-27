@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/esp_lib_color_white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlitem"
+        android:background="?attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_height="wrap_content">
+
+
+
+        <com.esp.library.utilities.common.ESP_LIB_RoundedImageView
+            android:id="@+id/ivuser"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:src="@drawable/esp_lib_drawable_default_profile_picture" />
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/txtusername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_toEndOf="@+id/ivuser"
+            android:text="@string/esp_lib_text_selectapplication"
+            android:textColor="@color/esp_lib_color_black"
+            android:textSize="@dimen/_14ssp"
+            custom:customfont="light" />
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/txtuseremail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtusername"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:layout_toEndOf="@+id/ivuser"
+            android:text="@string/esp_lib_text_selectapplication"
+            android:textColor="@color/esp_lib_color_light_grey"
+            android:textSize="@dimen/_10ssp"
+            custom:customfont="regular" />
+    </RelativeLayout>
+</LinearLayout>

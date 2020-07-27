@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/esp_lib_drawable_draw_bg_sign"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:padding="@dimen/_10sdp"
+        android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etxtsignLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/_50sdp"
+        android:textColorHint="@color/colorPrimaryDark"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etxtsign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
+            android:paddingStart="@dimen/_10sdp"
+            android:background="@drawable/esp_lib_drawable_ic_icon_signature_base"
+            android:enabled="false"
+            android:paddingBottom="@dimen/margin_3dp"
+            android:textColor="@color/esp_lib_color_brownishGrey"
+            android:textSize="@dimen/_25ssp" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

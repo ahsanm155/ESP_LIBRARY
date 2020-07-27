@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_above="@+id/rlcancelrequestbt"
+    android:orientation="vertical">
+    <include
+        android:id="@+id/curvetoolbar"
+        layout="@layout/esp_lib_gradienttoolbar" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedscrollview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@color/esp_lib_color_white"
+                    android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_15sdp"
+                    android:orientation="vertical">
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtheading"
+                        style="@style/Esp_Lib_Style_TextHeading1Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/esp_lib_text_close_request_cancel" />
+
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        style="@style/Esp_Lib_Style_TextParagraphCoolGray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="@string/esp_lib_text_close_request_text" />
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilFieldLabel"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        app:hintTextAppearance="@style/Esp_Lib_Style_AddApplicationTextLabel">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyEditText
+                            android:id="@+id/txtreason"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="viewStart"
+                            android:hint="@string/esp_lib_text_reason_cancelling"
+                            android:inputType="textMultiLine|textCapWords"
+                            android:maxLines="5"
+                            android:minLines="3"
+                            android:gravity="start"
+                            android:maxLength="1000"
+                            android:textColor="@color/esp_lib_color_black"
+                            android:textSize="@dimen/_13ssp"
+                            android:theme="@style/Esp_Lib_Style_AddApplicationEditTextField"
+                            custom:customfont="regular" />
+
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        style="@style/Esp_Lib_Style_TextParagraphBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:text="@string/esp_lib_text_notify" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvUsersList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:animationCache="true"
+                        android:clipToPadding="false"
+                        android:keepScreenOn="true" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rlcancelrequestbt"
+        android:layout_width="match_parent"
+        android:weightSum="2"
+        android:layout_height="wrap_content"
+        android:background="@color/esp_lib_color_white"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="horizontal">
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+            android:id="@+id/btcancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:text="@string/esp_lib_text_cancel"
+            android:textAllCaps="false"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/esp_lib_drawable_draw_bg_green_stroke"
+            style="@style/Esp_Lib_Style_TextHeading3GreenHeavy"/>
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+            android:id="@+id/btcancelrequest"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:text="@string/esp_lib_text_cancel_request"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:foreground="?attr/selectableItemBackground"
+            android:textAllCaps="false"
+            android:background="@drawable/esp_lib_drawable_draw_bg_green"
+            style="@style/Esp_Lib_Style_TextHeading3WhiteHeavy"/>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

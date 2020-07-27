@@ -1,0 +1,126 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="@dimen/_15sdp"
+    android:orientation="vertical">
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:id="@+id/tValueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_gravity="start"
+        style="@style/Esp_Lib_Style_TextSmallGray"  />
+
+
+    <RelativeLayout
+        android:id="@+id/llattachment"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_30sdp"
+        android:paddingStart="@dimen/_11sdp"
+        android:paddingEnd="@dimen/_15sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:layout_gravity="start"
+        android:background="@drawable/esp_lib_drawable_draw_bg_green_stroke">
+
+        <ImageView
+            android:id="@+id/attachicon"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_15sdp"
+            android:tint="@color/colorPrimaryDark"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:src="@drawable/esp_lib_drawable_ic_icons_inputs_attach_black"/>
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/tbtvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/attachicon"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="start"
+            android:text="@string/esp_lib_text_attachfile"
+            style="@style/Esp_Lib_Style_TextHeading5Green" />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlattachmentdetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/esp_lib_drawable_draw_bg_grey_stroke">
+
+
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="@style/Esp_Lib_Style_MyRoundProgressBar"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_alignParentStart="true"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/txtacctehmentname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/progressbar"
+            android:layout_gravity="start"
+            android:singleLine="true"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:ellipsize="end"
+            style="@style/Esp_Lib_Style_TextHeading5Black"/>
+
+
+
+        <ImageView
+            android:id="@+id/attachtypeicon"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_below="@+id/txtacctehmentname"
+            android:layout_marginTop="@dimen/_5sdp"/>
+
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:id="@+id/txtextensionsize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/attachtypeicon"
+            android:layout_below="@+id/txtacctehmentname"
+            android:layout_gravity="start"
+            style="@style/Esp_Lib_Style_TextSmallGreen"/>
+
+
+        <ImageView
+            android:id="@+id/ivdots"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/esp_lib_drawable_vertical_dots"/>
+
+    </RelativeLayout>
+
+
+    <include
+        android:id="@+id/onlyviewlayout"
+        android:visibility="gone"
+        layout="@layout/esp_lib_item_add_application_field_type_text_view"/>
+
+</LinearLayout>

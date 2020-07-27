@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@color/esp_lib_color_white" />
+
+            <View
+                android:id="@+id/voverduedot"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:background="@drawable/esp_lib_drawable_draw_orange"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/cards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/esp_lib_color_white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_minus2sdp"
+                android:background="?attr/selectableItemBackground">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_15sdp">
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_minus5sdp">
+
+                        <ImageButton
+                            android:id="@+id/ibRemoveCard"
+                            style="?actionButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:background="@android:color/transparent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/_minus10sdp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/esp_lib_drawable_ic_vertical_dots"
+                            android:visibility="gone"/>
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/definitionName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginEnd="@dimen/_15sdp"
+                            android:layout_toStartOf="@+id/ibRemoveCard"
+                            style="@style/Esp_Lib_Style_TextHeading3Black"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlcategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/categorytext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/esp_lib_text_categorycolon"
+                            style="@style/Esp_Lib_Style_TextParagraphCoolGray" />
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_toEndOf="@+id/categorytext"
+                            style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlrequestNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/applicationNumbertext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/esp_lib_text_requestnumber"
+                            style="@style/Esp_Lib_Style_TextParagraphCoolGray"/>
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/applicationNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_toEndOf="@+id/applicationNumbertext"
+                            style="@style/Esp_Lib_Style_TextParagraphBlack" />
+
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlsubmitteddate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/startedOntext"
+                            style="@style/Esp_Lib_Style_TextParagraphCoolGray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/esp_lib_text_submittedoncolon" />
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/startedOn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_toEndOf="@+id/startedOntext"
+                            style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlola"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/txtola"
+                            style="@style/Esp_Lib_Style_TextParagraphCoolGray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/esp_lib_text_ola" />
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/txtolavalue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_toEndOf="@+id/txtola"
+                            style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+                    </RelativeLayout>
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/llreason"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <RelativeLayout
+                            android:id="@+id/rlpendingfor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                                android:id="@+id/pendingfortext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/esp_lib_text_pendingfor"
+                                style="@style/Esp_Lib_Style_TextParagraphCoolGray"/>
+
+                            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                                android:id="@+id/pendingfor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_toEndOf="@+id/pendingfortext"
+                                style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+                        </RelativeLayout>
+
+
+
+
+                    </RelativeLayout>
+
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_minus17sdp"
+                        android:layout_gravity="end"
+                        android:maxWidth="@dimen/_80sdp"
+                        layout="@layout/esp_lib_statuswithicon"/>
+
+                 <!--   <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtstatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:paddingStart="@dimen/_8sdp"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingEnd="@dimen/_8sdp"
+                        android:paddingBottom="@dimen/_6sdp"
+                        android:textSize="@dimen/_13ssp"
+                        custom:customfont="regular" />-->
+
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlreason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:paddingBottom="@dimen/_3sdp">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/reasontext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/esp_lib_text_reasonfordecline"
+                            style="@style/Esp_Lib_Style_TextParagraphCoolGray" />
+
+
+                      <!--  <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/reasontextvalue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/reasontext"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            style="@style/Esp_Lib_Style_TextParagraphBlack" />
+-->
+
+                    </RelativeLayout>
+
+
+
+                    <!--<RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp">
+
+                        <com.esp.library.utilities.customcontrols.BodyText
+                            android:id="@+id/reasontext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reasonfordecline"
+                            android:visibility="gone"
+                            android:textColor="@color/coolgrey"
+                            android:textSize="@dimen/_13ssp"
+                            custom:customfont="regular" />
+
+
+                    </RelativeLayout>-->
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/status_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginBottom="@dimen/_minus2sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:animationCache="true"
+                        android:clipToPadding="false" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

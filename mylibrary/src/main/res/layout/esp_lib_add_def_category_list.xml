@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/esp_lib_color_pale_grey"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/esp_lib_color_white"
+        app:cardCornerRadius="@dimen/_3sdp"
+        app:cardElevation="@dimen/_2sdp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Esp_Lib_Style_TextHeading3Black"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtcategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/esp_lib_color_very_light_grey_bg"
+                android:padding="@dimen/_5sdp"
+                style="@style/Esp_Lib_Style_TextSmallGray"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:ellipsize="end"
+                android:maxLines="3"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/icons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:textColor="@color/esp_lib_color_dark_grey"
+                android:textSize="@dimen/_14ssp"
+                android:visibility="gone" />
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+                android:id="@+id/btrequest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_17sdp"
+                android:visibility="gone"
+                android:background="@drawable/esp_lib_drawable_draw_bg_green_stroke"
+                android:text="@string/esp_lib_text_request"
+                android:textAllCaps="false"
+                style="@style/Esp_Lib_Style_TextHeading5Green"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/gradienttoolbar"
+    style="@style/Esp_Lib_Style_ToolbarStyle"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageButton
+                android:id="@+id/ibToolbarBack"
+                style="?actionButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/esp_lib_drawable_ic_arrow_nav_back"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:tint="@color/esp_lib_color_white"
+                android:background="?attr/selectableItemBackground"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/toolbarheading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_22sdp"
+                style="@style/Esp_Lib_Style_TextHeading3White"/>
+
+
+
+        </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/ivrighticon"
+        android:layout_width="@dimen/_23sdp"
+        android:layout_height="@dimen/_23sdp"
+        android:src="@drawable/ic_nav_filter"
+        android:layout_marginTop="@dimen/_26sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:padding="@dimen/_3sdp"
+        android:layout_gravity="end"
+        android:visibility="gone"
+        android:background="?attr/selectableItemBackground"
+        android:tint="@color/esp_lib_color_white" />
+
+    </androidx.appcompat.widget.Toolbar>

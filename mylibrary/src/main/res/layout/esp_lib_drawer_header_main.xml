@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/esp_lib_color_white"
+    android:gravity="bottom"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/esp_lib_color_white"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_15dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    >
+
+                    <ImageView
+                        android:id="@+id/back_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:paddingTop="@dimen/margin_5dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:src="@drawable/ic_nav_menu"
+                        android:tint="@color/esp_lib_color_light_grey"
+                        android:visibility="gone" />
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/margin_10dp"
+                        android:text="@string/esp_lib_text_app_version"
+                        android:textColor="@color/esp_lib_color_light_grey"
+                        android:textSize="@dimen/margin_10dp"
+                        android:visibility="gone"
+                        custom:customfont="regular" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/profile_photo"
+                    android:layout_width="@dimen/margin_50dp"
+                    android:layout_height="@dimen/margin_50dp"
+                    android:layout_gravity="center|start"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:src="@drawable/esp_lib_drawable_ic_contact_default"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_5dp"
+                        android:layout_weight="1"
+                        android:gravity="center|start"
+                        android:orientation="vertical">
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/user_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|start"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:paddingTop="@dimen/margin_5dp"
+                            android:text=""
+                            style="@style/Esp_Lib_Style_TextParagraphBlack" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                                android:id="@+id/user_email"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|start"
+                                android:layout_marginStart="@dimen/margin_5dp"
+                                android:layout_weight="1"
+                                style="@style/Esp_Lib_Style_TextSmallBlack"
+                                android:visibility="gone" />
+
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_5dp"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/margin_10dp"
+                            android:paddingBottom="@dimen/margin_10dp">
+
+                            <LinearLayout
+                                android:id="@+id/switchUser"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|start"
+                                android:orientation="vertical">
+
+                                <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                                    android:id="@+id/org_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center|start"
+                                    android:text=""
+                                    style="@style/Esp_Lib_Style_TextSmallBlack"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_5dp"
+                                    android:gravity="center|start"
+                                    android:orientation="horizontal">
+
+
+                                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                                        android:id="@+id/role"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center|start"
+                                        android:text=""
+                                        style="@style/Esp_Lib_Style_TextSmallGray"/>
+
+                                    <ProgressBar
+                                        android:id="@+id/progressbar"
+                                        style="@style/Esp_Lib_Style_MyRoundProgressBar"
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_margin="@dimen/margin_5dp"
+                                        android:indeterminate="true"
+                                        android:visibility="gone"
+
+                                        />
+
+                                    <ImageButton
+                                        android:id="@+id/switchUserImg"
+                                        android:layout_width="@dimen/_13sdp"
+                                        android:layout_height="@dimen/_14sdp"
+                                        android:layout_gravity="center"
+                                        android:background="?attr/selectableItemBackground"
+                                        android:layout_marginStart="@dimen/margin_5dp"
+                                        android:layout_marginEnd="@dimen/_3sdp"
+                                        android:src="@drawable/ic_arrow_down" />
+
+
+
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                        <Spinner
+                            android:id="@+id/splanguage"
+                            style="@style/Esp_Lib_Style_SpinnerTheme"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/_minus13sdp"
+                            android:overlapAnchor="false"
+                            android:spinnerMode="dialog"/>
+
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:id="@+id/txtVersionName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Esp_Lib_Style_TextSmallBlack"
+                            android:textSize="@dimen/_9ssp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

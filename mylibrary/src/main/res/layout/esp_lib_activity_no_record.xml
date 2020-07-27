@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/no_application_available_div"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_no_application" />
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtnoapplicationadded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:gravity="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_16"
+                custom:customfont="regular" />
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/detail_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_30dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginEnd="@dimen/margin_30dp"
+                android:gravity="center"
+                android:textColor="@color/esp_lib_color_dark_grey"
+                android:textSize="@dimen/text_12"
+                custom:customfont="regular" />
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+                android:id="@+id/add_btn"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_40dp"
+                android:layout_marginStart="@dimen/margin_50dp"
+                android:layout_marginTop="@dimen/margin_50dp"
+                android:layout_marginEnd="@dimen/margin_50dp"
+                android:visibility="gone"
+                android:text="@string/esp_lib_text_submit"
+                android:background="@drawable/esp_lib_drawable_draw_signin_button"
+                android:textAllCaps="false"
+                android:textColor="@color/esp_lib_color_white"
+                android:textSize="@dimen/_12ssp"
+                custom:customfont="regular" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

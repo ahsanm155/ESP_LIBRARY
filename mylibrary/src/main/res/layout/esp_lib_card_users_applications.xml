@@ -1,0 +1,105 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/esp_lib_color_view_bg"
+    android:orientation="vertical"
+
+    >
+   <!-- <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.esp.library.utilities.customcontrols.BodyText
+                android:id="@+id/toolbarheading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_17ssp"
+                custom:customfont="heavy" />
+
+            <com.esp.library.utilities.customcontrols.BodyText
+                android:id="@+id/toolbarcategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text=""
+                android:textColor="@color/light_grey"
+                android:textSize="@dimen/_13ssp"
+                android:visibility="gone"
+                custom:customfont="regular" />
+
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/ivfilter"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/ic_nav_filter"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_gravity="end"
+            android:tint="@color/white"
+            />
+
+    </androidx.appcompat.widget.Toolbar>-->
+
+    <include layout="@layout/esp_lib_gradienttoolbar"/>
+
+
+
+
+    <!-- <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+         android:id="@+id/swipeRefreshLayout"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+
+         <androidx.core.widget.NestedScrollView
+             android:id="@+id/nestedscrollview"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"
+                    android:background="@color/esp_lib_color_white"
+                    android:src="@drawable/esp_lib_drawable_draw_toolbar"/>
+
+
+                <FrameLayout
+                    android:id="@+id/request_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    >
+                </FrameLayout>
+
+
+            </LinearLayout>
+       <!-- </androidx.core.widget.NestedScrollView
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>>-->
+
+
+
+
+
+
+
+</LinearLayout>
