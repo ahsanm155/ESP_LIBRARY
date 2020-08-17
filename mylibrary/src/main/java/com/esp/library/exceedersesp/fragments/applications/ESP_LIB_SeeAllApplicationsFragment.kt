@@ -2,7 +2,6 @@ package com.esp.library.exceedersesp.fragments.applications
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -18,19 +17,16 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import com.esp.library.R
-import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.filters.ESP_LIB_FilterScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.customevents.EventOptions
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import com.facebook.shimmer.ShimmerFrameLayout
-import kotlinx.android.synthetic.main.esp_lib_activity_applications_drawer.*
 import kotlinx.android.synthetic.main.esp_lib_activity_no_record.view.*
 import kotlinx.android.synthetic.main.esp_lib_activity_search_layout.view.*
-import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.*
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.*
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.app_list
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.llcontentlayout
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.load_more_div
@@ -44,7 +40,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import utilities.adapters.setup.applications.ESP_LIB_ListCardsApplicationsAdapter
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter
 import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO
@@ -59,7 +54,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
     internal var TAG = javaClass.simpleName
 
     internal var context: Context? = null
-    internal var mApplicationAdapterESPLIB: ESP_LIB_ListUsersApplicationsAdapter? = null
+    internal var mApplicationAdapterESPLIB: ESP_LIB_ListUsersApplicationsAdapterV2? = null
     private var mApplicationCardAdapter: ESP_LIB_ListCardsApplicationsAdapter? = null
     private var mApplicationLayoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager? = null
     internal var loadDefinitionCall: Call<ESP_LIB_ResponseApplicationsDAO>? = null
@@ -279,12 +274,13 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
                 daoESPLIB.isMySpace = true
                 daoESPLIB.isFilterApplied = false
                 daoESPLIB.myApplications = false
+                daoESPLIB.type = 3
                 list.add("1")
                 daoESPLIB.statuses = list
                 //daoESPLIB.sortBy=4
             }
         }
-        loadDefinitionCall = apis.getUserApplicationsV3(daoESPLIB!!)
+        loadDefinitionCall = apis.getUserApplicationsV4(daoESPLIB!!)
         loadDefinitionCall!!.enqueue(
                 object : Callback<ESP_LIB_ResponseApplicationsDAO> {
                     override fun onResponse(call: Call<ESP_LIB_ResponseApplicationsDAO>, ESPLIBResponse: Response<ESP_LIB_ResponseApplicationsDAO>?) {
@@ -322,7 +318,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
                                     TOTAL_RECORDS_AVAILABLE = ESPLIBResponse.body().totalRecords
                                     SCROLL_TO += PER_PAGE_RECORDS
 
-                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapter(removeDuplication(app_actual_list), it, "", false) }
+                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(removeDuplication(app_actual_list), it, "", false) }
                                     view?.app_list?.adapter = mApplicationAdapterESPLIB
                                     mApplicationAdapterESPLIB!!.notifyDataSetChanged()
 
@@ -336,7 +332,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
                                     else
                                         app_actual_list = ESPLIBResponse.body().applications as MutableList<ESP_LIB_ApplicationsDAO>?
 
-                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapter(removeDuplication(app_actual_list), it, "", false) }
+                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(removeDuplication(app_actual_list), it, "", false) }
                                     view?.app_list?.adapter = mApplicationAdapterESPLIB
 
                                     PAGE_NO++

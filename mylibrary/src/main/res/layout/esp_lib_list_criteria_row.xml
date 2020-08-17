@@ -52,25 +52,28 @@
 
 
 
-                <ImageButton
-                    android:id="@+id/ibReassignCard"
-                    style="?actionButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="22dp"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/app_name"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:src="@drawable/esp_lib_drawable_ic_vertical_dots" />
-
 
                 <ImageView
                     android:id="@+id/ivexpandcollapserrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:tint="@color/esp_lib_color_grey"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:background="?attr/selectableItemBackground"
-                    android:layout_marginEnd="@dimen/_10sdp"
                     android:src="@drawable/ic_more_info_down"/>
+
+
+
+                <ImageButton
+                    android:id="@+id/ibReassignCard"
+                    style="?actionButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/app_name"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:src="@drawable/esp_lib_drawable_ic_vertical_dots" />
 
             </LinearLayout>
 
@@ -135,29 +138,37 @@
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:visibility="gone"
-                    android:layout_toStartOf="@+id/txtstatus"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:tint="@color/colorPrimaryDark"
                     android:background="?attr/selectableItemBackground"
                     android:src="@drawable/ic_card_not_commented"
                     />
 
-                <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
-                    android:id="@+id/txtstatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingBottom="@dimen/_5sdp"
-                    style="@style/Esp_Lib_Style_TextLinkBlue" />
+
 
             </RelativeLayout>
+
+
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlowner"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_3sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                style="@style/Esp_Lib_Style_TextLinkBlue" />
 
             <LinearLayout
                 android:id="@+id/llsignaturelayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rlowner"
+                android:layout_below="@+id/txtstatus"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"

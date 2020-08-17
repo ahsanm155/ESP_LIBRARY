@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="@dimen/_20sdp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivclose"
+        android:layout_width="@dimen/_10sdp"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_gravity="end"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/esp_lib_drawable_ic_cross"/>
+
+
+
+
+        <ImageView
+            android:id="@+id/ivprofileerror"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_minus10sdp"
+            android:src="@drawable/esp_lib_drawable_no_profile_picture"/>
+
+
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:id="@+id/txttitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:text="@string/esp_lib_text_verify_profile_not_added"
+        style="@style/Esp_Lib_Style_TextHeading1Black"/>
+
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:id="@+id/txtmessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:text="@string/esp_lib_text_to_accept_criteria_verify"
+        style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+</LinearLayout>

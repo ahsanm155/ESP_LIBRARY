@@ -394,11 +394,11 @@ class ESP_LIB_NavigationDrawerFragment : androidx.fragment.app.Fragment() {
 
             role?.text = pref?.selectedUserRole
 
-            if (pref?.selectedUserRole.equals(context?.resources?.getString(R.string.esp_lib_text_assessor),ignoreCase = true)
+            /*if (pref?.selectedUserRole.equals(context?.resources?.getString(R.string.esp_lib_text_assessor),ignoreCase = true)
                     || pref?.selectedUserRole.equals(context?.resources?.getString(R.string.esp_lib_text_admin),ignoreCase = true)) {
                 setting_nav_div?.visibility = View.VISIBLE
             } else
-                setting_nav_div?.visibility = View.GONE
+                setting_nav_div?.visibility = View.GONE*/
 
 
             org_name?.text = ESP_LIB_Shared.getInstance()?.toSubStr(ESP_LIB_Shared.getInstance()?.GetOrgName(), 20)

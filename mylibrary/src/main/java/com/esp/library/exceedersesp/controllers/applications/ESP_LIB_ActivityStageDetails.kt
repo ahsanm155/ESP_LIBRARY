@@ -1,14 +1,10 @@
 package com.esp.library.exceedersesp.controllers.applications
 
-import `in`.mayanknagwanshi.imagepicker.ImageSelectActivity
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Rect
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
@@ -21,9 +17,6 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.MimeTypeMap
 import android.widget.EditText
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.CustomTarget
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
@@ -34,7 +27,6 @@ import com.esp.library.utilities.customevents.EventOptions
 import com.esp.library.utilities.data.applicants.ESP_LIB_FaceDAO
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationCriteriaAdapter
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.esp_lib_activity_stage_detail.*
@@ -72,13 +64,13 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
     var context: ESP_LIB_BaseActivity? = null
     var criteriaAdapterESPLIB: ESP_LIB_ApplicationCriteriaAdapter? = null;
-    var ESPLIBDynamicStagesDAO: ESP_LIB_DynamicStagesDAO? = null
+    var dynamicStagesDAO: ESP_LIB_DynamicStagesDAO? = null
     var criteriaListCollections = ArrayList<ESP_LIB_DynamicStagesCriteriaListDAO?>()
     internal var fieldToBeUpdatedESPLIB: ESP_LIB_DynamicFormSectionFieldDAO? = null
     internal var pDialog: AlertDialog? = null
     private val REQUEST_CHOOSER = 12345
     private val REQUEST_LOOKUP = 2
-    private val CAMERA_REQUEST = 1
+    private val VERIFY_RESULT = 3
     var pref: ESP_LIB_SharedPreference? = null
     var actualResponseJson: String? = null
     var actualResponseJsonsubmitJsonESPLIB: ESP_LIB_DynamicResponseDAO? = null
@@ -108,8 +100,8 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
 
         //  criteriaListCollections.clear()
-        for (i in 0 until ESPLIBDynamicStagesDAO?.criteriaList!!.size) {
-            val getList = ESPLIBDynamicStagesDAO?.criteriaList?.get(i);
+        for (i in 0 until dynamicStagesDAO?.criteriaList!!.size) {
+            val getList = dynamicStagesDAO?.criteriaList?.get(i);
             val isArrayHasValue = criteriaListCollections.any { x -> x?.assessmentId == getList?.assessmentId }
             if (!isArrayHasValue) {
                 if (getList?.isEnabled!!)
@@ -125,7 +117,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
         rvCrietrias.isNestedScrollingEnabled = false
         rvCrietrias.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         criteriaAdapterESPLIB = ESP_LIB_ApplicationCriteriaAdapter(criteriaListCollections, context!!, rvCrietrias)
-        criteriaAdapterESPLIB?.getStage(ESPLIBDynamicStagesDAO!!)
+        criteriaAdapterESPLIB?.getStage(dynamicStagesDAO!!)
         criteriaAdapterESPLIB?.getActualResponse(intent.getStringExtra("actualResponseJson"))
         rvCrietrias.adapter = criteriaAdapterESPLIB
 
@@ -158,23 +150,23 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
 
     private fun updateTopView() {
-        ESPLIBDynamicStagesDAO = intent.getSerializableExtra("dynamicStagesDAO") as ESP_LIB_DynamicStagesDAO
-        txtStagename.text = ESPLIBDynamicStagesDAO?.name
-        sequencetextvalue.text = ESPLIBDynamicStagesDAO?.order.toString()
+        dynamicStagesDAO = intent.getSerializableExtra("dynamicStagesDAO") as ESP_LIB_DynamicStagesDAO
+        txtStagename.text = dynamicStagesDAO?.name
+        sequencetextvalue.text = dynamicStagesDAO?.order.toString()
 
-        if (ESPLIBDynamicStagesDAO?.type.equals(getString(R.string.esp_lib_text_link), ignoreCase = true)) {
+        if (dynamicStagesDAO?.type.equals(getString(R.string.esp_lib_text_link), ignoreCase = true)) {
             rlcondition.visibility = View.GONE
             rlacceptreject.visibility = View.GONE
         } else {
-            if (ESPLIBDynamicStagesDAO != null && ESPLIBDynamicStagesDAO!!.isAll) {
+            if (dynamicStagesDAO != null && dynamicStagesDAO!!.isAll) {
 
                 conditiontextvalue.text = context?.getString(R.string.esp_lib_text_all)
             } else {
                 conditiontextvalue.text = context?.getString(R.string.esp_lib_text_any)
             }
 
-            if (ESPLIBDynamicStagesDAO?.criteriaList != null && ESPLIBDynamicStagesDAO?.criteriaList!!.isNotEmpty()) {
-                acceptencetextvalue.text = ESPLIBDynamicStagesDAO?.criteriaList!!.size.toString()
+            if (dynamicStagesDAO?.criteriaList != null && dynamicStagesDAO?.criteriaList!!.isNotEmpty()) {
+                acceptencetextvalue.text = dynamicStagesDAO?.criteriaList!!.size.toString()
             } else {
                 acceptencetextvalue.text = "0"
             }
@@ -250,113 +242,90 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
         criteriaListDAOESPLIB = criteriaListDAO
 
 
-        showCmaeraVerificationAlert(getString(R.string.app_name), getString(R.string.esp_lib_text_need_to_verify), this)
+        //showCmaeraVerificationAlert(getString(R.string.app_name), getString(R.string.esp_lib_text_need_to_verify), this)
 
-        /*  var isApproved = isAccepted
+        ESP_LIB_CommonMethodsKotlin.verificationPopUpPopulation(actualResponseJson, context)
 
-         if (ESPLIBDynamicStagesDAO != null) {
-             val count: Int = 0
-             val dynamicStagesDAO1 = actualResponseJsonsubmitJsonESPLIB?.stages?.get(actualResponseJsonsubmitJsonESPLIB?.stages!!.size - 1)
+       /* if (criteriaListDAO!!.isSigned)
+            ESP_LIB_CommonMethodsKotlin.verificationPopUpPopulation(actualResponseJson, context)
+        else
+            startFeebform()*/
 
-             if (ESPLIBDynamicStagesDAO.id == dynamicStagesDAO1?.id) {
-                 val size = dynamicStagesDAO1.criteriaList!!.size
-                 if (ESPLIBDynamicStagesDAO.isAll) // if stage status is ALL then take feedback only on last criteria weather approve or reject
-                 {
+        /* var isApproved = isAccepted
 
-                     //if last stage and last criteria then open feedback on approve button
-                     //if last stage and any criteria then open feedback on reject button
+        if (ESPLIBDynamicStagesDAO != null) {
+            val count: Int = 0
+            val dynamicStagesDAO1 = actualResponseJsonsubmitJsonESPLIB?.stages?.get(actualResponseJsonsubmitJsonESPLIB?.stages!!.size - 1)
 
-                     val getCount = criteriaCount(dynamicStagesDAO1, count, size)
-                     if (getCount == size - 1 && isApproved)
-                         isApproved = false
+            if (ESPLIBDynamicStagesDAO.id == dynamicStagesDAO1?.id) {
+                val size = dynamicStagesDAO1.criteriaList!!.size
+                if (ESPLIBDynamicStagesDAO.isAll) // if stage status is ALL then take feedback only on last criteria weather approve or reject
+                {
 
-                 } else {
+                    //if last stage and last criteria then open feedback on approve button
+                    //if last stage and any criteria then open feedback on reject button
 
-                     //if last stage and last criteria then open feedback on reject button
-                     //if last stage and any criteria then open feedback on approve button
+                    val getCount = criteriaCount(dynamicStagesDAO1, count, size)
+                    if (getCount == size - 1 && isApproved)
+                        isApproved = false
 
-                     if (!isApproved) {
-                         val getCount = criteriaCount(dynamicStagesDAO1, count, size)
-                         if (getCount != size - 1)
-                             isApproved = true
-                     } else if (ESPLIBDynamicStagesDAO.id == dynamicStagesDAO1.id) {
-                         isApproved = false
-                     }
-                 }
-             }
+                } else {
+
+                    //if last stage and last criteria then open feedback on reject button
+                    //if last stage and any criteria then open feedback on approve button
+
+                    if (!isApproved) {
+                        val getCount = criteriaCount(dynamicStagesDAO1, count, size)
+                        if (getCount != size - 1)
+                            isApproved = true
+                    } else if (ESPLIBDynamicStagesDAO.id == dynamicStagesDAO1.id) {
+                        isApproved = false
+                    }
+                }
+            }
 
 
-             if (ESPLIBDynamicStagesDAO.isLast)
-                 isApproved = false
-         }
+            if (ESPLIBDynamicStagesDAO.isLast)
+                isApproved = false
+        }
 
 
 
 
-        isApproved=false
+       isApproved=false
 
-         if (!isApproved) {
-             val intent = Intent(this, ESP_LIB_FeedbackForm::class.java)
-             intent.putExtra("actualResponseJson", actualResponseJson)
-             intent.putExtra("criteriaListDAO", criteriaListDAOESPLIB)
-             intent.putExtra("isAccepted", isAccepted)
-             startActivity(intent)
-         } else {
-             // CustomLogs.displayLogs(TAG+" Approved")
+        if (!isApproved) {
+            val intent = Intent(this, ESP_LIB_FeedbackForm::class.java)
+            intent.putExtra("actualResponseJson", actualResponseJson)
+            intent.putExtra("criteriaListDAO", criteriaListDAOESPLIB)
+            intent.putExtra("isAccepted", isAccepted)
+            startActivity(intent)
+        } else {
+            // CustomLogs.displayLogs(TAG+" Approved")
 
-             SubmitStageRequest(isAccepted, criteriaListDAOESPLIB!!, position)
-         }*/
+            SubmitStageRequest(isAccepted, criteriaListDAOESPLIB!!, position)
+        }*/
     }
 
-    fun showCmaeraVerificationAlert(title: String?, message: String?, activity: Context) {
-        MaterialAlertDialogBuilder(activity, R.style.Esp_Lib_Style_AlertDialogTheme)
-                .setTitle(title)
-                .setCancelable(false)
-                .setMessage(message)
-                .setPositiveButton(activity.applicationContext.getString(R.string.esp_lib_text_ok))
-                { dialogInterface: DialogInterface, i: Int ->
-
-                    if (!ESP_LIB_CommonMethodsKotlin.checkPermission(this)) {
-                        ESP_LIB_CommonMethodsKotlin.requestPermission(this)
-                    } else
-                        startActivityForResult(ESP_LIB_CommonMethodsKotlin.getIntent(this, true, false), CAMERA_REQUEST)
-                    dialogInterface.dismiss()
-                }
-                .setNegativeButton(activity.applicationContext.getString(R.string.esp_lib_text_cancel))
-                { dialogInterface: DialogInterface, i: Int ->
-                    dialogInterface.dismiss()
-                }
-                .show()
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            CAMERA_REQUEST ->
+            VERIFY_RESULT ->
                 if (resultCode == Activity.RESULT_OK) {
-                    val filePath = data!!.getStringExtra(ImageSelectActivity.RESULT_FILE_PATH)
-                    setImageGlide(filePath)
+                    startFeebform()
                 }
         }
 
     }
 
-    private fun setImageGlide(pictureFilePath: String) {
-        Glide.with(this)
-                .asBitmap()
-                .load(pictureFilePath)
-                .apply(RequestOptions.overrideOf(200, 200))
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                    }
-
-                    override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
-                        start_loading_animation()
-                        ESP_LIB_Shared.getInstance().detectAndFrame(resource, ESP_LIB_CommonMethodsKotlin.getFaceClient(), context, false)
-
-
-                    }
-                })
+    private fun startFeebform()
+    {
+        val intent = Intent(this, ESP_LIB_FeedbackForm::class.java)
+        intent.putExtra("actualResponseJson", actualResponseJson)
+        intent.putExtra("criteriaListDAO", criteriaListDAOESPLIB)
+        intent.putExtra("isAccepted", isAccepted)
+        startActivity(intent)
     }
 
 
@@ -486,7 +455,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
                                 actualResponseJsonsubmitJsonESPLIB = responseESPLIB.body()
 
-                                if (ESPLIBDynamicStagesDAO?.id == stages[i].id) {
+                                if (dynamicStagesDAO?.id == stages[i].id) {
                                     setStatusColor(stages[i].status)
                                 }
                                 val getCriteria = stages[i].criteriaList?.get(j);
@@ -666,7 +635,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
                             startActivity(intent)
 
                         } else
-                            ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.app_name), getString(R.string.esp_lib_text_not_verified), context)
+                            ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.app_name), getString(R.string.esp_lib_text_face_not_verified), context)
                     }
 
                     ESP_LIB_CustomLogs.displayLogs("$TAG stagefeedbackSubmitForm: $response")
@@ -762,20 +731,20 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
     }
 
     fun getValuesForCalculatedValues(): ESP_LIB_DynamicResponseDAO? {
-        for (i in ESPLIBDynamicStagesDAO?.criteriaList!!.indices) {
-            val getList = ESPLIBDynamicStagesDAO?.criteriaList?.get(i);
+        for (i in dynamicStagesDAO?.criteriaList!!.indices) {
+            val getList = dynamicStagesDAO?.criteriaList?.get(i);
             val formValues = getFormValues(getList!!)
-            ESPLIBDynamicStagesDAO?.criteriaList?.get(i)?.formValues = formValues
+            dynamicStagesDAO?.criteriaList?.get(i)?.formValues = formValues
         }
 
         actualResponseJsonsubmitJsonTempESPLIB = actualResponseJsonsubmitJsonESPLIB
 
-        val criteriaList = ESPLIBDynamicStagesDAO?.criteriaList
+        val criteriaList = dynamicStagesDAO?.criteriaList
 
         for (k in actualResponseJsonsubmitJsonTempESPLIB?.stages!!.indices) {
 
             val dynamicStagesDAO1 = actualResponseJsonsubmitJsonTempESPLIB?.stages?.get(k)
-            if (dynamicStagesDAO1?.id == ESPLIBDynamicStagesDAO?.id) {
+            if (dynamicStagesDAO1?.id == dynamicStagesDAO?.id) {
 
                 for (p in criteriaList!!.indices) {
 
@@ -814,8 +783,8 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
                         for (i in calculatedMappedFieldsList.indices) {
                             val calculatedMappedFieldsDAO = calculatedMappedFieldsList[i]
-                            for (y in ESPLIBDynamicStagesDAO?.criteriaList!!.indices) {
-                                val getList = ESPLIBDynamicStagesDAO?.criteriaList?.get(y);
+                            for (y in dynamicStagesDAO?.criteriaList!!.indices) {
+                                val getList = dynamicStagesDAO?.criteriaList?.get(y);
 
                                 val form = getList?.form
                                 if (form?.sections != null) {
@@ -902,8 +871,8 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
                             }
                             //  }
 
-                            for (j in ESPLIBDynamicStagesDAO?.criteriaList!!.indices) {
-                                val dynamicStagesCriteriaListDAO = ESPLIBDynamicStagesDAO?.criteriaList?.get(j)
+                            for (j in dynamicStagesDAO?.criteriaList!!.indices) {
+                                val dynamicStagesCriteriaListDAO = dynamicStagesDAO?.criteriaList?.get(j)
                                 for (s in dynamicStagesCriteriaListDAO?.formValues!!.indices) {
                                     val dynamicFormValuesDAO = dynamicStagesCriteriaListDAO.formValues.get(s)
                                     val sectionCustomFieldId = dynamicFormValuesDAO.sectionCustomFieldId
@@ -969,7 +938,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
             ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.app_name), getString(R.string.esp_lib_text_upload_profile_image), context)
         } else if (pref?.getfaceId2().isNullOrEmpty()) {
             stop_loading_animation()
-            ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.app_name), getString(R.string.esp_lib_text_not_verified), context)
+            ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.app_name), getString(R.string.esp_lib_text_face_not_verified), context)
         } else {
             val espLibFacedao = ESP_LIB_FaceDAO()
             espLibFacedao.faceId1 = pref?.profileFaceId1
@@ -989,8 +958,8 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
     private fun setStatusColor(status: String?) {
         val actualResponseJson = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
         var isSigned: Boolean = false
-        for (i in 0 until ESPLIBDynamicStagesDAO?.criteriaList!!.size) {
-            isSigned = ESPLIBDynamicStagesDAO?.criteriaList?.get(i)?.isSigned!!
+        for (i in 0 until dynamicStagesDAO?.criteriaList!!.size) {
+            isSigned = dynamicStagesDAO?.criteriaList?.get(i)?.isSigned!!
             if (isSigned) {
                 ivsign.visibility = View.VISIBLE
                 break
@@ -1025,12 +994,12 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
             ESP_LIB_Enums.completed.toString() // Completed
             -> {
-                completeStage(ESPLIBDynamicStagesDAO!!, actualResponseJson, drawable)
+                completeStage(dynamicStagesDAO!!, actualResponseJson, drawable)
             }
 
             ESP_LIB_Enums.complete.toString() // Complete
             -> {
-                completeStage(ESPLIBDynamicStagesDAO!!, actualResponseJson, drawable)
+                completeStage(dynamicStagesDAO!!, actualResponseJson, drawable)
             }
 
             ESP_LIB_Enums.rejected.toString()  // Rejected

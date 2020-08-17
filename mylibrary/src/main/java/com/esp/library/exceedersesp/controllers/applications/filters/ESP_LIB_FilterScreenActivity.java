@@ -59,6 +59,7 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
     LinearLayout status_layout;
     LinearLayout lldivider;
     LinearLayout status_row;
+    LinearLayout llsort;
     NestedScrollView nestedscrollview;
     TextView statuses;
     ImageView status_btn;
@@ -105,9 +106,11 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
                 if (tab_position == 0) {
                     status_row.setVisibility(View.GONE);
                     lldivider.setVisibility(View.GONE);
+                    llsort.setVisibility(View.VISIBLE);
                 } else {
                     status_row.setVisibility(View.VISIBLE);
                     lldivider.setVisibility(View.VISIBLE);
+                    llsort.setVisibility(View.GONE);
                 }
 
             }
@@ -171,6 +174,7 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
         nestedscrollview = findViewById(R.id.nestedscrollview);
         lldivider = findViewById(R.id.lldivider);
         status_row = findViewById(R.id.status_row);
+        llsort = findViewById(R.id.llsort);
         statuses = findViewById(R.id.statuses);
         status_btn = findViewById(R.id.status_btn);
         txtbystatus = findViewById(R.id.txtbystatus);
@@ -371,7 +375,7 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
 
     private void initiateStatus() {
         String[] status = bContext.getResources().getStringArray(R.array.status);
-        String[] status_enum = bContext.getResources().getStringArray(R.array.status_enum);
+     //   String[] status_enum = bContext.getResources().getStringArray(R.array.status_enum);
 
         if (status != null && status.length > 0) {
             statuses_checkboxes = new ArrayList<>();
@@ -381,12 +385,12 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
                 final AppCompatCheckBox checkBox = new AppCompatCheckBox(bContext);
                 checkBox.setText(status[i]);
                 checkBox.setTextSize(15);
-                checkBox.setButtonDrawable(bContext.getResources().getDrawable(R.drawable.esp_lib_drawable_checkbox_button_selector));
+                checkBox.setButtonDrawable( ContextCompat.getDrawable(bContext,R.drawable.esp_lib_drawable_checkbox_button_selector));
                 checkBox.setTag(i);
                 checkBox.setTypeface(typeface);
-                checkBox.setPadding(70, 0, 70, 0);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                params.setMargins(0, 0, 0, 0);
+                checkBox.setPadding(50, 0, 30, 0);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0, 10, 0, 0);
                 checkBox.setLayoutParams(params);
 
 

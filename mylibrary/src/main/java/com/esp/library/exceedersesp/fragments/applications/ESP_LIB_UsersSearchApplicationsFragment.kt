@@ -17,10 +17,10 @@ import com.esp.library.utilities.common.ESP_LIB_EndlessRecyclerViewScrollListene
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO
 import java.util.*
@@ -151,7 +151,7 @@ class ESP_LIB_UsersSearchApplicationsFragment : androidx.fragment.app.Fragment()
         ESP_LIB_ESPApplication.getInstance().filter.statuses = list
         ESP_LIB_ESPApplication.getInstance().filter.definitionIds = definitionList
 
-        call = apis.getUserApplicationsV3(ESP_LIB_ESPApplication.getInstance().filter)
+        call = apis.getUserApplicationsV4(ESP_LIB_ESPApplication.getInstance().filter)
         call?.enqueue(object : Callback<ESP_LIB_ResponseApplicationsDAO> {
             override fun onResponse(call: Call<ESP_LIB_ResponseApplicationsDAO>, ESPLIBResponse: Response<ESP_LIB_ResponseApplicationsDAO>?) {
 
@@ -176,7 +176,7 @@ class ESP_LIB_UsersSearchApplicationsFragment : androidx.fragment.app.Fragment()
                             SCROLL_TO += PER_PAGE_RECORDS
 
 
-                            mApplicationAdapter = context?.let { ESP_LIB_ListUsersApplicationsAdapter(app_actual_list, it, searched_txt, false) }
+                            mApplicationAdapter = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(app_actual_list, it, searched_txt, false) }
                             app_search_list?.adapter = mApplicationAdapter
                             mApplicationAdapter?.notifyDataSetChanged()
                             app_search_list?.scrollToPosition(SCROLL_TO - 5)
@@ -185,7 +185,7 @@ class ESP_LIB_UsersSearchApplicationsFragment : androidx.fragment.app.Fragment()
                         } else {
 
                             app_actual_list = ESPLIBResponse.body().applications as MutableList<ESP_LIB_ApplicationsDAO>?
-                            mApplicationAdapter = context?.let { ESP_LIB_ListUsersApplicationsAdapter(app_actual_list, it, searched_txt, false) }
+                            mApplicationAdapter = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(app_actual_list, it, searched_txt, false) }
                             app_search_list?.adapter = mApplicationAdapter
                             PAGE_NO++
                             IN_LIST_RECORDS = app_actual_list!!.size

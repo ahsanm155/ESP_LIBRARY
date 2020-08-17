@@ -1,4 +1,4 @@
-package utilities.adapters.setup.applications
+package com.esp.library.utilities.setup.applications
 
 import android.content.Context
 import android.view.LayoutInflater

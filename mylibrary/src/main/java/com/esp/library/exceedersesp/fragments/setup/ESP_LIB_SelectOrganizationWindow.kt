@@ -81,7 +81,7 @@ class ESP_LIB_SelectOrganizationWindow : androidx.fragment.app.DialogFragment() 
 
         try {
 
-            val apis = CompRoot()?.getService(context)
+            val apis = CompRoot().getService(context)
             val organization_call = apis?.organizations
 
             organization_call?.enqueue(object : Callback<List<ESP_LIB_OrganizationPersonaDao>> {

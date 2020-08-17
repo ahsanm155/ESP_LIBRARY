@@ -4,34 +4,40 @@ import `in`.mayanknagwanshi.imagepicker.ImageSelectActivity
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.esp.library.R
+import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.controllers.identityVerification.Verify_Identity
 import com.esp.library.utilities.common.ESP_LIB_Constants
 import com.esp.library.utilities.common.ESP_LIB_Shared
-import com.esp.library.utilities.customevents.EventOptions
-import com.esp.library.utilities.data.applicants.signature.ESP_LIB_SignatureDAO
+import com.google.gson.Gson
 import com.microsoft.projectoxford.face.FaceServiceRestClient
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
 import retrofit2.Response
+import utilities.data.applicants.dynamics.ESP_LIB_DynamicResponseDAO
 import java.io.*
 import java.util.*
 
@@ -314,6 +320,50 @@ class ESP_LIB_CommonMethodsKotlin {
             }
             return bmpUri
         }
+
+        public fun verificationPopUpPopulation(actualResponseJson: String?, context: ESP_LIB_BaseActivity?)
+        {
+            val actualResponseJson = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
+            if (actualResponseJson.applicantPictureStatus.equals(context?.getString(R.string.esp_lib_text_unverified), ignoreCase = true) ||
+                    actualResponseJson.applicantPictureStatus.equals(context?.getString(R.string.esp_lib_text_uploaded), ignoreCase = true)) {
+                val sourceString = context?.getString(R.string.esp_lib_text_to_accept_criteria_verify) + "<b> " + context?.getString(R.string.esp_lib_text_contact_esp_manager) + "</b> " +
+                        context?.getString(R.string.esp_lib_text_to_verify_this_account)
+                val icon = R.drawable.esp_lib_drawable_profile_not_verified
+                val title = context?.getString(R.string.esp_lib_text_profile_picture_not_verified)
+                noProfilePicturePopup(icon, title!!, sourceString,context)
+            } else if (actualResponseJson.applicantPictureStatus.equals(context?.getString(R.string.esp_lib_text_nopicture), ignoreCase = true)) {
+                val sourceString = context?.getString(R.string.esp_lib_text_to_accept_criteria_verify) + "<b> " + context?.getString(R.string.esp_lib_text_add_profile_picture) + "</b> " +
+                        context?.getString(R.string.esp_lib_text_manager_can_verify)
+                val icon = R.drawable.esp_lib_drawable_no_profile_picture
+                val title = context?.getString(R.string.esp_lib_text_verify_profile_not_added)
+                noProfilePicturePopup(icon, title!!, sourceString,context)
+            } else if (actualResponseJson.applicantPictureStatus.equals(context?.getString(R.string.esp_lib_text_verfication_verified), ignoreCase = true)) {
+                val intent = Intent(context, Verify_Identity::class.java)
+                context?.startActivityForResult(intent, 3)
+            }
+        }
+
+        private fun noProfilePicturePopup(icon: Int, title: String, description: String, context: ESP_LIB_BaseActivity) {
+
+            val dialog = Dialog(context, R.style.WideDialog)
+            dialog.window?.requestFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.esp_lib_activity_no_profile_popup)
+            dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            val txttitle = dialog.findViewById(R.id.txttitle) as TextView
+            val txtmessage = dialog.findViewById(R.id.txtmessage) as TextView
+            val ivclose = dialog.findViewById(R.id.ivclose) as ImageView
+            val ivprofileerror = dialog.findViewById(R.id.ivprofileerror) as ImageView
+            ivprofileerror.setImageResource(icon)
+            txttitle.text = title
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                txtmessage.text = Html.fromHtml(description, Html.FROM_HTML_MODE_LEGACY);
+            } else {
+                txtmessage.text = Html.fromHtml(description);
+            }
+            ivclose.setOnClickListener { dialog.dismiss() }
+            dialog.show()
+        }
+
 
     }
 

@@ -29,12 +29,15 @@
     <color name="esp_lib_color_brownishGrey">#6b6b6b</color>
     <color name="esp_lib_color_lightblack">#303030</color>
     <color name="esp_lib_color_grey">#aaadb8</color>
+    <color name="esp_lib_color_red_light">#FFF1F3</color>
     <color name="esp_lib_color_dark_grey">#263238</color>
     <color name="esp_lib_color_mid_grey">#7f939f</color>
     <color name="esp_lib_color_light_grey">#90a4ae</color>
     <color name="esp_lib_color_pale_grey">#f6f7f9</color>
     <color name="esp_lib_color_palegreythree">#f6f8f8</color>
     <color name="esp_lib_color_red">#E91E63</color>
+    <color name="esp_lib_color_red_dark">#E21D26</color>
+    <color name="esp_lib_color_lipstick">#E21B24</color>
     <color name="esp_lib_color_silver">#c6c9d2</color>
     <color name="esp_lib_color_coolgrey">#9c9da6</color>
     <color name="esp_lib_color_grey30">#aaadb8</color>
@@ -46,6 +49,7 @@
     <color name="esp_lib_color_very_grey_dark">#807F83</color>
     <color name="esp_lib_color_search_background">#40CDD0D8</color>
     <color name="esp_lib_color_very_light_grey_dim">#4Daaadb8</color>
+    <color name="esp_lib_color_transparent_black">#99000000</color>
     <color name="esp_lib_color_view_bg">#f9faff</color>
     <color name="esp_lib_color_purpal">#b2b2b2</color>
     <color name="esp_lib_color_bgcolor">#FAFBFF</color>

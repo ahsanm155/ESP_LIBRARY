@@ -82,9 +82,16 @@
     <string name="esp_lib_text_profile_error_cancel">CANCEL</string>
     <string name="esp_lib_text_profile_complete" translatable="false">COMPLETE</string>
     <string name="esp_lib_text_verified" translatable="false">Your face is Verified</string>
+    <string name="esp_lib_text_unverified" translatable="false">UnVerified</string>
+    <string name="esp_lib_text_uploaded" translatable="false">Uploaded</string>
+    <string name="esp_lib_text_nopicture" translatable="false">NoPicture</string>
+    <string name="esp_lib_text_no_camera" translatable="false">Sorry, your phone does not have a camera!</string>
+    <string name="esp_lib_text_no_front_cam" translatable="false">No front facing camera found</string>
     <string name="esp_lib_text_upload_profile_image" translatable="false">Please upload profile image to continue</string>
-    <string name="esp_lib_text_not_verified" translatable="false">Your face is not Verified, please try again</string>
+    <string name="esp_lib_text_face_not_verified" translatable="false">Your face is not Verified, please try again</string>
+    <string name="esp_lib_text_not_verified" translatable="false">Not Verified</string>
     <string name="esp_lib_text_profile_incomplete" translatable="false">IN-COMPLETE</string>
+    <string name="esp_lib_text_profile_verification" translatable="false">Verification</string>
     <string name="esp_lib_text_profile_incomplete_admin" translatable="false">IN-COMPLETE-BY-ADMIN</string>
     <string name="esp_lib_text_forgot_password">Forgot Password</string>
     <string name="esp_lib_text_request_reject_error">This request has been rejected incorrect ticket. Please submit a new request with the correct information.</string>
@@ -122,6 +129,7 @@
     <string name="esp_lib_text_approvedby"  translatable="false">Approved By</string>
     <string name="esp_lib_text_rejectedby"  translatable="false">Rejected By</string>
     <string name="esp_lib_text_rejected">Rejected</string>
+    <string name="esp_lib_text_rejected_colon" translatable="false">Rejected:</string>
     <string name="esp_lib_text_rejected_enum" translatable="false">4</string>
     <string name="esp_lib_text_addcommenttoproceed">Please add comment to proceed</string>
     <string name="esp_lib_text_enterprise_submission_platform">Enterprise Submission Platform</string>
@@ -167,9 +175,11 @@
     <string name="esp_lib_text_ownercolon">Owner:</string>
     <string name="esp_lib_text_criteria_feedback">Criteria Feedback</string>
     <string name="esp_lib_text_pending">Pending</string>
+    <string name="esp_lib_text_pending_colon" translatable="false">Pending:</string>
     <string name="esp_lib_text_inprogress">In Progress</string>
     <string name="esp_lib_text_current">Current</string>
     <string name="esp_lib_text_accepted">Accepted</string>
+    <string name="esp_lib_text_accepted_colon" translatable="false">Accepted:</string>
     <string name="esp_lib_text_accepted_enum" translatable="false">3</string>
     <string name="esp_lib_text_acceptedsmall">accepted</string>
     <string name="esp_lib_text_logintolink">Login to link</string>
@@ -211,6 +221,7 @@
     <string name="esp_lib_text_hidden">hidden</string>
     <string name="esp_lib_text_shown">shown</string>
     <string name="esp_lib_text_all">All</string>
+    <string name="esp_lib_text_all_colon" translatable="false">All:</string>
     <string name="esp_lib_text_all_enum" translatable="false">0</string>
     <string name="esp_lib_text_select_Style" translatable="false">Select Style</string>
     <string name="esp_lib_text_Style" translatable="false">Style</string>
@@ -297,7 +308,17 @@
     <string name="esp_lib_text_pendingsmall">pending</string>
     <string name="esp_lib_text_valuebetween">Value must be between</string>
     <string name="esp_lib_text_and">and</string>
+    <string name="esp_lib_text_verify_your_identity" translatable="false">Please verify your identity</string>
+    <string name="esp_lib_text_verify_profile_not_added" translatable="false">Your have not added profile picture to your ESP account.</string>
+    <string name="esp_lib_text_profile_picture_not_verified" translatable="false">Your ESP profile picture is not verified.</string>
+    <string name="esp_lib_text_verify_your_identity_title" translatable="false">Verify your identity</string>
+    <string name="esp_lib_text_verify_your_identity_text" translatable="false">To accept this criteria we have to verify your identity. It will take only a few seconds.</string>
     <string name="esp_lib_text_value">Value</string>
+    <string name="esp_lib_text_to_accept_criteria_verify" translatable="false">To accept this criteria we have to verify your identity. Please </string>
+    <string name="esp_lib_text_add_profile_picture" translatable="false">add profile picture to your ESP account,</string>
+    <string name="esp_lib_text_manager_can_verify" translatable="false">so manager can verify it. </string>
+    <string name="esp_lib_text_contact_esp_manager" translatable="false">contact your ESP manager</string>
+    <string name="esp_lib_text_to_verify_this_account" translatable="false">to verify your profile picture in ESP account.</string>
     <string name="esp_lib_text_characters">characters</string>
     <string name="esp_lib_text_valuegreater">Value must be greater or equal to </string>
     <string name="esp_lib_text_valueless">Value must be less or equal to</string>
@@ -310,6 +331,7 @@
     <string name="esp_lib_text_appnotavailable">Open this file, Application is not available</string>
     <string name="esp_lib_text_choose">Choose</string>
     <string name="esp_lib_text_stages">STAGES</string>
+    <string name="esp_lib_text_responsible_for_submission" translatable="false">You are responsible for this submission</string>
     <string name="esp_lib_text_feedback">Feedback</string>
     <string name="esp_lib_text_feedbackdetail">You will have the ability to leave a feedback when the request will be closed.</string>
     <string name="esp_lib_text_acceptcriteri">Accept Criteria</string>
@@ -399,6 +421,21 @@
     <string name="esp_lib_text_requesttoaction">Requests to action</string>
     <string name="esp_lib_text_seeall">See All</string>
     <string name="esp_lib_text_allowsubmission">Allow Submission</string>
+    <string name="esp_lib_text_allow" translatable="false">Allow</string>
+    <string name="esp_lib_text_start_verification" translatable="false">Start Verification</string>
+    <string name="esp_lib_text_retake_photo" translatable="false">Retake a Photo</string>
+    <string name="esp_lib_text_use_your_camera" translatable="false">to use your camera.</string>
+    <string name="esp_lib_text_ensure_light" translatable="false">Ensure that there is enough light in room.</string>
+    <string name="esp_lib_text_verfication_process" translatable="false">Verification process…</string>
+    <string name="esp_lib_text_verfication_verified" translatable="false">Verified</string>
+    <string name="esp_lib_text_verfication_mismatch_text" translatable="false">There is a mismatch between your ESP profile picture and the current photo.</string>
+    <string name="esp_lib_text_try_face_again" translatable="false">Try to scan your face again.</string>
+    <string name="esp_lib_text_take_problem_appear" translatable="false">If this problem will appear again:</string>
+    <string name="esp_lib_text_take_problem_enough_light" translatable="false">ensure that there is enough light in the room</string>
+    <string name="esp_lib_text_take_problem_check_profile_pic" translatable="false">check your ESP profile picture</string>
+    <string name="esp_lib_text_take_problem_contact_support" translatable="false">contact our support team</string>
+    <string name="esp_lib_text_take_photo_dot" translatable="false">Take a Photo.</string>
+    <string name="esp_lib_text_take_photo" translatable="false">Take a Photo</string>
     <string name="esp_lib_text_closesubmission" translatable="false">Close Submission</string>
     <string name="esp_lib_text_stopsubmissiontext">Are you sure you want to stop allowing submissions for this definition?</string>
     <string name="esp_lib_text_completesubmissiontext" translatable="false">Are you sure you want to close submissions for this definition?</string>

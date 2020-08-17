@@ -3,8 +3,6 @@ package com.esp.library.exceedersesp.fragments.applications
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,7 +17,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import com.esp.library.R
-import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.SingleController.CompRoot
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_AddApplicationsActivity
@@ -31,9 +28,9 @@ import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.customevents.EventOptions
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.esp_lib_activity_no_record.view.*
 import kotlinx.android.synthetic.main.esp_lib_activity_search_layout.view.*
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.*
@@ -44,7 +41,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import utilities.adapters.setup.applications.ESP_LIB_ListCardsApplicationsAdapter
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter
 import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_FirebaseTokenDAO
@@ -61,7 +57,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
     internal var TAG = javaClass.simpleName
     internal var context: Context? = null
-    internal var mApplicationAdapterESPLIB: ESP_LIB_ListUsersApplicationsAdapter? = null
+    internal var mApplicationAdapterESPLIB: ESP_LIB_ListUsersApplicationsAdapterV2? = null
     private var mApplicationCardAdapter: ESP_LIB_ListCardsApplicationsAdapter? = null
     private var mApplicationLayoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager? = null
     internal var loadDefinitionCall: Call<ESP_LIB_ResponseApplicationsDAO>? = null
@@ -99,32 +95,6 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
     private fun AddScroller() {
 
-        //    val toolbar = activity?.findViewById(R.id.toolbar) as Toolbar
-        /*  view?.app_list?.addOnScrollListener(object : EndlessRecyclerViewScrollListener(mApplicationLayoutManager as androidx.recyclerview.widget.LinearLayoutManager?) {
-              override fun onHide() {
-                  // Shared.getInstance().setToolbarHeight(toolbar, false)
-              }
-
-              override fun onShow() {
-                  // Shared.getInstance().setToolbarHeight(toolbar, true)
-              }
-
-              override fun getFooterViewType(defaultNoFooterViewType: Int): Int {
-                  return defaultNoFooterViewType
-              }
-
-              override fun onLoadMore(page: Int, totalItemsCount: Int) {
-
-                  if (IN_LIST_RECORDS < TOTAL_RECORDS_AVAILABLE) {
-                      loadApplications(true)
-                      // loadData(true)
-                  }
-
-              }
-
-          })*/
-
-
         view?.nestedscrollview?.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
                 if (IN_LIST_RECORDS < TOTAL_RECORDS_AVAILABLE) {
@@ -133,9 +103,6 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                 }
             }
         })
-
-
-
 
     }
 
@@ -467,12 +434,15 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
             if (title.equals(getString(R.string.esp_lib_text_open), ignoreCase = true)) {
                 list.add("1")
                 list.add("2")
+
+                daoESPLIB.type=1
+
                 daoESPLIB.statuses = list
                 if (!isLoadMore)
                     loadCardApplications(false, search_text)
             } else {
 
-
+                daoESPLIB.type=2
                 if (ESP_LIB_ESPApplication.getInstance()?.filter?.statuses != null && ESP_LIB_ESPApplication.getInstance()?.filter?.statuses!!.size < 5) {
                     if (!daoESPLIB.statuses.isNullOrEmpty())
                         daoESPLIB.statuses = ArrayList<String>()
@@ -511,7 +481,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
             }
         }
         val apis = CompRoot().getService(context);
-        loadDefinitionCall = apis?.getUserApplicationsV3(daoESPLIB)
+        loadDefinitionCall = apis?.getUserApplicationsV4(daoESPLIB)
 
 
 
@@ -550,8 +520,8 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                                     TOTAL_RECORDS_AVAILABLE = ESPLIBResponse.body().totalRecords
                                     SCROLL_TO += PER_PAGE_RECORDS
 
-                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapter(removeDuplication(app_actual_list), it, "", false) }
-                                    (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapter?)?.getFragmentContext(this@ESP_LIB_UsersApplicationsFragment)
+                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(removeDuplication(app_actual_list), it, "", false) }
+                                    (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapterV2?)?.getFragmentContext(this@ESP_LIB_UsersApplicationsFragment)
                                     view?.app_list?.adapter = mApplicationAdapterESPLIB
                                     mApplicationAdapterESPLIB!!.notifyDataSetChanged()
 
@@ -568,8 +538,8 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                                     else
                                         app_actual_list = ESPLIBResponse.body().applications as MutableList<ESP_LIB_ApplicationsDAO>?
 
-                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapter(removeDuplication(app_actual_list), it, "", false) }
-                                    (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapter?)?.getFragmentContext(this@ESP_LIB_UsersApplicationsFragment)
+                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(removeDuplication(app_actual_list), it, "", false) }
+                                    (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapterV2?)?.getFragmentContext(this@ESP_LIB_UsersApplicationsFragment)
                                     view?.app_list?.adapter = mApplicationAdapterESPLIB
 
                                     PAGE_NO++
@@ -935,8 +905,8 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         super.onPause()
         //unRegisterEventBus()
         isShowingActivity = false
-        if ((mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapter?)?.getPopUpMenu() != null) {
-            val popUpMenu = (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapter?)?.getPopUpMenu()
+        if ((mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapterV2?)?.getPopUpMenu() != null) {
+            val popUpMenu = (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapterV2?)?.getPopUpMenu()
             popUpMenu?.dismiss()
         }
     }

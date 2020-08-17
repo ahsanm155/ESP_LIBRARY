@@ -28,8 +28,8 @@ import com.esp.library.utilities.common.ESP_LIB_CustomLogs;
 import com.esp.library.utilities.common.ESP_LIB_Shared;
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2;
 
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesCriteriaListDAO;
 import utilities.interfaces.ESP_LIB_CriteriaFieldsListener;
@@ -154,7 +154,7 @@ public class ESP_LIB_EdittextItem {
 
 
             String label = fieldDAO.getLabel();
-            if (ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications())
+            if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
                 label = fieldDAO.getLabel() + ":";
             holder.tValueLabel.setText(label);
             holder.tValue.setText(getValue);

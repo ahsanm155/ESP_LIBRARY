@@ -20,13 +20,13 @@ import com.esp.library.utilities.common.ESP_LIB_GetValues;
 import com.esp.library.utilities.common.ESP_LIB_Shared;
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2;
 import com.google.gson.Gson;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter;
 import utilities.data.applicants.ESP_LIB_ApplicationDetailFieldsDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicResponseDAO;
@@ -109,7 +109,7 @@ public class ESP_LIB_DateItem {
         //Setting Label
         String label = fieldDAO.getLabel();
         if (isViewOnly) {
-            if (ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications())
+            if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
                 label = fieldDAO.getLabel() + ":";
             holder.tValueLabel.setText(label);
         } else {

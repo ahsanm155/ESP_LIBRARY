@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/esp_lib_gradienttoolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/esp_lib_color_white"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_20sdp"
+        android:orientation="vertical">
+
+    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/esp_lib_text_verify_your_identity"
+        style="@style/Esp_Lib_Style_TextHeading1Black"/>
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:text="@string/esp_lib_text_verify_your_identity_text"
+            style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+        <RelativeLayout
+            android:id="@+id/rlone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtcountone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1."
+                style="@style/Esp_Lib_Style_TextHeading5Green"/>
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtallow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/txtcountone"
+                android:text="@string/esp_lib_text_allow"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtappname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/txtallow"
+                android:text="@string/app_name"
+                style="@style/Esp_Lib_Style_TextHeading5Black"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/txtappname"
+                android:text="@string/esp_lib_text_use_your_camera"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rltwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtcounttwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2."
+                style="@style/Esp_Lib_Style_TextHeading5Green"/>
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/txtcounttwo"
+                android:text="@string/esp_lib_text_ensure_light"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlthree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtcountthree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3."
+                style="@style/Esp_Lib_Style_TextHeading5Green"/>
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/txtcountthree"
+                android:text="@string/esp_lib_text_take_photo_dot"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="@dimen/_260sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:id="@+id/cameracontainer">
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivcapture"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:scaleType="fitXY"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="@dimen/_260sdp"/>
+
+
+        <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+            android:id="@+id/btaction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/esp_lib_drawable_draw_bg_green"
+            android:foreground="?attr/selectableItemBackground"
+            android:text="@string/esp_lib_text_allow"
+            android:textAllCaps="false"
+            style="@style/Esp_Lib_Style_TextHeading5White"/>
+
+
+        <LinearLayout
+            android:id="@+id/llretakebuttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:weightSum="2">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+                android:id="@+id/btretakePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/esp_lib_drawable_draw_bg_green_stroke"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="@string/esp_lib_text_retake_photo"
+                android:textAllCaps="false"
+                style="@style/Esp_Lib_Style_TextHeading5Green"/>
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+                android:id="@+id/btstartverification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/esp_lib_drawable_draw_bg_green"
+                android:foreground="?attr/selectableItemBackground"
+                android:text="@string/esp_lib_text_start_verification"
+                android:textAllCaps="false"
+                style="@style/Esp_Lib_Style_TextHeading5White"/>
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rlfour"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp">
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtcountfour"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4."
+                style="@style/Esp_Lib_Style_TextHeading5Green"/>
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtverification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/txtcountfour"
+                android:text="@string/esp_lib_text_verfication_process"
+                style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+
+    <RelativeLayout
+        android:id="@+id/rlverified"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:id="@+id/ivverify"
+                android:layout_width="@dimen/_17sdp"
+                android:layout_height="@dimen/_17sdp"
+                android:src="@drawable/esp_lib_drawable_verified"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_centerHorizontal="true"
+                android:layout_toStartOf="@+id/txtverified"
+                android:tint="@color/colorPrimaryDark"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txtverified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/esp_lib_text_verfication_verified"
+                style="@style/Esp_Lib_Style_TextHeading6Green"/>
+
+
+        </RelativeLayout>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llnotverified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:padding="@dimen/_15sdp"
+            android:background="@drawable/esp_lib_drawable_draw_bg_red">
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:id="@+id/txterrordiscription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/esp_lib_text_verfication_mismatch_text"
+                style="@style/Esp_Lib_Style_TextSmallRed"/>
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/esp_lib_text_take_problem_appear"
+                android:layout_marginTop="@dimen/_10sdp"
+                style="@style/Esp_Lib_Style_TextSmallRed"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_3sdp"
+                    android:layout_height="@dimen/_3sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/_9sdp"
+                    android:src="@drawable/esp_lib_drawable_circle_red_shape"/>
+
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/esp_lib_text_take_problem_enough_light"
+                style="@style/Esp_Lib_Style_TextSmallRed"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_3sdp"
+                    android:layout_height="@dimen/_3sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/_9sdp"
+                    android:src="@drawable/esp_lib_drawable_circle_red_shape"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/esp_lib_text_take_problem_check_profile_pic"
+                style="@style/Esp_Lib_Style_TextSmallRed"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_10sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_3sdp"
+                    android:layout_height="@dimen/_3sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/_9sdp"
+                    android:src="@drawable/esp_lib_drawable_circle_red_shape"/>
+
+            <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/esp_lib_text_take_problem_contact_support"
+                style="@style/Esp_Lib_Style_TextSmallRed"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llnotverifiedbuttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:weightSum="2">
+
+                <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+                    android:id="@+id/btcancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:background="@drawable/esp_lib_drawable_draw_bg_green_stroke"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/esp_lib_text_cancel"
+                    android:textAllCaps="false"
+                    style="@style/Esp_Lib_Style_TextHeading5Green"/>
+
+
+                <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
+                    android:id="@+id/btretakenotverified"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:background="@drawable/esp_lib_drawable_draw_bg_green"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="@string/esp_lib_text_retake_photo"
+                    android:textAllCaps="false"
+                    style="@style/Esp_Lib_Style_TextHeading5White"/>
+
+
+            </LinearLayout>
+
+
+
+
+    </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -26,6 +26,7 @@ import com.esp.library.utilities.common.ESP_LIB_Shared;
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import com.esp.library.utilities.setup.ESP_LIB_CustomSpinnerAdapter;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
@@ -35,7 +36,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter;
 import utilities.common.ESP_LIB_MaterialSpinner;
 import utilities.data.applicants.ESP_LIB_ApplicationDetailFieldsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_CurrencyDAO;
@@ -190,7 +190,7 @@ public class ESP_LIB_CurrencyItem {
         //Setting Label
         String label = fieldDAO.getLabel();
         if (isViewOnly) {
-            if (ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications()) {
+            if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications()) {
                 label = fieldDAO.getLabel() + ":";
                 holder.tValueLabel.setText(label);
             } else
@@ -252,7 +252,7 @@ public class ESP_LIB_CurrencyItem {
                 fieldDAO.setSelectedCurrencySymbol(selectedCurrency.getSymobl());
                 //Setting empty value for the required Validation.
                 if (isViewOnly) {
-                    if (ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications())
+                    if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
                         holder.tValue.setText("");
                     else {
                         holder.tValue.setText("");
@@ -263,7 +263,7 @@ public class ESP_LIB_CurrencyItem {
                     holder.etValue.setText("");
             } else {
                 if (isViewOnly) {
-                    if (ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications())
+                    if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
                         holder.tValue.setText(fieldDAO.getValue());
                     else {
                         holder.tValue.setText(fieldDAO.getSelectedCurrencyId() + " (" + fieldDAO.getSelectedCurrencySymbol() + ") " + fieldDAO.getValue());
@@ -288,7 +288,7 @@ public class ESP_LIB_CurrencyItem {
 
             if (selectedCurrency != null) {
                 if (isViewOnly) {
-                    if (ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications())
+                    if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
                         holder.tValue.setText(selectedCurrency.getCode() + " (" + selectedCurrency.getSymobl() + ") " + holder.tValue.getText());
                     else {
                         holder.tValue.setText(selectedCurrency.getCode() + " (" + selectedCurrency.getSymobl() + ") " + fieldDAO.getValue());

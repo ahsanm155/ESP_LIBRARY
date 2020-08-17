@@ -452,9 +452,8 @@ class ESP_LIB_FragmentProfileImage : androidx.fragment.app.Fragment(), ESP_LIB_I
     fun UpdateLoadImageForField(uri: Uri?, context: Context?) {
 
         try {
-            var body = ESP_LIB_Shared.getInstance().prepareFilePart(uri, requireContext())
+            val body = ESP_LIB_Shared.getInstance().prepareFilePart(uri, requireContext())
             UpLoadFile(body)
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -492,9 +491,9 @@ class ESP_LIB_FragmentProfileImage : androidx.fragment.app.Fragment(), ESP_LIB_I
                                     }
 
                                     override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
-
+                                        stop_loading_animation()
                                             profile_imageESPLIB?.setImageBitmap(resource)
-                                            ESP_LIB_Shared.getInstance().detectAndFrame(resource, ESP_LIB_CommonMethodsKotlin.getFaceClient(), requireActivity(),true)
+                                            //ESP_LIB_Shared.getInstance().detectAndFrame(resource, ESP_LIB_CommonMethodsKotlin.getFaceClient(), requireActivity(),true)
 
 
                                     }

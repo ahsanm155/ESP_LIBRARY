@@ -13,10 +13,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import com.esp.library.R
-import com.esp.library.utilities.common.ESP_LIB_Shared
-import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ActivityStageDetails
 import com.esp.library.utilities.common.ESP_LIB_Enums
+import com.esp.library.utilities.common.ESP_LIB_Shared
+import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationCriteriaAdapter
 import com.google.gson.Gson
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO
@@ -50,10 +50,13 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
         internal var rvExpandCrietrias: androidx.recyclerview.widget.RecyclerView
         internal var llstagesrow: LinearLayout
         internal var lldetail: LinearLayout
+        internal var llshadow: LinearLayout
         internal var rlstatus: RelativeLayout
         internal var txtStagename: TextView
         internal var txtstatus: TextView
+        internal var llresponsible: RelativeLayout
         internal var ivsign: ImageView
+        internal var ivcircledot: ImageView
         internal var acceptedontext: TextView
         internal var acceptedonvalue: TextView
         internal var sequencetextvalue: TextView
@@ -68,7 +71,10 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             rvExpandCrietrias = itemView.findViewById(R.id.rvExpandCrietrias)
             llstagesrow = itemView.findViewById(R.id.llstagesrow)
             lldetail = itemView.findViewById(R.id.lldetail)
+            llshadow = itemView.findViewById(R.id.llshadow)
             txtStagename = itemView.findViewById(R.id.txtStagename)
+            llresponsible = itemView.findViewById(R.id.llresponsible)
+            ivcircledot = itemView.findViewById(R.id.ivcircledot)
             txtstatus = itemView.findViewById(R.id.txtstatus)
             ivsign = itemView.findViewById(R.id.ivsign)
             rlstatus = itemView.findViewById(R.id.rlstatus)
@@ -100,6 +106,14 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
     override fun onBindViewHolder(holder_parent: ParentViewHolder, position: Int) {
         val holder = holder_parent as ActivitiesList
         val dynamicStagesDAO = stagesListESPLIB.get(position)
+
+
+        val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
+        if (actualResponse.summary!!.isMine && (dynamicStagesDAO.status!!.equals(ESP_LIB_Enums.open.toString(),ignoreCase = true)||
+                dynamicStagesDAO.status!!.equals(ESP_LIB_Enums.locked.toString(),ignoreCase = true))) {
+            holder.llresponsible.visibility = View.VISIBLE
+        }
+
         if (isComingfromAssessor) {
 
 
@@ -119,7 +133,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             if (displayDate.isNullOrEmpty())
                 holder.rlaccepreject.visibility = View.GONE
 
-            val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
+           // val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
             if (actualResponse.applicationStatus.equals(ESP_LIB_Enums.rejected.toString(), ignoreCase = true)) // rejected
                 holder.acceptedontext.text = context.getString(R.string.esp_lib_text_rejectedon)
 
@@ -163,6 +177,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
                 holder.rvCrietrias.isNestedScrollingEnabled = false
                 holder.rvCrietrias.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
                 criteriaAdapterESPLIB = ESP_LIB_ApplicationCriteriaAdapter(criteriaListCollections, context, holder.rvCrietrias)
+                criteriaAdapterESPLIB?.getStage(dynamicStagesDAO)
                 criteriaAdapterESPLIB?.getActualResponse(actualResponseJson)
                 holder.rvCrietrias.adapter = criteriaAdapterESPLIB
             }
@@ -239,7 +254,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
     private fun setStatusColor(holder: ActivitiesList, ESPLIBDynamicStagesDAO: ESP_LIB_DynamicStagesDAO, position: Int) {
         var status = ESPLIBDynamicStagesDAO.status?.toLowerCase(Locale.getDefault())
         val actualResponseJson = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
-        //  holder.lldetail.setBackgroundResource(R.drawable.draw_bg_white)
+         // holder.lldetail.setBackgroundResource(R.drawable.draw_bg_white)
 
         var isSigned: Boolean = false
         for (i in 0 until ESPLIBDynamicStagesDAO.criteriaList!!.size) {
@@ -343,6 +358,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
 
                 }*/ else {
             holder.lldetail.setBackgroundResource(R.drawable.esp_lib_drawable_draw_bg_grey_stroke)
+            holder.llshadow.setBackgroundResource(0) // remove shadow background
             holder.txtstatus.setTextColor(ContextCompat.getColor(context, R.color.esp_lib_color_status_locked))
             drawable.setColor(ContextCompat.getColor(context, R.color.esp_lib_color_status_locked_background))
 

@@ -94,8 +94,12 @@ interface ESP_LIB_APIs {
     @POST("verify")
     fun verifyfaceId(@Body ESPLIBFaceDAO: ESP_LIB_FaceDAO): Call<ESP_LIB_FaceDAO>
 
-    @POST("application/listV3")
-    fun getUserApplicationsV3(@Body ESPLIBFilterDAO: ESP_LIB_FilterDAO): Call<ESP_LIB_ResponseApplicationsDAO>
+    @Multipart
+    @POST("face/Verify")
+    fun verifyface(@Part file: MultipartBody.Part?): Call<Any>
+
+    @POST("application/listV4")
+    fun getUserApplicationsV4(@Body ESPLIBFilterDAO: ESP_LIB_FilterDAO): Call<ESP_LIB_ResponseApplicationsDAO>
 
     @POST("application/assigned")
     fun getUserAssigned(@Body ESPLIBFilterDAO: ESP_LIB_FilterDAO): Call<ESP_LIB_ResponseApplicationsDAO>
@@ -212,6 +216,7 @@ interface ESP_LIB_APIs {
 
     @POST("applicant/section/{sectionid}")
     fun saveApplicantDataBySectionId(@Path("sectionid") sectionid: Int?, @Body post: ArrayList<ESP_LIB_ApplicationProfileDAO.Values>): Call<Int>
+
 
 
     @Multipart

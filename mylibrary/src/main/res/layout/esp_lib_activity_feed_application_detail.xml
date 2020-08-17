@@ -366,6 +366,7 @@
         android:background="@drawable/esp_lib_drawable_draw_bg_green"
         android:text="@string/esp_lib_text_addsub"
         android:layout_margin="@dimen/_10sdp"
+        android:visibility="gone"
         android:foreground="?attr/selectableItemBackground"
         android:layout_alignParentBottom="true"
         android:textAllCaps="false"

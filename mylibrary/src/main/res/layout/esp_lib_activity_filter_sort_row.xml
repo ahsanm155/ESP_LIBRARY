@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlParentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,8 +8,9 @@
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_20sdp"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:button="@drawable/esp_lib_drawable_radio_button_selector"/>
 
 
@@ -18,8 +18,8 @@
         android:id="@+id/txtname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_3sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/checkBox"
         style="@style/Esp_Lib_Style_TextParagraphBlack" />
 

@@ -36,16 +36,45 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_10sdp"
-                    android:background="@color/esp_lib_color_white"
-                    android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+                    android:layout_height="wrap_content">
 
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_10sdp"
+                        android:background="@color/esp_lib_color_white"
+                        android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+
+
+                    <View
+                        android:id="@+id/viewlinecurve"
+                        android:layout_width="@dimen/_3sdp"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:background="@color/esp_lib_color_yellowishOrange"
+                        android:layout_height="@dimen/_8sdp"/>
+
+
+                </RelativeLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
 
                 <include
                     android:id="@+id/topcardview"
-                    layout="@layout/esp_lib_application_detail_view"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    layout="@layout/esp_lib_activity_dynamic_items_view"/>
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/lldraftcard"
@@ -103,9 +132,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginBottom="@dimen/_12sdp"
                         android:visibility="gone"
-                        layout="@layout/esp_lib_link_definition_card" />
+                        android:layout_marginBottom="@dimen/_12sdp"
+                        layout="@layout/esp_lib_link_definition_card"/>
 
                 <RelativeLayout
                     android:id="@+id/rldetailrow"
@@ -224,6 +253,7 @@
                         android:id="@+id/ivsubmissionrowarrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:tag="0"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:tint="@color/esp_lib_color_grey"
@@ -232,6 +262,14 @@
 
 
                 </RelativeLayout>
+                    <View
+                        android:id="@+id/dividersubmission"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:visibility="gone"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:background="@color/esp_lib_color_very_light_grey_dim"/>
 
                     <LinearLayout
                         android:id="@+id/llsubmission_app_list"
@@ -243,11 +281,6 @@
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_8sdp"
                         android:orientation="vertical">
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/esp_lib_color_very_light_grey_dim"/>
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -263,7 +296,45 @@
 
                     </LinearLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/rlnosubmission"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:background="@android:color/white">
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_130sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:padding="@dimen/_15sdp"
+                        android:background="@drawable/esp_lib_drawable_draw_bg_grey30_stroke">
+
+
+                        <ImageView
+                            android:id="@+id/ivnosub"
+                            android:layout_width="@dimen/_60sdp"
+                            android:layout_height="@dimen/_60sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/esp_lib_drawable_no_submissions"/>
+
+
+                        <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_below="@+id/ivnosub"
+                            android:layout_centerHorizontal="true"
+                            style="@style/Esp_Lib_Style_TextHeading5Gray"
+                            android:text="@string/esp_lib_text_no_submissions"/>
+
+
+                    </RelativeLayout>
+                    </RelativeLayout>
 
 
                 </LinearLayout>
@@ -317,6 +388,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/esp_lib_text_approvalstages"
                         android:visibility="gone"
+                        android:layout_marginBottom="@dimen/_7sdp"
                         android:layout_marginTop="@dimen/_18sdp"
                         android:layout_marginStart="@dimen/_10sdp"
                         style="@style/Esp_Lib_Style_TextSmallGray"/>
@@ -325,8 +397,8 @@
                     android:id="@+id/rvStagesFieldsCards"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_1sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:animationCache="true"
                     android:clipToPadding="false"
@@ -334,17 +406,22 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/llcloserequestspinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:background="@drawable/esp_lib_drawable_shadow">
+
                 <Spinner
                     android:id="@+id/spcloserequest"
                     android:background="@drawable/esp_lib_drawable_spinner_bg"
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_height="@dimen/_45sdp"
-                    android:paddingStart="@dimen/_6sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_8sdp"/>
-
+                    android:paddingStart="@dimen/_6sdp"/>
+                </LinearLayout>
                 <include
                     android:id="@+id/llfeedback"
                     android:visibility="gone"

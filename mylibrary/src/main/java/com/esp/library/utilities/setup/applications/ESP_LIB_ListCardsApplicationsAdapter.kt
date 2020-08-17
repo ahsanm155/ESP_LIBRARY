@@ -17,11 +17,8 @@ import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_Application
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
-import kotlinx.android.synthetic.main.esp_lib_custom_alert_view.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications
+import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationStatusAdapter
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications
 import utilities.data.applicants.ESP_LIB_ApplicationSingleton
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.interfaces.ESP_LIB_AnyClick

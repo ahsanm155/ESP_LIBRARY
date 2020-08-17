@@ -1,5 +1,6 @@
 package utilities.data.applicants.dynamics
 
+import com.esp.library.utilities.data.applicants.ESP_LIB_SummaryDAO
 import utilities.data.ESP_LIB_Base
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import java.io.Serializable
@@ -21,6 +22,7 @@ class ESP_LIB_DynamicResponseDAO : ESP_LIB_Base(), Serializable {
     var applicationSubmittedDate: String? = null
     var applicationCreatedDate: String? = null
     var applicantName: String? = null
+    var applicantPictureStatus: String? = null
     var applicationNumber: String? = null
     var currentStageId: String? = null
     var type: String? = null
@@ -46,6 +48,7 @@ class ESP_LIB_DynamicResponseDAO : ESP_LIB_Base(), Serializable {
     var stages: List<ESP_LIB_DynamicStagesDAO>? = null
     var form: ESP_LIB_DynamicFormDAO? = null
     var details: ESP_LIB_DynamicFormValuesDAO? = null
+    var summary: ESP_LIB_SummaryDAO? = null
 
     //Use For Post Data SubmitV2Api
     var sectionValues: List<ESP_LIB_DynamicSectionValuesDAO>? = null

@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,7 +19,6 @@ import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,7 +27,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -39,7 +40,6 @@ import com.esp.library.R;
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity;
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication;
 import com.esp.library.exceedersesp.SingleController.CompRoot;
-import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_ApplicationFeedbackAdapter;
 import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_FeedbackForm;
 import com.esp.library.ipaulpro.afilechooser.utils.FileUtils;
 import com.esp.library.utilities.common.ESP_LIB_AlertActionWindow;
@@ -53,9 +53,10 @@ import com.esp.library.utilities.common.ESP_LIB_RealPathUtil;
 import com.esp.library.utilities.common.ESP_LIB_Shared;
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import com.esp.library.utilities.customevents.EventOptions;
-import com.esp.library.utilities.data.applicants.ESP_LIB_CancelApplicationDAO;
 import com.esp.library.utilities.data.applicants.signature.ESP_LIB_SignatureDAO;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
+import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationItemsAdapter;
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
@@ -81,8 +82,7 @@ import retrofit2.Response;
 import utilities.adapters.setup.applications.ESP_LIB_ApplicationStagesAdapter;
 import utilities.adapters.setup.applications.ESP_LIB_ListAddApplicationSectionsAdapter;
 import utilities.adapters.setup.applications.ESP_LIB_ListSubmissionApplicationsAdapter;
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter;
-import utilities.data.CriteriaRejectionfeedback.ESP_LIB_FeedbackDAO;
+import utilities.common.ESP_LIB_CommonMethodsKotlin;
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.applicants.ESP_LIB_ApplicationSingleton;
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO;
@@ -103,7 +103,6 @@ import utilities.data.applicants.dynamics.ESP_LIB_DynamicResponseDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicSectionValuesDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesCriteriaListDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesDAO;
-import utilities.data.applicants.feedback.ESP_LIB_ApplicationsFeedbackAttachmentsDAO;
 import utilities.data.applicants.feedback.ESP_LIB_ApplicationsFeedbackDAO;
 import utilities.data.filters.ESP_LIB_FilterDAO;
 import utilities.interfaces.ESP_LIB_CriteriaFieldsListener;
@@ -123,37 +122,28 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     ESP_LIB_DynamicFormSectionFieldDAO fieldToBeUpdated = null;
     private static final int REQUEST_CHOOSER = 12345;
     private static final int REQUEST_LOOKUP = 2;
+    private static final int VERIFY_RESULT = 3;
     String actualResponseJson;
     ESP_LIB_SharedPreference pref;
+    ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAOESPLIB = null;
+    Boolean isAccepted = false;
     boolean isComingFromService, isClosingDatePassed;
 
-
+    TextView txtallvalue, txtpendingvalue, txtacceptedvalue, txtrejectedvalue;
+    ImageView ivsubmissionoptions;
     Toolbar toolbar;
-    TextView categoryy;
+    View viewline, viewlinecurve;
+    RelativeLayout rlfeedminerow;
+    TextView txtfeedminelabel;
+    TextView txtfeedminevalue;
     TextView toolbarheading;
-    ImageButton ibToolbarBack;
     TextView definitionName;
-    TextView txtrequestedbyval;
-    TextView txtrequestedonval;
-    TextView applicationNumber;
+    ImageButton ibToolbarBack;
     LinearLayout rejected_status;
     Button submit_btn;
     RecyclerView app_list;
-    RecyclerView status_list;
-    TextView txtrequest;
-    TextView txtrequestedby;
-    TextView acceptedOn;
-    TextView acceptedontext;
-    RelativeLayout rlaccepreject;
-    TextView categorytext;
     TextView heading;
     View linkdefinitioncard;
-    SwitchCompat switchsubmissionallow;
-    TextView txtmoreinfo;
-    ImageView ivainforrow;
-    RelativeLayout rldescription;
-    TextView txtinfodescription;
-    View pendinglineview;
     TextView txtrequestdetail;
     LinearLayout lldetail;
     TextView txtfeedback;
@@ -163,17 +153,14 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     RelativeLayout rldetailrow;
     RelativeLayout rlsubmissionrow;
     TextView txtsubmissions;
-    LinearLayout llmaindetail;
+    LinearLayout llmaindetail, llcloserequestspinner;
     View topcardview;
     RelativeLayout main_content;
-    RelativeLayout rlpendingfor;
-    TextView pendingfor;
     Spinner spcloserequest;
     RecyclerView rvStagesFieldsCards;
     LinearLayout llstages;
     TextView txtapprovalStages;
     TextView status;
-    View llstatuslayout;
     ImageView ivsign;
     RelativeLayout rlstatus;
     NestedScrollView nestedscrollview;
@@ -185,11 +172,15 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     TextView definitionNameTitle;
     TextView definitionDescription;
     TextView txtdetailrowtext;
+    ImageView ivcircledot;
     LinearLayout llnofeedbackrecord;
+    RelativeLayout rlnosubmission;
     RecyclerView rvFeedbackCommentsList;
+    RecyclerView items_list;
+    RecyclerView status_list;
     View llfeedback;
+    View dividersubmission;
     TextView submissionallowedtext;
-    RelativeLayout rlcategory;
 
     RecyclerView submission_app_list;
     LinearLayout llsubmission_app_list;
@@ -202,7 +193,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     ESP_LIB_ApplicationStagesAdapter ESPLIBApplicationStagesAdapter;
     boolean isServiceRunning, isNotified;
 
-    ArrayList<ESP_LIB_ApplicationsDAO> app_actual_list = new ArrayList<>();
+    ArrayList<ESP_LIB_ApplicationsDAO> app_submission_list = new ArrayList<>();
     ESP_LIB_DynamicResponseDAO actual_response = null;
 
     Call<List<ESP_LIB_CalculatedMappedFieldsDAO>> calculatedValues_call = null;
@@ -272,7 +263,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         setGravity();
         loadData();
 
-
+        txtdetailrowtext.setText(pref.getlabels().getApplication() + " " + getString(R.string.esp_lib_text_details));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -280,7 +271,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                 PER_PAGE_RECORDS = 12;
                 IN_LIST_RECORDS = 0;
                 TOTAL_RECORDS_AVAILABLE = 0;
-                app_actual_list.clear();
+                app_submission_list.clear();
                 loadData();
             }
         });
@@ -305,10 +296,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
         if ((statusId == 1 || isResubmit) && !isComingfromAssessor) // 1= New or draft
         {
-            if (mApplication != null) {
-                definitionNameTitle.setText(mApplication.getDefinitionName());
 
-            }
 
             rldetailrow.setVisibility(View.GONE);
             llfeedback.setVisibility(View.GONE);
@@ -358,29 +346,24 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             i.putExtra("dynamicResponseDAO", ESPLIBDynamicResponseDAO);
             startActivity(i);*/
 
-            if (llsubmission_app_list.getVisibility() == View.VISIBLE) {
+            if (app_submission_list.size() == 0) {
+                rlnosubmission.setVisibility(View.VISIBLE);
                 llsubmission_app_list.setVisibility(View.GONE);
-                ivsubmissionrowarrow.setImageResource(R.drawable.ic_arrow_down);
             } else {
-                ivsubmissionrowarrow.setImageResource(R.drawable.ic_arrow_up);
+                rlnosubmission.setVisibility(View.GONE);
                 llsubmission_app_list.setVisibility(View.VISIBLE);
             }
 
-        });
-        txtmoreinfo.setOnClickListener(v ->
-        {
-            if (txtmoreinfo.getText().toString().equalsIgnoreCase(getString(R.string.esp_lib_text_moreinformation))) {
-                rldescription.setVisibility(View.VISIBLE);
-                pendinglineview.setVisibility(View.VISIBLE);
-                txtmoreinfo.setText(getString(R.string.esp_lib_text_lessinformation));
-                ivainforrow.setImageResource(R.drawable.esp_lib_drawable_icons_blue_arrow_up);
-
+            if (ivsubmissionrowarrow.getTag() == "1") {
+                llsubmission_app_list.setVisibility(View.GONE);
+                ivsubmissionrowarrow.setImageResource(R.drawable.ic_arrow_down);
+                ivsubmissionrowarrow.setTag("0");
+                rlnosubmission.setVisibility(View.GONE);
+                dividersubmission.setVisibility(View.GONE);
             } else {
-
-                rldescription.setVisibility(View.GONE);
-                pendinglineview.setVisibility(View.GONE);
-                txtmoreinfo.setText(getString(R.string.esp_lib_text_moreinformation));
-                ivainforrow.setImageResource(R.drawable.esp_lib_drawable_iconsarrowdownblue);
+                ivsubmissionrowarrow.setImageResource(R.drawable.ic_arrow_up);
+                ivsubmissionrowarrow.setTag("1");
+                dividersubmission.setVisibility(View.VISIBLE);
 
             }
 
@@ -396,7 +379,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         });
 
 
-        switchsubmissionallow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+       /* switchsubmissionallow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (!isComingFromService) {
@@ -407,45 +390,74 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                 } else
                     isComingFromService = false;
             }
+        });*/
+
+        ivsubmissionoptions.setOnClickListener(view -> {
+            showMenu(view, bContext);
         });
 
+
+    }
+
+    private void showMenu(View v, Context mContext) {
+
+
+        PopupMenu popup = new PopupMenu(mContext, v);
+        popup.inflate(R.menu.menu_list_item_add_application_fields);
+        popup.setGravity(Gravity.CENTER);
+        Menu menuOpts = popup.getMenu();
+        MenuItem remove_action = menuOpts.findItem(R.id.action_remove);
+        remove_action.setTitle(getString(R.string.esp_lib_text_stopsubmission));
+        popup.setOnMenuItemClickListener(menuItem -> {
+
+            if (menuItem.getItemId() == R.id.action_remove) {
+
+                submissionDialog(getString(R.string.esp_lib_text_stopsubmissiontext), getString(R.string.esp_lib_text_stopsubmission), getString(R.string.esp_lib_text_stopsubmission));
+
+            }
+            return false;
+        });
+
+
+        popup.show();
 
     }
 
     private void initailizeIds() {
 
         toolbar = findViewById(R.id.gradienttoolbar);
-        categoryy = findViewById(R.id.category);
+        dividersubmission = findViewById(R.id.dividersubmission);
+        ivcircledot = findViewById(R.id.ivcircledot);
+        ivsubmissionoptions = findViewById(R.id.ivsubmissionoptions);
+        definitionName = findViewById(R.id.definitionName);
+        definitionName.setTextAppearance(this, R.style.Esp_Lib_Style_TextHeading1Black);
+        definitionName.setPadding(17, 20, 0, 0);
+        rlnosubmission = findViewById(R.id.rlnosubmission);
+        viewline = findViewById(R.id.viewline);
+        txtallvalue = findViewById(R.id.txtallvalue);
+        txtpendingvalue = findViewById(R.id.txtpendingvalue);
+        txtacceptedvalue = findViewById(R.id.txtacceptedvalue);
+        txtrejectedvalue = findViewById(R.id.txtrejectedvalue);
+        viewlinecurve = findViewById(R.id.viewlinecurve);
+        rlfeedminerow = findViewById(R.id.rlfeedminerow);
+        rlfeedminerow.setPadding(17, 30, 0, 0);
+        txtfeedminelabel = findViewById(R.id.txtfeedminelabel);
+        txtfeedminevalue = findViewById(R.id.txtfeedminevalue);
         toolbarheading = findViewById(R.id.toolbarheading);
         ibToolbarBack = findViewById(R.id.ibToolbarBack);
-        definitionName = findViewById(R.id.definitionName);
+        status_list = findViewById(R.id.status_list);
+        items_list = findViewById(R.id.items_list);
+        items_list.setPadding(17, 0, 0, 0);
         submission_app_list = findViewById(R.id.submission_app_list);
         llsubmission_app_list = findViewById(R.id.llsubmission_app_list);
         ivsign = findViewById(R.id.ivsign);
-        txtrequestedbyval = findViewById(R.id.txtrequestedbyval);
-        txtrequestedonval = findViewById(R.id.txtrequestedonval);
-        acceptedOn = findViewById(R.id.acceptedOn);
-        acceptedontext = findViewById(R.id.acceptedontext);
-        rlaccepreject = findViewById(R.id.rlaccepreject);
-        applicationNumber = findViewById(R.id.applicationNumber);
         rejected_status = findViewById(R.id.rejected_status);
         submit_btn = findViewById(R.id.submit_btn);
         status = findViewById(R.id.txtstatus);
-        llstatuslayout = findViewById(R.id.llstatuslayout);
         rlstatus = findViewById(R.id.rlstatus);
         app_list = findViewById(R.id.app_list);
-        status_list = findViewById(R.id.status_list);
-        txtrequest = findViewById(R.id.applicationNumbertext);
-        txtrequestedby = findViewById(R.id.txtrequestedby);
-        categorytext = findViewById(R.id.categorytext);
         heading = findViewById(R.id.heading);
         linkdefinitioncard = findViewById(R.id.linkcard);
-        switchsubmissionallow = findViewById(R.id.switchsubmissionallow);
-        txtmoreinfo = findViewById(R.id.txtmoreinfo);
-        ivainforrow = findViewById(R.id.ivainforrow);
-        rldescription = findViewById(R.id.rldescription);
-        txtinfodescription = findViewById(R.id.txtinfodescription);
-        pendinglineview = findViewById(R.id.pendinglineview);
         txtrequestdetail = findViewById(R.id.txtrequestdetail);
         lldetail = findViewById(R.id.lldetail);
         txtfeedback = findViewById(R.id.txtfeedback);
@@ -458,9 +470,8 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         llmaindetail = findViewById(R.id.llmaindetail);
         topcardview = findViewById(R.id.topcardview);
         main_content = findViewById(R.id.main_content);
-        rlpendingfor = findViewById(R.id.rlpendingfor);
-        pendingfor = findViewById(R.id.pendingfor);
         spcloserequest = findViewById(R.id.spcloserequest);
+        llcloserequestspinner = findViewById(R.id.llcloserequestspinner);
         rvStagesFieldsCards = findViewById(R.id.rvStagesFieldsCards);
         llstages = findViewById(R.id.llstages);
         txtapprovalStages = findViewById(R.id.txtapprovalStages);
@@ -478,7 +489,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         rvFeedbackCommentsList = findViewById(R.id.rvFeedbackCommentsList);
         llfeedback = findViewById(R.id.llfeedback);
         submissionallowedtext = findViewById(R.id.submissionallowedtext);
-        rlcategory = findViewById(R.id.rlcategory);
+        rlstatus.setVisibility(View.GONE);
     }
 
     private void initailize() {
@@ -491,7 +502,11 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         app_list.setLayoutManager(mApplicationLayoutManager);
         app_list.setItemAnimator(new DefaultItemAnimator());
 
-        //status_list = findViewById(R.id.status_list);
+
+        items_list.setHasFixedSize(true);
+        items_list.setLayoutManager(new LinearLayoutManager(bContext, LinearLayoutManager.VERTICAL, false));
+        items_list.setItemAnimator(new DefaultItemAnimator());
+
         status_list.setHasFixedSize(true);
         status_list.setLayoutManager(new LinearLayoutManager(bContext, LinearLayoutManager.HORIZONTAL, false));
         status_list.setItemAnimator(new DefaultItemAnimator());
@@ -523,17 +538,29 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     }
 
     private void setCloseRequestSpinner(List<String> closeRequestList) {
-        closeRequestList.add(0, getString(R.string.esp_lib_text_close_request_as));
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(bContext, R.layout.esp_lib_label_text, closeRequestList);
+        List<String> tempcloseRequestList = new ArrayList<>();
+        tempcloseRequestList.addAll(closeRequestList);
+        if (tempcloseRequestList.contains(getString(R.string.esp_lib_text_reassign))) {
+            int index = tempcloseRequestList.indexOf(getString(R.string.esp_lib_text_reassign));
+            tempcloseRequestList.remove(index);
+        }
+
+        if (tempcloseRequestList.size() > 0)
+            llcloserequestspinner.setVisibility(View.VISIBLE);
+        else
+            llcloserequestspinner.setVisibility(View.GONE);
+
+        tempcloseRequestList.add(0, getString(R.string.esp_lib_text_close_request_as));
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(bContext, R.layout.esp_lib_label_text, tempcloseRequestList);
         spcloserequest.setSelection(0);
         spcloserequest.setAdapter(arrayAdapter);
 
         spcloserequest.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                if (closeRequestList.get(position).equalsIgnoreCase(getString(R.string.esp_lib_text_close))) {
+                if (tempcloseRequestList.get(position).equalsIgnoreCase(getString(R.string.esp_lib_text_close))) {
                     submissionDialog(getString(R.string.esp_lib_text_completesubmissiontext), getString(R.string.esp_lib_text_yes), getString(R.string.esp_lib_text_closesubmission));
-                } else if (closeRequestList.get(position).equalsIgnoreCase(getString(R.string.esp_lib_text_cancel))) {
+                } else if (tempcloseRequestList.get(position).equalsIgnoreCase(getString(R.string.esp_lib_text_cancel))) {
                     Intent i = new Intent(bContext, ESP_LIB_CloseRequest.class);
                     i.putExtra("applicationId", mApplication.getId());
                     startActivity(i);
@@ -578,7 +605,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             } else {
                 txtrequestdetail.setVisibility(View.GONE);
                 lldetail.setVisibility(View.GONE);
-                ESP_LIB_ListUsersApplicationsAdapter.Companion.setSubApplications(false);
+                ESP_LIB_ListUsersApplicationsAdapterV2.Companion.setSubApplications(false);
             }
         }
 
@@ -600,56 +627,28 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
     private void UpdateTopView() {
         if (mApplication != null) {
-            String displayDate;
-            if (mApplication.getSubmittedOn() != null && mApplication.getSubmittedOn().length() > 0) {
-                displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(bContext, mApplication.getSubmittedOn(), true);
-            } else {
-                displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(bContext, mApplication.getCreatedOn(), true);
-            }
-            txtrequestedonval.setText(displayDate);
-            txtrequestedbyval.setText(mApplication.getApplicantName());
-            long days = ESP_LIB_Shared.getInstance().fromStringToDate(bContext, displayDate);
-            String daysVal = getString(R.string.esp_lib_text_day);
-            if (days > 1)
-                daysVal = getString(R.string.esp_lib_text_days);
 
-
-            pendingfor.setText(days + " " + daysVal);
+            /*ESP_LIB_ApplicationStatusAdapter statusAdapter = new ESP_LIB_ApplicationStatusAdapter(mApplication.getStageStatuses(), this);
+            status_list.setAdapter(statusAdapter);*/
 
             if (isSubApplications) {
-                categoryy.setText(mApplication.getApplicantName());
-                categorytext.setText(getString(R.string.esp_lib_text_applicantcolon));
-                rlpendingfor.setVisibility(View.VISIBLE);
                 llmaindetail.setVisibility(View.VISIBLE);
                 rldetailrow.setVisibility(View.GONE);
-                llstatuslayout.setVisibility(View.GONE);
                 txtrequestdetail.setVisibility(View.VISIBLE);
                 toolbarheading.setText(getString(R.string.esp_lib_text_submissiondetails));
             } else {
 
-                if (mApplication.getCategory() == null || mApplication.getCategory().isEmpty())
-                    rlcategory.setVisibility(View.GONE);
 
                 if (mApplication.isSigned())
                     ivsign.setVisibility(View.VISIBLE);
                 else
                     ivsign.setVisibility(View.GONE);
 
-                categoryy.setText(mApplication.getCategory());
-                rlpendingfor.setVisibility(View.GONE);
-                // llstatuslayout.setVisibility(View.VISIBLE);
-                llstatuslayout.setVisibility(View.GONE);
                 status.setText(mApplication.getStatus());
-              /*  ESP_LIB_ApplicationStatusAdapter statusAdapter = new ESP_LIB_ApplicationStatusAdapter(mApplication.getStageStatuses(), bContext);
-                status_list.setAdapter(statusAdapter);*/
                 setStatusColor(mApplication.getStatusId());
                 toolbarheading.setText(pref.getlabels().getApplication() + " " + getString(R.string.esp_lib_text_details));
+
             }
-            applicationNumber.setText(mApplication.getApplicationNumber());
-            definitionName.setText(mApplication.getDefinitionName());
-
-
-            /*categoryy.setText(mApplication.getCategory());*/
 
 
         }
@@ -665,17 +664,41 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             public void onResponse(Call<ESP_LIB_DynamicResponseDAO> call, Response<ESP_LIB_DynamicResponseDAO> response) {
 
                 if (response != null && response.body() != null) {
+
+                    actual_response = response.body();
+                    actualResponseJson = response.body().toJson();
+
+                    ESP_LIB_ApplicationItemsAdapter itemsAdapter = new ESP_LIB_ApplicationItemsAdapter(response.body().getSummary().getCardValues(), bContext);
+                    items_list.setAdapter(itemsAdapter);
+                    definitionName.setText(response.body().getSummary().getName());
+
+                    if (response.body().getSummary().isMine()) {
+                        viewline.setVisibility(View.VISIBLE);
+                        viewlinecurve.setVisibility(View.VISIBLE);
+                        rlfeedminerow.setVisibility(View.VISIBLE);
+                        txtfeedminevalue.setText(response.body().getSummary().getTitle());
+                        txtfeedminelabel.setText(getString(R.string.esp_lib_text_mine));
+                        txtfeedminelabel.setTextColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+                        viewline.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+                        viewlinecurve.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+                    } else if (!response.body().getSummary().isMine() && (response.body().getSummary().getTitle() != null &&
+                            !response.body().getSummary().getTitle().isEmpty())) {
+                        rlfeedminerow.setVisibility(View.VISIBLE);
+                        txtfeedminelabel.setVisibility(View.GONE);
+                        ivcircledot.setVisibility(View.GONE);
+                        txtfeedminevalue.setText(response.body().getSummary().getTitle());
+                    } else
+                        definitionName.setPadding(17, 30, 0, 15);
+
                     isClosingDatePassed = false;
                     status.setText(response.body().getApplicationStatus());
                     setStatusColor(response.body().getApplicationStatusId());
                     ESP_LIB_ApplicationSingleton.Companion.getInstace().setApplication(response.body());
-                    txtinfodescription.setText(response.body().getDescription());
 
                     if (response.body().getPermissions() != null && response.body().getPermissions().size() > 0) {
-                        spcloserequest.setVisibility(View.VISIBLE);
                         setCloseRequestSpinner(response.body().getPermissions());
                     } else
-                        spcloserequest.setVisibility(View.GONE);
+                        llcloserequestspinner.setVisibility(View.GONE);
 
 
                     if (mApplication == null) {
@@ -683,7 +706,6 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                         mApplication.setId(response.body().getApplicationId());
                         mApplication.setApplicationNumber(response.body().getApplicationNumber());
                         mApplication.setApplicantName(response.body().getApplicantName());
-                        mApplication.setCategory(response.body().getCategory());
                         mApplication.setCreatedOn(response.body().getCreatedOn());
                         mApplication.setStatus(response.body().getApplicationStatus());
                         mApplication.setStatusId(response.body().getApplicationStatusId());
@@ -695,12 +717,9 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     {
 
                         definitionDescription.setText(response.body().getDescription());
-
                         stop_loading_animation(false);
                         // if (llrows.getVisibility() == View.GONE)
                         submit_btn.setVisibility(View.VISIBLE);
-                        actual_response = response.body();
-                        actualResponseJson = response.body().toJson();
 
 
                         List<ESP_LIB_DynamicSectionValuesDAO> sectionsValues = actual_response.getSectionValues();
@@ -720,8 +739,6 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                         checkExpiry(response);
                     } else {
                         submit_btn.setVisibility(View.GONE);
-                        actual_response = response.body();
-                        actualResponseJson = response.body().toJson();
                         if (ESP_LIB_Shared.getInstance().hasLinkDefinitionId(response.body())) {
                             GetLinkApplicationInfo(mApplication.getId() + "", response.body());
                             if (rldetailrow.getVisibility() == View.VISIBLE) {
@@ -808,33 +825,33 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             daoESPLIB.setApplicantId("0");
             daoESPLIB.setDefinationId(null);
             daoESPLIB.setSearch("");
+            daoESPLIB.setType(1);
 
             ESP_LIB_APIs apis = new CompRoot().getService(bContext);
 
-            Call<ESP_LIB_ResponseApplicationsDAO> call = apis.getUserApplicationsV3(daoESPLIB);
+            Call<ESP_LIB_ResponseApplicationsDAO> call = apis.getUserApplicationsV4(daoESPLIB);
             call.enqueue(new Callback<ESP_LIB_ResponseApplicationsDAO>() {
                 @Override
                 public void onResponse(Call<ESP_LIB_ResponseApplicationsDAO> call, Response<ESP_LIB_ResponseApplicationsDAO> response) {
-
                     stop_loading_animation(false);
 
                     if (response != null && response.body() != null && response.body().getTotalRecords() > 0) {
                         if (response.body().getApplications() != null && response.body().getApplications().size() > 0) {
                             if (isLoadMore) {
-                                if (app_actual_list == null) {
-                                    app_actual_list.addAll(response.body().getApplications());
-                                } else if (app_actual_list != null && app_actual_list.size() > 0) {
-                                    app_actual_list.addAll(response.body().getApplications());
+                                if (app_submission_list == null) {
+                                    app_submission_list.addAll(response.body().getApplications());
+                                } else if (app_submission_list != null && app_submission_list.size() > 0) {
+                                    app_submission_list.addAll(response.body().getApplications());
                                 }
 
                                 PAGE_NO++;
-                                IN_LIST_RECORDS = app_actual_list.size();
+                                IN_LIST_RECORDS = app_submission_list.size();
                                 TOTAL_RECORDS_AVAILABLE = response.body().getTotalRecords();
                                 SCROLL_TO += PER_PAGE_RECORDS;
 
                                 try {
 
-                                    ESP_LIB_ListSubmissionApplicationsAdapter adapter = new ESP_LIB_ListSubmissionApplicationsAdapter(app_actual_list, bContext, "");
+                                    ESP_LIB_ListSubmissionApplicationsAdapter adapter = new ESP_LIB_ListSubmissionApplicationsAdapter(app_submission_list, bContext, "");
                                     submission_app_list.setAdapter(adapter);
                                     submission_app_list.scrollToPosition(SCROLL_TO - 5);
                                 } catch (Exception e) {
@@ -842,12 +859,12 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
                             } else {
                                 try {
-                                    app_actual_list.clear();
-                                    app_actual_list.addAll(response.body().getApplications());
-                                    ESP_LIB_ListSubmissionApplicationsAdapter adapter = new ESP_LIB_ListSubmissionApplicationsAdapter(app_actual_list, bContext, "");
+                                    app_submission_list.clear();
+                                    app_submission_list.addAll(response.body().getApplications());
+                                    ESP_LIB_ListSubmissionApplicationsAdapter adapter = new ESP_LIB_ListSubmissionApplicationsAdapter(app_submission_list, bContext, "");
                                     submission_app_list.setAdapter(adapter);
                                     PAGE_NO++;
-                                    IN_LIST_RECORDS = app_actual_list.size();
+                                    IN_LIST_RECORDS = app_submission_list.size();
                                     TOTAL_RECORDS_AVAILABLE = response.body().getTotalRecords();
                                     SCROLL_TO = 0;
                                     AddScroller();
@@ -857,6 +874,8 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                         } else
                             ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_some_thing_went_wrong), bContext);
                     }
+
+
                 }
 
                 @Override
@@ -918,11 +937,15 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     int submissioncount = body.getPendingLinkApplications() + body.getAcceptedLinkApplications() + body.getRejectedLinkApplications();
                     // if (submissioncount > 0)
                     //    rlsubmissionrow.setVisibility(View.VISIBLE);
+                    txtallvalue.setText(String.valueOf(submissioncount));
+                    txtpendingvalue.setText(String.valueOf(body.getPendingLinkApplications()));
+                    txtacceptedvalue.setText(String.valueOf(body.getAcceptedLinkApplications()));
+                    txtrejectedvalue.setText(String.valueOf(body.getRejectedLinkApplications()));
 
-                    txtsubmissions.setText(getString(R.string.esp_lib_text_submissions) + " (" + submissioncount + ")");
+                    // txtsubmissions.setText(getString(R.string.esp_lib_text_submissions) + " (" + submissioncount + ")");
 
 
-                    if (statusId == 3 || statusId == 4) // 3 = accepted 4 = rejected
+                  /*  if (statusId == 3 || statusId == 4) // 3 = accepted 4 = rejected
                     {
 
                         isComingFromService = true;
@@ -940,14 +963,14 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                             submissionallowedtext.setText(getString(R.string.esp_lib_text_submissionsstopped));
                             switchsubmissionallow.setVisibility(View.INVISIBLE);
                         }
-                    }
+                    }*/
 
 
                     stop_loading_animation(false);
 
                 } else {
                     stop_loading_animation(false);
-                    switchsubmissionallow.setEnabled(false);
+                    //  switchsubmissionallow.setEnabled(false);
 
                     //   Shared.getInstance().showAlertMessage(pref.getlabels().getApplication(), getString(R.string.some_thing_went_wrong), bContext);
                 }
@@ -963,71 +986,6 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         });
     }
 
-    private void getApplicationFeedBack(String id) {
-
-        start_loading_animation(false);
-
-        ESP_LIB_APIs apis = new CompRoot().getService(bContext);
-
-        applicationFeedback_call = apis.GetApplicationFeedBack(id);
-
-        applicationFeedback_call.enqueue(new Callback<List<ESP_LIB_ApplicationsFeedbackDAO>>() {
-            @Override
-            public void onResponse(Call<List<ESP_LIB_ApplicationsFeedbackDAO>> call, Response<List<ESP_LIB_ApplicationsFeedbackDAO>> response) {
-                stop_loading_animation(false);
-                if (response.body() != null && response.body().size() > 0) {
-                    rvFeedbackCommentsList.setVisibility(View.VISIBLE);
-                    llnofeedbackrecord.setVisibility(View.GONE);
-                    ArrayList<ESP_LIB_FeedbackDAO> feedbackList = new ArrayList<ESP_LIB_FeedbackDAO>();
-                    List<ESP_LIB_ApplicationsFeedbackDAO> body = response.body();
-                    for (int i = 0; i < body.size(); i++) {
-                        ESP_LIB_ApplicationsFeedbackDAO ESPLIBApplicationsFeedbackDAO = body.get(i);
-                        ESP_LIB_FeedbackDAO ESPLIBFeedbackDao = new ESP_LIB_FeedbackDAO();
-                        ESPLIBFeedbackDao.setUserName(ESPLIBApplicationsFeedbackDAO.getFullName());
-                        ESPLIBFeedbackDao.setComment(ESPLIBApplicationsFeedbackDAO.getComment());
-                        ESPLIBFeedbackDao.setCheck(true);
-                        ESPLIBFeedbackDao.setUserImage(ESPLIBApplicationsFeedbackDAO.getImageUrl());
-                        String role = getString(R.string.esp_lib_text_member);
-                        if (ESPLIBApplicationsFeedbackDAO.isAdmin())
-                            role = ESP_LIB_Enums.assessor.toString();
-
-                       /* if (role.equalsIgnoreCase(bContext.getString(R.string.applicant)))
-                            role = getString(R.string.member);*/
-
-
-                        ESPLIBFeedbackDao.setUserType(role);
-
-                        for (int j = 0; j < ESPLIBApplicationsFeedbackDAO.getAttachments().size(); j++) {
-                            ESP_LIB_ApplicationsFeedbackAttachmentsDAO ESPLIBApplicationsFeedbackAttachmentsDAO = ESPLIBApplicationsFeedbackDAO.getAttachments().get(j);
-                            ESP_LIB_DyanmicFormSectionFieldDetailsDAO ESPLIBDyanmicFormSectionFieldDetailsDAO = new ESP_LIB_DyanmicFormSectionFieldDetailsDAO();
-                            ESPLIBDyanmicFormSectionFieldDetailsDAO.setMimeType(ESPLIBApplicationsFeedbackAttachmentsDAO.getMimeType());
-                            ESPLIBDyanmicFormSectionFieldDetailsDAO.setName(ESPLIBApplicationsFeedbackAttachmentsDAO.getName());
-                            ESPLIBDyanmicFormSectionFieldDetailsDAO.setDownloadUrl(ESPLIBApplicationsFeedbackAttachmentsDAO.getDownloadUrl());
-                            ESPLIBDyanmicFormSectionFieldDetailsDAO.setCreatedOn(ESPLIBApplicationsFeedbackAttachmentsDAO.getCreatedOn());
-                            ESPLIBFeedbackDao.setAttachemntDetails(ESPLIBDyanmicFormSectionFieldDetailsDAO);
-                        }
-                        feedbackList.add(ESPLIBFeedbackDao);
-                    }
-                    ESP_LIB_ApplicationFeedbackAdapter feedbackAdapter = new ESP_LIB_ApplicationFeedbackAdapter(feedbackList, bContext, false);
-                    rvFeedbackCommentsList.setAdapter(feedbackAdapter);
-                } else {
-                    llnofeedbackrecord.setVisibility(View.VISIBLE);
-                    rvFeedbackCommentsList.setVisibility(View.GONE);
-                }
-
-                //   loadData();
-            }
-
-            @Override
-            public void onFailure(Call<List<ESP_LIB_ApplicationsFeedbackDAO>> call, Throwable t) {
-                stop_loading_animation(false);
-                llnofeedbackrecord.setVisibility(View.VISIBLE);
-                rvFeedbackCommentsList.setVisibility(View.GONE);
-            }
-        });
-
-
-    }
 
     public void postLinkDefinitionData(int definitionId, boolean isallowsubmission) {
 
@@ -1045,7 +1003,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     // if (!response.body().isSubmissionAllowed()) {
                     EventBus.getDefault().post(new EventOptions.EventRefreshData());
                     loadData();
-
+                    ivsubmissionoptions.setVisibility(View.GONE);
                         /*submissionallowedtext.setText(getString(R.string.esp_lib_text_submissionsstopped));
                         switchsubmissionallow.setVisibility(View.INVISIBLE);
                         loadData();*/
@@ -1295,53 +1253,25 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
         List<ESP_LIB_DynamicStagesDAO> tempStages = new ArrayList<>();
         for (int i = 0; i < responseStages.size(); i++) {
+
+            if (actual_response.getPermissions() != null && actual_response.getStages() != null &&
+                    actual_response.getPermissions().contains(getString(R.string.esp_lib_text_reassign)))
+                actual_response.getStages().get(i).setReassign(true);
+
             if (responseStages.get(i).isEnabled()) {
                 tempStages.add(responseStages.get(i));
             }
         }
 
         if (tempStages.size() > 0) {
-
             ESPLIBApplicationStagesAdapter = new ESP_LIB_ApplicationStagesAdapter(isComingfromAssessor, tempStages,
                     actualResponseJson, bContext, nestedscrollview);
             rvStagesFieldsCards.setAdapter(ESPLIBApplicationStagesAdapter);
             ESPLIBApplicationStagesAdapter.notifyDataSetChanged();
-            if (actual_response.getApplicationStatusId() == 4 || actual_response.getApplicationStatusId() == 3)
-            // getApplicationStatusId = 4 for application rejected
-            // getStatusId = 2 for stage rejected
-            // getApplicationStatusId = 3 for application accepted
-            // getStatusId = 1 for stage accepted
-            {
-                String getDate = "";
-                String getDisplayString = "";
-                for (int i = 0; i < tempStages.size(); i++) {
-                    if ((tempStages.get(i).getStatusId() == 2 || tempStages.get(i).getStatusId() == 1) && (tempStages.get(i).getCompletedOn() != null || !tempStages.get(i).getCompletedOn().isEmpty())) {
-                        getDate = tempStages.get(i).getCompletedOn();
-                        if (tempStages.get(i).getStatusId() == 1)
-                            getDisplayString = getString(R.string.esp_lib_text_acceptedon);
-                        else
-                            getDisplayString = getString(R.string.esp_lib_text_rejectedon);
-                    }
-                }
-
-                if (getDate != null && !getDate.isEmpty()) {
-                    String displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(bContext, getDate, true);
-                    rlaccepreject.setVisibility(View.VISIBLE);
-                    acceptedontext.setText(getDisplayString);
-                    acceptedOn.setText(displayDate);
-                }
-            }
-            //  getSignature(tempStages);
-
-        } else {
+        } else
             txtapprovalStages.setVisibility(View.GONE);
-            if (actual_response.getApplicationSubmittedDate() != null && actual_response.getApplicationSubmittedDate().length() > 0) {
-                String displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(bContext, actual_response.getApplicationSubmittedDate(), true);
-                acceptedOn.setText(displayDate);
-            }
 
 
-        }
     }
 
     private void getSignature(List<ESP_LIB_DynamicStagesDAO> tempStages) {
@@ -1645,10 +1575,23 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     SetUpLookUpValues(fieldToBeUpdated, lookup, isCalculatedMappedField);
                 }
 
+            } else if (requestCode == VERIFY_RESULT) {
+                if (resultCode == Activity.RESULT_OK) {
+                    startFeebform();
+                }
+
             }
 
         }
 
+    }
+
+    private void startFeebform() {
+        Intent intent = new Intent(this, ESP_LIB_FeedbackForm.class);
+        intent.putExtra("actualResponseJson", actualResponseJson);
+        intent.putExtra("criteriaListDAO", criteriaListDAOESPLIB);
+        intent.putExtra("isAccepted", isAccepted);
+        startActivity(intent);
     }
 
     public void UpdateLoadImageForField(ESP_LIB_DynamicFormSectionFieldDAO field, Uri uri) {
@@ -1872,28 +1815,12 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
     private void setGravity() {
         if (pref.getLanguage().equalsIgnoreCase("ar")) {
-            definitionName.setGravity(Gravity.RIGHT);
-            categoryy.setGravity(Gravity.RIGHT);
-            applicationNumber.setGravity(Gravity.RIGHT);
-            txtrequest.setGravity(Gravity.RIGHT);
-            txtrequestedbyval.setGravity(Gravity.RIGHT);
-            txtrequestedonval.setGravity(Gravity.RIGHT);
-            txtrequestedby.setGravity(Gravity.RIGHT);
             status.setGravity(Gravity.RIGHT);
             heading.setGravity(Gravity.RIGHT);
-            categorytext.setGravity(Gravity.RIGHT);
 
         } else {
-            definitionName.setGravity(Gravity.LEFT);
-            categoryy.setGravity(Gravity.LEFT);
-            applicationNumber.setGravity(Gravity.LEFT);
-            txtrequest.setGravity(Gravity.LEFT);
-            txtrequestedbyval.setGravity(Gravity.LEFT);
-            txtrequestedonval.setGravity(Gravity.LEFT);
-            txtrequestedby.setGravity(Gravity.LEFT);
             status.setGravity(Gravity.LEFT);
             heading.setGravity(Gravity.LEFT);
-            categorytext.setGravity(Gravity.LEFT);
         }
     }
 
@@ -1928,7 +1855,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
     }
 
-    public void cancelDefinition(int definitionId) {
+    /*public void cancelDefinition(int definitionId) {
 
         ESP_LIB_CancelApplicationDAO esp_lib_cancelApplicationDAO = new ESP_LIB_CancelApplicationDAO();
         esp_lib_cancelApplicationDAO.setApplicationid(mApplication.getId());
@@ -1968,10 +1895,10 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                 ESP_LIB_Shared.getInstance().showAlertMessage(pref.getlabels().getApplication(), getString(R.string.esp_lib_text_some_thing_went_wrong), bContext);
             }
         }
-    }
+    }*/
 
 
-    public void SubmitStageRequest(boolean isAccepted, ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAO) {
+   /* public void SubmitStageRequest(boolean isAccepted, ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAO) {
 
         ESP_LIB_DynamicResponseDAO submit_jsonNew = new Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO.class);//Shared.getInstance().CloneAddFormWithForm(actual_response);
         List<ESP_LIB_DynamicFormValuesDAO> criteriaFormValues = getCriteriaFormValues(criteriaListDAO);
@@ -1992,7 +1919,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         stagefeedbackSubmitForm(post);
 
 
-    }//END SubmitRequest
+    }//END SubmitRequest*/
 
     private List<ESP_LIB_DynamicFormValuesDAO> getCriteriaFormValues(ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAO) {
         int sectionId = 0;
@@ -2030,9 +1957,19 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     }
 
     @Override
-    public void feedbackClick(boolean isAccepted, @Nullable ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAO, @Nullable ESP_LIB_DynamicStagesDAO ESPLIBDynamicStagesDAO, int position) {
+    public void feedbackClick(boolean isApproved, @Nullable ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAO, @Nullable ESP_LIB_DynamicStagesDAO ESPLIBDynamicStagesDAO, int position) {
 
-        boolean isApproved = isAccepted;
+
+        isAccepted = isApproved;
+        criteriaListDAOESPLIB = criteriaListDAO;
+
+
+        if (criteriaListDAO.isSigned())
+            ESP_LIB_CommonMethodsKotlin.Companion.verificationPopUpPopulation(actualResponseJson, bContext);
+        else
+            startFeebform();
+
+       /* boolean isApproved = isAccepted;
 
         if (ESPLIBDynamicStagesDAO != null) {
             int count = 0;
@@ -2073,10 +2010,11 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             startActivity(intent);
         } else {
             SubmitStageRequest(isAccepted, criteriaListDAO);
-        }
+        }*/
 
 
     }
+
 
     private int criteriaCount(ESP_LIB_DynamicStagesDAO ESPLIBDynamicStagesDAO1, int count, int size) {
         for (int i = 0; i < size; i++) {
@@ -2219,7 +2157,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             super.onBackPressed();
             criteriaWasLoaded = false;
             if (!isSubApplications)
-                ESP_LIB_ListUsersApplicationsAdapter.Companion.setSubApplications(false);
+                ESP_LIB_ListUsersApplicationsAdapterV2.Companion.setSubApplications(false);
             /*Intent intent = new Intent(bContext, ApplicationsActivityDrawer.class);
             ComponentName cn = intent.getComponent();
             Intent mainIntent = Intent.makeRestartActivityTask(cn);

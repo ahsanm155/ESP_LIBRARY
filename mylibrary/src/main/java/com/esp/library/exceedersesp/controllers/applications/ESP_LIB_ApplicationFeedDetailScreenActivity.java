@@ -177,9 +177,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
 
-                if (IN_LIST_RECORDS < TOTAL_RECORDS_AVAILABLE) {
+                /*if (IN_LIST_RECORDS < TOTAL_RECORDS_AVAILABLE) {
                     getSubmissions(true);
-                }
+                }*/
             }
         });
 
@@ -482,6 +482,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                         //  if (ESP_LIB_Shared.getInstance().hasLinkDefinitionId(response.body())) {
                         if (response.body().getMySubmissions() != null) {
                             // rlsubmissionrow.setVisibility(View.VISIBLE);
+                            app_actual_list.clear();
                             app_actual_list.addAll(response.body().getMySubmissions());
                             ESP_LIB_ListSubmissionApplicationsAdapter adapter = new ESP_LIB_ListSubmissionApplicationsAdapter(app_actual_list, bContext, "");
                             adapter.isClickable(false);
@@ -494,6 +495,13 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                             rlsubmissionrow.setVisibility(View.GONE);
                         }*/
 
+
+
+                        if((!response.body().isMultipleSubmissionsAllowed() && response.body().getMySubmissions().size()==0)||
+                                response.body().isMultipleSubmissionsAllowed())
+                            addsub_btn.setVisibility(View.VISIBLE);
+                        else if(!response.body().isMultipleSubmissionsAllowed() && response.body().getMySubmissions().size()>0)
+                            addsub_btn.setVisibility(View.GONE);
 
                         ArrayList<ESP_LIB_DynamicFormSectionDAO> sections;
                         List<ESP_LIB_DynamicSectionValuesDAO> sectionsValues = actual_response.getSectionValues();
@@ -536,7 +544,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
     }
 
 
-    private void getSubmissions(Boolean isLoadMore) {
+   /* private void getSubmissions(Boolean isLoadMore) {
 
         start_loading_animation(true);
 
@@ -621,10 +629,18 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                                 } catch (Exception e) {
                                 }
                             }
+
+
+
                         } else
                             ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_some_thing_went_wrong), bContext);
                     } else
                         ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_some_thing_went_wrong), bContext);
+
+                    if (app_actual_list.size() == 0)
+                        rlnosubmission.setVisibility(View.VISIBLE);
+                    else
+                        rlnosubmission.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -641,7 +657,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
 
         }
-    }
+    }*/
 
 
     public void LoadStages() {

@@ -11,6 +11,7 @@ class ESP_LIB_FilterDAO : ESP_LIB_Base(), Serializable {
     var definitionIds: List<Int>? = null
     var pageNo: Int = 0
     var recordPerPage: Int = 0
+    var type: Int = 1
     var isMySpace: Boolean = false
     var myApplications: Boolean = false
     var sortBy: Int = 1

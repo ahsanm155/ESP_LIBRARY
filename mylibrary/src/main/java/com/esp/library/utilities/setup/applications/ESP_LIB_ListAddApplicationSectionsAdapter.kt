@@ -16,6 +16,7 @@ import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ActivityStageDetails
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationFeedDetailScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_ViewAnimationUtils
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import com.google.gson.Gson
 import utilities.data.applicants.dynamics.*
 import utilities.interfaces.ESP_LIB_FeedbackSubmissionClick
@@ -183,7 +184,7 @@ class ESP_LIB_ListAddApplicationSectionsAdapter(mApplication: ArrayList<ESP_LIB_
                 holder.tvSectionHeader.visibility = View.VISIBLE
                 if (isViewOnly) {
                     //  holder.tvSectionHeader.setPadding(36, 0, 0, 0)
-                    if (ESP_LIB_ListUsersApplicationsAdapter.isSubApplications) {
+                    if (ESP_LIB_ListUsersApplicationsAdapterV2.isSubApplications) {
                         //setSubmissionTextStyle(holder)
                         if (position > 0)
                             holder.viewsectionbottom.visibility = View.VISIBLE

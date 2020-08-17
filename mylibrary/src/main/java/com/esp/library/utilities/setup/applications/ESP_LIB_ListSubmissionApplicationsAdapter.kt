@@ -20,6 +20,7 @@ import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationDetailScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
+import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationStatusAdapter
 import utilities.data.applicants.ESP_LIB_ApplicationSingleton
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.interfaces.ESP_LIB_DeleteDraftListener
@@ -142,7 +143,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
 
 
         holder.cards.setOnClickListener {
-            if (isClickable) {
+          //  if (isClickable) {
                 holder.cards.isEnabled = false
 
                 if (ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == null || ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == context?.getString(R.string.esp_lib_text_profile_complete)) {
@@ -158,7 +159,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
 
                 val handler = Handler()
                 handler.postDelayed({ holder.cards.isEnabled = true }, 2000)
-            }
+           // }
         }
 
         val statusAdapter = ESP_LIB_ApplicationStatusAdapter(applicationsDAO.stageStatuses, context!!);

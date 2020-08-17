@@ -34,7 +34,6 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesCriteriaListDAO;
@@ -128,7 +127,7 @@ public class ESP_LIB_ApplicationFieldsRecyclerAdapter extends RecyclerView.Adapt
 
         int item_layout = R.layout.esp_lib_item_add_application_field_type_text_view;
         try {
-            if (ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications())
+            if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
                 item_layout = R.layout.esp_lib_item_sub_application_field_type_text_view;
         } catch (Exception e) {
         }

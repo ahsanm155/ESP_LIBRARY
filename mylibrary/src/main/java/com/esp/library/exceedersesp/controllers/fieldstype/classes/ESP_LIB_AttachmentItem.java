@@ -20,8 +20,8 @@ import com.esp.library.exceedersesp.controllers.fieldstype.other.ESP_LIB_Validat
 import com.esp.library.exceedersesp.controllers.fieldstype.viewholders.ESP_LIB_AttachmentTypeViewHolder;
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2;
 
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter;
 import utilities.common.ESP_LIB_CommonMethodsKotlin;
 import utilities.data.applicants.dynamics.ESP_LIB_DyanmicFormSectionFieldDetailsDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO;
@@ -107,7 +107,7 @@ public class ESP_LIB_AttachmentItem {
             String label = fieldDAO.getLabel();
 
             if (isViewOnly || fieldDAO.isMappedCalculatedField()) {
-                if (ESP_LIB_ListUsersApplicationsAdapter.Companion.isSubApplications())
+                if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
                     label = fieldDAO.getLabel() + ":";
                 holder.tValueLabel.setText(label);
                 holder.ivdots.setVisibility(View.INVISIBLE);

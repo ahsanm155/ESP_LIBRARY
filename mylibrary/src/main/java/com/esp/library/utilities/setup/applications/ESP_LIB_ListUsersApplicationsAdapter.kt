@@ -1,3 +1,4 @@
+/*
 package utilities.adapters.setup.applications
 
 import android.app.Activity
@@ -26,6 +27,7 @@ import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_UsersApplicat
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
+import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationStatusAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -146,13 +148,13 @@ class ESP_LIB_ListUsersApplicationsAdapter(private var mApplications: List<ESP_L
         val holder = holder_parent as ActivitiesList
         val applicationsDAO = mApplications?.get(position)
 
-        mApplications?.forEach {
-            it.mainCardValues?.forEach { mainCard ->
+
+        applicationsDAO?.mainCardValues?.forEach { mainCard ->
                 if (mainCard.label.equals(context?.getString(R.string.esp_lib_text_ola)))
-                    applicationsDAO?.ola = mainCard.value
+                    applicationsDAO.ola = mainCard.value
 
             }
-        }
+
 
         if (!applicationsDAO?.ola.isNullOrEmpty()) {
             holder.rlola.visibility = View.VISIBLE
@@ -171,9 +173,11 @@ class ESP_LIB_ListUsersApplicationsAdapter(private var mApplications: List<ESP_L
         if (applicationsDAO!!.isSigned)
             holder.ivsign.visibility = View.VISIBLE
 
-        /*       if (ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase() != context?.getString(R.string.applicantsmall)
+        */
+/*       if (ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase() != context?.getString(R.string.applicantsmall)
                        && applicationsDAO?.isOverDue!!)
-                   holder.voverduedot.visibility = View.VISIBLE*/
+                   holder.voverduedot.visibility = View.VISIBLE*//*
+
 
         if (searched_text != null && searched_text!!.length > 0) {
 
@@ -257,9 +261,11 @@ class ESP_LIB_ListUsersApplicationsAdapter(private var mApplications: List<ESP_L
 
         if (applicationsDAO?.statusId == 4) {
             holder.rlreason.visibility = View.VISIBLE
-            /*val lp = holder.txtstatus.getLayoutParams() as RelativeLayout.LayoutParams
+            */
+/*val lp = holder.txtstatus.getLayoutParams() as RelativeLayout.LayoutParams
             lp.addRule(RelativeLayout.BELOW, holder.reasontext.getId());
-            holder.txtstatus.setLayoutParams(lp);*/
+            holder.txtstatus.setLayoutParams(lp);*//*
+
             GetApplicationFeedBack(applicationsDAO.id.toString(), holder)
         } else
             holder.rlreason.visibility = View.GONE
@@ -482,3 +488,4 @@ class ESP_LIB_ListUsersApplicationsAdapter(private var mApplications: List<ESP_L
 
     }
 }
+*/

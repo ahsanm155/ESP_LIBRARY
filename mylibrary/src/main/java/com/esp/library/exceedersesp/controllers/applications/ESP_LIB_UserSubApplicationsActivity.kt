@@ -10,9 +10,9 @@ import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.utilities.common.*
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import kotlinx.android.synthetic.main.esp_lib_activity_no_record.*
 import kotlinx.android.synthetic.main.esp_lib_fragment_subusers_applications.*
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.*
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.app_list
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.load_more_div
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.swipeRefreshLayout
@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersApplicationsAdapter
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicResponseDAO
@@ -193,7 +192,7 @@ class ESP_LIB_UserSubApplicationsActivity : ESP_LIB_BaseActivity() {
         daoESPLIB.definationId = null
         daoESPLIB.search = ""
         // call = apis.GetUserSubApplicationsList("", 0, PAGE_NO, PER_PAGE_RECORDS, false, 1, "", getDynamicStagesDAO.linkDefinitionId);
-        call = apis.getUserApplicationsV3(daoESPLIB)
+        call = apis.getUserApplicationsV4(daoESPLIB)
 
 
 
@@ -221,7 +220,7 @@ class ESP_LIB_UserSubApplicationsActivity : ESP_LIB_BaseActivity() {
                             SCROLL_TO += PER_PAGE_RECORDS
 
                             try {
-                                mApplicationAdapter = context?.let { ESP_LIB_ListUsersApplicationsAdapter(app_actual_list, it, "", true) }
+                                mApplicationAdapter = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(app_actual_list, it, "", true) }
                                 app_list?.adapter = mApplicationAdapter
                                 mApplicationAdapter!!.notifyDataSetChanged()
                                 app_list?.scrollToPosition(SCROLL_TO - 5)
@@ -231,7 +230,7 @@ class ESP_LIB_UserSubApplicationsActivity : ESP_LIB_BaseActivity() {
                         } else {
                             try {
                                 app_actual_list = ESPLIBResponse.body().applications as MutableList<ESP_LIB_ApplicationsDAO>?
-                                mApplicationAdapter = context?.let { ESP_LIB_ListUsersApplicationsAdapter(app_actual_list, it, "", true) }
+                                mApplicationAdapter = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(app_actual_list, it, "", true) }
                                 app_list?.adapter = mApplicationAdapter
                                 PAGE_NO++
                                 IN_LIST_RECORDS = app_actual_list!!.size
@@ -438,7 +437,7 @@ class ESP_LIB_UserSubApplicationsActivity : ESP_LIB_BaseActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        ESP_LIB_ListUsersApplicationsAdapter.isSubApplications = false
+        ESP_LIB_ListUsersApplicationsAdapterV2.isSubApplications = false
     }
 
 }

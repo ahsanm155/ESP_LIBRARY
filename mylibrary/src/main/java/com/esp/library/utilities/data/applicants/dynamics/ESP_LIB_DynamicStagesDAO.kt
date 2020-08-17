@@ -19,6 +19,7 @@ class ESP_LIB_DynamicStagesDAO : ESP_LIB_Base(), Serializable {
     var linkDefinitionSectionId: Int = 0
     var isAll: Boolean = false
     var isLast: Boolean = false
+    var isReassign: Boolean = false
     var linkDefinitionCanApplyMultiple: Boolean = false
     var status: String? = null
     var criteriaCount: Int = 0
