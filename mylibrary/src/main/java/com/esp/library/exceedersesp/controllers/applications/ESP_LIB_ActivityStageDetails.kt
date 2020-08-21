@@ -25,6 +25,7 @@ import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_FeedbackForm
 import com.esp.library.utilities.common.*
 import com.esp.library.utilities.customevents.EventOptions
 import com.esp.library.utilities.data.applicants.ESP_LIB_FaceDAO
+import com.esp.library.utilities.interfaces.ESP_LIB_FullScreen_CallbackListener
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationCriteriaAdapter
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter
 import com.google.gson.Gson
@@ -244,12 +245,12 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
         //showCmaeraVerificationAlert(getString(R.string.app_name), getString(R.string.esp_lib_text_need_to_verify), this)
 
-        ESP_LIB_CommonMethodsKotlin.verificationPopUpPopulation(actualResponseJson, context)
 
-       /* if (criteriaListDAO!!.isSigned)
+
+        if (criteriaListDAO!!.isSigned)
             ESP_LIB_CommonMethodsKotlin.verificationPopUpPopulation(actualResponseJson, context)
         else
-            startFeebform()*/
+            startFeebform()
 
         /* var isApproved = isAccepted
 
@@ -569,7 +570,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
     }
 
-    fun veridyFaceIds(espLibFacedao: ESP_LIB_FaceDAO) {
+    /*fun veridyFaceIds(espLibFacedao: ESP_LIB_FaceDAO) {
 
         start_loading_animation()
         try {
@@ -659,7 +660,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
         }
 
-    }
+    }*/
 
     private fun start_loading_animation() {
         try {
@@ -930,7 +931,9 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+
+
+ /*   @Subscribe(threadMode = ThreadMode.MAIN)
     fun veridyFaceId(eventFaceIdVerification: EventOptions.EventFaceIdVerification) {
 
         if (pref?.profileFaceId1.isNullOrEmpty()) {
@@ -945,7 +948,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
             espLibFacedao.faceId2 = pref?.getfaceId2()
             veridyFaceIds(espLibFacedao)
         }
-    }
+    }*/
 
     private fun callService() {
         unRegisterReciever()
@@ -957,10 +960,14 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
     private fun setStatusColor(status: String?) {
         val actualResponseJson = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
+
         var isSigned: Boolean = false
         for (i in 0 until dynamicStagesDAO?.criteriaList!!.size) {
-            isSigned = dynamicStagesDAO?.criteriaList?.get(i)?.isSigned!!
-            if (isSigned) {
+            val dynamicStagesCriteriaListDAO = dynamicStagesDAO?.criteriaList?.get(i)
+            val assessmentStatus = dynamicStagesCriteriaListDAO?.assessmentStatus
+            isSigned = dynamicStagesCriteriaListDAO?.isSigned!!
+            if (isSigned && (assessmentStatus!!.equals(context?.getString(R.string.esp_lib_text_accepted),ignoreCase = true)||
+                            assessmentStatus.equals(context?.getString(R.string.esp_lib_text_rejected),ignoreCase = true))) {
                 ivsign.visibility = View.VISIBLE
                 break
             }
@@ -983,7 +990,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
             }
             ESP_LIB_Enums.pending.toString() // Pending
             -> {
-                txtstatus.text = context?.getString(R.string.esp_lib_text_pending)
+                txtstatus.text = context?.getString(R.string.esp_lib_text_opencaps)
                 txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
             }
@@ -1113,5 +1120,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
         if (ESP_LIB_ApplicationDetailScreenActivity.criteriaWasLoaded)
             ESP_LIB_ApplicationDetailScreenActivity.criteriaWasLoaded = false
     }
+
+
 
 }

@@ -95,6 +95,8 @@ class ESP_LIB_ApplicationsActivityDrawer : ESP_LIB_BaseActivity(), ESP_LIB_Users
     override fun onCreate(savedInstanceState: Bundle?) {
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.esp_lib_activity_applications_drawer)
 
         initailize()
@@ -111,10 +113,6 @@ class ESP_LIB_ApplicationsActivityDrawer : ESP_LIB_BaseActivity(), ESP_LIB_Users
             }
         }
 
-       /* filiter.setOnClickListener { v ->
-            ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_FilterScreenActivity::class.java, context, null, 2)
-        }
-*/
         toolbar_heading.setText(pref?.getlabels()?.applications)
 
 
@@ -127,27 +125,6 @@ class ESP_LIB_ApplicationsActivityDrawer : ESP_LIB_BaseActivity(), ESP_LIB_Users
         val ft = fm!!.beginTransaction()
         ft.add(R.id.request_fragment, submit_request_tabs)
         ft.commit()
-
-        /* if (ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase() == getString(R.string.applicantsmall)) {
-             val submit_request = ApplicationActivityTabs.newInstance()
-             val ft = fm!!.beginTransaction()
-             ft.add(R.id.request_fragment, submit_request)
-             ft.commit()
-         } else {
-             submit_request = UsersApplicationsFragment.newInstance()
-             val ft = fm!!.beginTransaction()
-             ft.add(R.id.request_fragment, submit_request!!)
-             ft.commit()
-         }
- */
-
-        /*if (ESP_LIB_ESPApplication.getInstance().isComponent || ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()) == ESP_LIB_Enums.applicant.toString()) {
-            setLayoutMargin(resources.getDimensionPixelSize(R.dimen._55sdp))
-        } else {
-            setLayoutMargin(resources.getDimensionPixelSize(R.dimen._15sdp))
-        }*/
-
-
 
         submit_request_searchESPLIB = ESP_LIB_UsersSearchApplicationsFragment.newInstance()
         val ft_search = fm!!.beginTransaction()

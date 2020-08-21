@@ -15,6 +15,10 @@ import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.esp.library.utilities.customevents.EventOptions;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -65,6 +69,7 @@ public class ImageProcessing {
         @Override
         protected void onPostExecute(String result) {
             progressBar.dismiss();
+            EventBus.getDefault().post(new EventOptions.EventFaceIdVerification());
            // Toast.makeText(mContext,"Image saved at " + picturePath.getAbsolutePath(),Toast.LENGTH_SHORT).show();
         }
     }

@@ -39,6 +39,7 @@ class ESP_LIB_DynamicStagesCriteriaListDAO : ESP_LIB_Base(), Serializable {
     var customFields:  List<ESP_LIB_DynamicFormSectionFieldDAO>? = null
     var customFieldsCount: Int = 0
     var isSystem: Boolean = false
+    var permissions: List<String>? = null
     lateinit var form: ESP_LIB_DynamicFormDAO
     lateinit var formValues: List<ESP_LIB_DynamicFormValuesDAO>
 

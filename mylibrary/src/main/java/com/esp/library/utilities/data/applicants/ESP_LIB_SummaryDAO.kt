@@ -6,6 +6,7 @@ import java.io.Serializable
 class ESP_LIB_SummaryDAO: ESP_LIB_Base(), Serializable {
 
     var cardValues: List<ESP_LIB_CardValuesDAO>? = null
+    var isFeed: Boolean = false
     var isMine: Boolean = false
     var name: String? = null
     var title: String? = null

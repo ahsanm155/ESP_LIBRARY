@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.PopupMenu
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
@@ -17,7 +18,6 @@ import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_Application
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_UsersApplicationsFragment
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Enums
-import com.esp.library.utilities.common.ESP_LIB_RecyclerItemClickListener
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import utilities.data.applicants.ESP_LIB_ApplicationSingleton
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
@@ -40,10 +40,14 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
         internal var status_list: androidx.recyclerview.widget.RecyclerView
         internal var items_list: androidx.recyclerview.widget.RecyclerView
         internal var rlstatus: RelativeLayout
-        internal var cards: RelativeLayout
+        internal var rlfeedminerow: RelativeLayout
+        internal var cards: CardView
         internal var ibRemoveCard: ImageButton
         internal var txtstatus: TextView
+        internal var txtfeedminelabel: TextView
+        internal var ivcircledot: ImageView
         internal var definitionName: TextView
+        internal var txtfeedminevalue: TextView
         internal var ivsign: ImageView
 
         init {
@@ -52,8 +56,12 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
             cards = itemView.findViewById(R.id.cards)
             txtstatus = itemView.findViewById(R.id.txtstatus)
             rlstatus = itemView.findViewById(R.id.rlstatus)
+            txtfeedminelabel = itemView.findViewById(R.id.txtfeedminelabel)
+            ivcircledot = itemView.findViewById(R.id.ivcircledot)
+            rlfeedminerow = itemView.findViewById(R.id.rlfeedminerow)
             ibRemoveCard = itemView.findViewById(R.id.ibRemoveCard)
             definitionName = itemView.findViewById(R.id.definitionName)
+            txtfeedminevalue = itemView.findViewById(R.id.txtfeedminevalue)
             status_list = itemView.findViewById(R.id.status_list)
             items_list = itemView.findViewById(R.id.items_list)
             status_list.setHasFixedSize(true)
@@ -77,7 +85,6 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
     }
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.esp_lib_activity_dynamic_list_applications_row, parent, false)
         return ActivitiesList(v)
@@ -95,8 +102,8 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
         val applicationsDAO = mApplications?.get(position)
 
         val definitionName = applicationsDAO?.definitionName
-
-        holder.definitionName.text=definitionName
+        holder.definitionName.setPadding(0, 30, 0, 0)
+        holder.definitionName.text = definitionName
 
         if (applicationsDAO!!.isSigned)
             holder.ivsign.visibility = View.VISIBLE
@@ -104,7 +111,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
         val statusAdapter = ESP_LIB_ApplicationStatusAdapter(applicationsDAO.stageStatuses, context!!)
         holder.status_list.adapter = statusAdapter
 
-        val itemsAdapter = ESP_LIB_ApplicationItemsAdapter(applicationsDAO.mainCardValues, context!!)
+        val itemsAdapter = ESP_LIB_ApplicationItemsAdapter(applicationsDAO.summary?.cardValues, context!!)
         holder.items_list.adapter = itemsAdapter
 
         holder.ibRemoveCard.setOnClickListener { v -> ShowMenu(v, applicationsDAO) }
@@ -115,29 +122,35 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
             //holder.cards.isEnabled = false
 
             if (ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == null || ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == context?.getString(R.string.esp_lib_text_profile_complete)) {
-                    appDetail(applicationsDAO, false)
+                appDetail(applicationsDAO, false)
             } else if (ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == context?.getString(R.string.esp_lib_text_profile_incomplete)) {
                 ESP_LIB_Shared.getInstance().showAlertProfileMessage(context?.getString(R.string.esp_lib_text_profile_error_heading), context?.getString(R.string.esp_lib_text_profile_error_desc), context)
             } else if (ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == context?.getString(R.string.esp_lib_text_profile_incomplete_admin)) {
                 ESP_LIB_Shared.getInstance().showAlertProfileMessage(context?.getString(R.string.esp_lib_text_profile_error_heading), context?.getString(R.string.esp_lib_text_profile_error_desc_admin), context)
             }
 
-           /* val handler = Handler()
-            handler.postDelayed({ holder.cards.isEnabled = true }, 2000)*/
+            /* val handler = Handler()
+             handler.postDelayed({ holder.cards.isEnabled = true }, 2000)*/
 
         }
 
-        holder.items_list.addOnItemTouchListener(
-                ESP_LIB_RecyclerItemClickListener(context,  holder.items_list, object : ESP_LIB_RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View?, position: Int) {
-                        holder.cards.performClick()
-                    }
+        if (applicationsDAO.summary?.isFeed!!) {
+            holder.rlfeedminerow.visibility = View.VISIBLE
+            holder.txtfeedminevalue.setText(applicationsDAO.summary?.title)
+            holder.rlfeedminerow.setPadding(0, 30, 0, 0)
+        }
+        else if(!applicationsDAO.summary?.isFeed!!)
+        {
+            if(!applicationsDAO.summary?.title.isNullOrEmpty())
+            {
+                holder.txtfeedminelabel.visibility=View.GONE
+                holder.ivcircledot.visibility=View.GONE
+                holder.rlfeedminerow.visibility = View.VISIBLE
+                holder.txtfeedminevalue.setText(applicationsDAO.summary?.title)
+                holder.rlfeedminerow.setPadding(0, 30, 0, 0)
+            }
 
-                    override fun onLongItemClick(view: View?, position: Int) {
-                        // do whatever
-                    }
-                })
-        )
+        }
 
 
     }//End Holder Class
@@ -223,7 +236,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
             }
             2 // Pending
             -> {
-                holder.txtstatus.setText(R.string.esp_lib_text_pending)
+                holder.txtstatus.setText(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
                 holder.ibRemoveCard.visibility = View.GONE
@@ -256,7 +269,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
                 holder.ibRemoveCard.visibility = View.GONE
             }
             else -> {
-                holder.txtstatus.setText(R.string.esp_lib_text_pending)
+                holder.txtstatus.setText(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
                 holder.ibRemoveCard.visibility = View.GONE

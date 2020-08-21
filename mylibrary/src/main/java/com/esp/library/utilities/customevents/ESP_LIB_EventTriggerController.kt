@@ -5,4 +5,6 @@ class EventOptions {
     class EventRefreshData
     class EventBottomSheetShowing
     class EventFaceIdVerification
+    class RefreshDataOnBack
+    class PopUpDismissEvent
 }

@@ -111,7 +111,10 @@ interface ESP_LIB_APIs {
        fun reAssignData(@Query("applicationId") applicationId: Int?, @Query("newOwnerId") newOwnerId: Int,
                         @Body dynamicStagesCriteriaListDAO: DynamicStagesCriteriaListDAO?): Call<DynamicStagesCriteriaListDAO>*/
 
-    @POST("application/reassign/assessment")
+    /*@POST("application/reassign/assessment")
+    fun reAssignData(@Body ESPLIBDynamicStagesCriteriaListDAO: ESP_LIB_DynamicStagesCriteriaListDAO?): Call<Any>*/
+
+    @PUT("assessment/reassign/")
     fun reAssignData(@Body ESPLIBDynamicStagesCriteriaListDAO: ESP_LIB_DynamicStagesCriteriaListDAO?): Call<Any>
 
     @POST("application/getCalculatedValues")

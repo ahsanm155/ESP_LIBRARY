@@ -115,7 +115,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name="com.esp.library.exceedersesp.controllers.applications.ESP_LIB_UsersList"
+            android:name="com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ReassignUsersList"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
@@ -176,7 +176,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name="com.esp.library.exceedersesp.controllers.identityVerification.Verify_Identity"
+            android:name="com.esp.library.exceedersesp.controllers.identityVerification.ESP_LIB_Verify_Identity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 

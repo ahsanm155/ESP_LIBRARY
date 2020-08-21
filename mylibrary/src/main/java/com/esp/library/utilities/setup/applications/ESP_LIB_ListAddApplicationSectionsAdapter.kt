@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationDetailScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
@@ -18,11 +17,14 @@ import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_Application
 import com.esp.library.utilities.common.ESP_LIB_ViewAnimationUtils
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.esp_lib_new_definition_filters_list_placeholder.view.*
 import utilities.data.applicants.dynamics.*
 import utilities.interfaces.ESP_LIB_FeedbackSubmissionClick
 
 
-class ESP_LIB_ListAddApplicationSectionsAdapter(mApplication: ArrayList<ESP_LIB_DynamicFormSectionDAO>?, con: ESP_LIB_BaseActivity, internal var searched_text: String,
+class ESP_LIB_ListAddApplicationSectionsAdapter(mApplication: java.util.ArrayList<ESP_LIB_DynamicFormSectionDAO>?,
+                                                con: ESP_LIB_BaseActivity, internal var searched_text: String,
+                                                internal var isComingFromFeedDetail: Boolean,
                                                 internal var isViewOnly: Boolean) : androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_ListAddApplicationSectionsAdapter.ParentViewHolder>() {
     private var actualResponseJson: String? = null
     internal var pref: ESP_LIB_SharedPreference
@@ -237,6 +239,11 @@ class ESP_LIB_ListAddApplicationSectionsAdapter(mApplication: ArrayList<ESP_LIB_
         val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
         holder.rvFieldsCards.layoutManager = linearLayoutManager
 
+
+        //if (holder.rvFieldsCards.visibility == View.VISIBLE)
+
+            if(isComingFromFeedDetail)
+                holder.rlsection.visibility=View.GONE
 
 
         holder.ivarrow.setOnClickListener {

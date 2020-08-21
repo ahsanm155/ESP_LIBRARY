@@ -277,7 +277,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
                             sections = GetOnlyFieldsCards(response.body().getForm(), null);
 
                         if (sections != null && sections.size() > 0) {
-                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", false);
+                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", false, false);
                             mApplicationSectionsAdapter.setActualResponseJson(actualResponseJson);
                             app_list.setAdapter(mApplicationSectionsAdapter);
                             mApplicationSectionsAdapter.notifyDataSetChanged();

@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.esp.library.R
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.ESP_LIB_WebViewScreenActivity
 import com.esp.library.utilities.common.*
 import com.esp.library.utilities.customevents.EventOptions
@@ -480,7 +481,7 @@ class ESP_LIB_FragmentProfileImage : androidx.fragment.app.Fragment(), ESP_LIB_I
                             Glide.with(context!!).load(response.body()).placeholder(R.drawable.esp_lib_drawable_default_profile_picture)
                                     .error(R.drawable.esp_lib_drawable_default_profile_picture).into(it)
                         }*/
-
+                        ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.imageUrl=response.body()
                         Glide.with(context!!)
                                 .asBitmap()
                                 .load(response.body())

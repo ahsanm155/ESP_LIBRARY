@@ -102,7 +102,7 @@ class ESP_LIB_ListStagesCriteriaDetailAdapter(private val mCriteriaESPLIBS: List
         if (mCriteriaESPLIBS[position].assessmentStatus != null && mCriteriaESPLIBS[position].assessmentStatus!!.length > 0) {
             holder.status.visibility = View.VISIBLE
             if (mCriteriaESPLIBS[position].assessmentStatus!!.toLowerCase().equals(context.getString(R.string.esp_lib_text_active), ignoreCase = true) || mCriteriaESPLIBS[position].assessmentStatus!!.toLowerCase().equals(context.getString(R.string.esp_lib_text_neww), ignoreCase = true)) {
-                holder.status.setText(R.string.esp_lib_text_pending)
+                holder.status.setText(R.string.esp_lib_text_opencaps)
 
                 holder.status_dot.setBackgroundDrawable(context.resources.getDrawable(R.drawable.esp_lib_drawable_draw_bg_pending))
 

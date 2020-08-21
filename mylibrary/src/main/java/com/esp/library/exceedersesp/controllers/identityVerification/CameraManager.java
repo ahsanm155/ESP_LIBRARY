@@ -70,6 +70,15 @@ public class CameraManager {
                 break;
         }
 
+        /*int result;
+        if (camInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (camInfo.orientation + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (camInfo.orientation - degrees + 360) % 360;
+        }
+        return result;*/
+
         int result;
         result = (camInfo.orientation + degrees) % 360;
         return (360 - result) % 360;

@@ -2,7 +2,6 @@ package utilities.adapters.setup.applications
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,7 @@ import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_Application
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
-import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationStatusAdapter
+import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationItemsAdapter
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications
 import utilities.data.applicants.ESP_LIB_ApplicationSingleton
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
@@ -34,68 +33,55 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
     private var isComingFromSeeAll: Boolean = false
 
     var mApplicationsFiltered: ArrayList<ESP_LIB_ApplicationsDAO>? = null
+
     open class ParentViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v)
 
     inner class ActivitiesList(v: View) : ParentViewHolder(v) {
 
         internal var cards: RelativeLayout
-        internal var requestnumvalue: TextView
+        internal var rlfeedminerow: RelativeLayout
         internal var definitionName: TextView
-        internal var rlpendingfor: RelativeLayout? = null
-        internal var startedOn: TextView
-        internal var startedOntext: TextView
         internal var txtstatus: TextView
-        internal var txtrequestedbyvalue: TextView
-        internal var txtsubmissionvalue: TextView
-        internal var txtfeedvalue: TextView
+        internal var txtfeedminevalue: TextView
+        internal var txtfeedminelabel: TextView
         internal var ivsign: ImageView
+        internal var viewline: View
+        internal var buttonsviewline: View
         internal var ivcircledot: ImageView
-        internal var pendingfor: TextView? = null
-        internal var txtola: TextView
-        internal var txtolavalue: TextView
-        internal var llOLA: RelativeLayout
+        internal var items_list: androidx.recyclerview.widget.RecyclerView
         internal var rlstatus: RelativeLayout
         internal var btviewdetails: Button
         internal var btreject: Button
         internal var llcardButtons: LinearLayout
         internal var status_list: androidx.recyclerview.widget.RecyclerView
-        internal var voverduedot: View
-        internal var viewfeed: View
 
 
         init {
 
-            viewfeed = itemView.findViewById(R.id.viewfeed)
             cards = itemView.findViewById(R.id.cards)
+            rlfeedminerow = itemView.findViewById(R.id.rlfeedminerow)
             btviewdetails = itemView.findViewById(R.id.btviewdetails)
             btreject = itemView.findViewById(R.id.btreject)
-            txtola = itemView.findViewById(R.id.txtola)
-            txtolavalue = itemView.findViewById(R.id.txtolavalue)
-            txtfeedvalue = itemView.findViewById(R.id.txtfeedvalue)
-            requestnumvalue = itemView.findViewById(R.id.requestnumvalue)
+            txtfeedminevalue = itemView.findViewById(R.id.txtfeedminevalue)
+            viewline = itemView.findViewById(R.id.viewline)
+            buttonsviewline = itemView.findViewById(R.id.buttonsviewline)
+            txtfeedminelabel = itemView.findViewById(R.id.txtfeedminelabel)
             llcardButtons = itemView.findViewById(R.id.llcardButtons)
             definitionName = itemView.findViewById(R.id.definitionName)
-            startedOn = itemView.findViewById(R.id.startedOn)
-            txtrequestedbyvalue = itemView.findViewById(R.id.txtrequestedbyvalue)
             ivsign = itemView.findViewById(R.id.ivsign)
             ivcircledot = itemView.findViewById(R.id.ivcircledot)
-            startedOntext = itemView.findViewById(R.id.startedOntext)
             txtstatus = itemView.findViewById(R.id.txtstatus)
             rlstatus = itemView.findViewById(R.id.rlstatus)
-            txtsubmissionvalue = itemView.findViewById(R.id.txtsubmissionvalue)
-            llOLA = itemView.findViewById(R.id.llOLA)
+            items_list = itemView.findViewById(R.id.items_list)
             status_list = itemView.findViewById(R.id.status_list)
-            voverduedot = itemView.findViewById(R.id.voverduedot)
             status_list.setHasFixedSize(true)
             status_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             status_list.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
 
-            try {
-                rlpendingfor = itemView.findViewById(R.id.rlpendingfor)
-                pendingfor = itemView.findViewById(R.id.pendingfor)
-            } catch (e: java.lang.Exception) {
 
-            }
+            items_list.setHasFixedSize(true)
+            items_list.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
+            items_list.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
 
 
         }
@@ -118,8 +104,8 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
     }
 
     fun setInterfaceClickListener(anyClick: ESP_LIB_AnyClick?) {
-        clickListener=anyClick
-        ESP_LIB_CustomLogs.displayLogs(TAG+" clickListener: "+clickListener)
+        clickListener = anyClick
+        ESP_LIB_CustomLogs.displayLogs(TAG + " clickListener: " + clickListener)
     }
 
 
@@ -136,104 +122,131 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
 
         val holder = holder_parent as ActivitiesList
         val applicationsDAO = mApplicationsFiltered?.get(position)
+        holder.rlfeedminerow.visibility = View.VISIBLE
+        holder.viewline.visibility = View.VISIBLE
+        holder.items_list.setPadding(0, 0, 0, 30)
+        holder.definitionName.setPadding(0, 20, 0, 0)
+        holder.rlfeedminerow.setPadding(0, 30, 0, 0)
+
+        holder.txtfeedminevalue.text = applicationsDAO?.summary?.title
+        holder.definitionName.text = applicationsDAO?.summary?.name
+
+        if (applicationsDAO?.summary?.isMine!!) {
+            if (applicationsDAO.summary?.title.isNullOrEmpty())
+                holder.txtfeedminevalue.text = applicationsDAO.category
+            holder.viewline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_blue))
+            holder.buttonsviewline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_blue))
+            holder.txtfeedminelabel.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_blue))
+            holder.txtfeedminelabel.text = context?.getString(R.string.esp_lib_text_mine)
+        } else {
+            holder.viewline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_yellowishOrange))
+            holder.buttonsviewline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_yellowishOrange))
+            holder.txtfeedminelabel.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_yellowishOrange))
+
+        }
 
 
 
-        if (isComingFromSeeAll)
-        {
+        if (isComingFromSeeAll) {
             holder.llcardButtons.visibility = View.GONE
-            holder.viewfeed.visibility = View.GONE
-            holder.txtfeedvalue.visibility = View.GONE
+            holder.viewline.visibility = View.GONE
+            holder.buttonsviewline.visibility = View.GONE
+            holder.txtfeedminelabel.visibility = View.GONE
             holder.ivcircledot.visibility = View.GONE
         }
 
-        if (applicationsDAO?.type.equals(context?.getString(R.string.esp_lib_text_application), ignoreCase = true)) {
-            val category = applicationsDAO?.category
-            holder.viewfeed.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_blue))
-            holder.txtfeedvalue.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_blue))
-            holder.txtfeedvalue.text = context?.getString(R.string.esp_lib_text_mine)
-            holder.txtsubmissionvalue.text = category
-        } else {
-            holder.txtola.text=context?.getString(R.string.esp_lib_text_submissionscolon)
-            holder.txtolavalue.text= applicationsDAO?.numberOfSubmissions.toString()
-            holder.viewfeed.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_yellowishOrange))
-            holder.txtfeedvalue.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_yellowishOrange))
-            holder.txtsubmissionvalue.text = applicationsDAO?.parentDefinitionName
-        }
+
+        val itemsAdapter = ESP_LIB_ApplicationItemsAdapter(applicationsDAO.summary?.cardValues, context!!)
+        holder.items_list.adapter = itemsAdapter
 
 
-        val definitionName = applicationsDAO?.definitionName
-        val applicationNumber = applicationsDAO?.applicationNumber
-        var applicationName: String? = ""
-        applicationName = when (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
-            true -> ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.name
-            false -> applicationsDAO?.applicantName
-        }
+        holder.status_list.visibility = View.GONE
 
-        holder.txtrequestedbyvalue.text = applicationsDAO?.applicantName
-        holder.requestnumvalue.text = applicationNumber
-
-        if (applicationsDAO!!.isSigned)
-            holder.ivsign.visibility = View.VISIBLE
-
-        /*       if (ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase() != context?.getString(R.string.applicantsmall)
-                       && applicationsDAO?.isOverDue!!)
-                   holder.voverduedot.visibility = View.VISIBLE*/
-
-        if (searched_text != null && searched_text!!.length > 0) {
-
-            //  holder.category.text = ESP_LIB_Shared.getInstance().getSearchedTextHighlight(searched_text, category, context)
-            holder.definitionName.text = ESP_LIB_Shared.getInstance().getSearchedTextHighlight(searched_text, definitionName, context)
-            // holder.applicationNumber.text = ESP_LIB_Shared.getInstance().getSearchedTextHighlight(searched_text, applicationNumber, context)
-
-        } else {
-
-            if (isSubApplications) {
-                //    holder.categorytext.text = context?.getString(R.string.esp_lib_text_applicantcolon)
-                // holder.category.text = applicationName
-                holder.definitionName.text = definitionName
-                holder.rlpendingfor?.visibility = View.VISIBLE
-            } else {
-
-                // holder.category.text = category
-                holder.definitionName.text = definitionName
-                holder.rlpendingfor?.visibility = View.GONE
-            }
-            //holder.applicationNumber.text = applicationNumber
-        }
+        /*       if (applicationsDAO?.type.equals(context?.getString(R.string.esp_lib_text_application), ignoreCase = true)) {
+                   val category = applicationsDAO?.category
+                   holder.viewfeed.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_blue))
+                   holder.txtfeedvalue.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_blue))
+                   holder.txtfeedvalue.text = context?.getString(R.string.esp_lib_text_mine)
+                   holder.txtsubmissionvalue.text = category
+               } else {
+                   holder.txtola.text=context?.getString(R.string.esp_lib_text_submissionscolon)
+                   holder.txtolavalue.text= applicationsDAO?.numberOfSubmissions.toString()
+                   holder.viewfeed.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_yellowishOrange))
+                   holder.txtfeedvalue.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_yellowishOrange))
+                   holder.txtsubmissionvalue.text = applicationsDAO?.parentDefinitionName
+               }
 
 
-        if (applicationsDAO.statusId == 1) // if draft application hide submitted on
-        {
-            holder.startedOn.visibility = View.GONE
-            holder.startedOntext.visibility = View.GONE
-        }
+               val definitionName = applicationsDAO?.definitionName
+               val applicationNumber = applicationsDAO?.applicationNumber
+               var applicationName: String? = ""
+               applicationName = when (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
+                   true -> ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.name
+                   false -> applicationsDAO?.applicantName
+               }
 
-        var displayDate = "";
+               holder.txtrequestedbyvalue.text = applicationsDAO?.applicantName
+               holder.requestnumvalue.text = applicationNumber
 
-        if (applicationsDAO.startedOn != null && applicationsDAO.startedOn!!.length > 0) {
-            displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(context, applicationsDAO.startedOn, true)
-            holder.startedOn.text = displayDate
-        } /*else {
-            displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(context, applicationsDAO.createdOn, true)
-            holder.startedOn.text = displayDate
-        }*/
+               if (applicationsDAO!!.isSigned)
+                   holder.ivsign.visibility = View.VISIBLE
+
+               /*       if (ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase() != context?.getString(R.string.applicantsmall)
+                              && applicationsDAO?.isOverDue!!)
+                          holder.voverduedot.visibility = View.VISIBLE*/
+
+               if (searched_text != null && searched_text!!.length > 0) {
+
+                   //  holder.category.text = ESP_LIB_Shared.getInstance().getSearchedTextHighlight(searched_text, category, context)
+                   holder.definitionName.text = ESP_LIB_Shared.getInstance().getSearchedTextHighlight(searched_text, definitionName, context)
+                   // holder.applicationNumber.text = ESP_LIB_Shared.getInstance().getSearchedTextHighlight(searched_text, applicationNumber, context)
+
+               } else {
+
+                   if (isSubApplications) {
+                       //    holder.categorytext.text = context?.getString(R.string.esp_lib_text_applicantcolon)
+                       // holder.category.text = applicationName
+                       holder.definitionName.text = definitionName
+                       holder.rlpendingfor?.visibility = View.VISIBLE
+                   } else {
+
+                       // holder.category.text = category
+                       holder.definitionName.text = definitionName
+                       holder.rlpendingfor?.visibility = View.GONE
+                   }
+                   //holder.applicationNumber.text = applicationNumber
+               }
 
 
-        val days = ESP_LIB_Shared.getInstance().fromStringToDate(context, displayDate)
+               if (applicationsDAO.statusId == 1) // if draft application hide submitted on
+               {
+                   holder.startedOn.visibility = View.GONE
+                   holder.startedOntext.visibility = View.GONE
+               }
+
+               var displayDate = "";
+
+               if (applicationsDAO.startedOn != null && applicationsDAO.startedOn!!.length > 0) {
+                   displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(context, applicationsDAO.startedOn, true)
+                   holder.startedOn.text = displayDate
+               } /*else {
+                   displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(context, applicationsDAO.createdOn, true)
+                   holder.startedOn.text = displayDate
+               }*/
 
 
-        var daysVal = context?.getString(R.string.esp_lib_text_day)
-        if (days > 1)
-            daysVal = context?.getString(R.string.esp_lib_text_days)
-
-        holder.pendingfor?.setText(days.toString() + " " + daysVal)
+               val days = ESP_LIB_Shared.getInstance().fromStringToDate(context, displayDate)
 
 
+               var daysVal = context?.getString(R.string.esp_lib_text_day)
+               if (days > 1)
+                   daysVal = context?.getString(R.string.esp_lib_text_days)
 
-        if (applicationsDAO != null) {
-            setStatusColor(holder, applicationsDAO)
-        }
+               holder.pendingfor?.setText(days.toString() + " " + daysVal)
+       */
+
+
+
 
 
 
@@ -246,13 +259,10 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
         }
 
         holder.btreject.setOnClickListener {
-            ESP_LIB_CustomLogs.displayLogs(TAG+" clickListener btreject: "+clickListener)
-            clickListener?.onActionPerformed(applicationsDAO,mApplicationsFiltered!!)
+            ESP_LIB_CustomLogs.displayLogs(TAG + " clickListener btreject: " + clickListener)
+            applicationsDAO.let { it1 -> clickListener?.onActionPerformed(it1, mApplicationsFiltered!!) }
 
         }
-
-        val statusAdapter = ESP_LIB_ApplicationStatusAdapter(applicationsDAO.stageStatuses, context!!);
-        holder.status_list.adapter = statusAdapter
 
 
     }//End Holder Class
@@ -269,66 +279,6 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
         }
     }
 
-    private fun setStatusColor(holder: ActivitiesList, ESPLIBApplicationsDAO: ESP_LIB_ApplicationsDAO) {
-        val getStatusId = ESPLIBApplicationsDAO.statusId
-        holder.rlstatus.setBackgroundResource(R.drawable.esp_lib_drawable_status_background)
-        val drawable = holder.rlstatus.getBackground() as GradientDrawable
-        when (getStatusId) {
-            0 // Invited
-            -> {
-
-                holder.txtstatus.setText(R.string.esp_lib_text_invited)
-                holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_invited))
-                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_invited_background))
-
-            }
-            1 // New as draft
-            -> {
-
-                holder.txtstatus.setText(R.string.esp_lib_text_draftcaps)
-                holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_draft))
-                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_draft_background))
-
-            }
-            2 // Pending
-            -> {
-                holder.txtstatus.setText(R.string.esp_lib_text_pending)
-                holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
-                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
-
-            }
-            3 // Accepted
-            -> {
-
-                holder.txtstatus.setText(R.string.esp_lib_text_accepted)
-                holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_accepted))
-                holder.ivsign.setImageResource(R.drawable.esp_lib_drawable_ic_icon_green_signed)
-                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_accepted_background))
-
-            }
-            4  // Rejected
-            -> {
-                holder.txtstatus.setText(R.string.esp_lib_text_rejected)
-                holder.ivsign.setImageResource(R.drawable.esp_lib_drawable_ic_icon_red_signed)
-                holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_rejected))
-                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_rejected_background))
-
-            }
-            5  // Cancelled
-            -> {
-                holder.txtstatus.setText(R.string.esp_lib_text_cancelled)
-                holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_draft))
-                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_draft_background))
-
-            }
-            else -> {
-                holder.txtstatus.setText(R.string.esp_lib_text_pending)
-                holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
-                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
-
-            }
-        }
-    }
 
     private fun appDetail(ESPLIBApplicationsDAO: ESP_LIB_ApplicationsDAO, isResubmit: Boolean) {
         //      ESP_LIB_CustomLogs.displayLogs(LOG_TAG + " mApplications.getStatus(): " + ESPLIBApplicationsDAO.status!!.toLowerCase())
@@ -409,9 +359,8 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
     }
 
 
-
     companion object {
-        var clickListener: ESP_LIB_AnyClick?=null
+        var clickListener: ESP_LIB_AnyClick? = null
 
     }
 }

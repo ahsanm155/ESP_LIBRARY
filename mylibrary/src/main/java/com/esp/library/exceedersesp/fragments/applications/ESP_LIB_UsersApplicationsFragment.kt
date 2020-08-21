@@ -492,7 +492,11 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                         if (isLoadMore) {
                             view?.load_more_div?.visibility = View.GONE
                         } else
+                        {
                             app_actual_list?.clear()
+                            setOpenRequestsAdapter()
+                            view?.txtrequestcount?.text=""
+                        }
 
                         loadDefinitionCall = null
 
@@ -520,10 +524,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                                     TOTAL_RECORDS_AVAILABLE = ESPLIBResponse.body().totalRecords
                                     SCROLL_TO += PER_PAGE_RECORDS
 
-                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(removeDuplication(app_actual_list), it, "", false) }
-                                    (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapterV2?)?.getFragmentContext(this@ESP_LIB_UsersApplicationsFragment)
-                                    view?.app_list?.adapter = mApplicationAdapterESPLIB
-                                    mApplicationAdapterESPLIB!!.notifyDataSetChanged()
+                                    setOpenRequestsAdapter()
 
                                     view?.app_list?.scrollToPosition(SCROLL_TO - 3)
 
@@ -538,9 +539,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                                     else
                                         app_actual_list = ESPLIBResponse.body().applications as MutableList<ESP_LIB_ApplicationsDAO>?
 
-                                    mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(removeDuplication(app_actual_list), it, "", false) }
-                                    (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapterV2?)?.getFragmentContext(this@ESP_LIB_UsersApplicationsFragment)
-                                    view?.app_list?.adapter = mApplicationAdapterESPLIB
+                                   setOpenRequestsAdapter()
 
                                     PAGE_NO++
                                     IN_LIST_RECORDS = removeDuplication(app_actual_list).size
@@ -598,6 +597,13 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
     }//LoggedInUser end
 
 
+    private fun setOpenRequestsAdapter(){
+        if(app_actual_list!=null) {
+            mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(removeDuplication(app_actual_list), it, "", false) }
+            (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapterV2?)?.getFragmentContext(this@ESP_LIB_UsersApplicationsFragment)
+            view?.app_list?.adapter = mApplicationAdapterESPLIB
+        }
+    }
 
     fun loadCardApplications(isLoadMore: Boolean, searchText: String) {
         if (isEventRefreshData) {

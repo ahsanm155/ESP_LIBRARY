@@ -27,7 +27,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
-import com.esp.library.exceedersesp.controllers.identityVerification.Verify_Identity
+import com.esp.library.exceedersesp.controllers.identityVerification.ESP_LIB_Verify_Identity
 import com.esp.library.utilities.common.ESP_LIB_Constants
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.google.gson.Gson
@@ -338,7 +338,7 @@ class ESP_LIB_CommonMethodsKotlin {
                 val title = context?.getString(R.string.esp_lib_text_verify_profile_not_added)
                 noProfilePicturePopup(icon, title!!, sourceString,context)
             } else if (actualResponseJson.applicantPictureStatus.equals(context?.getString(R.string.esp_lib_text_verfication_verified), ignoreCase = true)) {
-                val intent = Intent(context, Verify_Identity::class.java)
+                val intent = Intent(context, ESP_LIB_Verify_Identity::class.java)
                 context?.startActivityForResult(intent, 3)
             }
         }

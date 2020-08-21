@@ -15,27 +15,26 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.Handler
 import android.provider.MediaStore
 import android.text.Html
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.utilities.common.ESP_LIB_Constants
 import com.esp.library.utilities.common.ESP_LIB_Shared
+import com.esp.library.utilities.customevents.EventOptions
 import kotlinx.android.synthetic.main.esp_lib_activity_verify_identity.*
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import okhttp3.MultipartBody
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,11 +46,11 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class Verify_Identity : ESP_LIB_BaseActivity() {
+class ESP_LIB_Verify_Identity : ESP_LIB_BaseActivity() {
 
     private val PERMISSION_REQUEST_CODE = 200
     private val TAG = javaClass.simpleName
-
+    var pictureFile: File? = null
     internal var pDialog: AlertDialog? = null
     private var mCamera: Camera? = null
     private var mPicture: Camera.PictureCallback? = null
@@ -67,26 +66,23 @@ class Verify_Identity : ESP_LIB_BaseActivity() {
         initialize()
 
 
-
-        val sourceString =  getString(R.string.esp_lib_text_verfication_mismatch_text) + "<b> " + getString(R.string.esp_lib_text_try_face_again) +"</b>"
+        val sourceString = getString(R.string.esp_lib_text_verfication_mismatch_text) + "<b> " + getString(R.string.esp_lib_text_try_face_again) + "</b>"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            txterrordiscription.text= Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY);
+            txterrordiscription.text = Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY);
         } else {
-            txterrordiscription.text= Html.fromHtml(sourceString);
+            txterrordiscription.text = Html.fromHtml(sourceString);
         }
 
 
         btcancel.setOnClickListener { onBackPressed() }
 
         btretakenotverified.setOnClickListener {
-            if(btretakenotverified.text.equals(getString(R.string.esp_lib_text_continuee)))
-            {
+            if (btretakenotverified.text.equals(getString(R.string.esp_lib_text_continuee))) {
                 val intent = Intent()
                 intent.putExtra("success", true)
-                setResult(Activity.RESULT_OK,intent)
+                setResult(Activity.RESULT_OK, intent)
                 finish()
-            }
-            else {
+            } else {
                 llnotverified.visibility = View.GONE
                 rlfour.visibility = View.GONE
                 llnotverifiedbuttons.visibility = View.GONE
@@ -213,6 +209,7 @@ class Verify_Identity : ESP_LIB_BaseActivity() {
             //set a picture callback
             //refresh the preview
             try {
+
                 mCamera = Camera.open(cameraId)
                 mPicture = getPictureCallback()
                 mPreview!!.refreshCamera(mCamera)
@@ -225,33 +222,10 @@ class Verify_Identity : ESP_LIB_BaseActivity() {
 
     private fun getPictureCallback(): PictureCallback {
         return PictureCallback { data, camera ->
-            val pictureFile: File = generateMediaFile()
+            pictureFile = generateMediaFile()
             try {
                 val imageProcessing = ImageProcessing(myContext)
                 imageProcessing.createImage(pictureFile, data)
-
-                val handler = Handler()
-                handler.postDelayed({
-                    Glide.with(this)
-                            .asBitmap()
-                            .load(pictureFile.absolutePath)
-                            .apply(RequestOptions.overrideOf(200, 200))
-                            .into(object : CustomTarget<Bitmap>() {
-                                override fun onLoadCleared(placeholder: Drawable?) {
-                                }
-
-                                override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
-                                    ivcapture.setImageBitmap(resource)
-                                    getBitmap = resource
-
-
-                                }
-                            })
-
-                }, 500)
-
-
-
                 ivcapture.visibility = View.VISIBLE
                 llretakebuttons.visibility = View.VISIBLE
                 cameracontainer.visibility = View.GONE
@@ -297,7 +271,8 @@ class Verify_Identity : ESP_LIB_BaseActivity() {
             call_upload.enqueue(object : Callback<Any> {
                 override fun onResponse(call: Call<Any>, response: Response<Any>?) {
 
-                    if (response?.code() == 200)
+
+                    if (response?.code() == 200 && response.body() as Boolean)
                         verified()
                     else
                         notVerified()
@@ -323,7 +298,7 @@ class Verify_Identity : ESP_LIB_BaseActivity() {
         txtverification.text = getString(R.string.esp_lib_text_profile_verification)
         rlverified.visibility = View.VISIBLE
         llnotverifiedbuttons.visibility = View.VISIBLE
-        btretakenotverified.text=getString(R.string.esp_lib_text_continuee)
+        btretakenotverified.text = getString(R.string.esp_lib_text_continuee)
         ivverify.setImageResource(R.drawable.esp_lib_drawable_verified)
         ivverify.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
         txtverified.text = getString(R.string.esp_lib_text_verfication_verified)
@@ -331,7 +306,7 @@ class Verify_Identity : ESP_LIB_BaseActivity() {
     }
 
     private fun notVerified() {
-        btretakenotverified.text=getString(R.string.esp_lib_text_retake_photo)
+        btretakenotverified.text = getString(R.string.esp_lib_text_retake_photo)
         txtverification.text = getString(R.string.esp_lib_text_profile_verification)
         rlverified.visibility = View.VISIBLE
         llnotverified.visibility = View.VISIBLE
@@ -391,19 +366,17 @@ class Verify_Identity : ESP_LIB_BaseActivity() {
     }
 
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(this, arrayOf(CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
+        ActivityCompat.requestPermissions(this, arrayOf(CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.size > 0) {
-                var permissionGranted=true
+                var permissionGranted = true
 
-                for(element in grantResults)
-                {
-                    if(element ==PackageManager.PERMISSION_DENIED)
-                    {
-                        permissionGranted=false
+                for (element in grantResults) {
+                    if (element == PackageManager.PERMISSION_DENIED) {
+                        permissionGranted = false
                         break
                     }
                 }
@@ -423,6 +396,44 @@ class Verify_Identity : ESP_LIB_BaseActivity() {
             }
         }
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun dataRefreshEvent(eventFaceIdVerification: EventOptions.EventFaceIdVerification) {
+        Glide.with(this)
+                .asBitmap()
+                .load(pictureFile?.absolutePath)
+                //  .apply(RequestOptions.overrideOf(200, 200))
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                    }
+
+                    override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
+                        ivcapture.setImageBitmap(resource)
+                        getBitmap = resource
+
+
+                    }
+                })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerEventBus()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unRegisterEventBus()
+    }
+
+    private fun registerEventBus() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this)
+    }
+
+    private fun unRegisterEventBus() {
+        EventBus.getDefault().unregister(this)
     }
 
 

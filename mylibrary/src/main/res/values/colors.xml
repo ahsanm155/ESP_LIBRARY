@@ -4,10 +4,10 @@
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/esp_lib_color_black20</color>
 
     <!--FOR ESP-->
-    <color name="colorPrimary">#24c068</color>
-    <color name="colorPrimaryDark">#24c068</color>
-    <color name="colorAccent">#24c068</color>
-    <color name="esp_lib_color_green">#24c068</color>
+    <color name="colorPrimary">#A0DA6C</color>
+    <color name="colorPrimaryDark">#6cb33f</color>
+    <color name="colorAccent">#6cb33f</color>
+    <color name="esp_lib_color_green">#6cb33f</color>
     <color name="esp_lib_color_button_start">#29b2cf</color>
     <color name="esp_lib_color_button_end">#3de98f</color>
 

@@ -167,6 +167,13 @@
     </style>
 
 
+    <!-- Set parent theme as app theme. -->
+    <style name="ESP_LIB_DialogTheme" parent="ESP_LIB_Styles_AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
     <!--////// Headings /////-->
 
     <style name="Esp_Lib_Style_BaseTextHeading1">
@@ -213,6 +220,10 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="Esp_Lib_Style_TextHeading1White" parent="Esp_Lib_Style_BaseTextHeading1">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="Esp_Lib_Style_TextHeading3BlackHeavy" parent="Esp_Lib_Style_BaseTextHeading3Heavy">
         <item name="android:textColor">@android:color/black</item>
     </style>
@@ -238,9 +249,6 @@
     </style>
 
 
-    <style name="Esp_Lib_Style_TextHeading1White" parent="Esp_Lib_Style_BaseTextHeading1">
-        <item name="android:textColor">@android:color/white</item>
-    </style>
 
 
     <style name="Esp_Lib_Style_TextHeading3Black" parent="Esp_Lib_Style_BaseTextHeading3">
@@ -326,7 +334,7 @@
         <item name="android:textColor">@color/esp_lib_color_grey</item>
     </style>
 
-    <style name="Esp_Lib_Style_TextParagraphCoolGray" parent="Esp_Lib_Style_TextParagraphGray">
+    <style name="Esp_Lib_Style_TextParagraphCoolGray" parent="Esp_Lib_Style_BaseTextParagraph">
         <item name="android:textColor">@color/esp_lib_color_coolgrey</item>
     </style>
 
@@ -410,6 +418,10 @@
 
     <style name="Esp_Lib_Style_TextSubHeaderGray" parent="Esp_Lib_Style_BaseTextSubHeader">
         <item name="android:textColor">@color/esp_lib_color_cooltwogrey</item>
+    </style>
+
+    <style name="Esp_Lib_Style_TextSubHeaderBlack" parent="Esp_Lib_Style_BaseTextSubHeader">
+        <item name="android:textColor">@color/esp_lib_color_black</item>
     </style>
 
     <style name="Esp_Lib_Style_CustomSearchEditTextAppearance" parent="Widget.AppCompat.EditText">

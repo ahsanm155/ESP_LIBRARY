@@ -250,6 +250,7 @@
     <string name="esp_lib_text_language">Language:</string>
     <string name="esp_lib_text_enteremailandpassword">Please enter email and password to login</string>
     <string name="esp_lib_text_email">Email</string>
+    <string name="esp_lib_text_reassign_comment_hint" translatable="false">Leave your comment here…</string>
     <string name="esp_lib_text_emailcolon">Email:</string>
     <string name="esp_lib_text_profiletype">Profile type</string>
     <string name="esp_lib_text_password">Password</string>
@@ -385,6 +386,8 @@
     <string name="esp_lib_text_additemlist">Add item list</string>
     <string name="esp_lib_text_searchlookupitem">Search lookup item...</string>
     <string name="esp_lib_text_emptyitemlist">Uh oh you don\'t have any list items</string>
+    <string name="esp_lib_text_reassign_description" translatable="false">Please note that after reassigning these criteria to another employee, you won’t have access to these criteria and this request.</string>
+    <string name="esp_lib_text_reassign_reason" translatable="false">Please provide information about the reason for reassigning.</string>
     <string name="esp_lib_text_details">Details</string>
     <string name="esp_lib_text_submissiondetails">Submission Details</string>
     <string name="esp_lib_text_requestdetails">Request Details</string>
@@ -401,6 +404,7 @@
     <string name="esp_lib_text_categorycolon">Category:</string>
     <string name="esp_lib_text_idenediid">iDENEDi ID:</string>
     <string name="esp_lib_text_submittedoncolon">Submitted On:</string>
+    <string name="esp_lib_text_submittedbycolon" translatable="false">Submitted By:</string>
     <string name="esp_lib_text_requestedoncolon" translatable="false">Requested On:</string>
     <string name="esp_lib_text_ola" translatable="false">OLA:</string>
     <string name="esp_lib_text_pendingfor">Pending For:</string>
@@ -418,7 +422,7 @@
     <string name="esp_lib_text_submissionsstopped">Submissions Stopped</string>
     <string name="esp_lib_text_viewapplications">View Applications</string>
     <string name="esp_lib_text_stopsubmission">Stop Submission</string>
-    <string name="esp_lib_text_requesttoaction">Requests to action</string>
+    <string name="esp_lib_text_requesttoaction">Requests to screen</string>
     <string name="esp_lib_text_seeall">See All</string>
     <string name="esp_lib_text_allowsubmission">Allow Submission</string>
     <string name="esp_lib_text_allow" translatable="false">Allow</string>
@@ -445,6 +449,11 @@
     <string name="esp_lib_text_formisempty">Form is empty</string>
     <string name="esp_lib_text_form">Form</string>
     <string name="esp_lib_text_reassign">Reassign</string>
+    <string name="esp_lib_text_reassignto" translatable="false">Reassign To</string>
+    <string name="esp_lib_text_reassign_criteria_success" translatable="false">You have successfully reassigned the criteria!</string>
+    <string name="esp_lib_text_accepted_criteria_success" translatable="false">You have successfully accepted the criteria!</string>
+    <string name="esp_lib_text_rejected_criteria" translatable="false">You have rejected the criteria!</string>
+    <string name="esp_lib_text_reassign_title" translatable="false">Reason for Reassign</string>
     <string name="esp_lib_text_warning" translatable="false">Warning!</string>
     <string name="esp_lib_text_preview_description" translatable="false">Your preview is not updated still you want to continue?</string>
     <string name="esp_lib_text_selectusers">Select User</string>

@@ -73,7 +73,7 @@
                 android:id="@+id/txtappname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_4sdp"
                 android:layout_toEndOf="@+id/txtallow"
                 android:text="@string/app_name"
                 style="@style/Esp_Lib_Style_TextHeading5Black"/>
@@ -81,7 +81,7 @@
             <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_4sdp"
                 android:layout_toEndOf="@+id/txtappname"
                 android:text="@string/esp_lib_text_use_your_camera"
                 style="@style/Esp_Lib_Style_TextParagraphBlack"/>

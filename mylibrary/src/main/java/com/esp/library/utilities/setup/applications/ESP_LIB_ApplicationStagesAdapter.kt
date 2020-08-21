@@ -107,14 +107,24 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
         val holder = holder_parent as ActivitiesList
         val dynamicStagesDAO = stagesListESPLIB.get(position)
 
-
-        val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
-        if (actualResponse.summary!!.isMine && (dynamicStagesDAO.status!!.equals(ESP_LIB_Enums.open.toString(),ignoreCase = true)||
-                dynamicStagesDAO.status!!.equals(ESP_LIB_Enums.locked.toString(),ignoreCase = true))) {
-            holder.llresponsible.visibility = View.VISIBLE
+        var isCriteriaOwner=false
+        for (element in dynamicStagesDAO.criteriaList!!)
+        {
+            if(element.isOwner)
+            {
+                isCriteriaOwner=true
+                break
+            }
         }
 
+
         if (isComingfromAssessor) {
+
+            val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
+            if (isCriteriaOwner && (dynamicStagesDAO.status!!.equals(ESP_LIB_Enums.open.toString(),ignoreCase = true))) {
+                // holder.llresponsible.visibility = View.VISIBLE
+                holder.ivcircledot.visibility = View.VISIBLE
+            }
 
 
             holder.llstagesrow.visibility = View.VISIBLE
@@ -122,12 +132,6 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             holder.sequencetextvalue.text = dynamicStagesDAO.order.toString()
             holder.txtstatus.text = dynamicStagesDAO.status
 
-
-            /*  if (dynamicStagesDAO.isAll) {
-                  holder.conditiontextvalue.text = context.getString(R.string.all)
-              } else {
-                  holder.conditiontextvalue.text = context.getString(R.string.any)
-              }*/
 
             val displayDate = ESP_LIB_Shared.getInstance().getStageDisplayDate(context, dynamicStagesDAO.completedOn)
             if (displayDate.isNullOrEmpty())
@@ -161,6 +165,9 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
 
 
         } else {
+
+            holder.llshadow.setBackgroundResource(0) // remove shadow background
+
             holder.llstagesrow.visibility = View.GONE
 
             for (i in 0 until dynamicStagesDAO.criteriaList!!.size) {
@@ -258,8 +265,11 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
 
         var isSigned: Boolean = false
         for (i in 0 until ESPLIBDynamicStagesDAO.criteriaList!!.size) {
-            isSigned = ESPLIBDynamicStagesDAO.criteriaList?.get(i)?.isSigned!!
-            if (isSigned) {
+            val dynamicStagesCriteriaListDAO = ESPLIBDynamicStagesDAO.criteriaList?.get(i)
+            val assessmentStatus = dynamicStagesCriteriaListDAO?.assessmentStatus
+            isSigned = dynamicStagesCriteriaListDAO?.isSigned!!
+            if (isSigned && (assessmentStatus!!.equals(context.getString(R.string.esp_lib_text_accepted),ignoreCase = true)||
+                            assessmentStatus.equals(context.getString(R.string.esp_lib_text_rejected),ignoreCase = true))) {
                 holder.ivsign.visibility = View.VISIBLE
                 break
             }
@@ -294,7 +304,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             }
             ESP_LIB_Enums.pending.toString() // Pending
             -> {
-                holder.txtstatus.setText(context.getString(R.string.esp_lib_text_pending))
+                holder.txtstatus.setText(context.getString(R.string.esp_lib_text_opencaps))
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context, R.color.esp_lib_color_status_pending))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context, R.color.esp_lib_color_status_pending))
                 drawable?.setColor(ContextCompat.getColor(context, R.color.esp_lib_color_status_pending_background))

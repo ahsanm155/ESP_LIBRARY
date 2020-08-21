@@ -19,6 +19,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
@@ -32,9 +33,6 @@ import com.esp.library.utilities.common.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import com.squareup.picasso.MemoryPolicy
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import me.leolin.shortcutbadger.ShortcutBadger
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -153,19 +151,6 @@ class ESP_LIB_NavigationDrawerFragment : androidx.fragment.app.Fragment() {
             email?.visibility = View.GONE
         }
 
-        if (ESP_LIB_ESPApplication.getInstance().user != null && ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.imageUrl != null && ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.imageUrl!!.length > 0) {
-            Picasso.with(context)
-                    .load(ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.imageUrl)
-                    .placeholder(R.drawable.esp_lib_drawable_ic_contact_default)
-                    .memoryPolicy(MemoryPolicy.NO_CACHE)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .transform(ESP_LIB_RoundedPicasso())
-                    .resize(ESP_LIB_Constants.PROFILE_PHOTO_SIZE, ESP_LIB_Constants.PROFILE_PHOTO_SIZE)
-                    .into(profile_photo)
-
-
-        }
-
         getLookupInfoList()
 
 
@@ -208,6 +193,17 @@ class ESP_LIB_NavigationDrawerFragment : androidx.fragment.app.Fragment() {
         return v
         //selectItem(position);
 
+    }
+
+    private fun setProfileImage() {
+        if (ESP_LIB_ESPApplication.getInstance().user != null && ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.imageUrl != null && ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.imageUrl!!.length > 0) {
+            profile_photo?.let {
+                Glide.with(requireActivity()).load(ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.imageUrl)
+                        .error(R.drawable.esp_lib_drawable_default_profile_picture)
+                        .circleCrop()
+                        .into(it)
+            }
+        }
     }
 
     private fun initailize(v: View) {
@@ -440,7 +436,7 @@ class ESP_LIB_NavigationDrawerFragment : androidx.fragment.app.Fragment() {
     }
 
     fun DrawerOpen() {
-
+        setProfileImage()
         mDrawerLayout?.openDrawer(GravityCompat.START)
 
     }

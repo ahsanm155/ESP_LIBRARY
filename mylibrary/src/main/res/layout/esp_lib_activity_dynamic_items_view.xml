@@ -6,7 +6,7 @@
 
     <View
         android:id="@+id/viewline"
-        android:layout_width="@dimen/_3sdp"
+        android:layout_width="@dimen/_2sdp"
         android:visibility="gone"
         android:background="@color/esp_lib_color_yellowishOrange"
         android:layout_height="match_parent"/>
@@ -45,7 +45,6 @@
                 android:id="@+id/txtfeedminevalue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4 submissions"
                 android:layout_toEndOf="@+id/ivcircledot"
                 style="@style/Esp_Lib_Style_TextParagraph1CoolGray" />
 

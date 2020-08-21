@@ -6,14 +6,21 @@
     android:background="@color/esp_lib_color_pale_grey"
     android:orientation="vertical">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
     <LinearLayout
         android:id="@+id/llshadow"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_3sdp"
         android:layout_marginEnd="@dimen/_3sdp"
-        android:orientation="vertical"
-        android:background="@drawable/esp_lib_drawable_shadow">
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="@drawable/esp_lib_drawable_shadow"
+        android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/llresponsible"
@@ -39,15 +46,7 @@
             android:layout_below="@+id/txtresponsible"
             android:background="@color/esp_lib_color_grey30"/>
 
-        <ImageView
-            android:id="@+id/ivcircledot"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:visibility="gone"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="@dimen/_11sdp"
-            android:background="@drawable/esp_lib_drawable_draw_orange"/>
+
 
 
     </RelativeLayout>
@@ -247,4 +246,14 @@
         android:keepScreenOn="true" />
     </LinearLayout>
 
+        <ImageView
+            android:id="@+id/ivcircledot"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"
+            android:layout_marginEnd="@dimen/_17sdp"
+            android:background="@drawable/esp_lib_drawable_draw_orange"/>
+    </RelativeLayout>
 </LinearLayout>

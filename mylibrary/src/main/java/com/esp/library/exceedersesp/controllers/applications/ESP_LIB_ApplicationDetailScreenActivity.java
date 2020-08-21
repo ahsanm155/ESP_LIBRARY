@@ -370,12 +370,9 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         });
 
 
-        ESP_LIB_KeyboardUtils.addKeyboardToggleListener(this, new ESP_LIB_KeyboardUtils.SoftKeyboardToggleListener() {
-            @Override
-            public void onToggleSoftKeyboard(boolean isVisible) {
-                isNotified = isVisible;
-                isKeyboardVisible = isVisible;
-            }
+        ESP_LIB_KeyboardUtils.addKeyboardToggleListener(this, isVisible -> {
+            isNotified = isVisible;
+            isKeyboardVisible = isVisible;
         });
 
 
@@ -585,8 +582,8 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
             llmaindetail.setVisibility(View.GONE);
             lldraftcard.setVisibility(View.GONE);
-            if (actual_response != null && ESP_LIB_Shared.getInstance().hasLinkDefinitionId(actual_response))
-                rlsubmissionrow.setVisibility(View.VISIBLE);
+            /*if (actual_response != null && ESP_LIB_Shared.getInstance().hasLinkDefinitionId(actual_response))
+                rlsubmissionrow.setVisibility(View.VISIBLE);*/
             ivdetailarrow.setImageResource(R.drawable.ic_arrow_down);
         } else {
 
@@ -668,27 +665,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     actual_response = response.body();
                     actualResponseJson = response.body().toJson();
 
-                    ESP_LIB_ApplicationItemsAdapter itemsAdapter = new ESP_LIB_ApplicationItemsAdapter(response.body().getSummary().getCardValues(), bContext);
-                    items_list.setAdapter(itemsAdapter);
-                    definitionName.setText(response.body().getSummary().getName());
-
-                    if (response.body().getSummary().isMine()) {
-                        viewline.setVisibility(View.VISIBLE);
-                        viewlinecurve.setVisibility(View.VISIBLE);
-                        rlfeedminerow.setVisibility(View.VISIBLE);
-                        txtfeedminevalue.setText(response.body().getSummary().getTitle());
-                        txtfeedminelabel.setText(getString(R.string.esp_lib_text_mine));
-                        txtfeedminelabel.setTextColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
-                        viewline.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
-                        viewlinecurve.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
-                    } else if (!response.body().getSummary().isMine() && (response.body().getSummary().getTitle() != null &&
-                            !response.body().getSummary().getTitle().isEmpty())) {
-                        rlfeedminerow.setVisibility(View.VISIBLE);
-                        txtfeedminelabel.setVisibility(View.GONE);
-                        ivcircledot.setVisibility(View.GONE);
-                        txtfeedminevalue.setText(response.body().getSummary().getTitle());
-                    } else
-                        definitionName.setPadding(17, 30, 0, 15);
+                    populateTopCardData(response);
 
                     isClosingDatePassed = false;
                     status.setText(response.body().getApplicationStatus());
@@ -729,7 +706,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
                         if (sections != null && sections.size() > 0) {
 
-                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", false);
+                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", false, false);
                             mApplicationSectionsAdapter.setActualResponseJson(actualResponseJson);
                             app_list.setAdapter(mApplicationSectionsAdapter);
                             // mApplicationSectionsAdapter.notifyDataSetChanged();
@@ -742,10 +719,10 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                         if (ESP_LIB_Shared.getInstance().hasLinkDefinitionId(response.body())) {
                             GetLinkApplicationInfo(mApplication.getId() + "", response.body());
                             if (rldetailrow.getVisibility() == View.VISIBLE) {
-                                rlsubmissionrow.setVisibility(View.VISIBLE);
-                                linkdefinitioncard.setVisibility(View.GONE);
+                                rlsubmissionrow.setVisibility(View.GONE);
+                                linkdefinitioncard.setVisibility(View.VISIBLE);
                                 //spcloserequest.setVisibility(View.VISIBLE);
-                                getSubmissions(false);
+                                // getSubmissions(false);
                             }
 
 
@@ -762,7 +739,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                                 sectionsValues, actual_response.getStages(), true, true);
 
                         if (sections.size() > 0) {
-                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", true);
+                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", false, true);
                             mApplicationSectionsAdapter.setActualResponseJson(actualResponseJson);
                             app_list.setAdapter(mApplicationSectionsAdapter);
                             //  mApplicationSectionsAdapter.notifyDataSetChanged();
@@ -776,6 +753,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     stop_loading_animation(false);
                     ESP_LIB_Shared.getInstance().showAlertMessage(pref.getlabels().getApplication(), getString(R.string.esp_lib_text_some_thing_went_wrong), bContext);
                 }
+
             }
 
             @Override
@@ -786,6 +764,40 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             }
         });
 
+    }
+
+    private void populateTopCardData(Response<ESP_LIB_DynamicResponseDAO> response) {
+        ESP_LIB_ApplicationItemsAdapter itemsAdapter = new ESP_LIB_ApplicationItemsAdapter(response.body().getSummary().getCardValues(), bContext);
+        items_list.setAdapter(itemsAdapter);
+        if ((statusId == 1 || isResubmit))
+            definitionNameTitle.setText(response.body().getSummary().getName());
+        definitionName.setText(response.body().getSummary().getName());
+
+        if (response.body().getSummary().isMine()) {
+
+            viewline.setVisibility(View.VISIBLE);
+            viewlinecurve.setVisibility(View.VISIBLE);
+            rlfeedminerow.setVisibility(View.VISIBLE);
+            txtfeedminevalue.setText(response.body().getSummary().getTitle());
+            txtfeedminelabel.setText(getString(R.string.esp_lib_text_mine));
+            txtfeedminelabel.setTextColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+            viewline.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+            viewlinecurve.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+
+        } else if (!response.body().getSummary().isMine() && (response.body().getSummary().getTitle() != null &&
+                !response.body().getSummary().getTitle().isEmpty())) {
+            rlfeedminerow.setVisibility(View.VISIBLE);
+            txtfeedminelabel.setVisibility(View.GONE);
+            ivcircledot.setVisibility(View.GONE);
+            txtfeedminevalue.setText(response.body().getSummary().getTitle());
+        }
+        if (response.body().getSummary().isFeed()) {
+            txtfeedminelabel.setText(getString(R.string.esp_lib_text_feed));
+            txtfeedminelabel.setTextColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
+            viewline.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
+            viewlinecurve.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
+        } else
+            definitionName.setPadding(17, 30, 0, 15);
     }
 
     private void getSubmissions(Boolean isLoadMore) {
@@ -871,10 +883,12 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                                 } catch (Exception e) {
                                 }
                             }
+
+
                         } else
                             ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_some_thing_went_wrong), bContext);
                     }
-
+                    txtsubmissions.setText(getString(R.string.esp_lib_text_submissions) + " (" + app_submission_list.size() + ")");
 
                 }
 
@@ -941,6 +955,13 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     txtpendingvalue.setText(String.valueOf(body.getPendingLinkApplications()));
                     txtacceptedvalue.setText(String.valueOf(body.getAcceptedLinkApplications()));
                     txtrejectedvalue.setText(String.valueOf(body.getRejectedLinkApplications()));
+
+                    if (body.isSubmissionAllowed())
+                        ivsubmissionoptions.setVisibility(View.VISIBLE);
+                    else {
+                        submissionallowedtext.setText(getString(R.string.esp_lib_text_submissionsstopped));
+                        ivsubmissionoptions.setVisibility(View.GONE);
+                    }
 
                     // txtsubmissions.setText(getString(R.string.esp_lib_text_submissions) + " (" + submissioncount + ")");
 
@@ -1089,7 +1110,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                 drawable.setColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_status_draft_background));
                 break;
             case 2: // Pending
-                status.setText(getString(R.string.esp_lib_text_pending));
+                status.setText(getString(R.string.esp_lib_text_opencaps));
                 status.setTextColor(getResources().getColor(R.color.esp_lib_color_status_pending));
                 drawable.setColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_status_pending_background));
                 break;
@@ -1258,7 +1279,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     actual_response.getPermissions().contains(getString(R.string.esp_lib_text_reassign)))
                 actual_response.getStages().get(i).setReassign(true);
 
-            if (responseStages.get(i).isEnabled()) {
+            if (responseStages.get(i).isEnabled() && !responseStages.get(i).getType().equalsIgnoreCase(getString(R.string.esp_lib_text_link))) {
                 tempStages.add(responseStages.get(i));
             }
         }
@@ -1775,7 +1796,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         }
     }//LoggedInUser end
 
-    public void stagefeedbackSubmitForm(ESP_LIB_PostApplicationsStatusDAO post) {
+  /*  public void stagefeedbackSubmitForm(ESP_LIB_PostApplicationsStatusDAO post) {
 
 
         start_loading_animation(true);
@@ -1811,7 +1832,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                 }
             }
         }
-    }
+    }*/
 
     private void setGravity() {
         if (pref.getLanguage().equalsIgnoreCase("ar")) {
@@ -2191,6 +2212,11 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         EventBus.getDefault().unregister(this);
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void dataRefreshOnBackEvent(EventOptions.RefreshDataOnBack refreshDataOnBack) {
+        loadData();
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void dataRefreshEvent(EventOptions.EventTriggerController eventTriggerController) {

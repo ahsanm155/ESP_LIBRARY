@@ -20,7 +20,7 @@ import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ActivityStageDetails
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationDetailScreenActivity
-import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_UsersList
+import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ReassignUsersList
 import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_FeedbackForm
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
@@ -231,10 +231,11 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         holder.txtstatus.text = criteriaListDAO?.assessmentStatus
 
 
-
         if (isNotifyOnly) {
             mApplicationSectionsAdapterESPLIB?.notifyItemChanged(isNotifyOnlyPosition)
         }
+
+
         val sectionsStages = GetStagesFieldsCards(criteriaListDAO)
         val sections = ArrayList<ESP_LIB_DynamicFormSectionDAO>()
         for (j in 0 until sectionsStages.size) {
@@ -259,15 +260,14 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
             holder.btreject.text = criteriaListDAO?.rejectText
 
 
-        if (criteriaListDAO?.comments != null && criteriaListDAO.comments!!.size > 0) {
+        if (criteriaListDAO?.comments != null && criteriaListDAO.comments!!.isNotEmpty()) {
             holder.add_criteria_comments.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_card_commented))
         } else {
             holder.add_criteria_comments.setImageDrawable(ContextCompat.getDrawable(context!!, R.drawable.ic_card_not_commented))
         }
 
 
-
-        mApplicationSectionsAdapterESPLIB = ESP_LIB_ListAddApplicationSectionsAdapter(sections, (context as ESP_LIB_BaseActivity?)!!, "", isViewOnly)
+        mApplicationSectionsAdapterESPLIB = ESP_LIB_ListAddApplicationSectionsAdapter(sections, (context as ESP_LIB_BaseActivity?)!!, "", isViewOnly,false)
         actualResponseJson?.let { mApplicationSectionsAdapterESPLIB?.setActualResponseJson(it) }
         holder.rvFields.adapter = mApplicationSectionsAdapterESPLIB
         mApplicationSectionsAdapterESPLIB?.getCriteriaObject(criteriaListDAO)
@@ -345,14 +345,27 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         }
 
 
-             if ((ESP_LIB_ESPApplication.getInstance()?.user?.role.equals(context?.getString(R.string.esp_lib_text_admin), ignoreCase = true)) ||
+            /* if ((ESP_LIB_ESPApplication.getInstance()?.user?.role.equals(context?.getString(R.string.esp_lib_text_admin), ignoreCase = true)) ||
                      ((isComingfromAssessor && criteriaListDAO!!.isOwner) && (dynamicStagesDAO?.status.equals(context?.getString(R.string.esp_lib_text_open), ignoreCase = true)
                              || dynamicStagesDAO?.status.equals(context?.getString(R.string.esp_lib_text_locked), ignoreCase = true)) &&
                              !criteriaListDAO.assessmentStatus.equals(context?.getString(R.string.esp_lib_text_accepted), ignoreCase = true) &&
                              !criteriaListDAO.assessmentStatus.equals(context?.getString(R.string.esp_lib_text_rejected), ignoreCase = true)))
                  holder.ibReassignCard.visibility = View.VISIBLE
              else
-                 holder.ibReassignCard.visibility = View.GONE
+                 holder.ibReassignCard.visibility = View.GONE*/
+
+
+        if(criteriaListDAO?.permissions?.size==0)
+            holder.ibReassignCard.visibility = View.GONE
+
+        criteriaListDAO?.permissions?.forEach {
+            if(it.equals(context?.getString(R.string.esp_lib_text_reassign),ignoreCase = true))
+                holder.ibReassignCard.visibility = View.VISIBLE
+            else
+                holder.ibReassignCard.visibility = View.GONE
+        }
+
+
 
 
        /* if (dynamicStagesDAO?.isReassign != null && dynamicStagesDAO?.isReassign!!)
@@ -582,14 +595,14 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
             }
             context?.getString(R.string.esp_lib_text_pending) // Pending
             -> {
-                holder.txtstatus.text = context!!.getString(R.string.esp_lib_text_pending)
+                holder.txtstatus.text = context!!.getString(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                    drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
             }
             context?.getString(R.string.esp_lib_text_inprogress) // inprogress
             -> {
-                holder.txtstatus.text = context!!.getString(R.string.esp_lib_text_pending)
+                holder.txtstatus.text = context!!.getString(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                   drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
@@ -630,7 +643,8 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
                 holder.lldetail.setBackgroundResource(R.drawable.esp_lib_drawable_draw_bg_grey_stroke)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_coolgrey))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_coolgrey))
-                   drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_transparent_color))
+                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_transparent_color))
+                holder.txtstatus.setPadding(0,0,0,0)
             }
 
             context?.getString(R.string.esp_lib_text_activecaps)  // Active
@@ -645,7 +659,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
                     criteriaListDAOESPLIB.assessmentStatus = context?.getString(R.string.esp_lib_text_rejected)
                 } else if (!criteriaListDAOESPLIB.isOwner) {
                     holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
-                    holder.txtstatus.text = context?.getString(R.string.esp_lib_text_pending)
+                    holder.txtstatus.text = context?.getString(R.string.esp_lib_text_opencaps)
                     holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                        drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
                 } else {
@@ -677,7 +691,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
                 }
             }
             else -> {
-                holder.txtstatus.text = context!!.getString(R.string.esp_lib_text_pending)
+                holder.txtstatus.text = context!!.getString(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
             }
@@ -801,7 +815,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         popup.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.action_reassign) {
 
-                var intent = Intent(context, ESP_LIB_UsersList::class.java)
+                var intent = Intent(context, ESP_LIB_ReassignUsersList::class.java)
                 intent.putExtra("criteriaListDAO", criteriaListDAOESPLIB)
                 context?.startActivity(intent)
 

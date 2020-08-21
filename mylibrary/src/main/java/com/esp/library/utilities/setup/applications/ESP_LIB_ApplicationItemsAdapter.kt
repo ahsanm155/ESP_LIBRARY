@@ -1,14 +1,18 @@
 package com.esp.library.utilities.setup.applications
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.utilities.data.applicants.ESP_LIB_CardValuesDAO
-import kotlinx.android.synthetic.main.esp_lib_activity_dynamic_list_applications_row.view.*
 
 
 class ESP_LIB_ApplicationItemsAdapter(val itemsList: List<ESP_LIB_CardValuesDAO>?, con: Context)
@@ -26,7 +30,6 @@ class ESP_LIB_ApplicationItemsAdapter(val itemsList: List<ESP_LIB_CardValuesDAO>
     inner class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         internal var txtlabel: TextView = itemView.findViewById(R.id.txtlabel)
-        internal var txtvalue: TextView = itemView.findViewById(R.id.txtvalue)
 
     }
 
@@ -39,9 +42,19 @@ class ESP_LIB_ApplicationItemsAdapter(val itemsList: List<ESP_LIB_CardValuesDAO>
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val cardValuesDAO = itemsList?.get(position)
-        holder.txtlabel.text=cardValuesDAO?.label+":"
-        holder.txtvalue.text=cardValuesDAO?.value
 
+        var label=cardValuesDAO?.label
+        var value=cardValuesDAO?.value
+        if(label.isNullOrEmpty())
+            label=""
+        if(value.isNullOrEmpty())
+            value=""
+
+        val textConcate = "$label $value"
+        val wordtoSpan: Spannable = SpannableString(textConcate)
+        wordtoSpan.setSpan(TextAppearanceSpan(context, R.style.Esp_Lib_Style_TextParagraphCoolGray), 0, label.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        wordtoSpan.setSpan(TextAppearanceSpan(context, R.style.Esp_Lib_Style_TextParagraphBlack), label.length+1, textConcate.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.txtlabel.text=wordtoSpan
 
 
     }//End Holder Class

@@ -43,6 +43,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginEnd="@dimen/_minus5sdp">
 
                         <ImageButton
@@ -68,17 +69,36 @@
 
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtrequestnumlabel"
+                        style="@style/Esp_Lib_Style_TextParagraphGray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/esp_lib_text_requestnumber" />
+
+                    <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+                        android:id="@+id/txtrequestnumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_toEndOf="@+id/txtrequestnumlabel"
+                        style="@style/Esp_Lib_Style_TextParagraphBlack"/>
+                    </RelativeLayout>
 
 
                     <RelativeLayout
                         android:id="@+id/rlsubmitteddate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp">
+                        android:layout_marginTop="@dimen/_3sdp">
 
                         <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
                             android:id="@+id/submittedOntext"
-                            style="@style/Esp_Lib_Style_TextSmallGray"
+                            style="@style/Esp_Lib_Style_TextParagraphGray"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/esp_lib_text_submittedoncolon" />
@@ -89,7 +109,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_toEndOf="@+id/submittedOntext"
-                            style="@style/Esp_Lib_Style_TextSmallBlack"/>
+                            style="@style/Esp_Lib_Style_TextParagraphBlack"/>
 
                         <include
                             android:layout_width="wrap_content"

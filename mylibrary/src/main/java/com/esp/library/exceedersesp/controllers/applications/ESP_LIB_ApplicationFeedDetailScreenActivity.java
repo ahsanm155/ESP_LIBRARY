@@ -38,8 +38,8 @@ import com.esp.library.utilities.common.ESP_LIB_ProgressBarAnimation;
 import com.esp.library.utilities.common.ESP_LIB_Shared;
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
+import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationItemsAdapter;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.gson.Gson;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -56,7 +56,6 @@ import utilities.adapters.setup.applications.ESP_LIB_ListAddApplicationSectionsA
 import utilities.adapters.setup.applications.ESP_LIB_ListSubmissionApplicationsAdapter;
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO;
-import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO;
 import utilities.data.applicants.ESP_LIB_SubmittalApplicationsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_CurrencyDAO;
@@ -65,11 +64,9 @@ import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldsCardsDAO;
-import utilities.data.applicants.dynamics.ESP_LIB_DynamicResponseDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicSectionValuesDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesCriteriaListDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesDAO;
-import utilities.data.filters.ESP_LIB_FilterDAO;
 import utilities.interfaces.ESP_LIB_CriteriaFieldsListener;
 import utilities.interfaces.ESP_LIB_FeedbackSubmissionClick;
 
@@ -92,28 +89,17 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
 
     Toolbar toolbar;
-    TextView submissionValue;
+    View viewline, viewlinecurve;
+    TextView txtfeedminelabel, txtfeedminevalue;
+    RecyclerView items_list;
     TextView toolbarheading;
     ImageButton ibToolbarBack;
     TextView definitionName;
-    TextView txtrequestedbyval;
-    TextView txtrequestedonval;
-    TextView applicationNumber;
     LinearLayout rejected_status;
     Button addsub_btn;
     RecyclerView app_list;
     RecyclerView submission_app_list;
     LinearLayout llsubmission_app_list;
-    TextView txtrequest;
-    TextView txtrequestedby;
-    TextView acceptedOn;
-    TextView acceptedontext;
-    RelativeLayout rlaccepreject;
-    TextView categorytext;
-    TextView txtmoreinfo;
-    ImageView ivainforrow;
-    RelativeLayout rldescription;
-    TextView txtinfodescription;
     View pendinglineview;
     TextView txtrequestdetail;
     LinearLayout lldetail;
@@ -128,7 +114,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
     TextView txtsubmissions;
     LinearLayout llmaindetail;
     View topcardview;
-    RelativeLayout main_content;
+    RelativeLayout main_content, rlfeedminerow;
     NestedScrollView nestedscrollview;
     ShimmerFrameLayout shimmer_view_container;
     ImageView ivdetailarrow, ivsubmissionrowarrow;
@@ -136,7 +122,6 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
     TextView txtdetailrowtext;
     TextView submissionallowedtext;
     TextView txtexperts;
-    RelativeLayout rlcategory;
     View dividersubmission;
 
 
@@ -197,6 +182,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         loadData();
 
 
+        txtdetailrowtext.setText(pref.getlabels().getApplication() + " " + getString(R.string.esp_lib_text_details));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -204,13 +190,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
             }
         });
 
-        /*Bundle bnd = getIntent().getExtras();
-        if (bnd != null) {
-            mApplication = (ESP_LIB_ApplicationsDAO) bnd.getSerializable(ESP_LIB_ApplicationsDAO.Companion.getBUNDLE_KEY());
-            UpdateTopView();
 
-
-        }*/
 
         UpdateTopView();
 
@@ -267,24 +247,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
             }
 
         });
-        txtmoreinfo.setOnClickListener(v ->
-        {
-            if (txtmoreinfo.getText().toString().equalsIgnoreCase(getString(R.string.esp_lib_text_moreinformation))) {
-                rldescription.setVisibility(View.VISIBLE);
-                pendinglineview.setVisibility(View.VISIBLE);
-                txtmoreinfo.setText(getString(R.string.esp_lib_text_lessinformation));
-                ivainforrow.setImageResource(R.drawable.esp_lib_drawable_icons_blue_arrow_up);
 
-            } else {
 
-                rldescription.setVisibility(View.GONE);
-                pendinglineview.setVisibility(View.GONE);
-                txtmoreinfo.setText(getString(R.string.esp_lib_text_moreinformation));
-                ivainforrow.setImageResource(R.drawable.esp_lib_drawable_iconsarrowdownblue);
 
-            }
-
-        });
 
 
         ESP_LIB_KeyboardUtils.addKeyboardToggleListener(this, new ESP_LIB_KeyboardUtils.SoftKeyboardToggleListener() {
@@ -325,29 +290,22 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
     private void initailizeIds() {
 
         toolbar = findViewById(R.id.gradienttoolbar);
-        submissionValue = findViewById(R.id.category);
+        rlfeedminerow = findViewById(R.id.rlfeedminerow);
+        rlfeedminerow.setPadding(17, 30, 0, 0);
+        viewline = findViewById(R.id.viewline);
+        viewlinecurve = findViewById(R.id.viewlinecurve);
+        txtfeedminelabel = findViewById(R.id.txtfeedminelabel);
+        txtfeedminevalue = findViewById(R.id.txtfeedminevalue);
         txtexperts = findViewById(R.id.txtexperts);
         toolbarheading = findViewById(R.id.toolbarheading);
         ibToolbarBack = findViewById(R.id.ibToolbarBack);
         definitionName = findViewById(R.id.definitionName);
-        txtrequestedbyval = findViewById(R.id.txtrequestedbyval);
-        txtrequestedonval = findViewById(R.id.txtrequestedonval);
-        acceptedOn = findViewById(R.id.acceptedOn);
-        acceptedontext = findViewById(R.id.acceptedontext);
-        rlaccepreject = findViewById(R.id.rlaccepreject);
-        applicationNumber = findViewById(R.id.applicationNumber);
+        definitionName.setPadding(17, 20, 0, 0);
         rejected_status = findViewById(R.id.rejected_status);
         addsub_btn = findViewById(R.id.addsub_btn);
         app_list = findViewById(R.id.app_list);
         submission_app_list = findViewById(R.id.submission_app_list);
         llsubmission_app_list = findViewById(R.id.llsubmission_app_list);
-        txtrequest = findViewById(R.id.applicationNumbertext);
-        txtrequestedby = findViewById(R.id.txtrequestedby);
-        categorytext = findViewById(R.id.categorytext);
-        txtmoreinfo = findViewById(R.id.txtmoreinfo);
-        ivainforrow = findViewById(R.id.ivainforrow);
-        rldescription = findViewById(R.id.rldescription);
-        txtinfodescription = findViewById(R.id.txtinfodescription);
         pendinglineview = findViewById(R.id.pendinglineview);
         txtrequestdetail = findViewById(R.id.txtrequestdetail);
         lldetail = findViewById(R.id.lldetail);
@@ -370,11 +328,15 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         txtdetailrowtext = findViewById(R.id.txtdetailrowtext);
         submissionallowedtext = findViewById(R.id.submissionallowedtext);
-        rlcategory = findViewById(R.id.rlcategory);
         dividersubmission = findViewById(R.id.dividersubmission);
+        items_list = findViewById(R.id.items_list);
+        items_list.setPadding(17, 0, 0, 0);
 
+        viewline.setVisibility(View.VISIBLE);
+        viewlinecurve.setVisibility(View.VISIBLE);
+        rlfeedminerow.setVisibility(View.VISIBLE);
+        txtfeedminelabel.setText(getString(R.string.esp_lib_text_feed));
 
-        categorytext.setText(getString(R.string.esp_lib_text_requestcolon));
     }
 
     private void initailize() {
@@ -387,6 +349,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         app_list.setLayoutManager(mApplicationLayoutManager);
         app_list.setItemAnimator(new DefaultItemAnimator());
 
+        items_list.setHasFixedSize(true);
+        items_list.setLayoutManager(new LinearLayoutManager(bContext, LinearLayoutManager.VERTICAL, false));
+        items_list.setItemAnimator(new DefaultItemAnimator());
 
         mApplicationSubmissionLayoutManager = new LinearLayoutManager(bContext);
         submission_app_list.setHasFixedSize(true);
@@ -439,26 +404,11 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
     private void UpdateTopView() {
 
         toolbarheading.setText(pref.getlabels().getApplication() + " " + getString(R.string.esp_lib_text_details));
-
         Bundle bnd = getIntent().getExtras();
         if (bnd != null) {
             mApplication = (ESP_LIB_ApplicationsDAO) bnd.getSerializable(ESP_LIB_ApplicationsDAO.Companion.getBUNDLE_KEY());
-            if (mApplication != null) {
-                String displayDate = "";
-                if (mApplication.getStartedOn() != null && mApplication.getStartedOn().length() > 0) {
-                    displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(bContext, mApplication.getStartedOn(), true);
-                }
-                txtrequestedonval.setText(displayDate);
-                txtrequestedbyval.setText(mApplication.getApplicantName());
-                submissionValue.setText(mApplication.getParentDefinitionName());
-                applicationNumber.setText(mApplication.getApplicationNumber());
-                definitionName.setText(mApplication.getDefinitionName());
-
-            }
 
         }
-
-
     }
 
 
@@ -487,7 +437,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                             ESP_LIB_ListSubmissionApplicationsAdapter adapter = new ESP_LIB_ListSubmissionApplicationsAdapter(app_actual_list, bContext, "");
                             adapter.isClickable(false);
                             submission_app_list.setAdapter(adapter);
-                            txtsubmissions.setText(getString(R.string.esp_lib_text_submissions) + " (" + app_actual_list.size() + ")");
+                            txtsubmissions.setText(getString(R.string.esp_lib_text_submissions) + " (" + app_actual_list.size() + "/"+response.body().getApplicationCard().getNumberOfSubmissions()+")");
 
 
                             //getSubmissions(false);
@@ -495,12 +445,13 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                             rlsubmissionrow.setVisibility(View.GONE);
                         }*/
 
+                        showTopCardData(response);
 
 
-                        if((!response.body().isMultipleSubmissionsAllowed() && response.body().getMySubmissions().size()==0)||
+                        if ((!response.body().isMultipleSubmissionsAllowed() && response.body().getMySubmissions().size() == 0) ||
                                 response.body().isMultipleSubmissionsAllowed())
                             addsub_btn.setVisibility(View.VISIBLE);
-                        else if(!response.body().isMultipleSubmissionsAllowed() && response.body().getMySubmissions().size()>0)
+                        else if (!response.body().isMultipleSubmissionsAllowed() && response.body().getMySubmissions().size() > 0)
                             addsub_btn.setVisibility(View.GONE);
 
                         ArrayList<ESP_LIB_DynamicFormSectionDAO> sections;
@@ -512,7 +463,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                             sections = GetOnlyFieldsCards(response.body().getForm(), null);
 
                         if (sections != null && sections.size() > 0) {
-                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", false);
+                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", true,false);
                             mApplicationSectionsAdapter.setActualResponseJson(actualResponseJson);
                             app_list.setAdapter(mApplicationSectionsAdapter);
                             mApplicationSectionsAdapter.notifyDataSetChanged();
@@ -523,7 +474,12 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
                             //   UnSuccessResponse();
                         }
+
+
                     }
+                    rlsubmissionrow.performClick();
+                    ivsubmissionrowarrow.setVisibility(View.GONE);
+
                 }
 
                 @Override
@@ -543,6 +499,40 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         }
     }
 
+
+    private void showTopCardData(Response<ESP_LIB_SubmittalApplicationsDAO> response) {
+        ESP_LIB_ApplicationsDAO applicationCard = response.body().getApplicationCard();
+        if (applicationCard != null && applicationCard.getSummary() != null) {
+
+            ESP_LIB_ApplicationItemsAdapter itemsAdapter = new ESP_LIB_ApplicationItemsAdapter(applicationCard.getSummary().getCardValues(), bContext);
+            items_list.setAdapter(itemsAdapter);
+
+            definitionName.setText(applicationCard.getSummary().getName());
+            txtfeedminevalue.setText(applicationCard.getSummary().getTitle());
+            viewline.setVisibility(View.VISIBLE);
+            viewlinecurve.setVisibility(View.VISIBLE);
+            rlfeedminerow.setVisibility(View.VISIBLE);
+            if (applicationCard.getSummary().isFeed()) {
+                txtfeedminelabel.setText(getString(R.string.esp_lib_text_feed));
+                txtfeedminelabel.setTextColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
+                viewline.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
+                viewlinecurve.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
+            }
+            else if (applicationCard.getSummary().isMine()) {
+                txtfeedminelabel.setText(getString(R.string.esp_lib_text_mine));
+                txtfeedminelabel.setTextColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+                viewline.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+                viewlinecurve.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
+            }/*else if (!applicationCard.getSummary().isMine() && (applicationCard.getSummary().getTitle() != null &&
+                    !applicationCard.getSummary().getTitle().isEmpty())) {
+                rlfeedminerow.setVisibility(View.VISIBLE);
+                txtfeedminelabel.setVisibility(View.GONE);
+                // ivcircledot.setVisibility(View.GONE);
+                txtfeedminevalue.setText(applicationCard.getSummary().getTitle());
+            }*/ else
+                definitionName.setPadding(17, 30, 0, 15);
+        }
+    }
 
    /* private void getSubmissions(Boolean isLoadMore) {
 
@@ -661,13 +651,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
 
     public void LoadStages() {
-
-
         start_loading_animation(false);
         try {
-
             loadStages_call = ESP_LIB_Shared.getInstance().retroFitObject(bContext).getCurrency();
-
             loadStages_call.enqueue(new Callback<List<ESP_LIB_CurrencyDAO>>() {
                 @Override
                 public void onResponse(Call<List<ESP_LIB_CurrencyDAO>> call, Response<List<ESP_LIB_CurrencyDAO>> response) {
@@ -935,23 +921,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
     private void setGravity() {
         if (pref.getLanguage().equalsIgnoreCase("ar")) {
             definitionName.setGravity(Gravity.RIGHT);
-            submissionValue.setGravity(Gravity.RIGHT);
-            applicationNumber.setGravity(Gravity.RIGHT);
-            txtrequest.setGravity(Gravity.RIGHT);
-            txtrequestedbyval.setGravity(Gravity.RIGHT);
-            txtrequestedonval.setGravity(Gravity.RIGHT);
-            txtrequestedby.setGravity(Gravity.RIGHT);
-            categorytext.setGravity(Gravity.RIGHT);
 
         } else {
             definitionName.setGravity(Gravity.LEFT);
-            submissionValue.setGravity(Gravity.LEFT);
-            applicationNumber.setGravity(Gravity.LEFT);
-            txtrequest.setGravity(Gravity.LEFT);
-            txtrequestedbyval.setGravity(Gravity.LEFT);
-            txtrequestedonval.setGravity(Gravity.LEFT);
-            txtrequestedby.setGravity(Gravity.LEFT);
-            categorytext.setGravity(Gravity.LEFT);
         }
     }
 

@@ -79,7 +79,7 @@
         <RelativeLayout
             android:id="@+id/rlcardstack"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_205sdp">
+            android:layout_height="@dimen/_215sdp">
 
 
             <com.facebook.shimmer.ShimmerFrameLayout

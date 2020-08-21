@@ -43,6 +43,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
         internal var cards: RelativeLayout
         internal var definitionName: TextView
         internal var submittedOn: TextView
+        internal var txtrequestnumber: TextView
         internal var txtstatus: TextView
         internal var rlstatus: RelativeLayout
         internal var ibRemoveCard: ImageButton
@@ -55,6 +56,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
             cards = itemView.findViewById(R.id.cards)
             definitionName = itemView.findViewById(R.id.definitionName)
             submittedOn = itemView.findViewById(R.id.submittedOn)
+            txtrequestnumber = itemView.findViewById(R.id.txtrequestnumber)
             ivsign = itemView.findViewById(R.id.ivsign)
             rlstatus = itemView.findViewById(R.id.rlstatus)
             txtstatus = itemView.findViewById(R.id.txtstatus)
@@ -126,6 +128,8 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
             displayDate = ESP_LIB_Shared.getInstance().getDisplayDate(context, applicationsDAO.submittedOn, true)
             holder.submittedOn.text = displayDate
         }
+
+        holder.txtrequestnumber.text=applicationsDAO.applicationNumber
 
 
 
@@ -249,7 +253,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
             }
             2 // Pending
             -> {
-                holder.txtstatus.setText(R.string.esp_lib_text_pending)
+                holder.txtstatus.setText(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
                 holder.ibRemoveCard.visibility = View.GONE
@@ -282,7 +286,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
                 holder.ibRemoveCard.visibility = View.GONE
             }
             else -> {
-                holder.txtstatus.setText(R.string.esp_lib_text_pending)
+                holder.txtstatus.setText(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
                 holder.ibRemoveCard.visibility = View.GONE

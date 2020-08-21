@@ -15,20 +15,20 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
-import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ActivityStageDetails
 import com.esp.library.exceedersesp.controllers.fieldstype.classes.ESP_LIB_AttachmentItem
 import com.esp.library.exceedersesp.controllers.fieldstype.other.ESP_LIB_AttachmentImageDownload
 import com.esp.library.ipaulpro.afilechooser.utils.FileUtils
-import com.esp.library.utilities.common.ESP_LIB_Enums
-import com.esp.library.utilities.common.ESP_LIB_RealPathUtil
-import com.esp.library.utilities.common.ESP_LIB_Shared
-import com.esp.library.utilities.common.ESP_LIB_SharedPreference
+import com.esp.library.utilities.common.*
+import com.esp.library.utilities.customevents.EventOptions
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.esp_lib_activity_attachment_row.*
 import kotlinx.android.synthetic.main.esp_lib_activity_feedback_form.*
 import kotlinx.android.synthetic.main.esp_lib_feedback_add_section.*
 import okhttp3.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,8 +41,6 @@ import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesCriteriaListDAO
 import utilities.interfaces.ESP_LIB_FeedbackConfirmationListener
 import java.io.File
 import java.io.IOException
-import java.util.*
-import kotlin.collections.ArrayList
 
 class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmationListener {
 
@@ -429,9 +427,19 @@ class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmatio
             status_call.enqueue(object : Callback<Int> {
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
                     stop_loading_animation()
-                    ESP_LIB_ActivityStageDetails.isGoBAck = true
-                    isComingFromFeedbackFrom = true
-                    onBackPressed()
+
+
+                    val dialogFragment = FullScreenDialogExample() // my custom FargmentDialog
+                    val args = Bundle()
+
+                    if (isApproveClick)
+                        args.putString("message", getString(R.string.esp_lib_text_accepted_criteria_success))
+                    else
+                        args.putString("message", getString(R.string.esp_lib_text_rejected_criteria))
+
+                    dialogFragment.arguments = args
+                    dialogFragment.show(supportFragmentManager, "popup")
+
 
                 }
 
@@ -525,6 +533,33 @@ class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmatio
                 btconfirm.alpha = 0.5f
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerReciever()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unRegisterReciever()
+    }
+
+    private fun registerReciever() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this)
+    }
+
+    private fun unRegisterReciever() {
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun popupismissEvent(popUpDismiss: EventOptions.PopUpDismissEvent) {
+        ESP_LIB_ActivityStageDetails.isGoBAck = true
+        isComingFromFeedbackFrom = true
+        onBackPressed()
+
     }
 
     override fun onBackPressed() {

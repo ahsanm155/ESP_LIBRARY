@@ -51,8 +51,6 @@
                 style="@style/Esp_Lib_Style_TextHeading3BlackHeavy" />
 
 
-
-
                 <ImageView
                     android:id="@+id/ivexpandcollapserrow"
                     android:layout_width="wrap_content"
@@ -61,7 +59,6 @@
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:background="?attr/selectableItemBackground"
                     android:src="@drawable/ic_more_info_down"/>
-
 
 
                 <ImageButton

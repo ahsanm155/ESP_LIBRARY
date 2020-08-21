@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/esp_lib_drawable_draw_bg_white"
             android:orientation="vertical">
@@ -31,6 +31,7 @@
                     android:id="@+id/ivsubmissionoptions"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_18sdp"
+                    android:visibility="gone"
                     android:background="?attr/selectableItemBackground"
                     android:src="@drawable/esp_lib_drawable_vertical_dots"
                     android:layout_centerVertical="true"

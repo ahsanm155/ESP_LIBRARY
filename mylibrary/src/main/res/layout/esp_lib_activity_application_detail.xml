@@ -50,7 +50,7 @@
 
                     <View
                         android:id="@+id/viewlinecurve"
-                        android:layout_width="@dimen/_3sdp"
+                        android:layout_width="@dimen/_2sdp"
                         android:visibility="gone"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:background="@color/esp_lib_color_yellowishOrange"
@@ -126,16 +126,6 @@
                     android:orientation="vertical">
 
 
-                    <include
-                        android:id="@+id/linkcard"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:layout_marginEnd="@dimen/_8sdp"
-                        android:visibility="gone"
-                        android:layout_marginBottom="@dimen/_12sdp"
-                        layout="@layout/esp_lib_link_definition_card"/>
-
                 <RelativeLayout
                     android:id="@+id/rldetailrow"
                     android:layout_width="match_parent"
@@ -174,6 +164,8 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+
+
 
                     <LinearLayout
                         android:id="@+id/llmaindetail"
@@ -224,6 +216,16 @@
                         </androidx.recyclerview.widget.RecyclerView>
                     </LinearLayout>
 
+
+                    <include
+                        android:id="@+id/linkcard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:visibility="gone"
+                        layout="@layout/esp_lib_link_definition_card"/>
 
                 <RelativeLayout
                     android:id="@+id/rlsubmissionrow"
