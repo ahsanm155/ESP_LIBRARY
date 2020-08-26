@@ -1,6 +1,7 @@
 package com.esp.library.exceedersesp.controllers.fieldstype.classes;
 
 import android.content.Context;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -224,6 +225,7 @@ public class ESP_LIB_LookupItem {
         }
 
         setDrawable(holder,pref);
+
 
     }
 

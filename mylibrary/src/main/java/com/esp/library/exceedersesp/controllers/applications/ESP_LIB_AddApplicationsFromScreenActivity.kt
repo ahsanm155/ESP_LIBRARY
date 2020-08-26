@@ -60,6 +60,8 @@ class ESP_LIB_AddApplicationsFromScreenActivity : ESP_LIB_BaseActivity(), ESP_LI
 
     }
 
+
+
     override fun mActionTo(whattodo: String) {
         if (whattodo == getString(R.string.esp_lib_text_draft)) {
             if (submit_request != null) {

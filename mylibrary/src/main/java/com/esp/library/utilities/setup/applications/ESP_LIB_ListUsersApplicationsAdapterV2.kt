@@ -42,6 +42,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
         internal var rlstatus: RelativeLayout
         internal var rlfeedminerow: RelativeLayout
         internal var cards: CardView
+        internal var btnClickArea: Button
         internal var ibRemoveCard: ImageButton
         internal var txtstatus: TextView
         internal var txtfeedminelabel: TextView
@@ -56,6 +57,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
             cards = itemView.findViewById(R.id.cards)
             txtstatus = itemView.findViewById(R.id.txtstatus)
             rlstatus = itemView.findViewById(R.id.rlstatus)
+            btnClickArea = itemView.findViewById(R.id.btnClickArea)
             txtfeedminelabel = itemView.findViewById(R.id.txtfeedminelabel)
             ivcircledot = itemView.findViewById(R.id.ivcircledot)
             rlfeedminerow = itemView.findViewById(R.id.rlfeedminerow)
@@ -118,7 +120,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
 
         setStatusColor(holder, applicationsDAO)
 
-        holder.cards.setOnClickListener {
+        holder.btnClickArea.setOnClickListener {
             //holder.cards.isEnabled = false
 
             if (ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == null || ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == context?.getString(R.string.esp_lib_text_profile_complete)) {

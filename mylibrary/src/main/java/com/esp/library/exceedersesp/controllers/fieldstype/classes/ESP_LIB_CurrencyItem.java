@@ -2,6 +2,7 @@ package com.esp.library.exceedersesp.controllers.fieldstype.classes;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -425,6 +426,14 @@ public class ESP_LIB_CurrencyItem {
 
 
         }
+
+        ESP_LIB_DynamicFormSectionFieldDAO finalFieldDAO3 = fieldDAO;
+        new Handler().postDelayed(() -> {
+            if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
+                holder.etValue.setText("");
+                validateForm(finalFieldDAO3);
+            }
+        }, 2000);
 
     }
 

@@ -93,7 +93,7 @@ class ESP_LIB_ApplicationsActivityDrawer : ESP_LIB_BaseActivity(), ESP_LIB_Users
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        changeStatusBarColor(true)
+       // changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);

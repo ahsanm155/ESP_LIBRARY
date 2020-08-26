@@ -2,6 +2,7 @@ package com.esp.library.exceedersesp.controllers.fieldstype.classes;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -304,6 +305,14 @@ public class ESP_LIB_DateItem {
             } else
                 holder.etValue.setEnabled(true);
         }
+
+
+        new Handler().postDelayed(() -> {
+            if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
+                holder.etValue.setText("");
+                validateForm(fieldDAO);
+            }
+        }, 2000);
     }
 
     private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO) {

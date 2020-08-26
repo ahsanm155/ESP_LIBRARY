@@ -265,6 +265,7 @@
     <string name="esp_lib_text_user">User</string>
     <string name="esp_lib_text_adminsmall">admin</string>
     <string name="esp_lib_text_accept">Accept</string>
+    <string name="esp_lib_text_stop" translatable="false">Stop</string>
     <string name="esp_lib_text_comment_visible_to_applicant" translatable="false">Make this comment visibile to applicant</string>
     <string name="esp_lib_text_actioncenter">Action center</string>
     <string name="esp_lib_text_approve">Approve</string>
@@ -353,6 +354,7 @@
     <string name="esp_lib_text_locked">locked</string>
     <string name="esp_lib_text_link">link</string>
     <string name="esp_lib_text_open">open</string>
+    <string name="esp_lib_text_opencolon" translatable="false">Open:</string>
     <string name="esp_lib_text_opencaps">Open</string>
     <string name="esp_lib_text_errorcreatingnewfile">Error creating new file</string>
     <string name="esp_lib_text_thumbnail">thumbnail</string>
@@ -422,7 +424,7 @@
     <string name="esp_lib_text_submissionsstopped">Submissions Stopped</string>
     <string name="esp_lib_text_viewapplications">View Applications</string>
     <string name="esp_lib_text_stopsubmission">Stop Submission</string>
-    <string name="esp_lib_text_requesttoaction">Requests to screen</string>
+    <string name="esp_lib_text_requesttoaction">Requests to action</string>
     <string name="esp_lib_text_seeall">See All</string>
     <string name="esp_lib_text_allowsubmission">Allow Submission</string>
     <string name="esp_lib_text_allow" translatable="false">Allow</string>
@@ -441,7 +443,8 @@
     <string name="esp_lib_text_take_photo_dot" translatable="false">Take a Photo.</string>
     <string name="esp_lib_text_take_photo" translatable="false">Take a Photo</string>
     <string name="esp_lib_text_closesubmission" translatable="false">Close Submission</string>
-    <string name="esp_lib_text_stopsubmissiontext">Are you sure you want to stop allowing submissions for this definition?</string>
+    <string name="esp_lib_text_stopsubmissiontext">Are you sure you want to stop the submissions?</string>
+    <string name="esp_lib_text_stopsubmissiondescription" translatable="false">After that, you won\'t receive any submissions for this request anymore.</string>
     <string name="esp_lib_text_completesubmissiontext" translatable="false">Are you sure you want to close submissions for this definition?</string>
     <string name="esp_lib_text_allowsubmissiontext">Are you sure you want to allow submissions for this definition?</string>
     <string name="esp_lib_text_moreinformation">More Information</string>

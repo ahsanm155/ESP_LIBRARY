@@ -1,5 +1,7 @@
 package com.esp.library.exceedersesp.controllers.fieldstype.other;
 
+import android.os.Handler;
+
 import com.esp.library.exceedersesp.controllers.Profile.ESP_LIB_EditSectionDetails;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO;
@@ -46,6 +48,7 @@ public class ESP_LIB_Validation {
             if (ESPLIBCriteriaFieldsListener != null) {
                 criteriaListDAO.setValidate(fieldDAO.isValidate());
                 ESPLIBCriteriaFieldsListener.validateCriteriaFields(criteriaListDAO);
+
             }
         } catch (Exception e) {
 

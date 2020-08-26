@@ -1,7 +1,11 @@
 package utilities.adapters.setup.applications
 
+import android.content.res.ColorStateList
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
 import android.text.TextUtils
+import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +15,9 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.esp.library.R
-import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_AddApplicationsFromScreenActivity
-import org.json.JSONException
-import org.json.JSONObject
+import com.esp.library.utilities.common.ESP_LIB_Shared
 import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
 import java.io.IOException
 import java.nio.charset.Charset
@@ -96,7 +98,10 @@ class ESP_LIB_ListApplicationCategoryAndDefinationAdapter(private val mApplicati
         if (search_text.length > 0)
             holder.name.text = ESP_LIB_Shared.getInstance().getSearchedTextHighlight(search_text, getmApplications.name,context)
         else
+        {
+            holder.name.text = ESP_LIB_Shared.getInstance().getSearchedTextHighlight(search_text, getmApplications.name,context)
             holder.name.text = getmApplications.name
+        }
 
         holder.txtcategory.text = getmApplications.category
         holder.description.text = getmApplications.description

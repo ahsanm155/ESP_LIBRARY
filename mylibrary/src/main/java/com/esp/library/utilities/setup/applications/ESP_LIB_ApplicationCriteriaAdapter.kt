@@ -267,7 +267,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         }
 
 
-        mApplicationSectionsAdapterESPLIB = ESP_LIB_ListAddApplicationSectionsAdapter(sections, (context as ESP_LIB_BaseActivity?)!!, "", isViewOnly,false)
+        mApplicationSectionsAdapterESPLIB = ESP_LIB_ListAddApplicationSectionsAdapter(sections, (context as ESP_LIB_BaseActivity?)!!, "", isViewOnly, false)
         actualResponseJson?.let { mApplicationSectionsAdapterESPLIB?.setActualResponseJson(it) }
         holder.rvFields.adapter = mApplicationSectionsAdapterESPLIB
         mApplicationSectionsAdapterESPLIB?.getCriteriaObject(criteriaListDAO)
@@ -345,33 +345,31 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         }
 
 
-            /* if ((ESP_LIB_ESPApplication.getInstance()?.user?.role.equals(context?.getString(R.string.esp_lib_text_admin), ignoreCase = true)) ||
-                     ((isComingfromAssessor && criteriaListDAO!!.isOwner) && (dynamicStagesDAO?.status.equals(context?.getString(R.string.esp_lib_text_open), ignoreCase = true)
-                             || dynamicStagesDAO?.status.equals(context?.getString(R.string.esp_lib_text_locked), ignoreCase = true)) &&
-                             !criteriaListDAO.assessmentStatus.equals(context?.getString(R.string.esp_lib_text_accepted), ignoreCase = true) &&
-                             !criteriaListDAO.assessmentStatus.equals(context?.getString(R.string.esp_lib_text_rejected), ignoreCase = true)))
-                 holder.ibReassignCard.visibility = View.VISIBLE
-             else
-                 holder.ibReassignCard.visibility = View.GONE*/
+        /* if ((ESP_LIB_ESPApplication.getInstance()?.user?.role.equals(context?.getString(R.string.esp_lib_text_admin), ignoreCase = true)) ||
+                 ((isComingfromAssessor && criteriaListDAO!!.isOwner) && (dynamicStagesDAO?.status.equals(context?.getString(R.string.esp_lib_text_open), ignoreCase = true)
+                         || dynamicStagesDAO?.status.equals(context?.getString(R.string.esp_lib_text_locked), ignoreCase = true)) &&
+                         !criteriaListDAO.assessmentStatus.equals(context?.getString(R.string.esp_lib_text_accepted), ignoreCase = true) &&
+                         !criteriaListDAO.assessmentStatus.equals(context?.getString(R.string.esp_lib_text_rejected), ignoreCase = true)))
+             holder.ibReassignCard.visibility = View.VISIBLE
+         else
+             holder.ibReassignCard.visibility = View.GONE*/
 
 
-        if(criteriaListDAO?.permissions?.size==0)
+        if (criteriaListDAO?.permissions == null || criteriaListDAO.permissions?.size == 0)
             holder.ibReassignCard.visibility = View.GONE
 
         criteriaListDAO?.permissions?.forEach {
-            if(it.equals(context?.getString(R.string.esp_lib_text_reassign),ignoreCase = true))
+            if (it.equals(context?.getString(R.string.esp_lib_text_reassign), ignoreCase = true))
                 holder.ibReassignCard.visibility = View.VISIBLE
             else
                 holder.ibReassignCard.visibility = View.GONE
         }
 
 
-
-
-       /* if (dynamicStagesDAO?.isReassign != null && dynamicStagesDAO?.isReassign!!)
-            holder.ibReassignCard.visibility = View.VISIBLE
-        else
-            holder.ibReassignCard.visibility = View.GONE*/
+        /* if (dynamicStagesDAO?.isReassign != null && dynamicStagesDAO?.isReassign!!)
+             holder.ibReassignCard.visibility = View.VISIBLE
+         else
+             holder.ibReassignCard.visibility = View.GONE*/
 
         holder.ibReassignCard.setOnClickListener { v ->
             if (!criteriaListDAO?.assessmentStatus.equals(context?.getString(R.string.esp_lib_text_reassigned), ignoreCase = true))
@@ -577,35 +575,35 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
             return
         }
 
-         holder.txtstatus.setBackgroundResource(R.drawable.esp_lib_drawable_status_background)
-         val drawable = holder.txtstatus.getBackground() as GradientDrawable
+        holder.txtstatus.setBackgroundResource(R.drawable.esp_lib_drawable_status_background)
+        val drawable = holder.txtstatus.getBackground() as GradientDrawable
 
         when (assessmentStatus) {
             context?.getString(R.string.esp_lib_text_invited) // Invited
             -> {
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_invited))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_invited))
-                   drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_invited_background))
+                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_invited_background))
             }
             context?.getString(R.string.esp_lib_text_neww) // New
             -> {
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_new))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_new))
-                   drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_draft_background))
+                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_draft_background))
             }
             context?.getString(R.string.esp_lib_text_pending) // Pending
             -> {
                 holder.txtstatus.text = context!!.getString(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
-                   drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
+                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
             }
             context?.getString(R.string.esp_lib_text_inprogress) // inprogress
             -> {
                 holder.txtstatus.text = context!!.getString(R.string.esp_lib_text_opencaps)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
-                  drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
+                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
             }
             context?.getString(R.string.esp_lib_text_accepted) // Accepted
             -> {
@@ -618,18 +616,18 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
                     hideAcceptRejectStatus(holder)
                 }
 
-                 // DrawableCompat.setTint(holder.etxtsign.background, ContextCompat.getColor(context!!, R.color.colorPrimaryDark));
+                // DrawableCompat.setTint(holder.etxtsign.background, ContextCompat.getColor(context!!, R.color.colorPrimaryDark));
 
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_accepted))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_accepted))
-                  drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_accepted_background))
+                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_accepted_background))
             }
             context?.getString(R.string.esp_lib_text_rejected)  // Rejected
             -> {
                 rejectedCurve(holder, criteriaListDAOESPLIB)
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_rejected))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_rejected))
-                  drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_rejected_background))
+                drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_rejected_background))
             }
 
             context?.getString(R.string.esp_lib_text_cancelled)   // Cancelled
@@ -644,7 +642,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
                 holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_coolgrey))
                 holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_coolgrey))
                 drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_transparent_color))
-                holder.txtstatus.setPadding(0,0,0,0)
+                holder.txtstatus.setPadding(0, 0, 0, 0)
             }
 
             context?.getString(R.string.esp_lib_text_activecaps)  // Active
@@ -661,7 +659,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
                     holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
                     holder.txtstatus.text = context?.getString(R.string.esp_lib_text_opencaps)
                     holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending))
-                       drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
+                    drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
                 } else {
 
                     if (isNotifyOnly) {
@@ -687,7 +685,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
                     holder.txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_new))
                     holder.txtstatus.text = context?.getString(R.string.esp_lib_text_opencaps)
                     holder.txtline.setBackgroundColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_new))
-                       drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
+                    drawable.setColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_pending_background))
                 }
             }
             else -> {

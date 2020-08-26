@@ -443,7 +443,12 @@ public class ESP_LIB_EdittextItem {
         validateForm(fieldDAO);
 
 
-
+        new Handler().postDelayed(() -> {
+            if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
+                holder.etValue.setText("");
+                validateForm(fieldDAO);
+            }
+        }, 2000);
 
     }
 

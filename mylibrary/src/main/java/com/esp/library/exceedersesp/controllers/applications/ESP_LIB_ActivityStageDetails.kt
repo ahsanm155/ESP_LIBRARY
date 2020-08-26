@@ -19,34 +19,24 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
-import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.SingleController.CompRoot
 import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_FeedbackForm
+import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AddApplicationFragment
 import com.esp.library.utilities.common.*
 import com.esp.library.utilities.customevents.EventOptions
-import com.esp.library.utilities.data.applicants.ESP_LIB_FaceDAO
-import com.esp.library.utilities.interfaces.ESP_LIB_FullScreen_CallbackListener
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationCriteriaAdapter
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.esp_lib_activity_stage_detail.*
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import kotlinx.android.synthetic.main.esp_lib_statuswithicon.*
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.logging.HttpLoggingInterceptor
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import utilities.common.ESP_LIB_CommonMethodsKotlin
-import utilities.data.apis.ESP_LIB_APIs
 import utilities.data.applicants.ESP_LIB_CalculatedMappedFieldsDAO
 import utilities.data.applicants.addapplication.ESP_LIB_LookUpDAO
 import utilities.data.applicants.addapplication.ESP_LIB_PostApplicationsStatusDAO
@@ -55,7 +45,6 @@ import utilities.interfaces.ESP_LIB_CriteriaFieldsListener
 import utilities.interfaces.ESP_LIB_FeedbackSubmissionClick
 import java.io.File
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFieldsListener,
@@ -316,7 +305,17 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
                 if (resultCode == Activity.RESULT_OK) {
                     startFeebform()
                 }
+            REQUEST_LOOKUP->
+                if (resultCode == Activity.RESULT_OK) {
+                   // val dfs = data?.extras!!.getSerializable(ESP_LIB_DynamicFormSectionFieldDAO.BUNDLE_KEY) as ESP_LIB_DynamicFormSectionFieldDAO?
+                    val lookup = data?.extras!!.getSerializable(ESP_LIB_LookUpDAO.BUNDLE_KEY) as ESP_LIB_LookUpDAO?
+                    //val isCalculatedMappedField = data.extras!!.getBoolean("isCalculatedMappedField")
+                    if (fieldToBeUpdatedESPLIB != null && lookup != null) {
+                        SetUpLookUpValues(fieldToBeUpdatedESPLIB!!, lookup)
+                    }
+                }
         }
+
 
     }
 

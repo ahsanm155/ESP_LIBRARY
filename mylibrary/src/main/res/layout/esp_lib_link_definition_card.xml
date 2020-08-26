@@ -97,7 +97,7 @@
                     android:id="@+id/txtpendinglabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/esp_lib_text_pending_colon"
+                    android:text="@string/esp_lib_text_opencolon"
                     android:layout_centerVertical="true"
                     style="@style/Esp_Lib_Style_TextParagraphCoolGray"/>
 

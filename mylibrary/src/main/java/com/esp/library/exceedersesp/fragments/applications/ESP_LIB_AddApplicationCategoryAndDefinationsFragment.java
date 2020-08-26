@@ -125,13 +125,13 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
 
                 if (s.length() == 0) {
                     ibClear.setVisibility(View.GONE);
-                    mDefAdapter = new ESP_LIB_ListApplicationCategoryAndDefinationAdapter(cat_list_filtered, bContext, getString(R.string.esp_lib_text_definition));
-                    defination_list.setAdapter(mDefAdapter);
+                   /* mDefAdapter = new ESP_LIB_ListApplicationCategoryAndDefinationAdapter(cat_list_filtered, bContext, getString(R.string.esp_lib_text_definition));
+                    defination_list.setAdapter(mDefAdapter);*/
                 } else {
-                    mDefAdapter.getFilter().filter(s);
+                   // mDefAdapter.getFilter().filter(s);
                     ibClear.setVisibility(View.VISIBLE);
                 }
-
+                mDefAdapter.getFilter().filter(s);
 
             }
 
@@ -315,6 +315,7 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
                     }
                     if (cat_list.size() > 0) {
                         try {
+                            cat_list_filtered.clear();
                             cat_list_filtered.addAll(cat_list);
                             mDefAdapter = new ESP_LIB_ListApplicationCategoryAndDefinationAdapter(cat_list, bContext, getString(R.string.esp_lib_text_definition));
                             defination_list.setAdapter(mDefAdapter);

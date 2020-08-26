@@ -116,7 +116,7 @@ class ESP_LIB_MyFirebaseInstanceIDService : FirebaseMessagingService() {
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
                 .setStyle(NotificationCompat.BigTextStyle().bigText(messageBody))
-                .setSmallIcon(R.drawable.ic_launch_logo)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
                 // .setNumber(4)
                 .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)

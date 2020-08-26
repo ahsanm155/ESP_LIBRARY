@@ -2038,6 +2038,8 @@ public class ESP_LIB_Shared {
 
         //searchItem = ReplaceSpeicalChars(searchItem, "");
 
+        if(searchItem.isEmpty())
+            return new SpannableString(fullItem);
         if (fullItem.toLowerCase().contains(searchItem.toLowerCase())) {
             Spannable spanText = Spannable.Factory.getInstance().newSpannable(fullItem);
 

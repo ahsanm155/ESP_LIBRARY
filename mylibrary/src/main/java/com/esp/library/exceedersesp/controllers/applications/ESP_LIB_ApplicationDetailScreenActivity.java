@@ -10,10 +10,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -58,7 +61,6 @@ import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRec
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationItemsAdapter;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -91,7 +93,6 @@ import utilities.data.applicants.ESP_LIB_LinkApplicationsDAO;
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_CurrencyDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_LookUpDAO;
-import utilities.data.applicants.addapplication.ESP_LIB_PostApplicationsStatusDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_ResponseFileUploadDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DyanmicFormSectionFieldDetailsDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormDAO;
@@ -409,7 +410,8 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
             if (menuItem.getItemId() == R.id.action_remove) {
 
-                submissionDialog(getString(R.string.esp_lib_text_stopsubmissiontext), getString(R.string.esp_lib_text_stopsubmission), getString(R.string.esp_lib_text_stopsubmission));
+                //submissionDialog(getString(R.string.esp_lib_text_stopsubmissiontext), getString(R.string.esp_lib_text_stopsubmission), getString(R.string.esp_lib_text_stopsubmission));
+                submissionDialog(v);
 
             }
             return false;
@@ -417,6 +419,41 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
 
         popup.show();
+
+    }
+
+
+    public void submissionDialog(View v) {
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        ViewGroup viewGroup = findViewById(android.R.id.content);
+        View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.esp_lib_activity_stop_submission_popup, viewGroup, false);
+        builder.setView(dialogView);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        Button btcancel = dialogView.findViewById(R.id.btcancel);
+        Button btstop = dialogView.findViewById(R.id.btstop);
+        ImageView ivcross = dialogView.findViewById(R.id.ivcross);
+        btcancel.setOnClickListener(v1 -> alertDialog.dismiss());
+        ivcross.setOnClickListener(v1 -> alertDialog.dismiss());
+        btstop.setOnClickListener(v1 -> {
+
+            if (ESP_LIB_Shared.getInstance().isWifiConnected(bContext)) {
+                postLinkDefinitionData(mApplication.getId(), false);
+            } else {
+                ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_internet_error_heading), getString(R.string.esp_lib_text_internet_connection_error), bContext);
+            }
+            alertDialog.dismiss();
+        });
+
+
+        alertDialog.show();
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(alertDialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        alertDialog.getWindow().setAttributes(layoutParams);
+
 
     }
 
@@ -556,7 +593,8 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (tempcloseRequestList.get(position).equalsIgnoreCase(getString(R.string.esp_lib_text_close))) {
-                    submissionDialog(getString(R.string.esp_lib_text_completesubmissiontext), getString(R.string.esp_lib_text_yes), getString(R.string.esp_lib_text_closesubmission));
+                    //submissionDialog(getString(R.string.esp_lib_text_completesubmissiontext), getString(R.string.esp_lib_text_yes), getString(R.string.esp_lib_text_closesubmission));
+                    submissionDialog(view);
                 } else if (tempcloseRequestList.get(position).equalsIgnoreCase(getString(R.string.esp_lib_text_cancel))) {
                     Intent i = new Intent(bContext, ESP_LIB_CloseRequest.class);
                     i.putExtra("applicationId", mApplication.getId());
@@ -1844,103 +1882,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             heading.setGravity(Gravity.LEFT);
         }
     }
-
-    private void submissionDialog(String msg, String buttonText, String title) {
-
-        new MaterialAlertDialogBuilder(this, R.style.Esp_Lib_Style_AlertDialogTheme)
-                .setTitle(title)
-                .setCancelable(false)
-                .setMessage(msg)
-                .setPositiveButton(buttonText, (dialogInterface, i) -> {
-                    if (ESP_LIB_Shared.getInstance().isWifiConnected(bContext)) {
-                        // if (title.equalsIgnoreCase(getString(R.string.esp_lib_text_allowsubmission)))
-                        postLinkDefinitionData(mApplication.getId(), false);
-                        /*else
-                            postLinkDefinitionData(mApplication.getId(), false);*/
-                    } else {
-                        ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_internet_error_heading), getString(R.string.esp_lib_text_internet_connection_error), bContext);
-                    }
-                    dialogInterface.dismiss();
-                })
-                .setNeutralButton(getString(R.string.esp_lib_text_cancel), (dialogInterface, i) -> {
-                   /* isComingFromService = true;
-                    if (title.equalsIgnoreCase(getString(R.string.esp_lib_text_allowsubmission))) {
-                        switchsubmissionallow.setChecked(false);
-                    } else {
-                        switchsubmissionallow.setChecked(true);
-                    }*/
-                    dialogInterface.dismiss();
-                })
-                .show();
-
-
-    }
-
-    /*public void cancelDefinition(int definitionId) {
-
-        ESP_LIB_CancelApplicationDAO esp_lib_cancelApplicationDAO = new ESP_LIB_CancelApplicationDAO();
-        esp_lib_cancelApplicationDAO.setApplicationid(mApplication.getId());
-
-
-        start_loading_animation(true);
-        try {
-            ESP_LIB_APIs apis = new CompRoot().getService(bContext);
-
-
-            postLinkDefinition.enqueue(new Callback<ESP_LIB_LinkApplicationsDAO>() {
-                @Override
-                public void onResponse(Call<ESP_LIB_LinkApplicationsDAO> call, Response<ESP_LIB_LinkApplicationsDAO> response) {
-                    stop_loading_animation(true);
-                    if (!response.body().isSubmissionAllowed()) {
-
-                        submissionallowedtext.setText(getString(R.string.esp_lib_text_submissionsstopped));
-                        switchsubmissionallow.setVisibility(View.INVISIBLE);
-                        loadData();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ESP_LIB_LinkApplicationsDAO> call, Throwable t) {
-                    t.printStackTrace();
-                    stop_loading_animation(true);
-                    if (getBContext() != null) {
-                        ESP_LIB_Shared.getInstance().showAlertMessage(pref.getlabels().getApplication(), getString(R.string.esp_lib_text_some_thing_went_wrong), bContext);
-                    }
-                }
-            });
-
-        } catch (Exception ex) {
-
-            stop_loading_animation(true);
-            if (getBContext() != null) {
-                ESP_LIB_Shared.getInstance().showAlertMessage(pref.getlabels().getApplication(), getString(R.string.esp_lib_text_some_thing_went_wrong), bContext);
-            }
-        }
-    }*/
-
-
-   /* public void SubmitStageRequest(boolean isAccepted, ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAO) {
-
-        ESP_LIB_DynamicResponseDAO submit_jsonNew = new Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO.class);//Shared.getInstance().CloneAddFormWithForm(actual_response);
-        List<ESP_LIB_DynamicFormValuesDAO> criteriaFormValues = getCriteriaFormValues(criteriaListDAO);
-
-        // CustomLogs.displayLogs(ACTIVITY_NAME + " post.ApplicationSingleton(): " + ApplicationSingleton.getInstace().getApplication().getApplicationId());
-        ESP_LIB_PostApplicationsStatusDAO post = new ESP_LIB_PostApplicationsStatusDAO();
-
-        criteriaListDAO.setFormValues(criteriaFormValues);
-        post.setAccepted(isAccepted);
-        post.setApplicationId(submit_jsonNew.getApplicationId());
-        post.setAssessmentId(criteriaListDAO.getAssessmentId());
-        post.setComments("");
-        post.setStageId(criteriaListDAO.getStageId());
-        post.setValues(criteriaFormValues);
-
-
-        ESP_LIB_CustomLogs.displayLogs(ACTIVITY_NAME + " post.getApplicationStatus(): " + post.toJson() + " toString: " + post.toString());
-        stagefeedbackSubmitForm(post);
-
-
-    }//END SubmitRequest*/
+    
 
     private List<ESP_LIB_DynamicFormValuesDAO> getCriteriaFormValues(ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAO) {
         int sectionId = 0;

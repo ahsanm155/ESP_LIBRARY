@@ -12,7 +12,6 @@
 
     <LinearLayout
         android:id="@+id/detail_view"
-        android:layout_above="@+id/addsub_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">

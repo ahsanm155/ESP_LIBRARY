@@ -10,9 +10,9 @@
     android:gravity="center">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_login_logo" />
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:src="@mipmap/ic_launcher" />
         <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

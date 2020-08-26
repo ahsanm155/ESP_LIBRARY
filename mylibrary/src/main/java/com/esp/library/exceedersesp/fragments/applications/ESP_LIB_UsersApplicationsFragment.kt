@@ -820,6 +820,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
         view?.llcontentlayout?.visibility = View.GONE
         view?.no_application_available_div?.visibility = View.VISIBLE
+
         try {
             if (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
                 view?.add_btn?.visibility = View.VISIBLE
@@ -835,6 +836,13 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         } catch (e: java.lang.Exception) {
 
         }
+
+        if(!searchText.isNullOrEmpty())
+        {
+            view?.txtnoapplicationadded?.text=getString(R.string.esp_lib_text_norecord)
+            view?.add_btn?.visibility=View.GONE
+        }
+
 
     }
 

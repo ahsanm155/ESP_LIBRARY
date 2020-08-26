@@ -224,30 +224,11 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
             i.putExtra("dynamicResponseDAO", ESPLIBDynamicResponseDAO);
             startActivity(i);*/
 
+            showSubmissionList();
 
-            if (llsubmission_app_list.getVisibility() == View.VISIBLE) {
-                llsubmission_app_list.setVisibility(View.GONE);
-                rlotherexperts.setVisibility(View.GONE);
-                dividersubmission.setVisibility(View.GONE);
-                ivsubmissionrowarrow.setImageResource(R.drawable.ic_arrow_down);
-            } else {
-                ivsubmissionrowarrow.setImageResource(R.drawable.ic_arrow_up);
-                llsubmission_app_list.setVisibility(View.VISIBLE);
-                dividersubmission.setVisibility(View.VISIBLE);
-                rlotherexperts.setVisibility(View.VISIBLE);
-                int mySubmissions = mApplication.getNumberOfSubmissions() - app_actual_list.size();
-                if (mySubmissions > 0) {
-                    rlexpertvalues.setVisibility(View.VISIBLE);
-                    txtexperts.setText(mySubmissions + " " + getString(R.string.esp_lib_text_other_experts));
-                }
-                if (app_actual_list.size() == 0)
-                    rlnosubmission.setVisibility(View.VISIBLE);
-                else
-                    rlnosubmission.setVisibility(View.GONE);
-            }
 
         });
-
+        rlsubmissionrow.setEnabled(false);
 
 
 
@@ -261,6 +242,30 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         });
 
 
+    }
+
+    private void showSubmissionList()
+    {
+        if (llsubmission_app_list.getVisibility() == View.VISIBLE) {
+            /*llsubmission_app_list.setVisibility(View.GONE);
+            rlotherexperts.setVisibility(View.GONE);
+            dividersubmission.setVisibility(View.GONE);
+            ivsubmissionrowarrow.setImageResource(R.drawable.ic_arrow_down);*/
+        } else {
+            ivsubmissionrowarrow.setImageResource(R.drawable.ic_arrow_up);
+            llsubmission_app_list.setVisibility(View.VISIBLE);
+            dividersubmission.setVisibility(View.VISIBLE);
+            rlotherexperts.setVisibility(View.VISIBLE);
+            int mySubmissions = mApplication.getNumberOfSubmissions() - app_actual_list.size();
+            if (mySubmissions > 0) {
+                rlexpertvalues.setVisibility(View.VISIBLE);
+                txtexperts.setText(mySubmissions + " " + getString(R.string.esp_lib_text_other_experts));
+            }
+            if (app_actual_list.size() == 0)
+                rlnosubmission.setVisibility(View.VISIBLE);
+            else
+                rlnosubmission.setVisibility(View.GONE);
+        }
     }
 
     private void refreshData() {
@@ -477,7 +482,8 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
 
                     }
-                    rlsubmissionrow.performClick();
+                   // rlsubmissionrow.performClick();
+                    showSubmissionList();
                     ivsubmissionrowarrow.setVisibility(View.GONE);
 
                 }
