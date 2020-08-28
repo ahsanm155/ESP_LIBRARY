@@ -120,36 +120,51 @@ class ESP_LIB_ListUsersAdapter(private val userslist: List<ESP_LIB_UsersListDAO>
 
 
         if (previousPosition == position) {
-            holder.userselection.setChecked(true);
+            holder.userselection.isChecked = true;
         } else {
-            holder.userselection.setChecked(false);
+            holder.userselection.isChecked = false;
         }
 
         holder.rlitem.setOnClickListener {
 
-            if (previousPosition != position) {
-                if (previousPosition != -1) {
-                    ESPLIBUsersListFiltered?.get(previousPosition)?.isChecked = false
-                    if (previousPosition != position)
-                        ESPLIBUsersListFiltered?.get(position)?.isChecked = true
+            checkedChangeClick(position)
 
-                } else
-                    ESPLIBUsersListFiltered?.get(position)?.isChecked = true
+        }
 
-                try {
-                    notifyDataSetChanged()
-                } catch (e: Exception) {
-                }
-                previousPosition = position
-                ESPLIBUserItemClick?.userClick(ESPLIBUsersListFiltered?.get(position))
 
-            }
+        /* holder.userselection.setOnCheckedChangeListener { buttonView, isChecked ->
+             checkedChangeClick(position)
+         }*/
 
+        holder.userselection.setOnClickListener {
+            if (previousPosition == position)
+                holder.userselection.isChecked = true;
+            else
+                checkedChangeClick(position)
         }
 
 
     }//End Holder Class
 
+    private fun checkedChangeClick(position: Int) {
+        if (previousPosition != position) {
+            if (previousPosition != -1) {
+                ESPLIBUsersListFiltered?.get(previousPosition)?.isChecked = false
+                if (previousPosition != position)
+                    ESPLIBUsersListFiltered?.get(position)?.isChecked = true
+
+            } else
+                ESPLIBUsersListFiltered?.get(position)?.isChecked = true
+
+            try {
+                notifyDataSetChanged()
+            } catch (e: Exception) {
+            }
+            previousPosition = position
+            ESPLIBUserItemClick?.userClick(ESPLIBUsersListFiltered?.get(position))
+
+        }
+    }
 
     override fun getItemCount(): Int {
         return ESPLIBUsersListFiltered?.size ?: 0

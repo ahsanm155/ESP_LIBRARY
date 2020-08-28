@@ -45,6 +45,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+
+
         <activity
             android:name="com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationsActivityDrawer"
             android:screenOrientation="portrait"
@@ -57,6 +59,11 @@
 
         <activity
             android:name="com.esp.library.exceedersesp.controllers.applications.ESP_LIB_CloseRequest"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.esp.library.exceedersesp.controllers.submissions.ESP_LIB_SubmissionCardDetails"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 

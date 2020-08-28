@@ -39,7 +39,7 @@
     <ImageView
         android:id="@+id/ivrighticon"
         android:layout_width="@dimen/_23sdp"
-        android:layout_height="@dimen/_23sdp"
+        android:layout_height="@dimen/_20sdp"
         android:src="@drawable/ic_nav_filter"
         android:layout_marginTop="@dimen/_26sdp"
         android:layout_marginEnd="@dimen/_10sdp"

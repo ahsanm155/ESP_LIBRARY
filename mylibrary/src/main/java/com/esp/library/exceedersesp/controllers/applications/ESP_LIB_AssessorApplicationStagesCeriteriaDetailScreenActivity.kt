@@ -183,7 +183,8 @@ class ESP_LIB_AssessorApplicationStagesCeriteriaDetailScreenActivity : ESP_LIB_B
             val apis = retrofit.create(ESP_LIB_APIs::class.java)
 
             if (ESP_LIB_ApplicationSingleton.instace.application != null) {
-                detail_call = apis.GetApplicationDetailv2(ESP_LIB_ApplicationSingleton.instace.application!!.applicationId.toString() + "")
+                detail_call = apis.GetApplicationDetailv2(ESP_LIB_ApplicationSingleton.instace.application!!.applicationId.toString() + "",
+                false,false)
             }
 
 

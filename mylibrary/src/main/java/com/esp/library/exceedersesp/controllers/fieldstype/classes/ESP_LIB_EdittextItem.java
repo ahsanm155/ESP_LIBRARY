@@ -445,8 +445,10 @@ public class ESP_LIB_EdittextItem {
 
         new Handler().postDelayed(() -> {
             if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
-                holder.etValue.setText("");
-                validateForm(fieldDAO);
+                try {
+                    holder.etValue.setText("");
+                    validateForm(fieldDAO);
+                }catch (Exception e){}
             }
         }, 2000);
 

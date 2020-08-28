@@ -26,8 +26,9 @@ import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.interfaces.ESP_LIB_DeleteDraftListener
 import java.util.*
 
-class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<ESP_LIB_ApplicationsDAO>?, con: Context,
-                                                internal var searched_text: String?) :
+class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: MutableList<ESP_LIB_ApplicationsDAO>, con: Context,
+                                                internal var searched_text: String?,
+                                                val isSubApplications: Boolean) :
         androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_ListSubmissionApplicationsAdapter.ParentViewHolder>() {
 
     private var context: Context? = null
@@ -64,7 +65,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
             status_list = itemView.findViewById(R.id.status_list)
             status_list.setHasFixedSize(true)
             status_list.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
-            status_list.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
+            status_list.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
 
 
         }
@@ -90,11 +91,11 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
 
 
         val holder = holder_parent as ActivitiesList
-        val applicationsDAO = mApplications?.get(position)
+        val applicationsDAO = mApplications.get(position)
 
 
 
-        val definitionName = applicationsDAO?.definitionName
+        val definitionName = applicationsDAO.definitionName
        /*
        val category = applicationsDAO?.category
        val applicationNumber = applicationsDAO?.applicationNumber
@@ -104,7 +105,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
             false -> applicationsDAO?.applicantName
         }*/
 
-        if (applicationsDAO!!.isSigned)
+        if (applicationsDAO.isSigned)
             holder.ivsign.visibility = View.VISIBLE
 
         /*       if (ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase() != context?.getString(R.string.applicantsmall)
@@ -304,7 +305,7 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
             bundle.putSerializable(ESP_LIB_ApplicationsDAO.BUNDLE_KEY, ESPLIBApplicationsDAO)
             bundle.putInt("statusId", statusId)
             bundle.putBoolean("isResubmit", isResubmit)
-            bundle.putBoolean("isSubApplications", true)
+            bundle.putBoolean("isSubApplications", isSubApplications)
             ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_ApplicationDetailScreenActivity::class.java, context as Activity?, bundle, 2)
         } else {
 
@@ -315,6 +316,8 @@ class ESP_LIB_ListSubmissionApplicationsAdapter(private var mApplications: List<
             bundle.putSerializable(ESP_LIB_ApplicationsDAO.BUNDLE_KEY, ESPLIBApplicationsDAO)
             bundle.putInt("statusId", statusId)
             bundle.putBoolean("isComingfromAssessor", true)
+            bundle.putBoolean("isResubmit", isResubmit)
+            bundle.putBoolean("isSubApplications", isSubApplications)
             ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_ApplicationDetailScreenActivity::class.java, context as Activity?, bundle, 2)
         }
     }

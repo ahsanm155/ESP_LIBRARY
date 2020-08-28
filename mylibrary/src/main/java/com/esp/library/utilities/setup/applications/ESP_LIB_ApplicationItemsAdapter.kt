@@ -3,15 +3,15 @@ package com.esp.library.utilities.setup.applications
 import android.content.Context
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.esp.library.R
+import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.data.applicants.ESP_LIB_CardValuesDAO
 
 
@@ -55,7 +55,6 @@ class ESP_LIB_ApplicationItemsAdapter(val itemsList: List<ESP_LIB_CardValuesDAO>
         wordtoSpan.setSpan(TextAppearanceSpan(context, R.style.Esp_Lib_Style_TextParagraphCoolGray), 0, label.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         wordtoSpan.setSpan(TextAppearanceSpan(context, R.style.Esp_Lib_Style_TextParagraphBlack), label.length+1, textConcate.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.txtlabel.text=wordtoSpan
-
 
     }//End Holder Class
 

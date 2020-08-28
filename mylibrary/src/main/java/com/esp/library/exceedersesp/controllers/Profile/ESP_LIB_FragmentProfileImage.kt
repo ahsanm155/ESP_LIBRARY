@@ -3,12 +3,10 @@ package com.esp.library.exceedersesp.controllers.Profile
 
 import `in`.mayanknagwanshi.imagepicker.ImageSelectActivity
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -20,7 +18,6 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -244,6 +241,10 @@ class ESP_LIB_FragmentProfileImage : androidx.fragment.app.Fragment(), ESP_LIB_I
                             val tempField = ESP_LIB_Shared.getInstance().setObjectValues(parentSectionField)
                             if (tempField.isVisible) {
                                 finalFields.add(tempField)
+
+                                if (tempField.type == 11 && tempField.value != null && !tempField.value!!.contains(":"))
+                                    tempField.value = ""
+
                             }
                         }
 

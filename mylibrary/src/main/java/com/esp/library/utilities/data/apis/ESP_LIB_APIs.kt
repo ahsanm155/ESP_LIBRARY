@@ -135,8 +135,9 @@ interface ESP_LIB_APIs {
     @DELETE("application/{id}")
     fun deleteApplication(@Path("id") id: Int): Call<Any>
 
-    @GET("application/detailsv2/{id}")
-    fun GetApplicationDetailv2(@Path("id") id: String): Call<ESP_LIB_DynamicResponseDAO>
+    @GET("application/detailsv2/{id}/{isResubmit}/{submissionView}")
+    fun GetApplicationDetailv2(@Path("id") id: String,@Path("isResubmit") isResubmit: Boolean,
+                               @Path("submissionView") submissionView: Boolean): Call<ESP_LIB_DynamicResponseDAO>
 
     @GET("application/feedback/{id}")
     fun GetApplicationFeedBack(@Path("id") applicationId: String): Call<List<ESP_LIB_ApplicationsFeedbackDAO>>

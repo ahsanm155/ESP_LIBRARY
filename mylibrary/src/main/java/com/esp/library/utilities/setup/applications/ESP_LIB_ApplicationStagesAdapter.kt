@@ -107,13 +107,16 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
         val holder = holder_parent as ActivitiesList
         val dynamicStagesDAO = stagesListESPLIB.get(position)
 
-        var isCriteriaOwner=false
-        for (element in dynamicStagesDAO.criteriaList!!)
-        {
-            if(element.isOwner)
-            {
-                isCriteriaOwner=true
-                break
+        var isCriteriaOwner = false
+        for (element in dynamicStagesDAO.criteriaList!!) {
+            if (element.isOwner) {
+
+                if ((element.assessmentStatus!!.equals(ESP_LIB_Enums.open.toString(), ignoreCase = true))
+                        ||(element.assessmentStatus!!.equals(ESP_LIB_Enums.active.toString(), ignoreCase = true))) {
+                    isCriteriaOwner = true
+                    break
+                }
+
             }
         }
 
@@ -121,7 +124,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
         if (isComingfromAssessor) {
 
             val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
-            if (isCriteriaOwner && (dynamicStagesDAO.status!!.equals(ESP_LIB_Enums.open.toString(),ignoreCase = true))) {
+            if (isCriteriaOwner && (dynamicStagesDAO.status!!.equals(ESP_LIB_Enums.open.toString(), ignoreCase = true))) {
                 // holder.llresponsible.visibility = View.VISIBLE
                 holder.ivcircledot.visibility = View.VISIBLE
             }
@@ -137,7 +140,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             if (displayDate.isNullOrEmpty())
                 holder.rlaccepreject.visibility = View.GONE
 
-           // val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
+            // val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
             if (actualResponse.applicationStatus.equals(ESP_LIB_Enums.rejected.toString(), ignoreCase = true)) // rejected
                 holder.acceptedontext.text = context.getString(R.string.esp_lib_text_rejectedon)
 
@@ -261,15 +264,15 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
     private fun setStatusColor(holder: ActivitiesList, ESPLIBDynamicStagesDAO: ESP_LIB_DynamicStagesDAO, position: Int) {
         var status = ESPLIBDynamicStagesDAO.status?.toLowerCase(Locale.getDefault())
         val actualResponseJson = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
-         // holder.lldetail.setBackgroundResource(R.drawable.draw_bg_white)
+        // holder.lldetail.setBackgroundResource(R.drawable.draw_bg_white)
 
         var isSigned: Boolean = false
         for (i in 0 until ESPLIBDynamicStagesDAO.criteriaList!!.size) {
             val dynamicStagesCriteriaListDAO = ESPLIBDynamicStagesDAO.criteriaList?.get(i)
             val assessmentStatus = dynamicStagesCriteriaListDAO?.assessmentStatus
             isSigned = dynamicStagesCriteriaListDAO?.isSigned!!
-            if (isSigned && (assessmentStatus!!.equals(context.getString(R.string.esp_lib_text_accepted),ignoreCase = true)||
-                            assessmentStatus.equals(context.getString(R.string.esp_lib_text_rejected),ignoreCase = true))) {
+            if (isSigned && (assessmentStatus!!.equals(context.getString(R.string.esp_lib_text_accepted), ignoreCase = true) ||
+                            assessmentStatus.equals(context.getString(R.string.esp_lib_text_rejected), ignoreCase = true))) {
                 holder.ivsign.visibility = View.VISIBLE
                 break
             }

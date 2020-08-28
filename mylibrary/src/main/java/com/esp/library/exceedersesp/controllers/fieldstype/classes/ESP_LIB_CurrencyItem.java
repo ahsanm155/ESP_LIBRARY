@@ -1,7 +1,6 @@
 package com.esp.library.exceedersesp.controllers.fieldstype.classes;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -28,13 +27,10 @@ import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import com.esp.library.utilities.setup.ESP_LIB_CustomSpinnerAdapter;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import utilities.common.ESP_LIB_MaterialSpinner;
@@ -422,6 +418,15 @@ public class ESP_LIB_CurrencyItem {
                     holder.etValue.setEnabled(false);
                 else
                     holder.etValue.setEnabled(true);
+
+            }
+
+            if (isViewOnly) {
+                if (fieldDAO.getValue() == null || fieldDAO.getValue().isEmpty())
+                    holder.tValue.setText("-");
+
+                holder.tCurrencyLabel.setText(label);
+                holder.tCurrencyLabel.setVisibility(View.VISIBLE);
             }
 
 
@@ -430,9 +435,14 @@ public class ESP_LIB_CurrencyItem {
         ESP_LIB_DynamicFormSectionFieldDAO finalFieldDAO3 = fieldDAO;
         new Handler().postDelayed(() -> {
             if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
-                holder.etValue.setText("");
-                validateForm(finalFieldDAO3);
+                try {
+                    holder.etValue.setText("");
+                    validateForm(finalFieldDAO3);
+                } catch (Exception e) {
+                }
             }
+
+
         }, 2000);
 
     }

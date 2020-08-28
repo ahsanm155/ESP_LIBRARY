@@ -1843,6 +1843,9 @@ public class ESP_LIB_Shared {
                 if (isClearMappedCalculatedFields && (fields.get(h).getType() == 18 || fields.get(h).getType() == 19))
                     fields.get(h).setValue("");
 
+                if (fields.get(h).getType() == 11 && fields.get(h).getValue() != null && !fields.get(h).getValue().contains(":"))
+                    fields.get(h).setValue("");
+
                 tempFields.add(fields.get(h));
             }
         }
@@ -2373,7 +2376,6 @@ public class ESP_LIB_Shared {
 
 
     }
-
 
 
 

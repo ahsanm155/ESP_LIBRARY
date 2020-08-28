@@ -9,25 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_UsersApplicationsFragment
-import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.customcontrols.ESP_LIB_CustomViewPager
 import com.esp.library.utilities.customcontrols.ESP_LIB_DisplayUtils
 import com.esp.library.utilities.customcontrols.ESP_LIB_myBadgeView
-import com.esp.library.utilities.customevents.EventOptions
-import com.esp.library.utilities.customevents.EventOptions.EventRefreshData
+import com.esp.library.utilities.setup.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.esp_lib_activity_main_applications_tabs.*
 import kotlinx.android.synthetic.main.esp_lib_activity_main_applications_tabs.view.*
-import org.greenrobot.eventbus.EventBus
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
 import java.util.*
 
@@ -142,68 +135,13 @@ class ESP_LIB_ApplicationActivityTabs : androidx.fragment.app.Fragment() {
         }
     }
 
-    fun loadDefinations() {
 
-        //start_loading_animation()
-
-        val apis = ESP_LIB_Shared.getInstance().retroFitObject(context)
-        val def_call = apis.getSubDefinitionList()
-        def_call.enqueue(object : Callback<List<ESP_LIB_CategoryAndDefinationsDAO>> {
-            @SuppressLint("RestrictedApi")
-            override fun onResponse(call: Call<List<ESP_LIB_CategoryAndDefinationsDAO>>, response: Response<List<ESP_LIB_CategoryAndDefinationsDAO>>) {
-                //stop_loading_animation()
-                if (response.body() != null && response.body().size > 0) {
-                    val body = response.body()
-                    subDefinitionBody = body as ArrayList<ESP_LIB_CategoryAndDefinationsDAO>?
-                    txtsubmissionrequest?.text = pref?.getlabels()?.submissionRequests + " (" + body?.size + ")"
-
-
-                    if (ESP_LIB_ESPApplication.getInstance().isComponent || ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()) == ESP_LIB_Enums.applicant.toString()) {
-                        try {
-                            setLayoutMargin(resources.getDimensionPixelSize(R.dimen._50sdp))
-
-                            /* Bundle bnd = new Bundle();
-                            bnd.putBoolean("whatodo", true);
-                            Intent intent = new Intent();
-                            intent.putExtras(bnd);
-                            bContext.setResult(2, intent);
-                            bContext.finish();*/
-                            EventBus.getDefault().post(EventOptions.EventBottomSheetShowing())
-                            rlbottomSheetHeader?.visibility = View.VISIBLE
-                        } catch (e: Exception) {
-                        }
-                    }
-
-
-                } else {
-                    rlbottomSheetHeader?.visibility = View.GONE
-                    setLayoutMargin(0)
-                }
-            }
-
-            override fun onFailure(call: Call<List<ESP_LIB_CategoryAndDefinationsDAO>>, t: Throwable) {
-                //   Shared.getInstance().messageBox(getString(R.string.some_thing_went_wrong), context as Activity?)
-                // stop_loading_animation()
-                // UnSuccessResponse()
-            }
-        })
-
-    }
-
-    private fun setLayoutMargin(LayoutMargin: Int) {
-        try {
-            val lp = viewPagerESPLIB?.layoutParams as CoordinatorLayout.LayoutParams
-            lp.setMargins(0, 0, 0, LayoutMargin)
-            viewPagerESPLIB?.layoutParams = lp
-        } catch (e: Exception) {
-        }
-    }
 
     private fun setupViewPager(viewPager: androidx.viewpager.widget.ViewPager) {
-        val adapter = fragmentManager?.let { ViewPagerAdapter(it) }
+        val adapter = requireActivity().supportFragmentManager.let { ViewPagerAdapter(it) }
         // if (ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase() == getString(R.string.applicantsmall)) {
-        adapter?.addFragment(ESP_LIB_UsersApplicationsFragment.newInstance(getString(R.string.esp_lib_text_open)), getString(R.string.esp_lib_text_opencaps))
-        adapter?.addFragment(ESP_LIB_UsersApplicationsFragment.newInstance(getString(R.string.esp_lib_text_closedsmall)), getString(R.string.esp_lib_text_closed))
+        adapter.addFragment(ESP_LIB_UsersApplicationsFragment.newInstance(getString(R.string.esp_lib_text_open)), getString(R.string.esp_lib_text_opencaps))
+        adapter.addFragment(ESP_LIB_UsersApplicationsFragment.newInstance(getString(R.string.esp_lib_text_closedsmall)), getString(R.string.esp_lib_text_closed))
         /*} else {
             adapter?.addFragment(UsersApplicationsFragment.newInstance("pending"), getString(R.string.pending))
             adapter?.addFragment(UsersApplicationsFragment.newInstance("all"), getString(R.string.all))
@@ -211,7 +149,7 @@ class ESP_LIB_ApplicationActivityTabs : androidx.fragment.app.Fragment() {
         viewPager.adapter = adapter
     }
 
-    internal inner class ViewPagerAdapter(manager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(manager) {
+   /* internal inner class ViewPagerAdapter(manager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<androidx.fragment.app.Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 
@@ -232,7 +170,7 @@ class ESP_LIB_ApplicationActivityTabs : androidx.fragment.app.Fragment() {
             return mFragmentTitleList[position]
         }
     }
-
+*/
     companion object {
 
         var tabLayout: TabLayout? = null
@@ -250,14 +188,6 @@ class ESP_LIB_ApplicationActivityTabs : androidx.fragment.app.Fragment() {
             ESP_LIB_ESPApplication.getInstance().isOnCLosedTab = false
         }
 
-        /*if (ESP_LIB_ESPApplication.getInstance().isComponent || ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()) == ESP_LIB_Enums.applicant.toString()) {
-            if (ESP_LIB_Shared.getInstance().isWifiConnected(context)) {
-                loadDefinations()
-            } else {
-                ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_internet_error_heading), getString(R.string.esp_lib_text_internet_connection_error), context)
-            }
-        } else
-            rlbottomSheetHeader?.visibility = View.GONE*/
 
     }
 

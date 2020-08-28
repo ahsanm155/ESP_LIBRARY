@@ -15,6 +15,7 @@ class ESP_LIB_SubmittalApplicationsDAO : ESP_LIB_Base(), Serializable {
     var form: ESP_LIB_DynamicFormDAO? = null
     var mySubmissions: List<ESP_LIB_ApplicationsDAO>? = null
     var isMultipleSubmissionsAllowed:Boolean = false
+    var isDismissed:Boolean = false
 
 
     companion object {

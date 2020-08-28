@@ -19,6 +19,7 @@ import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.customcontrols.ESP_LIB_CustomViewPager
 import com.esp.library.utilities.customcontrols.ESP_LIB_DisplayUtils
 import com.esp.library.utilities.customcontrols.ESP_LIB_myBadgeView
+import com.esp.library.utilities.setup.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.esp_lib_activity_seeall_applications_tabs.view.*
 import retrofit2.Call
@@ -130,14 +131,14 @@ class ESP_LIB_ApplicationSeeAllActivityTabs : androidx.fragment.app.Fragment() {
     }
 
     private fun setupViewPager(viewPager: ViewPager, isFeed: Boolean) {
-        val adapter = fragmentManager?.let { ViewPagerAdapter(it) }
-        adapter?.addFragment(ESP_LIB_SeeAllApplicationsFragment.newInstance(getString(R.string.esp_lib_text_assigned)), getString(R.string.esp_lib_text_assigned))
+        val adapter = requireActivity().supportFragmentManager.let { ViewPagerAdapter(it) }
+        adapter.addFragment(ESP_LIB_SeeAllApplicationsFragment.newInstance(getString(R.string.esp_lib_text_assigned)), getString(R.string.esp_lib_text_assigned))
         if (isFeed)
-            adapter?.addFragment(ESP_LIB_SeeAllApplicationsFragment.newInstance(getString(R.string.esp_lib_text_feed)), getString(R.string.esp_lib_text_feed))
+            adapter.addFragment(ESP_LIB_SeeAllApplicationsFragment.newInstance(getString(R.string.esp_lib_text_feed)), getString(R.string.esp_lib_text_feed))
         viewPager.adapter = adapter
     }
 
-    internal inner class ViewPagerAdapter(manager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(manager) {
+   /* internal inner class ViewPagerAdapter(manager: androidx.fragment.app.FragmentManager) : androidx.fragment.app.FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<androidx.fragment.app.Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 
@@ -158,7 +159,7 @@ class ESP_LIB_ApplicationSeeAllActivityTabs : androidx.fragment.app.Fragment() {
             return mFragmentTitleList[position]
         }
     }
-
+*/
     companion object {
 
         var tabLayout: TabLayout? = null

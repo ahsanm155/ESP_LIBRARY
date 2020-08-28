@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.appcompat.widget.PopupMenu
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.core.view.forEachIndexed
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationDetailScreenActivity
@@ -42,7 +43,6 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
         internal var rlstatus: RelativeLayout
         internal var rlfeedminerow: RelativeLayout
         internal var cards: CardView
-        internal var btnClickArea: Button
         internal var ibRemoveCard: ImageButton
         internal var txtstatus: TextView
         internal var txtfeedminelabel: TextView
@@ -57,19 +57,19 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
             cards = itemView.findViewById(R.id.cards)
             txtstatus = itemView.findViewById(R.id.txtstatus)
             rlstatus = itemView.findViewById(R.id.rlstatus)
-            btnClickArea = itemView.findViewById(R.id.btnClickArea)
             txtfeedminelabel = itemView.findViewById(R.id.txtfeedminelabel)
             ivcircledot = itemView.findViewById(R.id.ivcircledot)
             rlfeedminerow = itemView.findViewById(R.id.rlfeedminerow)
             ibRemoveCard = itemView.findViewById(R.id.ibRemoveCard)
             definitionName = itemView.findViewById(R.id.definitionName)
             txtfeedminevalue = itemView.findViewById(R.id.txtfeedminevalue)
+
             status_list = itemView.findViewById(R.id.status_list)
-            items_list = itemView.findViewById(R.id.items_list)
             status_list.setHasFixedSize(true)
             status_list.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
             status_list.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
 
+            items_list = itemView.findViewById(R.id.items_list)
             items_list.setHasFixedSize(true)
             items_list.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.VERTICAL, false)
             items_list.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
@@ -115,12 +115,16 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
 
         val itemsAdapter = ESP_LIB_ApplicationItemsAdapter(applicationsDAO.summary?.cardValues, context!!)
         holder.items_list.adapter = itemsAdapter
-
+       // holder.items_list.suppressLayout(true) // disbale recycler item click
         holder.ibRemoveCard.setOnClickListener { v -> ShowMenu(v, applicationsDAO) }
+
+
 
         setStatusColor(holder, applicationsDAO)
 
-        holder.btnClickArea.setOnClickListener {
+
+
+        holder.cards.setOnClickListener {
             //holder.cards.isEnabled = false
 
             if (ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == null || ESP_LIB_ESPApplication.getInstance()?.user?.profileStatus == context?.getString(R.string.esp_lib_text_profile_complete)) {

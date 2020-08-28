@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/esp_lib_color_pale_grey"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/curvetoolbar"
+        layout="@layout/esp_lib_gradienttoolbar"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedscrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp"
+                android:background="@color/esp_lib_color_white"
+                android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+
+
+            <include
+                android:id="@+id/linkcard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/esp_lib_link_definition_card"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginStart="@dimen/_7sdp"
+                android:layout_marginEnd="@dimen/_7sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:paddingStart="@dimen/_13sdp"
+                android:paddingEnd="@dimen/_13sdp"
+                android:background="@android:color/white">
+
+            <FrameLayout
+                android:id="@+id/request_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true">
+            </FrameLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>

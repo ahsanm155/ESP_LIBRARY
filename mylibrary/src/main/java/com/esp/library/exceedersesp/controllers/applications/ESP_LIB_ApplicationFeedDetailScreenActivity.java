@@ -7,6 +7,8 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
@@ -30,6 +33,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.esp.library.R;
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity;
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication;
+import com.esp.library.exceedersesp.SingleController.CompRoot;
 import com.esp.library.utilities.common.ESP_LIB_Constants;
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs;
 import com.esp.library.utilities.common.ESP_LIB_EndlessRecyclerViewScrollListener;
@@ -94,6 +98,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
     RecyclerView items_list;
     TextView toolbarheading;
     ImageButton ibToolbarBack;
+    ImageView ivrighticon;
     TextView definitionName;
     LinearLayout rejected_status;
     Button addsub_btn;
@@ -191,7 +196,6 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         });
 
 
-
         UpdateTopView();
 
 
@@ -231,8 +235,6 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         rlsubmissionrow.setEnabled(false);
 
 
-
-
         ESP_LIB_KeyboardUtils.addKeyboardToggleListener(this, new ESP_LIB_KeyboardUtils.SoftKeyboardToggleListener() {
             @Override
             public void onToggleSoftKeyboard(boolean isVisible) {
@@ -241,11 +243,12 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
             }
         });
 
+        ivrighticon.setOnClickListener(view -> { showMenu(view,bContext);});
+
 
     }
 
-    private void showSubmissionList()
-    {
+    private void showSubmissionList() {
         if (llsubmission_app_list.getVisibility() == View.VISIBLE) {
             /*llsubmission_app_list.setVisibility(View.GONE);
             rlotherexperts.setVisibility(View.GONE);
@@ -261,11 +264,12 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                 rlexpertvalues.setVisibility(View.VISIBLE);
                 txtexperts.setText(mySubmissions + " " + getString(R.string.esp_lib_text_other_experts));
             }
-            if (app_actual_list.size() == 0)
-                rlnosubmission.setVisibility(View.VISIBLE);
-            else
-                rlnosubmission.setVisibility(View.GONE);
+
         }
+        if (app_actual_list.size() == 0)
+            rlnosubmission.setVisibility(View.VISIBLE);
+        else
+            rlnosubmission.setVisibility(View.GONE);
     }
 
     private void refreshData() {
@@ -304,6 +308,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         txtexperts = findViewById(R.id.txtexperts);
         toolbarheading = findViewById(R.id.toolbarheading);
         ibToolbarBack = findViewById(R.id.ibToolbarBack);
+        ivrighticon = findViewById(R.id.ivrighticon);
         definitionName = findViewById(R.id.definitionName);
         definitionName.setPadding(17, 20, 0, 0);
         rejected_status = findViewById(R.id.rejected_status);
@@ -341,7 +346,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         viewlinecurve.setVisibility(View.VISIBLE);
         rlfeedminerow.setVisibility(View.VISIBLE);
         txtfeedminelabel.setText(getString(R.string.esp_lib_text_feed));
-
+        ivrighticon.setImageResource(R.drawable.esp_lib_drawable_ic_vertical_dots);
     }
 
     private void initailize() {
@@ -371,6 +376,51 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
     }
 
+    private void showMenu(View v, Context mContext) {
+
+
+        PopupMenu popup = new PopupMenu(mContext, v);
+        popup.inflate(R.menu.menu_list_item_add_application_fields);
+        popup.setGravity(Gravity.CENTER);
+        Menu menuOpts = popup.getMenu();
+        MenuItem remove_action = menuOpts.findItem(R.id.action_remove);
+        remove_action.setTitle(getString(R.string.esp_lib_text_dismiss));
+        popup.setOnMenuItemClickListener(menuItem -> {
+
+            if (menuItem.getItemId() == R.id.action_remove) {
+                dismissFeedStages();
+            }
+            return false;
+        });
+        popup.show();
+
+    }
+
+
+    public void dismissFeedStages() {
+        start_loading_animation(false);
+        try {
+            ESP_LIB_APIs apis = ESP_LIB_Shared.getInstance().retroFitObject(bContext);
+            Call<Object> objectCall = apis.getdismissApplication(mApplication.getParentApplicationId(), getString(R.string.esp_lib_text_feed));
+            objectCall.enqueue(new Callback<Object>() {
+                @Override
+                public void onResponse(Call<Object> call, Response<Object> response) {
+
+                        stop_loading_animation();
+                        ivrighticon.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onFailure(Call<Object> call, Throwable t) {
+                    stop_loading_animation();
+                }
+            });
+
+        } catch (Exception ex) {
+            stop_loading_animation();
+        }
+    }//LoggedInUser end
+
     private void detailClick() {
         if (llmaindetail.getVisibility() == View.VISIBLE) {
             llrows.setVisibility(View.VISIBLE);
@@ -379,8 +429,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                 rlsubmissionrow.setVisibility(View.VISIBLE);
             }
             ivdetailarrow.setImageResource(R.drawable.ic_arrow_down);
+            rldetailrow.setBackgroundResource(R.drawable.esp_lib_drawable_shadow);
         } else {
-
+            rldetailrow.setBackgroundResource(R.drawable.esp_lib_drawable_draw_bg_white);
             ivdetailarrow.setImageResource(R.drawable.ic_arrow_up);
 
             llmaindetail.setVisibility(View.VISIBLE);
@@ -431,6 +482,10 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
 
                     if (response != null && response.body() != null) {
+
+                        if(!response.body().isDismissed())
+                            ivrighticon.setVisibility(View.VISIBLE);
+
                         actual_response = response.body();
                         actualResponseJson = actual_response.toJson();
                         rlsubmissionrow.setVisibility(View.VISIBLE);
@@ -439,10 +494,10 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                             // rlsubmissionrow.setVisibility(View.VISIBLE);
                             app_actual_list.clear();
                             app_actual_list.addAll(response.body().getMySubmissions());
-                            ESP_LIB_ListSubmissionApplicationsAdapter adapter = new ESP_LIB_ListSubmissionApplicationsAdapter(app_actual_list, bContext, "");
+                            ESP_LIB_ListSubmissionApplicationsAdapter adapter = new ESP_LIB_ListSubmissionApplicationsAdapter(app_actual_list, bContext, "", false);
                             adapter.isClickable(false);
                             submission_app_list.setAdapter(adapter);
-                            txtsubmissions.setText(getString(R.string.esp_lib_text_submissions) + " (" + app_actual_list.size() + "/"+response.body().getApplicationCard().getNumberOfSubmissions()+")");
+                            txtsubmissions.setText(getString(R.string.esp_lib_text_submissions) + " (" + app_actual_list.size() + "/" + response.body().getApplicationCard().getNumberOfSubmissions() + ")");
 
 
                             //getSubmissions(false);
@@ -468,7 +523,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                             sections = GetOnlyFieldsCards(response.body().getForm(), null);
 
                         if (sections != null && sections.size() > 0) {
-                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", true,false);
+                            mApplicationSectionsAdapter = new ESP_LIB_ListAddApplicationSectionsAdapter(sections, bContext, "", true, false);
                             mApplicationSectionsAdapter.setActualResponseJson(actualResponseJson);
                             app_list.setAdapter(mApplicationSectionsAdapter);
                             mApplicationSectionsAdapter.notifyDataSetChanged();
@@ -482,7 +537,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
 
                     }
-                   // rlsubmissionrow.performClick();
+                    // rlsubmissionrow.performClick();
                     showSubmissionList();
                     ivsubmissionrowarrow.setVisibility(View.GONE);
 
@@ -523,8 +578,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                 txtfeedminelabel.setTextColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
                 viewline.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
                 viewlinecurve.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_yellowishOrange));
-            }
-            else if (applicationCard.getSummary().isMine()) {
+            } else if (applicationCard.getSummary().isMine()) {
                 txtfeedminelabel.setText(getString(R.string.esp_lib_text_mine));
                 txtfeedminelabel.setTextColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
                 viewline.setBackgroundColor(ContextCompat.getColor(bContext, R.color.esp_lib_color_blue));
@@ -726,6 +780,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                                                 if (parentSectionField.isVisible()) {
                                                     ESP_LIB_DynamicFormSectionFieldDAO tempField = ESP_LIB_Shared.getInstance().setObjectValues(parentSectionField);
 
+                                                    if (tempField.getType() == 11 && tempField.getValue() != null && !tempField.getValue().contains(":"))
+                                                        tempField.setValue("");
+
                                                     if (tempField.getSectionCustomFieldId() == instanceValue.getSectionCustomFieldId()) {
                                                         String value = instanceValue.getValue();
                                                         if (value != null && !value.isEmpty()) {
@@ -819,6 +876,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         for (int h = 0; h < (fields != null ? fields.size() : 0); h++) {
             if (fields.get(h).isVisible() && !fields.get(h).isReadOnly()) {
                 if (isClearMappedCalculatedFields && (fields.get(h).getType() == 18 || fields.get(h).getType() == 19))
+                    fields.get(h).setValue("");
+
+                if (fields.get(h).getType() == 11 && fields.get(h).getValue() != null && !fields.get(h).getValue().contains(":"))
                     fields.get(h).setValue("");
 
                 tempFields.add(fields.get(h));

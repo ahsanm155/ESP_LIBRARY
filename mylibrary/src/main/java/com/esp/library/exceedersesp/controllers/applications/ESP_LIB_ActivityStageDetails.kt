@@ -21,7 +21,6 @@ import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.SingleController.CompRoot
 import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_FeedbackForm
-import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AddApplicationFragment
 import com.esp.library.utilities.common.*
 import com.esp.library.utilities.customevents.EventOptions
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationCriteriaAdapter
@@ -111,10 +110,10 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
         criteriaAdapterESPLIB?.getActualResponse(intent.getStringExtra("actualResponseJson"))
         rvCrietrias.adapter = criteriaAdapterESPLIB
 
-        start_loading_animation()
+        /*start_loading_animation()
         val handler = Handler()
         handler.postDelayed({ stop_loading_animation() }, 3000)
-
+*/
         ESP_LIB_KeyboardUtils.addKeyboardToggleListener(bContext) { isVisible -> isKeyboardVisible = isVisible }
 
         /* when (ESP_LIB_Shared.getInstance().isWifiConnected(this)) {
@@ -368,6 +367,9 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
                         }
 
+                        if (dynamicFormSectionFieldDAO.type == 11 && dynamicFormSectionFieldDAO.value != null && !dynamicFormSectionFieldDAO.value!!.contains(":"))
+                            dynamicFormSectionFieldDAO.value = ""
+
                         formValuesList.add(value)
                     }
                 }
@@ -442,7 +444,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
         start_loading_animation()
         try {
             val apis = CompRoot()?.getService(bContext)
-            val detail_call = apis?.GetApplicationDetailv2(id)
+            val detail_call = apis?.GetApplicationDetailv2(id,false,false)
             detail_call?.enqueue(object : Callback<ESP_LIB_DynamicResponseDAO> {
                 override fun onResponse(call: Call<ESP_LIB_DynamicResponseDAO>, responseESPLIB: Response<ESP_LIB_DynamicResponseDAO>?) {
 

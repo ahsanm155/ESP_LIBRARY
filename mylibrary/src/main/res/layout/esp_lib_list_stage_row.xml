@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_3sdp"
         android:layout_marginEnd="@dimen/_3sdp"
-        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginTop="@dimen/_6sdp"
         android:background="@drawable/esp_lib_drawable_shadow"
         android:orientation="vertical">
 
@@ -75,7 +75,7 @@
         android:layout_height="@dimen/_45sdp"
         android:padding="@dimen/_10sdp"
         android:foreground="?attr/selectableItemBackground"
-        android:background="@color/esp_lib_color_white"
+        android:background="@drawable/esp_lib_drawable_draw_bg_white"
         android:orientation="vertical">
 
 
@@ -89,6 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/esp_lib_text_stages"
+            android:layout_marginStart="@dimen/_5sdp"
             android:paddingTop="@dimen/_3sdp"
             android:layout_centerHorizontal="true"
             android:maxWidth="@dimen/_210sdp"
@@ -250,10 +251,10 @@
             android:id="@+id/ivcircledot"
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
+            android:visibility="gone"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/_17sdp"
+            android:layout_marginEnd="@dimen/_14sdp"
             android:background="@drawable/esp_lib_drawable_draw_orange"/>
     </RelativeLayout>
 </LinearLayout>

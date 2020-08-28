@@ -123,7 +123,8 @@ class ESP_LIB_AssessorApplicationStagesCeriteriaCommentsScreenActivity : ESP_LIB
             val apis = ESP_LIB_Shared.getInstance().retroFitObject(context)
 
             if (ESP_LIB_ApplicationSingleton.instace.application != null) {
-                detail_call = apis.GetApplicationDetailv2(ESP_LIB_ApplicationSingleton.instace.application!!.applicationId.toString() + "")
+                detail_call = apis.GetApplicationDetailv2(ESP_LIB_ApplicationSingleton.instace.application!!.applicationId.toString() + "",
+                false,false)
             }
 
 

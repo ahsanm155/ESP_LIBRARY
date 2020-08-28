@@ -11,19 +11,10 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
+        android:foreground="?attr/selectableItemBackground"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
-                android:id="@+id/btnClickArea"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_height="@dimen/_80sdp"
-                android:foreground="?attr/selectableItemBackground"
-                android:background="@color/esp_lib_color_transparent_color" />
 
         <include
             layout="@layout/esp_lib_activity_dynamic_items_view"
@@ -31,8 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_15sdp" />
 
-
-        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
