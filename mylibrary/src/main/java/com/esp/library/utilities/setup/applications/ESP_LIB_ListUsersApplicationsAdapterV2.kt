@@ -115,7 +115,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
 
         val itemsAdapter = ESP_LIB_ApplicationItemsAdapter(applicationsDAO.summary?.cardValues, context!!)
         holder.items_list.adapter = itemsAdapter
-       // holder.items_list.suppressLayout(true) // disbale recycler item click
+        holder.items_list.suppressLayout(true) // disbale recycler item click
         holder.ibRemoveCard.setOnClickListener { v -> ShowMenu(v, applicationsDAO) }
 
 
