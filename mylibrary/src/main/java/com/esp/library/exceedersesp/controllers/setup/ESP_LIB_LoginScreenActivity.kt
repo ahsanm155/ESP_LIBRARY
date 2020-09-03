@@ -44,21 +44,21 @@ class ESP_LIB_LoginScreenActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListPersonaD
 
         if (ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) != null) {
             ESP_LIB_Constants.base_url = ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) + ESP_LIB_Constants.base_url_api
-        } /*else {
+        } else {
             ESP_LIB_Shared.getInstance().WritePref("url", "https://esp.exceeders.com", "base_url", context)
             ESP_LIB_Constants.base_url = ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) + ESP_LIB_Constants.base_url_api
-        }*/
+        }
 
        /* else {
             Shared.getInstance().WritePref("url", "https://isp.exceedgulf.com", "base_url", context)
             Constants.base_url = Shared.getInstance().ReadPref("url", "base_url", context) + Constants.base_url_api
         }*/
 
-        else {
+        /*else {
             ESP_LIB_Shared.getInstance().WritePref("url", "https://qaesp.azurewebsites.net", "base_url", context)
             //   Shared.getInstance().WritePref("url", "http://espdemo.azurewebsites.net/", "base_url", context)
             ESP_LIB_Constants.base_url = ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) + ESP_LIB_Constants.base_url_api
-        }
+        }*/
        /* inAppUpdateManager = InAppUpdateManager.Builder(this, REQ_CODE_VERSION_UPDATE)
                 .resumeUpdates(true) // Resume the update, if the update was stalled. Default is true
                 .mode(InAppConstants.UpdateMode.IMMEDIATE)
