@@ -1141,7 +1141,7 @@ public class ESP_LIB_EditSectionDetails extends ESP_LIB_BaseActivity implements 
                                                     ESP_LIB_Shared.getInstance().saveLookUpItems(ESPLIBCalculatedMappedFieldsDAO.getSectionCustomFieldId(), servicelookupItems);
                                                 }
 
-                                                if (targetFieldType == 7 || targetFieldType == 15) {
+                                                if (targetFieldType == 7) {
 
                                                     ESPLIBDynamicFormSectionFieldDAO.setMappedCalculatedField(true);
                                                     ESPLIBDynamicFormSectionFieldDAO.setType(ESPLIBCalculatedMappedFieldsDAO.getTargetFieldType());

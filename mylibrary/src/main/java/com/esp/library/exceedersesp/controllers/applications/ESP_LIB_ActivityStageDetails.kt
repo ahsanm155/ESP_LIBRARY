@@ -93,8 +93,9 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
             val getList = dynamicStagesDAO?.criteriaList?.get(i);
             val isArrayHasValue = criteriaListCollections.any { x -> x?.assessmentId == getList?.assessmentId }
             if (!isArrayHasValue) {
-                if (getList?.isEnabled!!)
-                    criteriaListCollections.add(getList)
+                criteriaListCollections.add(getList)
+              /*  if (getList?.isEnabled!!)
+                    criteriaListCollections.add(getList)*/
             }
         }
 
@@ -406,7 +407,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
         start_loading_animation()
         try {
 
-            val apis = CompRoot()?.getService(bContext)
+            val apis = CompRoot()?.getService(this)
             val status_call = apis?.AcceptRejectApplication(ESPLIBPost)
 
 
@@ -821,7 +822,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
                                                         ESP_LIB_Shared.getInstance().saveLookUpItems(calculatedMappedFieldsDAO.sectionCustomFieldId, servicelookupItems)
                                                     }
 
-                                                    if (targetFieldType == 7 || targetFieldType == 15) {
+                                                    if (targetFieldType == 7) {
 
                                                         dynamicFormSectionFieldDAO.isMappedCalculatedField = true
                                                         dynamicFormSectionFieldDAO.type = calculatedMappedFieldsDAO.targetFieldType

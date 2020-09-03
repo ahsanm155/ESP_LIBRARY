@@ -1,10 +1,14 @@
 package utilities.data.applicants.dynamics
 
 import utilities.data.ESP_LIB_Base
+import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO
+import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldsCardsDAO
+import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesCriteriaListDAO
+import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesDAO
 import java.io.Serializable
 import java.util.*
 
-class ESP_LIB_DynamicFormSectionDAO : ESP_LIB_Base(), Serializable {
+class ESP_LIB_DynamicFormSectionDAO:ESP_LIB_Base(),Serializable {
     var id: Int = 0
     var defaultName: String? = null
     //var approveText: String? = null

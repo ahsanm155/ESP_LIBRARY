@@ -261,14 +261,9 @@ class ESP_LIB_ChooseLookUpOption : ESP_LIB_BaseActivity() {
     }
 
     fun GetLoadLookUps(id: Int?) {
-
-
         start_loading_animation()
-
         try {
-
             call = ESP_LIB_Shared.getInstance().retroFitObject(context).Lookups(id)
-
             call!!.enqueue(object : Callback<List<ESP_LIB_LookUpDAO>> {
                 override fun onResponse(call: Call<List<ESP_LIB_LookUpDAO>>, response: Response<List<ESP_LIB_LookUpDAO>>) {
 
@@ -321,7 +316,7 @@ class ESP_LIB_ChooseLookUpOption : ESP_LIB_BaseActivity() {
 
         }
 
-    }//LoggedInUser end
+    }
 
     private fun setGravity() {
         val pref = ESP_LIB_SharedPreference(context)

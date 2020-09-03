@@ -112,7 +112,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             if (element.isOwner) {
 
                 if ((element.assessmentStatus!!.equals(ESP_LIB_Enums.open.toString(), ignoreCase = true))
-                        ||(element.assessmentStatus!!.equals(ESP_LIB_Enums.active.toString(), ignoreCase = true))) {
+                        || (element.assessmentStatus!!.equals(ESP_LIB_Enums.active.toString(), ignoreCase = true))) {
                     isCriteriaOwner = true
                     break
                 }
@@ -124,7 +124,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
         if (isComingfromAssessor) {
 
             val actualResponse = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
-            if (isCriteriaOwner && (dynamicStagesDAO.status!!.equals(ESP_LIB_Enums.open.toString(), ignoreCase = true))) {
+            if (dynamicStagesDAO.myActionRequired) {
                 // holder.llresponsible.visibility = View.VISIBLE
                 holder.ivcircledot.visibility = View.VISIBLE
             }
@@ -177,7 +177,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
                 val getList = dynamicStagesDAO.criteriaList?.get(i);
                 val isArrayHasValue = criteriaListCollections.any { x -> x?.assessmentId == getList?.assessmentId }
                 if (!isArrayHasValue) {
-                    if (getList?.isEnabled!!)
+                    //if (getList?.isEnabled!!)
                         criteriaListCollections.add(getList)
                 }
             }
@@ -238,7 +238,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             val getList = ESPLIBDynamicStagesDAO.criteriaList?.get(i);
             val isArrayHasValue = criteriaListCollections.any { x -> x?.assessmentId == getList?.assessmentId }
             if (!isArrayHasValue) {
-                if (getList?.isEnabled!!)
+               // if (getList?.isEnabled!!)
                     criteriaListCollections.add(getList)
             }
         }

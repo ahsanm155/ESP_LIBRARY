@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RatingBar;
@@ -131,6 +132,19 @@ public class ESP_LIB_RatingItem {
                 });
             }
         }
+
+        AppCompatRatingBar finalRatingBar = ratingBar;
+        new Handler().postDelayed(() -> {
+            if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
+                try {
+                    finalRatingBar.setRating(0);
+                    validateForm(fieldDAO);
+                } catch (Exception e) {
+                }
+            }
+
+
+        }, 2000);
 
     }
 

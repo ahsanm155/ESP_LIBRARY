@@ -80,8 +80,8 @@
     <color name="esp_lib_color_status_pending_background">#1A00AEEF</color>
     <color name="esp_lib_color_status_rejected">#ef5350</color>
     <color name="esp_lib_color_status_rejected_background">#1Aef5350 </color>
-    <color name="esp_lib_color_status_accepted">#10c164</color>
-    <color name="esp_lib_color_status_accepted_background">#1A10c164</color>
+    <color name="esp_lib_color_status_accepted">#6cb33f</color>
+    <color name="esp_lib_color_status_accepted_background">#1A6cb33f</color>
     <color name="esp_lib_color_status_invited">#9575cd</color>
     <color name="esp_lib_color_status_invited_background">#1A9575cd</color>
     <color name="esp_lib_color_status_locked">#9c9da6</color>

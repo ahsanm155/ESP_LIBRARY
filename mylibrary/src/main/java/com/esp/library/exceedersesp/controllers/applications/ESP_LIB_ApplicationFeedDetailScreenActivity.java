@@ -33,7 +33,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.esp.library.R;
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity;
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication;
-import com.esp.library.exceedersesp.SingleController.CompRoot;
 import com.esp.library.utilities.common.ESP_LIB_Constants;
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs;
 import com.esp.library.utilities.common.ESP_LIB_EndlessRecyclerViewScrollListener;
@@ -243,7 +242,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
             }
         });
 
-        ivrighticon.setOnClickListener(view -> { showMenu(view,bContext);});
+        ivrighticon.setOnClickListener(view -> {
+            showMenu(view, bContext);
+        });
 
 
     }
@@ -406,8 +407,8 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                 @Override
                 public void onResponse(Call<Object> call, Response<Object> response) {
 
-                        stop_loading_animation();
-                        ivrighticon.setVisibility(View.GONE);
+                    stop_loading_animation();
+                    ivrighticon.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -483,7 +484,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
                     if (response != null && response.body() != null) {
 
-                        if(!response.body().isDismissed())
+                        if (!response.body().isDismissed())
                             ivrighticon.setVisibility(View.VISIBLE);
 
                         actual_response = response.body();
@@ -568,7 +569,9 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
             ESP_LIB_ApplicationItemsAdapter itemsAdapter = new ESP_LIB_ApplicationItemsAdapter(applicationCard.getSummary().getCardValues(), bContext);
             items_list.setAdapter(itemsAdapter);
 
-            definitionName.setText(applicationCard.getSummary().getName());
+            if (applicationCard.getSummary().getName() != null)
+                definitionName.setText(applicationCard.getSummary().getName().trim());
+
             txtfeedminevalue.setText(applicationCard.getSummary().getTitle());
             viewline.setVisibility(View.VISIBLE);
             viewlinecurve.setVisibility(View.VISIBLE);
@@ -804,7 +807,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
                                                                 }
                                                             }
 
-                                                            if (tempField.getType() == 19 || tempField.getType() == 18) // calculated and mapped
+                                                            if (tempField.getType() == 18 || tempField.getType() == 19) // calculated and mapped
                                                             {
                                                                 if (instanceValue.getType() == 7) {
                                                                     tempField.setType(instanceValue.getType());

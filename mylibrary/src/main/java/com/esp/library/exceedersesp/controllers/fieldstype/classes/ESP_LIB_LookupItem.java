@@ -1,21 +1,28 @@
 package com.esp.library.exceedersesp.controllers.fieldstype.classes;
 
+import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-
 
 import com.esp.library.R;
 import com.esp.library.exceedersesp.controllers.Profile.ESP_LIB_EditSectionDetails;
 import com.esp.library.exceedersesp.controllers.fieldstype.other.ESP_LIB_Validation;
 import com.esp.library.exceedersesp.controllers.fieldstype.viewholders.ESP_LIB_PickerTypeViewHolder;
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs;
+import com.esp.library.utilities.common.ESP_LIB_Shared;
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRecyclerAdapter;
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import utilities.data.apis.ESP_LIB_APIs;
+import utilities.data.applicants.addapplication.ESP_LIB_LookUpDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesCriteriaListDAO;
 import utilities.interfaces.ESP_LIB_CriteriaFieldsListener;
@@ -109,7 +116,7 @@ public class ESP_LIB_LookupItem {
 
             holder.tValueLabel.setText(label);
             if (fieldDAO.getValue() == null || TextUtils.isEmpty(fieldDAO.getValue()))
-                getValue="-";
+                getValue = "-";
             holder.tValue.setText(getValue);
             fieldDAO.setValidate(true);
             return;
@@ -135,6 +142,8 @@ public class ESP_LIB_LookupItem {
             lookupValue = fieldDAO.getLookupValue();
             lookupId = fieldDAO.getId();
         } else {
+
+            //getLookUpArray(fieldDAO, mContext);
 
            /* if(actualResponseJson!=null) {
                 DynamicResponseDAO actualResponse = new Gson().fromJson(actualResponseJson, DynamicResponseDAO.class);
@@ -199,7 +208,7 @@ public class ESP_LIB_LookupItem {
                         fieldDAO.setValidate(false);
                         holder.ivclear.setVisibility(View.GONE);
                         validateForm(fieldDAO);
-                      //  setDrawable(holder, pref);
+                        //  setDrawable(holder, pref);
                     }
                 });
 
@@ -224,19 +233,18 @@ public class ESP_LIB_LookupItem {
                 holder.etValue.setEnabled(true);
         }
 
-        setDrawable(holder,pref);
+        setDrawable(holder, pref);
 
 
     }
 
-    private void setDrawable(ESP_LIB_PickerTypeViewHolder holder, ESP_LIB_SharedPreference pref)
-    {
+    private void setDrawable(ESP_LIB_PickerTypeViewHolder holder, ESP_LIB_SharedPreference pref) {
         //if (holder.ivclear.getVisibility() == View.GONE) {
-            if (pref.getLanguage().equalsIgnoreCase("en"))
-                holder.etValue.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.esp_lib_drawable_ic_arrow_down_black, 0);
-            else
-                holder.etValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.esp_lib_drawable_ic_arrow_down_black, 0, 0, 0);
-      //  }
+        if (pref.getLanguage().equalsIgnoreCase("en"))
+            holder.etValue.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.esp_lib_drawable_ic_arrow_down_black, 0);
+        else
+            holder.etValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.esp_lib_drawable_ic_arrow_down_black, 0, 0, 0);
+        //  }
     }
 
     private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO) {
@@ -245,5 +253,49 @@ public class ESP_LIB_LookupItem {
         validation.setSectionListener(edisectionDetailslistener);
         validation.validateForm();
     }
+
+    private void getLookUpArray(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO, Context context) {
+
+        try {
+
+            ESP_LIB_APIs apis = ESP_LIB_Shared.getInstance().retroFitObject(context);
+
+            Call<List<ESP_LIB_LookUpDAO>> call_upload = apis.Lookups(fieldDAO.getLookUpId());
+            call_upload.enqueue(new Callback<List<ESP_LIB_LookUpDAO>>() {
+                @Override
+                public void onResponse(Call<List<ESP_LIB_LookUpDAO>> call, Response<List<ESP_LIB_LookUpDAO>> response) {
+
+                    if (response != null && response.body() != null) {
+
+                        for (int i = 0; i < response.body().size(); i++) {
+                            if (fieldDAO != null && fieldDAO.getValue() != null && !fieldDAO.getValue().isEmpty()) {
+                                if (String.valueOf(response.body().get(i).getId()).equalsIgnoreCase(fieldDAO.getValue())) {
+                                    fieldDAO.setValue(response.body().get(i).getName());
+                                }
+                            }
+                        }
+                    } else {
+
+                        ESP_LIB_Shared.getInstance().messageBox(context.getString(R.string.esp_lib_text_some_thing_went_wrong), (Activity) context);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<ESP_LIB_LookUpDAO>> call, Throwable t) {
+                    ESP_LIB_Shared.getInstance().showAlertMessage(context.getString(R.string.esp_lib_text_error), context.getString(R.string.esp_lib_text_some_thing_went_wrong), context);
+                    // UploadFileInformation(fileDAO);
+                }
+            });
+
+        } catch (Exception ex) {
+            if (ex != null) {
+                ESP_LIB_Shared.getInstance().showAlertMessage(context.getString(R.string.esp_lib_text_error), context.getString(R.string.esp_lib_text_some_thing_went_wrong), context);
+                //UploadFileInformation(fileDAO);
+
+            }
+        }
+    }
+
 
 }

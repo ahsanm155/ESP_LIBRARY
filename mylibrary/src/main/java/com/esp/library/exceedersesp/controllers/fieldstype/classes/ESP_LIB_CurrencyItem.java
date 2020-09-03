@@ -243,21 +243,25 @@ public class ESP_LIB_CurrencyItem {
             if (fieldDAO.getValue() != null && !TextUtils.isEmpty(fieldDAO.getValue())
                     && (fieldDAO.getSelectedCurrencySymbol() == null || TextUtils.isEmpty(fieldDAO.getSelectedCurrencySymbol()))) {
 
-
-                selectedCurrency = ESP_LIB_Shared.getInstance().getCurrencyById(Integer.valueOf(fieldDAO.getValue()));
-                fieldDAO.setSelectedCurrencyId(selectedCurrency.getId());
-                fieldDAO.setSelectedCurrencySymbol(selectedCurrency.getSymobl());
-                //Setting empty value for the required Validation.
-                if (isViewOnly) {
-                    if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
-                        holder.tValue.setText("");
-                    else {
-                        holder.tValue.setText("");
-                        holder.tCurrencyLabel.setText("");
-                        holder.tCurrencyLabel.setVisibility(View.GONE);
-                    }
-                } else
-                    holder.etValue.setText("");
+                try {
+                    selectedCurrency = ESP_LIB_Shared.getInstance().getCurrencyById(Integer.valueOf(fieldDAO.getValue()));
+                    fieldDAO.setSelectedCurrencyId(selectedCurrency.getId());
+                    fieldDAO.setSelectedCurrencySymbol(selectedCurrency.getSymobl());
+                    //Setting empty value for the required Validation.
+                    if (isViewOnly) {
+                        if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())
+                            holder.tValue.setText("");
+                        else {
+                            holder.tValue.setText("");
+                            holder.tCurrencyLabel.setText("");
+                            holder.tCurrencyLabel.setVisibility(View.GONE);
+                        }
+                    } else
+                        holder.etValue.setText("");
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
             } else {
                 if (isViewOnly) {
                     if (ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications())

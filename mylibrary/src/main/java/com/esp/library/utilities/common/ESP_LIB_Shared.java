@@ -1840,7 +1840,7 @@ public class ESP_LIB_Shared {
         List<ESP_LIB_DynamicFormSectionFieldDAO> tempFields = new ArrayList<>();
         for (int h = 0; h < (fields != null ? fields.size() : 0); h++) {
             if (fields.get(h).isVisible()) {
-                if (isClearMappedCalculatedFields && (fields.get(h).getType() == 18 || fields.get(h).getType() == 19))
+                if (isClearMappedCalculatedFields && (fields.get(h).getType() == 18||fields.get(h).getType() == 19))
                     fields.get(h).setValue("");
 
                 if (fields.get(h).getType() == 11 && fields.get(h).getValue() != null && !fields.get(h).getValue().contains(":"))

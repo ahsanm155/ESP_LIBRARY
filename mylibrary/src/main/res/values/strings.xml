@@ -424,7 +424,7 @@
     <string name="esp_lib_text_submissionsstopped">Submissions Stopped</string>
     <string name="esp_lib_text_viewapplications">View Applications</string>
     <string name="esp_lib_text_stopsubmission">Stop Submission</string>
-    <string name="esp_lib_text_requesttoaction">Requests to Screen</string>
+    <string name="esp_lib_text_requesttoaction">Requests to action</string>
     <string name="esp_lib_text_seeall">See All</string>
     <string name="esp_lib_text_allowsubmission">Allow Submission</string>
     <string name="esp_lib_text_allow" translatable="false">Allow</string>

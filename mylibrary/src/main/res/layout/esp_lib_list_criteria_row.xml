@@ -318,6 +318,7 @@
                     android:text="@string/esp_lib_text_reject"
                     android:textAllCaps="false"
                     android:layout_weight="1"
+                    android:foreground="?attr/selectableItemBackground"
                     android:gravity="center_horizontal|center_vertical"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:background="@drawable/esp_lib_drawable_draw_bg_green_stroke"

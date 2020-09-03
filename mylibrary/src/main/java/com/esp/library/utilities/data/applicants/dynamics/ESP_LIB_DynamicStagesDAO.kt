@@ -25,6 +25,7 @@ class ESP_LIB_DynamicStagesDAO : ESP_LIB_Base(), Serializable {
     var criteriaCount: Int = 0
     var statusId: Int = 0
     var isSystem: Boolean = false
+    var myActionRequired: Boolean = false
     var isEnabled: Boolean = false
     var localStatus: String? = null
     var type: String? = null

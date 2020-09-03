@@ -3,10 +3,12 @@ package com.esp.library.exceedersesp.controllers.Profile
 
 import `in`.mayanknagwanshi.imagepicker.ImageSelectActivity
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -18,6 +20,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -241,10 +244,6 @@ class ESP_LIB_FragmentProfileImage : androidx.fragment.app.Fragment(), ESP_LIB_I
                             val tempField = ESP_LIB_Shared.getInstance().setObjectValues(parentSectionField)
                             if (tempField.isVisible) {
                                 finalFields.add(tempField)
-
-                                if (tempField.type == 11 && tempField.value != null && !tempField.value!!.contains(":"))
-                                    tempField.value = ""
-
                             }
                         }
 
@@ -278,7 +277,7 @@ class ESP_LIB_FragmentProfileImage : androidx.fragment.app.Fragment(), ESP_LIB_I
                                             e.printStackTrace()
                                         }
 
-                                    } else if (getFinalFields.type == 19 || getFinalFields.type == 18) {
+                                    } else if (getFinalFields.type == 18 || getFinalFields.type == 19) {
                                         if (getVal.type == 11) {
                                             val fieldDAO = ESP_LIB_Shared.getInstance().populateCurrency(getValue)
                                             val concateValue = fieldDAO.value + " " + fieldDAO.selectedCurrencySymbol
@@ -543,78 +542,6 @@ class ESP_LIB_FragmentProfileImage : androidx.fragment.app.Fragment(), ESP_LIB_I
         EventBus.getDefault().unregister(this)
     }
 
-    private fun UpLoadImageDetect() {
-        start_loading_animation()
-        try {
-
-            val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BODY
-            val httpClient = OkHttpClient.Builder()
-
-
-            httpClient.addInterceptor { chain ->
-                val original = chain.request()
-                val requestBuilder = original.newBuilder()
-                        .header("Ocp-Apim-Subscription-Key", "a210b127e9fc4b42b0bac746c6e1faa6")
-                val request = requestBuilder.build()
-                chain.proceed(request)
-            }
-
-            if (ESP_LIB_Constants.WRITE_LOG) {
-                httpClient.addInterceptor(logging)
-            }
-            httpClient.connectTimeout(5, TimeUnit.MINUTES)
-            httpClient.readTimeout(5, TimeUnit.MINUTES)
-            httpClient.writeTimeout(5, TimeUnit.MINUTES)
-            val gson = GsonBuilder()
-                    .setLenient()
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                    .create()
-
-            /* retrofit builder and call web service*/
-            val retrofit = Retrofit.Builder()
-                    .baseUrl("https://northeurope.api.cognitive.microsoft.com/face/v1.0/")
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(httpClient.build())
-                    .build()
-
-            /* APIs Mapping respective Object*/
-            val apis = retrofit.create(ESP_LIB_APIs::class.java)
-
-
-            var jsonBody = JSONObject()
-            jsonBody.put("faceId1", "ab00d070-2e7a-442f-88d5-24384a1766e8")
-            jsonBody.put("faceId2", "7bc93833-d545-482f-ba45-2549ab7d1e59")
-
-            val call_upload = apis.uploadDetect(jsonBody)
-            call_upload.enqueue(object : Callback<Any> {
-                override fun onResponse(call: Call<Any>, response: Response<Any>?) {
-                    if (response?.body() != null) {
-
-                        stop_loading_animation()
-
-
-                    } else {
-                        stop_loading_animation()
-                        ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_error), getString(R.string.esp_lib_text_pleasetryagain), context)
-                    }
-
-                }
-
-                override fun onFailure(call: Call<Any>, t: Throwable) {
-                    stop_loading_animation()
-                    ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_error), getString(R.string.esp_lib_text_some_thing_went_wrong), context)
-                    // UploadFileInformation(fileDAO);
-                }
-            })
-
-        } catch (ex: Exception) {
-            stop_loading_animation()
-            ex.printStackTrace()
-            ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_error), getString(R.string.esp_lib_text_some_thing_went_wrong), context)
-        }
-
-    }
 
     /*  private fun checkPermission(): Boolean {
 

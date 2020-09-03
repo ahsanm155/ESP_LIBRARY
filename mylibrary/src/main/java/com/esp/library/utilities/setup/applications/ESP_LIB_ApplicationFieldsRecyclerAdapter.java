@@ -191,7 +191,7 @@ public class ESP_LIB_ApplicationFieldsRecyclerAdapter extends RecyclerView.Adapt
         if (isViewOnly)
             mApplicationFields.get(position).setShowToUserOnly(true);
 
-        // if ((fieldDAO.getType() == 18 || fieldDAO.getType() == 19) && !isCalculatedMappedField && !isViewOnly) {
+        // if ((fieldDAO.getType() == 18 ) && !isCalculatedMappedField && !isViewOnly) {
         if (fieldDAO.isTigger() && !isCalculatedMappedField && !isViewOnly) {
             isCalculatedMappedField = true;
             ESP_LIB_CalculatedMappedRequestTrigger.submitCalculatedMappedRequest(mContext, isViewOnly, fieldDAO);

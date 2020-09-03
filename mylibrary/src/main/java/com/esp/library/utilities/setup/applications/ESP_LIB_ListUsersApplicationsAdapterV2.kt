@@ -4,15 +4,16 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.*
+import android.view.*
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.view.forEachIndexed
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.SimpleOnItemTouchListener
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationDetailScreenActivity
@@ -24,6 +25,7 @@ import utilities.data.applicants.ESP_LIB_ApplicationSingleton
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.interfaces.ESP_LIB_DeleteDraftListener
 import java.util.*
+
 
 class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP_LIB_ApplicationsDAO>?, con: Context,
                                              internal var searched_text: String?, subApplications: Boolean) :
@@ -105,7 +107,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
 
         val definitionName = applicationsDAO?.definitionName
         holder.definitionName.setPadding(0, 30, 0, 0)
-        holder.definitionName.text = definitionName
+        holder.definitionName.text = definitionName?.trim()
 
         if (applicationsDAO!!.isSigned)
             holder.ivsign.visibility = View.VISIBLE
@@ -115,7 +117,7 @@ class ESP_LIB_ListUsersApplicationsAdapterV2(private var mApplications: List<ESP
 
         val itemsAdapter = ESP_LIB_ApplicationItemsAdapter(applicationsDAO.summary?.cardValues, context!!)
         holder.items_list.adapter = itemsAdapter
-        holder.items_list.suppressLayout(true) // disbale recycler item click
+        holder.items_list.setLayoutFrozen(true) // disbale recycler item click
         holder.ibRemoveCard.setOnClickListener { v -> ShowMenu(v, applicationsDAO) }
 
 

@@ -803,9 +803,12 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     private void populateTopCardData(Response<ESP_LIB_DynamicResponseDAO> response) {
         ESP_LIB_ApplicationItemsAdapter itemsAdapter = new ESP_LIB_ApplicationItemsAdapter(response.body().getSummary().getCardValues(), bContext);
         items_list.setAdapter(itemsAdapter);
-        if ((statusId == 1 || isResubmit))
-            definitionNameTitle.setText(response.body().getSummary().getName());
-        definitionName.setText(response.body().getSummary().getName());
+        if ((statusId == 1 || isResubmit)) {
+            if (response.body().getSummary().getName() != null)
+                definitionNameTitle.setText(response.body().getSummary().getName().trim());
+        }
+        if (response.body().getSummary().getName() != null)
+            definitionName.setText(response.body().getSummary().getName().trim());
 
         if (response.body().getSummary().isMine()) {
 
@@ -1185,28 +1188,16 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             for (int i = 0; i < response.getSections().size(); i++) {
                 ESP_LIB_DynamicFormSectionDAO sectionDAO = response.getSections().get(i);
                 int sectionId = sectionDAO.getId();
-
-
                 for (int j = 0; j < sectionsValues.size(); j++) {
-
                     int sectionValuesId = sectionsValues.get(j).getId();
-
                     if (sectionId == sectionValuesId) {
-
                         List<ESP_LIB_DynamicSectionValuesDAO.Instance> instances = sectionsValues.get(j).getInstances();
-
                         List<ESP_LIB_DynamicFormSectionFieldsCardsDAO> cardsList = new ArrayList<>();
-
                         for (int k = 0; k < (instances != null ? instances.size() : 0); k++) {
-
                             List<ESP_LIB_DynamicSectionValuesDAO.Instance.Value> sectionValuesAsFields = instances.get(k).getValues();
                             List<ESP_LIB_DynamicFormSectionFieldDAO> finalFields = new ArrayList<>();
-
-
                             for (int l = 0; l < (sectionValuesAsFields != null ? sectionValuesAsFields.size() : 0); l++) {
-
                                 ESP_LIB_DynamicSectionValuesDAO.Instance.Value instanceValue = sectionValuesAsFields.get(l);
-
                                 List<ESP_LIB_DynamicFormSectionFieldDAO> fields = sectionDAO.getFields();
                                 if (sectionDAO.getFields() != null) {
                                     for (int m = 0; m < sectionDAO.getFields().size(); m++) {
@@ -1246,7 +1237,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                                                         }
                                                     }
 
-                                                    if (tempField.getType() == 19 || tempField.getType() == 18) // calculated and mapped
+                                                    if (tempField.getType() == 18 || tempField.getType() == 19) // calculated and mapped
                                                     {
                                                         if (instanceValue.getType() == 7) {
                                                             tempField.setType(instanceValue.getType());
@@ -1273,7 +1264,12 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                             {
                                 if (sectionDAO.getFields() != null) {
                                     finalFields.clear();
-                                    finalFields.addAll(sectionDAO.getFields());
+                                    for(int ip=0;ip<sectionDAO.getFields().size();ip++)
+                                    {
+                                        if(sectionDAO.getFields().get(ip).isVisible())
+                                            finalFields.add(sectionDAO.getFields().get(ip));
+                                    }
+                                    sectionDAO.setFields(finalFields);
                                 }
                             }
 
@@ -1323,7 +1319,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     actual_response.getPermissions().contains(getString(R.string.esp_lib_text_reassign)))
                 actual_response.getStages().get(i).setReassign(true);
 
-            if (responseStages.get(i).isEnabled() && !responseStages.get(i).getType().equalsIgnoreCase(getString(R.string.esp_lib_text_link))) {
+            if (!responseStages.get(i).getType().equalsIgnoreCase(getString(R.string.esp_lib_text_link))) {
                 tempStages.add(responseStages.get(i));
             }
         }
@@ -2244,7 +2240,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                                                                     ESP_LIB_Shared.getInstance().saveLookUpItems(ESPLIBCalculatedMappedFieldsDAO.getSectionCustomFieldId(), servicelookupItems);
                                                                 }
 
-                                                                if (targetFieldType == 7 || targetFieldType == 15) {
+                                                                if (targetFieldType == 7) {
 
                                                                     ESPLIBDynamicFormSectionFieldDAO.setMappedCalculatedField(true);
                                                                     ESPLIBDynamicFormSectionFieldDAO.setType(ESPLIBCalculatedMappedFieldsDAO.getTargetFieldType());
@@ -2386,7 +2382,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                                                     ESP_LIB_Shared.getInstance().saveLookUpItems(ESPLIBCalculatedMappedFieldsDAO.getSectionCustomFieldId(), servicelookupItems);
                                                 }
 
-                                                if (targetFieldType == 7 || targetFieldType == 15) {
+                                                if (targetFieldType == 7) {
 
                                                     ESPLIBDynamicFormSectionFieldDAO.setMappedCalculatedField(true);
                                                     ESPLIBDynamicFormSectionFieldDAO.setType(ESPLIBCalculatedMappedFieldsDAO.getTargetFieldType());

@@ -508,7 +508,7 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
 
         try {
 
-            val apis = CompRoot()?.getService(context);
+            val apis = CompRoot().getService(context);
             login_call = apis?.getToken(ESPLIBPostTokenDAO.grant_type, ESPLIBPostTokenDAO.username, ESPLIBPostTokenDAO.password, ESPLIBPostTokenDAO.client_id)
 
             login_call!!.enqueue(object : Callback<ESP_LIB_TokenDAO> {
@@ -534,6 +534,7 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
                 }
 
                 override fun onFailure(call: Call<ESP_LIB_TokenDAO>, t: Throwable) {
+                    t.printStackTrace()
                     ESP_LIB_CustomLogs.displayLogs("$TAG theree")
                     stop_loading_animation()
                     ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_login_label), getString(R.string.esp_lib_text_some_thing_went_wrong), context)

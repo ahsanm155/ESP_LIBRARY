@@ -443,6 +443,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
             } else {
 
                 daoESPLIB.type=2
+                daoESPLIB.sortBy=1
                 if (ESP_LIB_ESPApplication.getInstance()?.filter?.statuses != null && ESP_LIB_ESPApplication.getInstance()?.filter?.statuses!!.size < 5) {
                     if (!daoESPLIB.statuses.isNullOrEmpty())
                         daoESPLIB.statuses = ArrayList<String>()
@@ -648,6 +649,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                 list.add("2")
                 daoESPLIB.statuses = list
             }
+
         }
 
         val apis = CompRoot().getService(context);

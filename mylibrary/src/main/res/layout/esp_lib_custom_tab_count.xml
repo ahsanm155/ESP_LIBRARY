@@ -15,7 +15,7 @@
 
     <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
         android:id="@+id/tab_badge"
-        android:layout_width="@dimen/_16sdp"
+        android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_16sdp"
         android:layout_toEndOf="@+id/tab_text"
         android:layout_marginStart="@dimen/_5sdp"

@@ -207,6 +207,8 @@ public class ESP_LIB_EdittextItem {
                     });*/
 
                 }
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -444,12 +446,12 @@ public class ESP_LIB_EdittextItem {
 
 
         new Handler().postDelayed(() -> {
-            if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
-                try {
+            try {
+                if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
                     holder.etValue.setText("");
                     validateForm(fieldDAO);
-                }catch (Exception e){}
-            }
+                }
+            }catch (Exception e){}
         }, 2000);
 
     }

@@ -348,7 +348,7 @@ public class ESP_LIB_GetValues {
     private void populateFields(ESP_LIB_DynamicResponseDAO response, List<ESP_LIB_ApplicationDetailFieldsDAO> list, int i, int j) {
         int getType = response.getForm().getSections().get(i).getFields().get(j).getType();
         if (getType == 1 || getType == 2 || getType == 3 || getType == 4 || getType == 10
-                || getType == 15 || getType == 16|| getType == 17|| getType == 18) {
+                || getType == 15 || getType == 16|| getType == 17|| getType == 18|| getType == 19) {
 
             if (response.getForm().getSections().get(i).getFields() != null && response.getForm().getSections().get(i).getFields().get(j) != null) {
 

@@ -59,7 +59,6 @@ class ESP_LIB_LoginScreenActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListPersonaD
             //   Shared.getInstance().WritePref("url", "http://espdemo.azurewebsites.net/", "base_url", context)
             ESP_LIB_Constants.base_url = ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) + ESP_LIB_Constants.base_url_api
         }
-
        /* inAppUpdateManager = InAppUpdateManager.Builder(this, REQ_CODE_VERSION_UPDATE)
                 .resumeUpdates(true) // Resume the update, if the update was stalled. Default is true
                 .mode(InAppConstants.UpdateMode.IMMEDIATE)
@@ -122,8 +121,9 @@ class ESP_LIB_LoginScreenActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListPersonaD
 
     fun getSettings() {
 
+
         start_loading_animation()
-        val apiService = CompRoot().getService(context);
+        val apiService = CompRoot().getService(this);
         apiService?.getESPLIBSettings?.enqueue(object : Callback<ESP_LIB_SettingsDAO> {
             override fun onResponse(call: Call<ESP_LIB_SettingsDAO>, response: Response<ESP_LIB_SettingsDAO>) {
                 stop_loading_animation()
@@ -141,6 +141,7 @@ class ESP_LIB_LoginScreenActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListPersonaD
             }
 
             override fun onFailure(call: Call<ESP_LIB_SettingsDAO>, t: Throwable) {
+                t.printStackTrace()
                 stop_loading_animation()
                 callFragment()
             }

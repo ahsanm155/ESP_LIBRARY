@@ -158,7 +158,7 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
 
         val itemsAdapter = ESP_LIB_ApplicationItemsAdapter(applicationsDAO.summary?.cardValues, context!!)
         holder.items_list.adapter = itemsAdapter
-        holder.items_list.suppressLayout(true) // disbale recycler item click
+        holder.items_list.setLayoutFrozen(true) // disbale recycler item click
 
         holder.status_list.visibility = View.GONE
 

@@ -342,7 +342,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
 
                 }
             }
-        }, 2000);
+        }, 1000);
 
 
     }
@@ -418,7 +418,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
                                                         }
                                                     }
 
-                                                    if (tempField.getType() == 19 || tempField.getType() == 18) // calculated and mapped
+                                                    if (tempField.getType() == 18 || tempField.getType() == 19) // calculated and mapped
                                                     {
                                                         if (instanceValue.getType() == 7) {
                                                             tempField.setType(instanceValue.getType());
@@ -1188,7 +1188,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
 
                                                             }
 
-                                                            if (targetFieldType == 7 || targetFieldType == 15) {
+                                                            if (targetFieldType == 7 ) {
 
                                                                 ESPLIBDynamicFormSectionFieldDAO.setMappedCalculatedField(true);
                                                                 ESPLIBDynamicFormSectionFieldDAO.setType(ESPLIBCalculatedMappedFieldsDAO.getTargetFieldType());
@@ -1211,13 +1211,15 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
                                                                 ESPLIBDynamicFormSectionFieldDAO.setValue(calculatedDisplayDate);
 
 
-                                                            } else if (targetFieldType == 11) {
+                                                            }
+                                                            else if (targetFieldType == 11) {
                                                                 ESP_LIB_DynamicFormSectionFieldDAO fieldDAO = ESP_LIB_Shared.getInstance().populateCurrency(ESPLIBCalculatedMappedFieldsDAO.getValue());
                                                                 String concateValue = fieldDAO.getValue() + " " + fieldDAO.getSelectedCurrencySymbol();
                                                                 ESPLIBDynamicFormSectionFieldDAO.setValue(concateValue);
 
 
-                                                            } else
+                                                            }
+                                                            else
                                                                 ESPLIBDynamicFormSectionFieldDAO.setValue(ESPLIBCalculatedMappedFieldsDAO.getValue());
 
 
