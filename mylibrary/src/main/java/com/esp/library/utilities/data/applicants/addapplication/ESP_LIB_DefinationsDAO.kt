@@ -4,7 +4,7 @@ import utilities.data.ESP_LIB_Base
 import java.io.Serializable
 
 
-class ESP_LIB_CategoryAndDefinationsDAO : ESP_LIB_Base(), Serializable {
+class ESP_LIB_DefinationsDAO : ESP_LIB_Base(), Serializable {
 
 
     var id: Int = 0

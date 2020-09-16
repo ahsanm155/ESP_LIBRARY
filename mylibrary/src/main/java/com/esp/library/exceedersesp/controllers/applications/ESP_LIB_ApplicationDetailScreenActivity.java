@@ -34,6 +34,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -408,7 +409,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         popup.setOnMenuItemClickListener(menuItem -> {
 
             if (menuItem.getItemId() == R.id.action_remove) {
-                submissionDialog(v);
+                popUpDialog(v);
             }
             return false;
         });
@@ -417,37 +418,25 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     }
 
 
-    public void submissionDialog(View v) {
+    public void popUpDialog(View v) {
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        ViewGroup viewGroup = findViewById(android.R.id.content);
-        View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.esp_lib_activity_stop_submission_popup, viewGroup, false);
-        builder.setView(dialogView);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.setCancelable(false);
-        Button btcancel = dialogView.findViewById(R.id.btcancel);
-        Button btstop = dialogView.findViewById(R.id.btstop);
-        ImageView ivcross = dialogView.findViewById(R.id.ivcross);
-        btcancel.setOnClickListener(v1 -> alertDialog.dismiss());
-        ivcross.setOnClickListener(v1 -> alertDialog.dismiss());
-        btstop.setOnClickListener(v1 -> {
+        AlertDialog dailog=ESP_LIB_Shared.getInstance().popUpDialog(v,bContext,getString(R.string.esp_lib_text_stopsubmissiontext),
+                getString(R.string.esp_lib_text_stopsubmissiondescription));
+        Button btcancel = dailog.findViewById(R.id.btcancel);
+        Button btaction = dailog.findViewById(R.id.btaction);
+        ImageView ivcross = dailog.findViewById(R.id.ivcross);
+        btcancel.setOnClickListener(v1 -> dailog.dismiss());
+        ivcross.setOnClickListener(v1 -> dailog.dismiss());
+        btaction.setOnClickListener(v1 -> {
 
             if (ESP_LIB_Shared.getInstance().isWifiConnected(bContext)) {
                 postLinkDefinitionData(mApplication.getId(), false);
             } else {
                 ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_internet_error_heading), getString(R.string.esp_lib_text_internet_connection_error), bContext);
             }
-            alertDialog.dismiss();
+            dailog.dismiss();
         });
-
-
-        alertDialog.show();
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(alertDialog.getWindow().getAttributes());
-        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        alertDialog.getWindow().setAttributes(layoutParams);
-
 
     }
 
@@ -588,7 +577,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (tempcloseRequestList.get(position).equalsIgnoreCase(getString(R.string.esp_lib_text_close))) {
-                    submissionDialog(view);
+                    popUpDialog(view);
                 } else if (tempcloseRequestList.get(position).equalsIgnoreCase(getString(R.string.esp_lib_text_cancel))) {
                     Intent i = new Intent(bContext, ESP_LIB_CloseRequest.class);
                     i.putExtra("applicationId", mApplication.getId());
@@ -2044,7 +2033,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     if (criteriaId == id) {
                         ESPLIBApplicationStagesAdapter.getStagesListESPLIB().get(p).getCriteriaList().get(q).setValidate(isAllFieldsValidateTrue);
                         try {
-                            ESPLIBApplicationStagesAdapter.notifyChangeIfAny(criteriaId);
+                            ESPLIBApplicationStagesAdapter.notifyChangeIfAny(criteriaId,ESPLIBApplicationStagesAdapter.getStagesListESPLIB().get(p).getCriteriaList().get(q));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -2113,9 +2102,10 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
         }
 
         if (submit_btn.getVisibility() == View.VISIBLE) {
-            ESP_LIB_AlertActionWindow action_window = ESP_LIB_AlertActionWindow.newInstance(getString(R.string.esp_lib_text_save_draft), getString(R.string.esp_lib_text_your) + " " + pref.getlabels().getApplication() + " " + getString(R.string.esp_lib_text_wasnotsubmitted), getString(R.string.esp_lib_text_save_draft_ok), getString(R.string.esp_lib_text_discard) + " " + pref.getlabels().getApplication(), getString(R.string.esp_lib_text_draft));
+            /*ESP_LIB_AlertActionWindow action_window = ESP_LIB_AlertActionWindow.newInstance(getString(R.string.esp_lib_text_save_draft), getString(R.string.esp_lib_text_your) + " " + pref.getlabels().getApplication() + " " + getString(R.string.esp_lib_text_wasnotsubmitted), getString(R.string.esp_lib_text_save_draft_ok), getString(R.string.esp_lib_text_discard) + " " + pref.getlabels().getApplication(), getString(R.string.esp_lib_text_draft));
             action_window.show(getSupportFragmentManager(), "");
-            action_window.setCancelable(true);
+            action_window.setCancelable(true);*/
+            draftDialog(getWindow().getDecorView().getRootView());
         } else if (topcardview.getVisibility() == View.GONE) {
             detailClick();
         } else {
@@ -2130,6 +2120,29 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
 
         }
+    }
+
+    public void draftDialog(View v) {
+
+        String description = getString(R.string.esp_lib_text_your) + " " + pref.getlabels().getApplication() + " " + getString(R.string.esp_lib_text_wasnotsubmitted);
+        AlertDialog dailog=ESP_LIB_Shared.getInstance().popUpDialog(v,bContext,getString(R.string.esp_lib_text_save_draft),description);
+        Button btcancel = dailog.findViewById(R.id.btcancel);
+        btcancel.setText(getString(R.string.esp_lib_text_discard) + " " + pref.getlabels().getApplication());
+        TextViewCompat.setTextAppearance(btcancel, R.style.Esp_Lib_Style_TextHeading5Green);
+        Button btaction = dailog.findViewById(R.id.btaction);
+        btaction.setText(getString(R.string.esp_lib_text_save_draft_ok));
+        TextViewCompat.setTextAppearance(btaction, R.style.Esp_Lib_Style_TextHeading5White);
+        ImageView ivcross = dailog.findViewById(R.id.ivcross);
+        btcancel.setOnClickListener(v1 -> {
+            dailog.dismiss();
+            finish();
+        });
+        ivcross.setOnClickListener(v1 -> dailog.dismiss());
+        btaction.setOnClickListener(v1 -> {
+            SubmitRequest(getString(R.string.esp_lib_text_draft));
+            dailog.dismiss();
+        });
+
     }
 
     @Override
@@ -2223,6 +2236,19 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                                                                 int targetFieldType = ESPLIBCalculatedMappedFieldsDAO.getTargetFieldType();
 
                                                                 if (targetFieldType == 13) {
+
+                                                                    if (!ESPLIBCalculatedMappedFieldsDAO.getValue().isEmpty()) {
+                                                                        String[] split = ESPLIBCalculatedMappedFieldsDAO.getValue().split(":");
+                                                                        String lookupId = split[0];
+                                                                        if (!lookupId.isEmpty() && ESP_LIB_Shared.getInstance().isNumeric(lookupId))
+                                                                            ESPLIBDynamicFormSectionFieldDAO.setId(Integer.parseInt(lookupId));
+
+                                                                        if (split.length >= 1) {
+                                                                            String lookupText = split[1];
+                                                                            ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
+                                                                        }
+                                                                    }
+
                                                                     List<ESP_LIB_LookUpDAO> servicelookupItems = ESPLIBCalculatedMappedFieldsDAO.getLookupItems();
                                                                     if (ESPLIBDynamicFormSectionFieldDAO.getLookupValue() != null && !ESPLIBDynamicFormSectionFieldDAO.getLookupValue().isEmpty()) {
 

@@ -16,6 +16,7 @@
         android:src="@drawable/esp_lib_drawable_ic_cross"/>
 
     <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:id="@+id/txttitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/esp_lib_text_stopsubmissiontext"
@@ -24,6 +25,7 @@
 
 
     <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
+        android:id="@+id/txtdescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_10sdp"
@@ -59,7 +61,7 @@
 
 
         <com.esp.library.utilities.customcontrols.ESP_LIB_CustomButton
-            android:id="@+id/btstop"
+            android:id="@+id/btaction"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_weight="1"

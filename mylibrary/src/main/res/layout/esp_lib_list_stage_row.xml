@@ -72,7 +72,7 @@
     <LinearLayout
         android:id="@+id/lldetail"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_45sdp"
+        android:layout_height="wrap_content"
         android:padding="@dimen/_10sdp"
         android:foreground="?attr/selectableItemBackground"
         android:background="@drawable/esp_lib_drawable_draw_bg_white"
@@ -91,6 +91,8 @@
             android:text="@string/esp_lib_text_stages"
             android:layout_marginStart="@dimen/_5sdp"
             android:paddingTop="@dimen/_3sdp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:layout_centerHorizontal="true"
             android:maxWidth="@dimen/_210sdp"
             android:layout_alignParentStart="true"

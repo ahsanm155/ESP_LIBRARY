@@ -14,7 +14,7 @@ import com.esp.library.utilities.common.ESP_LIB_SharedPreference;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO;
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO;
 import utilities.model.ESP_LIB_Labels;
 
 public class MainActivityESPLIB extends ESP_LIB_BaseActivity {
@@ -81,10 +81,10 @@ ESPApplication.getInstance().setSpecificApplication(false);
     private void callSpecificApplication()
     {
         ESP_LIB_ESPApplication.getInstance().setSpecificApplication(true);
-        ESP_LIB_CategoryAndDefinationsDAO ESPLIBCategoryAndDefinationsDAO = new ESP_LIB_CategoryAndDefinationsDAO();
+        ESP_LIB_DefinationsDAO ESPLIBCategoryAndDefinationsDAO = new ESP_LIB_DefinationsDAO();
         ESPLIBCategoryAndDefinationsDAO.setId(294);  // set your desire application id here
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ESP_LIB_CategoryAndDefinationsDAO.Companion.getBUNDLE_KEY(), ESPLIBCategoryAndDefinationsDAO);
+        bundle.putSerializable(ESP_LIB_DefinationsDAO.Companion.getBUNDLE_KEY(), ESPLIBCategoryAndDefinationsDAO);
         bundle.putString("toolbarheading", "malik");
         Intent i = new Intent(this, ESP_LIB_AddApplicationsFromScreenActivity.class);
         i.putExtras(bundle);

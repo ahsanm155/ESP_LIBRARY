@@ -21,7 +21,7 @@ import com.esp.library.utilities.setup.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.esp_lib_activity_main_applications_tabs.*
 import kotlinx.android.synthetic.main.esp_lib_activity_main_applications_tabs.view.*
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import java.util.*
 
 
@@ -36,7 +36,7 @@ class ESP_LIB_ApplicationActivityTabs : androidx.fragment.app.Fragment() {
     internal var pref: ESP_LIB_SharedPreference? = null
     internal var rlbottomSheetHeader: RelativeLayout? = null
     internal var txtsubmissionrequest: TextView? = null
-    internal var subDefinitionBody: ArrayList<ESP_LIB_CategoryAndDefinationsDAO>? = null
+    internal var subDefinitionBody: ArrayList<ESP_LIB_DefinationsDAO>? = null
 
 
     var open: String = ""

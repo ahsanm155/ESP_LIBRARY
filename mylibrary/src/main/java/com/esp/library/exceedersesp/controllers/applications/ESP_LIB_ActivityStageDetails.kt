@@ -212,7 +212,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
             if (criteriaId == id) {
                 criteriaAdapterESPLIB?.criteriaListESPLIB!!.get(q)?.isValidate = isAllFieldsValidateTrue
                 try {
-                    criteriaAdapterESPLIB?.notifyChangeIfAny(criteriaId)
+                    criteriaAdapterESPLIB?.notifyChangeIfAny(criteriaId,criteriaAdapterESPLIB?.criteriaListESPLIB!!.get(q))
                 } catch (e: Exception) {
 
                 }
@@ -572,97 +572,6 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
     }
 
-    /*fun veridyFaceIds(espLibFacedao: ESP_LIB_FaceDAO) {
-
-        start_loading_animation()
-        try {
-
-            val logging = HttpLoggingInterceptor()
-            logging.level = HttpLoggingInterceptor.Level.BODY
-            val httpClient = OkHttpClient.Builder()
-            httpClient.addInterceptor { chain ->
-                val original = chain.request()
-                val requestBuilder = original.newBuilder()
-                val request = requestBuilder.build()
-                chain.proceed(request)
-            }
-            if (ESP_LIB_Constants.WRITE_LOG) {
-                httpClient.addInterceptor(logging)
-            }
-            httpClient.addInterceptor { chain: Interceptor.Chain ->
-                val original = chain.request()
-                var requestBuilder: Request.Builder? = null
-                if (ESP_LIB_ESPApplication.getInstance() != null) {
-                    requestBuilder = original.newBuilder()
-                            .header("Ocp-Apim-Subscription-Key", "a210b127e9fc4b42b0bac746c6e1faa6")
-                }
-                var request: Request? = null
-                if (requestBuilder != null) request = requestBuilder.build()
-                chain.proceed(request)
-            }
-
-            httpClient.connectTimeout(5, TimeUnit.MINUTES)
-            httpClient.readTimeout(5, TimeUnit.MINUTES)
-            httpClient.writeTimeout(5, TimeUnit.MINUTES)
-            val gson = GsonBuilder()
-                    .setLenient()
-                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-                    .create()
-
-
-            val retrofit = Retrofit.Builder()
-                    .baseUrl("https://northeurope.api.cognitive.microsoft.com/face/v1.0/")
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(httpClient.build())
-                    .build()
-
-
-            val api = retrofit.create(ESP_LIB_APIs::class.java)
-
-
-            val status_call = api.verifyfaceId(espLibFacedao)
-
-
-            status_call.enqueue(object : Callback<ESP_LIB_FaceDAO> {
-                override fun onResponse(call: Call<ESP_LIB_FaceDAO>, response: Response<ESP_LIB_FaceDAO>) {
-                    stop_loading_animation()
-
-                    if (response.body() != null) {
-                        if (response.body().isIdentical) {
-                            ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_verified), context)
-
-                            val intent = Intent(context, ESP_LIB_FeedbackForm::class.java)
-                            intent.putExtra("actualResponseJson", actualResponseJson)
-                            intent.putExtra("criteriaListDAO", criteriaListDAOESPLIB)
-                            intent.putExtra("isAccepted", isAccepted)
-                            startActivity(intent)
-
-                        } else
-                            ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.app_name), getString(R.string.esp_lib_text_face_not_verified), context)
-                    }
-
-                    ESP_LIB_CustomLogs.displayLogs("$TAG stagefeedbackSubmitForm: $response")
-
-
-                }
-
-                override fun onFailure(call: Call<ESP_LIB_FaceDAO>, t: Throwable?) {
-                    stop_loading_animation()
-                    if (t != null && bContext != null) {
-                        ESP_LIB_Shared.getInstance().showAlertMessage(pref?.getlabels()?.application, getString(R.string.esp_lib_text_some_thing_went_wrong), bContext)
-                    }
-                }
-            })
-
-        } catch (e: Exception) {
-            stop_loading_animation()
-
-            ESP_LIB_Shared.getInstance().showAlertMessage(pref?.getlabels()?.application, getString(R.string.esp_lib_text_some_thing_went_wrong), bContext)
-
-
-        }
-
-    }*/
 
     private fun start_loading_animation() {
         try {
@@ -802,6 +711,18 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
                                                     val targetFieldType = calculatedMappedFieldsDAO.targetFieldType
 
                                                     if (targetFieldType == 13) {
+
+
+                                                        if (!calculatedMappedFieldsDAO.value.isEmpty()) {
+                                                            val split: Array<String> = calculatedMappedFieldsDAO.value.split(":".toRegex()).toTypedArray()
+                                                            val lookupId = split[0]
+                                                            if (!lookupId.isEmpty() && ESP_LIB_Shared.getInstance().isNumeric(lookupId)) dynamicFormSectionFieldDAO.id = lookupId.toInt()
+                                                            if (split.size >= 1) {
+                                                                val lookupText = split[1]
+                                                                dynamicFormSectionFieldDAO.lookupValue = lookupText
+                                                            }
+                                                        }
+
                                                         val servicelookupItems = calculatedMappedFieldsDAO.lookupItems
                                                         //  if (dynamicFormSectionFieldDAO.lookupValue != null && !dynamicFormSectionFieldDAO.lookupValue!!.isEmpty()) {
 
@@ -1026,7 +947,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
     }
 
     private fun lockedCase(actualResponseJsonESPLIB: ESP_LIB_DynamicResponseDAO, drawable: GradientDrawable) {
-        txtstatus.text = context?.getString(R.string.esp_lib_text_completedcaps)
+       // txtstatus.text = context?.getString(R.string.esp_lib_text_completedcaps)
         if (actualResponseJsonESPLIB.applicationStatus.equals(ESP_LIB_Enums.rejected.toString(), ignoreCase = true)) {
             ivsign.setImageResource(R.drawable.esp_lib_drawable_ic_icon_red_signed)
             txtstatus.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_status_rejected))

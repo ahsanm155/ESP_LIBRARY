@@ -7,15 +7,17 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
+import androidx.core.widget.TextViewCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.SingleController.CompRoot
@@ -27,10 +29,10 @@ import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
+import com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
 import com.esp.library.utilities.customevents.EventOptions
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import com.facebook.shimmer.ShimmerFrameLayout
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.esp_lib_activity_no_record.view.*
 import kotlinx.android.synthetic.main.esp_lib_activity_search_layout.view.*
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.*
@@ -45,6 +47,8 @@ import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_FirebaseTokenDAO
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_CategoriesDAO
 import utilities.data.filters.ESP_LIB_FilterDAO
 import utilities.interfaces.ESP_LIB_AnyClick
 import utilities.interfaces.ESP_LIB_DeleteDraftListener
@@ -107,8 +111,6 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
     }
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context = activity
@@ -119,7 +121,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         val v = inflater.inflate(R.layout.esp_lib_fragment_users_applications, container, false)
         initailize(v)
         initializeCards()
-      //  setGravity(v)
+        //  setGravity(v)
 
 
         v.app_list.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
@@ -142,7 +144,8 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
         }
 
-        v.add_btn.text = context?.getString(R.string.esp_lib_text_submit) + " " + pref?.getlabels()?.application
+        // v.add_btn.text = context?.getString(R.string.esp_lib_text_submit) + " " + pref?.getlabels()?.application
+        v.add_btn.text = context?.getString(R.string.esp_lib_text_explore_services)
         v.add_btn.setOnClickListener { view ->
             if (ESP_LIB_ESPApplication.getInstance().user.profileStatus == null || ESP_LIB_ESPApplication.getInstance().user.profileStatus.equals(context?.getString(R.string.esp_lib_text_profile_complete), ignoreCase = true)) {
                 ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_AddApplicationsActivity::class.java, context as Activity?, null, 2)
@@ -164,7 +167,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         }
 
         v.ivfilter?.setOnClickListener {
-            ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_FilterScreenActivity::class.java, requireActivity(),null, 2)
+            ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_FilterScreenActivity::class.java, requireActivity(), null, 2)
         }
 
         /*when (ESP_LIB_Shared.getInstance().isWifiConnected(context)) {
@@ -222,12 +225,17 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         if (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
-            v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_no) + " " + pref?.getlabels()?.application + " " + context?.getString(R.string.esp_lib_text_added)
-            v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_startsubmittingapp) + " " + pref?.getlabels()?.application + " " + context?.getString(R.string.esp_lib_text_itseasy)
+            //   v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_no) + " " + pref?.getlabels()?.application + " " + context?.getString(R.string.esp_lib_text_added)
+            //  v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_startsubmittingapp) + " " + pref?.getlabels()?.application + " " + context?.getString(R.string.esp_lib_text_itseasy)
 
+            v.txtnoapplicationadded?.text = getString(R.string.esp_lib_text_access_features)
         } else {
             v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_norecord)
         }
+
+
+
+
         shimmer_view_container = v.findViewById(R.id.shimmer_view_container)
         shimmer_view_container_cards = v.findViewById(R.id.shimmer_view_container_cards)
         cardStackView = v.findViewById(R.id.card_stack_view)
@@ -242,8 +250,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         setCardAdapter(app_actual_card_list)
     }
 
-    private fun setCardAdapter(appActualCardList: ArrayList<ESP_LIB_ApplicationsDAO>?)
-    {
+    private fun setCardAdapter(appActualCardList: ArrayList<ESP_LIB_ApplicationsDAO>?) {
         mApplicationCardAdapter = context?.let { ESP_LIB_ListCardsApplicationsAdapter(app_actual_card_list, it, "", false) }
         mApplicationCardAdapter?.setInterfaceClickListener(this)
         cardAdapterESPLIB = this@ESP_LIB_UsersApplicationsFragment.mApplicationCardAdapter as ESP_LIB_ListCardsApplicationsAdapter?
@@ -435,15 +442,15 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                 list.add("1")
                 list.add("2")
 
-                daoESPLIB.type=1
+                daoESPLIB.type = 1
 
                 daoESPLIB.statuses = list
                 if (!isLoadMore)
                     loadCardApplications(false, search_text)
             } else {
 
-                daoESPLIB.type=2
-                daoESPLIB.sortBy=1
+                daoESPLIB.type = 2
+                daoESPLIB.sortBy = 1
                 if (ESP_LIB_ESPApplication.getInstance()?.filter?.statuses != null && ESP_LIB_ESPApplication.getInstance()?.filter?.statuses!!.size < 5) {
                     if (!daoESPLIB.statuses.isNullOrEmpty())
                         daoESPLIB.statuses = ArrayList<String>()
@@ -492,11 +499,10 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                         loadDefinitionCall = null
                         if (isLoadMore) {
                             view?.load_more_div?.visibility = View.GONE
-                        } else
-                        {
+                        } else {
                             app_actual_list?.clear()
                             setOpenRequestsAdapter()
-                            view?.txtrequestcount?.text=""
+                            view?.txtrequestcount?.text = ""
                         }
 
                         loadDefinitionCall = null
@@ -530,8 +536,6 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                                     view?.app_list?.scrollToPosition(SCROLL_TO - 3)
 
 
-
-
                                 } else {
 
                                     // val app_actual_list_temp = filterData(response)
@@ -540,7 +544,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                                     else
                                         app_actual_list = ESPLIBResponse.body().applications as MutableList<ESP_LIB_ApplicationsDAO>?
 
-                                   setOpenRequestsAdapter()
+                                    setOpenRequestsAdapter()
 
                                     PAGE_NO++
                                     IN_LIST_RECORDS = removeDuplication(app_actual_list).size
@@ -551,9 +555,9 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
                                 }
                                 if (title.equals(getString(R.string.esp_lib_text_open), ignoreCase = true))
-                                view?.txtrequestcount?.text = TOTAL_RECORDS_AVAILABLE.toString() + " " + activity?.getString(R.string.esp_lib_text_open_requests)
+                                    view?.txtrequestcount?.text = TOTAL_RECORDS_AVAILABLE.toString() + " " + activity?.getString(R.string.esp_lib_text_open_requests)
                                 else
-                                view?.txtrequestcount?.text = TOTAL_RECORDS_AVAILABLE.toString() + " " + activity?.getString(R.string.esp_lib_text_closed_requests)
+                                    view?.txtrequestcount?.text = TOTAL_RECORDS_AVAILABLE.toString() + " " + activity?.getString(R.string.esp_lib_text_closed_requests)
                                 SuccessResponse()
                                 stop_loading_animation()
                                 if (!isLoadMore) {
@@ -598,8 +602,8 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
     }//LoggedInUser end
 
 
-    private fun setOpenRequestsAdapter(){
-        if(app_actual_list!=null) {
+    private fun setOpenRequestsAdapter() {
+        if (app_actual_list != null) {
             mApplicationAdapterESPLIB = context?.let { ESP_LIB_ListUsersApplicationsAdapterV2(removeDuplication(app_actual_list), it, "", false) }
             (mApplicationAdapterESPLIB as ESP_LIB_ListUsersApplicationsAdapterV2?)?.getFragmentContext(this@ESP_LIB_UsersApplicationsFragment)
             view?.app_list?.adapter = mApplicationAdapterESPLIB
@@ -689,7 +693,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                                     TOTAL_CARD_RECORDS_AVAILABLE = ESPLIBResponse.body().totalRecords
 
                                     setCardAdapter(app_actual_card_list)
-                                   // paginate()
+                                    // paginate()
                                 } else {
                                     if (app_actual_card_list != null)
                                         app_actual_card_list?.addAll(ESPLIBResponse.body().applications!!)
@@ -702,10 +706,10 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                                     TOTAL_CARD_RECORDS_AVAILABLE = ESPLIBResponse.body().totalRecords
 
 
-                                     removeDuplication(app_actual_card_list)
+                                    removeDuplication(app_actual_card_list)
                                     setCardAdapter(app_actual_card_list)
 
-                                   // paginate()
+                                    // paginate()
 
                                 }
 
@@ -717,10 +721,12 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                             } else {
                                 stop_loading_animation_cards()
                                 rlcardstack?.visibility = View.GONE
+                                UnSuccessResponse()
                             }
                         } else {
                             stop_loading_animation_cards()
                             rlcardstack?.visibility = View.GONE
+                            UnSuccessResponse()
                         }
 
 
@@ -810,6 +816,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
     private fun SuccessResponse() {
         view?.llcontentlayout?.visibility = View.VISIBLE
         view?.no_application_available_div?.visibility = View.GONE
+        view?.no_record_view?.visibility = View.GONE
         if (mHSListener != null) {
             mHSListener?.mAction(false)
         }
@@ -817,36 +824,118 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
     private fun UnSuccessResponse() {
 
-        if(rlcardstack?.visibility==View.VISIBLE)
-            return
+        /* if(rlcardstack?.visibility==View.VISIBLE)
+             return*/
 
-        view?.llcontentlayout?.visibility = View.GONE
+
+
+        view?.rlsearchbar?.visibility = View.GONE
         view?.no_application_available_div?.visibility = View.VISIBLE
+        view?.no_record_view?.visibility = View.VISIBLE
+        if (arguments?.getString("title").equals(getString(R.string.esp_lib_text_closed), ignoreCase = true)) {
+            view?.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_no_applications)
+            view?.ivnorecordinside?.visibility = View.VISIBLE
+            view?.no_record_view?.setPadding(0, 300, 0, 0)
+        } else {
+            var textView = view?.detail_text
 
-        try {
-            if (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
-                view?.add_btn?.visibility = View.VISIBLE
-                view?.detail_text?.visibility = View.VISIBLE
-                if (mHSListener != null) {
-                    mHSListener?.mAction(false)
-                }
-
+            if (rlcardstack?.visibility == View.GONE && app_actual_list?.size == 0) {
+                view?.no_record_view?.setPadding(0, 300, 0, 0)
+                //view?.llcontentlayout?.visibility = View.GONE
+                view?.ivnorecordoutside?.visibility = View.GONE
+                view?.ivnorecordinside?.visibility = View.VISIBLE
+                TextViewCompat.setTextAppearance(view?.txtnoapplicationadded!!, R.style.Esp_Lib_Style_TextHeading5Gray);
+                TextViewCompat.setTextAppearance(view?.detail_text!!, R.style.Esp_Lib_Style_TextHeading5Gray);
             } else {
-                view?.add_btn?.visibility = View.GONE
-                view?.detail_text?.visibility = View.GONE
+                view?.ivnorecordoutside?.visibility = View.VISIBLE
+                view?.ivnorecordinside?.visibility = View.GONE
+                TextViewCompat.setTextAppearance(view?.txtnoapplicationadded!!, R.style.Esp_Lib_Style_TextHeading6Gray);
+                TextViewCompat.setTextAppearance(view?.detail_text!!, R.style.Esp_Lib_Style_TextHeading6Gray);
             }
-        } catch (e: java.lang.Exception) {
 
+            if (app_actual_list != null && app_actual_list!!.size > 0)
+                SuccessResponse()
+            else
+                loadDefinitionsList(textView)
+
+
+
+
+            try {
+                if (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
+                    view?.add_btn?.visibility = View.VISIBLE
+                    view?.detail_text?.visibility = View.VISIBLE
+                    if (mHSListener != null) {
+                        mHSListener?.mAction(false)
+                    }
+
+                } else {
+                    view?.add_btn?.visibility = View.GONE
+                    view?.detail_text?.visibility = View.GONE
+                }
+            } catch (e: java.lang.Exception) {
+
+            }
         }
-
-        if(!searchText.isNullOrEmpty())
-        {
-            view?.txtnoapplicationadded?.text=getString(R.string.esp_lib_text_norecord)
-            view?.add_btn?.visibility=View.GONE
+        if (!searchText.isNullOrEmpty()) {
+            view?.txtnoapplicationadded?.text = getString(R.string.esp_lib_text_norecord)
+            view?.detail_text?.visibility = View.GONE
+            view?.no_record_view?.setPadding(0, 300, 0, 0)
+            view?.rlsearchbar?.visibility = View.VISIBLE
+            view?.add_btn?.visibility = View.GONE
         }
 
 
     }
+
+    private fun loadDefinitionsList(textView: ESP_LIB_BodyText?) {
+        //start_loading_animation()
+        /* APIs Mapping respective Object*/
+        val apis = ESP_LIB_Shared.getInstance().retroFitObject(context)
+        //  def_call = apis.AllDefincations(categoryId);
+        var def_call = apis.AllWithQuery()
+        def_call.enqueue(object : Callback<List<ESP_LIB_CategoriesDAO>> {
+            override fun onResponse(call: Call<List<ESP_LIB_CategoriesDAO>>, response: Response<List<ESP_LIB_CategoriesDAO>>) {
+                // stop_loading_animation()
+                if (response.body() != null && response.body().size > 0) {
+                    val cat_list = ArrayList<ESP_LIB_DefinationsDAO>()
+                    val body = response.body()
+                    for (i in body.indices) {
+                        val category = body[i].definitions
+                        if (category != null) {
+                            for (k in category.indices) {
+                                val ESPLIBCategoryAndDefinationsDAO = category[k]
+                                if (ESPLIBCategoryAndDefinationsDAO != null) {
+                                    if (ESPLIBCategoryAndDefinationsDAO.isActive) {
+                                        cat_list.add(ESPLIBCategoryAndDefinationsDAO)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    val sb = StringBuilder()
+                    cat_list.forEachIndexed { index, definition ->
+                        if (index < 3)
+                            sb.append(". " + definition.name).append("\n")
+
+                    }
+                    textView?.setLineSpacing(1.5f, 1.5f)
+                    textView?.text = sb
+                    textView?.visibility = View.VISIBLE
+                } else
+                    textView?.visibility = View.GONE
+
+            }
+
+            override fun onFailure(call: Call<List<ESP_LIB_CategoriesDAO>>, t: Throwable) {
+                ESP_LIB_Shared.getInstance().messageBox(t.message, context as Activity?)
+
+
+            }
+        })
+    } //
+
 
     fun GetProfileStatus() {
 
@@ -952,7 +1041,8 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
 
     override fun deletedraftApplication(ESPLIBApplicationsDAO: ESP_LIB_ApplicationsDAO) {
-        showConfirmationMessage(ESPLIBApplicationsDAO)
+        //showConfirmationMessage(ESPLIBApplicationsDAO)
+        popUpDialog(view, ESPLIBApplicationsDAO)
     }
 
     private fun postFirebaseToken() {
@@ -999,14 +1089,14 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         }
 
     }
-
+/*
     fun showConfirmationMessage(applicationDAOESPLIB: ESP_LIB_ApplicationsDAO) {
 
 
         MaterialAlertDialogBuilder(activity, R.style.Esp_Lib_Style_AlertDialogTheme)
                 .setTitle(activity?.applicationContext?.getString(R.string.esp_lib_text_delete) + " " + pref?.getlabels()?.application)
                 .setCancelable(false)
-                .setMessage(activity?.applicationContext?.getString(R.string.esp_lib_text_areyousure) + " " + applicationDAOESPLIB.definitionName + " " + pref?.getlabels()?.application + "?")
+                .setMessage(activity?.applicationContext?.getString(R.string.esp_lib_text_areyousure) + " \"" + applicationDAOESPLIB.definitionName + " " + pref?.getlabels()?.application + "\" ?")
                 .setPositiveButton(activity?.getApplicationContext()?.getString(R.string.esp_lib_text_yesdelete)) { dialogInterface, i ->
                     dialogInterface.dismiss()
 
@@ -1022,6 +1112,28 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                 .show();
 
 
+    }*/
+
+
+    fun popUpDialog(v: View?, applicationDAOESPLIB: ESP_LIB_ApplicationsDAO) {
+        val title = activity?.applicationContext?.getString(R.string.esp_lib_text_delete) + " " + pref?.getlabels()?.application
+        val description = getString(R.string.esp_lib_text_areyousure) + " \"" + applicationDAOESPLIB.definitionName + " " + pref?.getlabels()?.application + "\" ?"
+        val dailog = ESP_LIB_Shared.getInstance().popUpDialog(v, context, title, description)
+        val btcancel = dailog.findViewById<Button>(R.id.btcancel)
+        btcancel.text = getString(R.string.esp_lib_text_yesdelete)
+        val btaction = dailog.findViewById<Button>(R.id.btaction)
+        btaction.text = getString(R.string.esp_lib_text_no)
+        val ivcross = dailog.findViewById<ImageView>(R.id.ivcross)
+        btaction.setOnClickListener { v1: View? -> dailog.dismiss() }
+        ivcross.setOnClickListener { v1: View? -> dailog.dismiss() }
+        btcancel.setOnClickListener { v1: View? ->
+            dailog.dismiss()
+            when (ESP_LIB_Shared.getInstance().isWifiConnected(context)) {
+                true -> deleteApplication(applicationDAOESPLIB.id)
+                false -> ESP_LIB_Shared.getInstance().showAlertMessage(context?.getString(R.string.esp_lib_text_internet_error_heading), context?.getString(R.string.esp_lib_text_internet_connection_error), context)
+            }
+
+        }
     }
 
     fun deleteApplication(id: Int) {
@@ -1062,7 +1174,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         item as ESP_LIB_ApplicationsDAO
         arraylist as ArrayList<ESP_LIB_ApplicationsDAO>
 
-        sendDismissValue(item,arraylist)
+        sendDismissValue(item, arraylist)
 
     }
 
@@ -1070,18 +1182,17 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         start_loading_dialog()
         try {
 
-            var id=item.id
-            if(item.type.equals(getString(R.string.esp_lib_text_feed),ignoreCase = true))
-                id=item.parentApplicationId
+            var id = item.id
+            if (item.type.equals(getString(R.string.esp_lib_text_feed), ignoreCase = true))
+                id = item.parentApplicationId
 
             val apis = CompRoot().getService(context);
-            val call = apis?.getdismissApplication(id,item.type)
+            val call = apis?.getdismissApplication(id, item.type)
             call?.enqueue(object : Callback<Any> {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
 
 
                     if (response.body() != null) {
-
 
 
                     } else {
@@ -1131,8 +1242,6 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
 
     }
-
-
 
 
 }// Required empty public constructor

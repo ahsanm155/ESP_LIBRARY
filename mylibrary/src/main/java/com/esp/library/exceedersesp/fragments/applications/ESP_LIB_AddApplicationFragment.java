@@ -58,7 +58,7 @@ import retrofit2.Retrofit;
 import utilities.adapters.setup.applications.ESP_LIB_ListAddApplicationSectionsAdapter;
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.applicants.ESP_LIB_CalculatedMappedFieldsDAO;
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO;
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_CurrencyDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_LookUpDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_ResponseFileUploadDAO;
@@ -93,7 +93,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
     String actualResponseJson = null;
     InputMethodManager imm = null;
     ESP_LIB_ProgressBarAnimation anim = null;
-    ESP_LIB_CategoryAndDefinationsDAO definationsDAO;
+    ESP_LIB_DefinationsDAO definationsDAO;
     AlertDialog dialog = null;
 
     private static Button btnSubmit;
@@ -120,11 +120,11 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
         // Required empty public constructor
     }
 
-    public static ESP_LIB_AddApplicationFragment newInstance(ESP_LIB_CategoryAndDefinationsDAO cat, Button btn_Submit,
+    public static ESP_LIB_AddApplicationFragment newInstance(ESP_LIB_DefinationsDAO cat, Button btn_Submit,
                                                              TextView definitiondescription, TextView definitionnameTitle) {
         ESP_LIB_AddApplicationFragment fragment = new ESP_LIB_AddApplicationFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ESP_LIB_CategoryAndDefinationsDAO.Companion.getBUNDLE_KEY(), cat);
+        args.putSerializable(ESP_LIB_DefinationsDAO.Companion.getBUNDLE_KEY(), cat);
         fragment.setArguments(args);
 
         btnSubmit = btn_Submit;
@@ -140,7 +140,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
 
 
         if (getArguments() != null) {
-            definationsDAO = (ESP_LIB_CategoryAndDefinationsDAO) getArguments().getSerializable(ESP_LIB_CategoryAndDefinationsDAO.Companion.getBUNDLE_KEY());
+            definationsDAO = (ESP_LIB_DefinationsDAO) getArguments().getSerializable(ESP_LIB_DefinationsDAO.Companion.getBUNDLE_KEY());
 
         }
 
@@ -237,7 +237,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
         }
     }//LoggedInUser end
 
-    private void GetApplicationFrom(ESP_LIB_CategoryAndDefinationsDAO ESPLIBCategoryAndDefinationsDAO) {
+    private void GetApplicationFrom(ESP_LIB_DefinationsDAO ESPLIBCategoryAndDefinationsDAO) {
 
 
         try {
@@ -1080,30 +1080,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
 
     }
 
-   /* private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-          //  dynamicFormSectionFieldDAOCalculatedMapped = (DynamicFormSectionFieldDAO) intent.getSerializableExtra("dynamicFormSectionFieldDAO");
-            //  int position = intent.getIntExtra("position", 0);
-            callService();
-        }
-    };
-
-
-    private void callService() {
-        if (!isServiceRunning) {
-            isServiceRunning = true;
-            unRegisterReciever();
-            SubmitRequest("calculatedValues");
-        }
-    }*/
-
     private void registerReciever() {
-       /* isServiceRunning = false;
-        if (getActivity() != null) {
-            LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
-                    new IntentFilter("getcalculatedvalues"));
-        }*/
 
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
@@ -1111,8 +1088,6 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
     }
 
     private void unRegisterReciever() {
-       /* if (getActivity() != null)
-            LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);*/
         EventBus.getDefault().unregister(this);
     }
 
@@ -1120,12 +1095,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
     public void dataRefreshEvent(EventOptions.EventTriggerController eventTriggerController) {
         unRegisterReciever();
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                SubmitRequest("calculatedValues");
-            }
-        }, 1000);
+        handler.postDelayed(() -> SubmitRequest("calculatedValues"), 1000);
 
     }
 
@@ -1168,6 +1138,20 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
                                                             int targetFieldType = ESPLIBCalculatedMappedFieldsDAO.getTargetFieldType();
 
                                                             if (targetFieldType == 13) {
+
+                                                                if (!ESPLIBCalculatedMappedFieldsDAO.getValue().isEmpty()) {
+                                                                    String[] split = ESPLIBCalculatedMappedFieldsDAO.getValue().split(":");
+                                                                    String lookupId = split[0];
+                                                                    if (!lookupId.isEmpty() && ESP_LIB_Shared.getInstance().isNumeric(lookupId))
+                                                                        ESPLIBDynamicFormSectionFieldDAO.setId(Integer.parseInt(lookupId));
+
+                                                                    if (split.length >= 1) {
+                                                                        String lookupText = split[1];
+                                                                        ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
+                                                                    }
+                                                                }
+
+
                                                                 List<ESP_LIB_LookUpDAO> servicelookupItems = ESPLIBCalculatedMappedFieldsDAO.getLookupItems();
                                                                 if (ESPLIBDynamicFormSectionFieldDAO.getLookupValue() != null && !ESPLIBDynamicFormSectionFieldDAO.getLookupValue().isEmpty()) {
 
@@ -1188,7 +1172,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
 
                                                             }
 
-                                                            if (targetFieldType == 7 ) {
+                                                            if (targetFieldType == 7) {
 
                                                                 ESPLIBDynamicFormSectionFieldDAO.setMappedCalculatedField(true);
                                                                 ESPLIBDynamicFormSectionFieldDAO.setType(ESPLIBCalculatedMappedFieldsDAO.getTargetFieldType());
@@ -1211,15 +1195,13 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
                                                                 ESPLIBDynamicFormSectionFieldDAO.setValue(calculatedDisplayDate);
 
 
-                                                            }
-                                                            else if (targetFieldType == 11) {
+                                                            } else if (targetFieldType == 11) {
                                                                 ESP_LIB_DynamicFormSectionFieldDAO fieldDAO = ESP_LIB_Shared.getInstance().populateCurrency(ESPLIBCalculatedMappedFieldsDAO.getValue());
                                                                 String concateValue = fieldDAO.getValue() + " " + fieldDAO.getSelectedCurrencySymbol();
                                                                 ESPLIBDynamicFormSectionFieldDAO.setValue(concateValue);
 
 
-                                                            }
-                                                            else
+                                                            } else
                                                                 ESPLIBDynamicFormSectionFieldDAO.setValue(ESPLIBCalculatedMappedFieldsDAO.getValue());
 
 

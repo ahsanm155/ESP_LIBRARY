@@ -5,10 +5,13 @@ import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
-import android.view.Gravity
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
+import androidx.core.widget.TextViewCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AddApplicationFragment
@@ -18,7 +21,7 @@ import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationFieldsRec
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListAddApplicationAdapter
 import kotlinx.android.synthetic.main.esp_lib_activity_add_applications_form.*
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO
 
 
@@ -30,7 +33,7 @@ class ESP_LIB_AddApplicationsFromScreenActivity : ESP_LIB_BaseActivity(), ESP_LI
     internal var context: ESP_LIB_BaseActivity? = null
     internal var fm: androidx.fragment.app.FragmentManager? = null
     internal var submit_request: ESP_LIB_AddApplicationFragment? = null
-    internal var definationsDAOESPLIB: ESP_LIB_CategoryAndDefinationsDAO? = null
+    internal var definationsDAOESPLIB: ESP_LIB_DefinationsDAO? = null
     internal var imm: InputMethodManager? = null
     internal var upload_file: ESP_LIB_DynamicFormSectionFieldDAO? = null
     internal var pref: ESP_LIB_SharedPreference? = null
@@ -61,7 +64,6 @@ class ESP_LIB_AddApplicationsFromScreenActivity : ESP_LIB_BaseActivity(), ESP_LI
     }
 
 
-
     override fun mActionTo(whattodo: String) {
         if (whattodo == getString(R.string.esp_lib_text_draft)) {
             if (submit_request != null) {
@@ -81,7 +83,7 @@ class ESP_LIB_AddApplicationsFromScreenActivity : ESP_LIB_BaseActivity(), ESP_LI
         val bnd = intent.extras
         //  var appStatus: String? = null
         if (bnd != null) {
-            definationsDAOESPLIB = bnd.getSerializable(ESP_LIB_CategoryAndDefinationsDAO.BUNDLE_KEY) as ESP_LIB_CategoryAndDefinationsDAO
+            definationsDAOESPLIB = bnd.getSerializable(ESP_LIB_DefinationsDAO.BUNDLE_KEY) as ESP_LIB_DefinationsDAO
             /*if (definationsDAO != null)
                 appStatus = bnd.getString("appStatus")*/
             if (definationsDAOESPLIB?.parentApplicationInfo != null) {
@@ -164,19 +166,35 @@ class ESP_LIB_AddApplicationsFromScreenActivity : ESP_LIB_BaseActivity(), ESP_LI
 
     override fun onBackPressed() {
 
-        val action_window = ESP_LIB_AlertActionWindow.newInstance(getString(R.string.esp_lib_text_save_draft), getString(R.string.esp_lib_text_your) + " " + pref?.getlabels()?.application + " " + getString(R.string.esp_lib_text_wasnotsubmitted), getString(R.string.esp_lib_text_save_draft_ok), getString(R.string.esp_lib_text_discard) + " " + pref?.getlabels()?.application, getString(R.string.esp_lib_text_draft))
-        action_window.show(supportFragmentManager, "")
-        action_window.isCancelable = true
+        /* val action_window = ESP_LIB_AlertActionWindow.newInstance(getString(R.string.esp_lib_text_save_draft), getString(R.string.esp_lib_text_your) + " " + pref?.getlabels()?.application + " " + getString(R.string.esp_lib_text_wasnotsubmitted), getString(R.string.esp_lib_text_save_draft_ok), getString(R.string.esp_lib_text_discard) + " " + pref?.getlabels()?.application, getString(R.string.esp_lib_text_draft))
+         action_window.show(supportFragmentManager, "")
+         action_window.isCancelable = true*/
+
+        popUpDialog(window.decorView.rootView)
     }
 
-    private fun setGravity() {
-        if (pref?.language.equals("ar", ignoreCase = true)) {
-            toolbarheading.gravity = Gravity.RIGHT
+    fun popUpDialog(v: View?) {
+        val description = getString(R.string.esp_lib_text_your) + " " + pref?.getlabels()?.application + " " + getString(R.string.esp_lib_text_wasnotsubmitted)
+        val dailog = ESP_LIB_Shared.getInstance().popUpDialog(v, bContext, getString(R.string.esp_lib_text_save_draft), description)
+        val btcancel = dailog.findViewById<Button>(R.id.btcancel)
+        btcancel.text = getString(R.string.esp_lib_text_discard) + " " + pref?.getlabels()?.application
+        TextViewCompat.setTextAppearance(btcancel, R.style.Esp_Lib_Style_TextHeading5Green)
+        val btaction = dailog.findViewById<Button>(R.id.btaction)
+        btaction.text = getString(R.string.esp_lib_text_save_draft_ok)
+        TextViewCompat.setTextAppearance(btaction, R.style.Esp_Lib_Style_TextHeading5White)
+        val ivcross = dailog.findViewById<ImageView>(R.id.ivcross)
+        btcancel.setOnClickListener { v1: View? ->
+            dailog.dismiss()
+            finish()
+        }
+        ivcross.setOnClickListener { v1: View? -> dailog.dismiss() }
+        btaction.setOnClickListener { v1: View? ->
+            dailog.dismiss()
+            submit_request?.SubmitRequest(getString(R.string.esp_lib_text_draft))
 
-        } else {
-            toolbarheading.gravity = Gravity.LEFT
         }
     }
+
 
     companion object {
         var ACTIVITY_NAME = "controllers.applications.AddApplicationsFromScreenActivity"

@@ -12,24 +12,24 @@ import com.esp.library.R
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_AddApplicationsFromScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Shared
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 
 
-class ESP_LIB_ListApplicationSubDefinationAdapter(private val mApplications: List<ESP_LIB_CategoryAndDefinationsDAO>?,
+class ESP_LIB_ListApplicationSubDefinationAdapter(private val mApplications: List<ESP_LIB_DefinationsDAO>?,
                                                   con: Context,
                                                   subdefinationList: RecyclerView) :
         androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_ListApplicationSubDefinationAdapter.ParentViewHolder>(), Filterable {
 
     // internal var mCat: CategorySelection? = null
     private var context: Context
-    var mApplicationsFiltered: List<ESP_LIB_CategoryAndDefinationsDAO>? = null
+    var mApplicationsFiltered: List<ESP_LIB_DefinationsDAO>? = null
     var subDefinationList: RecyclerView? = null
 
 
     var search_text: String = "";
 
     interface CategorySelection {
-        fun StatusChange(update: ESP_LIB_CategoryAndDefinationsDAO)
+        fun StatusChange(update: ESP_LIB_DefinationsDAO)
     }
 
     open class ParentViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v)
@@ -118,9 +118,9 @@ class ESP_LIB_ListApplicationSubDefinationAdapter(private val mApplications: Lis
 
     }//End Holder Class
 
-    fun callIntent(getmApplications: ESP_LIB_CategoryAndDefinationsDAO) {
+    fun callIntent(getmApplications: ESP_LIB_DefinationsDAO) {
         val bundle = Bundle()
-        bundle.putSerializable(ESP_LIB_CategoryAndDefinationsDAO.BUNDLE_KEY, getmApplications)
+        bundle.putSerializable(ESP_LIB_DefinationsDAO.BUNDLE_KEY, getmApplications)
         ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_AddApplicationsFromScreenActivity::class.java, context as Activity, bundle, 2)
     }
 
@@ -152,7 +152,7 @@ class ESP_LIB_ListApplicationSubDefinationAdapter(private val mApplications: Lis
                 if (charString.isEmpty()) {
                     mApplicationsFiltered = mApplications
                 } else {
-                    val filteredList = ArrayList<ESP_LIB_CategoryAndDefinationsDAO>()
+                    val filteredList = ArrayList<ESP_LIB_DefinationsDAO>()
                     for (row in mApplications!!) {
 
                         // name match condition. this might differ depending on your requirement
@@ -173,7 +173,7 @@ class ESP_LIB_ListApplicationSubDefinationAdapter(private val mApplications: Lis
             }
 
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                mApplicationsFiltered = filterResults.values as ArrayList<ESP_LIB_CategoryAndDefinationsDAO>
+                mApplicationsFiltered = filterResults.values as ArrayList<ESP_LIB_DefinationsDAO>
                 notifyDataSetChanged()
             }
         }

@@ -27,12 +27,7 @@ import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplication
 import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.esp_lib_activity_no_record.view.*
 import kotlinx.android.synthetic.main.esp_lib_activity_search_layout.view.*
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.app_list
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.llcontentlayout
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.load_more_div
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.nestedscrollview
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.swipeRefreshLayout
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.txtrequestcount
+import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -43,7 +38,7 @@ import utilities.adapters.setup.applications.ESP_LIB_ListCardsApplicationsAdapte
 import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.data.filters.ESP_LIB_FilterDAO
 import java.util.*
 
@@ -79,7 +74,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
     internal var ivfilter: ImageView?=null
     internal var isEventRefreshData: Boolean=false
 
-    internal var definition_list: ArrayList<ESP_LIB_CategoryAndDefinationsDAO> = ArrayList()
+    internal var definition_list: ArrayList<ESP_LIB_DefinationsDAO> = ArrayList()
 
 
     interface HideShowPlus {
@@ -203,8 +198,8 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
         imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         if (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
-            v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_no) + " " + pref?.getlabels()?.application + " " + context?.getString(R.string.esp_lib_text_added)
-            v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_startsubmittingapp) + " " + pref?.getlabels()?.application + " " + context?.getString(R.string.esp_lib_text_itseasy)
+           // v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_no) + " " + pref?.getlabels()?.application + " " + context?.getString(R.string.esp_lib_text_added)
+          //  v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_startsubmittingapp) + " " + pref?.getlabels()?.application + " " + context?.getString(R.string.esp_lib_text_itseasy)
 
         } else {
             v.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_norecord)
@@ -430,7 +425,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun populateData(body: List<ESP_LIB_ApplicationsDAO>) {
-
+        SuccessResponse()
         app_actual_card_list?.clear()
         app_actual_card_list= body as ArrayList<ESP_LIB_ApplicationsDAO>?
         mApplicationCardAdapter = context?.let { ESP_LIB_ListCardsApplicationsAdapter(app_actual_card_list, it, "", false) }
@@ -545,6 +540,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
 
     private fun SuccessResponse() {
         view?.llcontentlayout?.visibility = View.VISIBLE
+        view?.no_record_view?.visibility = View.GONE
         view?.no_application_available_div?.visibility = View.GONE
         if (mHSListener != null) {
             mHSListener?.mAction(false)
@@ -552,13 +548,15 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun UnSuccessResponse() {
+        view?.rlsearchbar?.visibility = View.GONE
         view?.llcontentlayout?.visibility = View.GONE
+        view?.no_record_view?.visibility = View.VISIBLE
         view?.no_application_available_div?.visibility = View.VISIBLE
         try {
-
-
+            view?.ivnorecordinside?.visibility = View.VISIBLE
+            view?.no_record_view?.setPadding(0,300,0,0)
             if (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
-                view?.txtnoapplicationadded?.text=getString(R.string.esp_lib_text_norecord)
+                view?.txtnoapplicationadded?.text=getString(R.string.esp_lib_text_no_applications)
                 view?.detail_text?.visibility = View.GONE
                 if (mHSListener != null) {
                     mHSListener?.mAction(false)
@@ -569,6 +567,13 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
             }
         } catch (e: java.lang.Exception) {
 
+        }
+
+        if (!searchText.isNullOrEmpty()) {
+            view?.txtnoapplicationadded?.text = getString(R.string.esp_lib_text_norecord)
+            view?.detail_text?.visibility = View.GONE
+            view?.no_record_view?.setPadding(0,300,0,0)
+            view?.rlsearchbar?.visibility = View.VISIBLE
         }
 
     }

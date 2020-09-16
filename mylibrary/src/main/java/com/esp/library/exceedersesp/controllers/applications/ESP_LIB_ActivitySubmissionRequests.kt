@@ -28,14 +28,13 @@ import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import kotlinx.android.synthetic.main.esp_lib_activity_search_layout.*
 import kotlinx.android.synthetic.main.esp_lib_activity_submission_requests.*
-import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.*
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import utilities.adapters.setup.ESP_LIB_FilterItemsAdapter
 import utilities.adapters.setup.applications.ESP_LIB_ListApplicationSubDefinationAdapter
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.interfaces.ESP_LIB_DeleteFilterListener
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,8 +43,8 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
 
     internal var context: Context? = null
     internal var pref: ESP_LIB_SharedPreference? = null
-    internal var filter_definition_list: ArrayList<ESP_LIB_CategoryAndDefinationsDAO> = ArrayList()
-    internal var definition_list: ArrayList<ESP_LIB_CategoryAndDefinationsDAO> = ArrayList()
+    internal var filter_definition_list: ArrayList<ESP_LIB_DefinationsDAO> = ArrayList()
+    internal var definition_list: ArrayList<ESP_LIB_DefinationsDAO> = ArrayList()
     private var mDefAdapterESPLIB: ESP_LIB_ListApplicationSubDefinationAdapter? = null
     internal var ESPLIBFilter_adapter: ESP_LIB_FilterItemsAdapter? = null
 
@@ -53,7 +52,7 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
     companion object {
 
         var ACTIVITY_NAME = javaClass.simpleName
-        var subDefinationsDAOFilteredListESPLIB: ArrayList<ESP_LIB_CategoryAndDefinationsDAO> = ArrayList()
+        var subDefinationsDAOFilteredListESPLIB: ArrayList<ESP_LIB_DefinationsDAO> = ArrayList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +70,7 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
             val handler = Handler()
             handler.postDelayed({
                 stop_loading_animation()
-                populateData(subDefinitionBody as ArrayList<ESP_LIB_CategoryAndDefinationsDAO>)
+                populateData(subDefinitionBody as ArrayList<ESP_LIB_DefinationsDAO>)
             }, 500)
 
         }
@@ -177,9 +176,9 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
 
         val apis = ESP_LIB_Shared.getInstance().retroFitObject(bContext)
         val def_call = apis.getSubDefinitionList()
-        def_call.enqueue(object : Callback<List<ESP_LIB_CategoryAndDefinationsDAO>> {
+        def_call.enqueue(object : Callback<List<ESP_LIB_DefinationsDAO>> {
             @SuppressLint("RestrictedApi")
-            override fun onResponse(call: Call<List<ESP_LIB_CategoryAndDefinationsDAO>>, response: Response<List<ESP_LIB_CategoryAndDefinationsDAO>>) {
+            override fun onResponse(call: Call<List<ESP_LIB_DefinationsDAO>>, response: Response<List<ESP_LIB_DefinationsDAO>>) {
 
                 if (response.body() != null && response.body().size > 0) {
                     val body = response.body()
@@ -192,7 +191,7 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
                 stop_loading_animation()
             }
 
-            override fun onFailure(call: Call<List<ESP_LIB_CategoryAndDefinationsDAO>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ESP_LIB_DefinationsDAO>>, t: Throwable) {
                 ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_some_thing_went_wrong), bContext)
                 stop_loading_animation()
             }
@@ -200,7 +199,7 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
 
     }
 
-    private fun populateData(body: List<ESP_LIB_CategoryAndDefinationsDAO>) {
+    private fun populateData(body: List<ESP_LIB_DefinationsDAO>) {
         definition_list.clear()
         filter_definition_list.clear()
         definition_list.addAll(body)
@@ -211,7 +210,7 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
         toolbarheading?.text = pref?.getlabels()?.submissionRequests + " (" + body.size + ")"
     }
 
-    override fun deleteFilters(filtersList: ESP_LIB_CategoryAndDefinationsDAO) {
+    override fun deleteFilters(filtersList: ESP_LIB_DefinationsDAO) {
         if (ESP_LIB_Shared.getInstance().isWifiConnected(bContext)) {
             if (ESPLIBFilter_adapter != null) {
                 subDefinationsDAOFilteredListESPLIB.remove(filtersList)
@@ -238,7 +237,7 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
 
         val categoriesIds = ArrayList<Int>()
         for (i in subDefinationsDAOFilteredListESPLIB.indices) {
-            val df = subDefinationsDAOFilteredListESPLIB.get(i) as ESP_LIB_CategoryAndDefinationsDAO
+            val df = subDefinationsDAOFilteredListESPLIB.get(i) as ESP_LIB_DefinationsDAO
             categoriesIds.add(df.id)
 
             for (h in definition_list.indices) {

@@ -1,11 +1,7 @@
 package utilities.adapters.setup.applications
 
-import android.content.res.ColorStateList
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spannable
 import android.text.TextUtils
-import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,24 +14,24 @@ import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_AddApplicationsFromScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_Shared
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import java.io.IOException
 import java.nio.charset.Charset
 
 
-class ESP_LIB_ListApplicationCategoryAndDefinationAdapter(private val mApplications: List<ESP_LIB_CategoryAndDefinationsDAO>?,
+class ESP_LIB_ListApplicationCategoryAndDefinationAdapter(private val mApplications: List<ESP_LIB_DefinationsDAO>?,
                                                           con: ESP_LIB_BaseActivity, internal var list_type: String) :
         androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_ListApplicationCategoryAndDefinationAdapter.ParentViewHolder>(), Filterable {
 
     internal var mCat: CategorySelection? = null
     private var context: ESP_LIB_BaseActivity
-    var mApplicationsFiltered: List<ESP_LIB_CategoryAndDefinationsDAO>? = null
+    var mApplicationsFiltered: List<ESP_LIB_DefinationsDAO>? = null
 
 
     var search_text: String = "";
 
     interface CategorySelection {
-        fun StatusChange(update: ESP_LIB_CategoryAndDefinationsDAO)
+        fun StatusChange(update: ESP_LIB_DefinationsDAO)
     }
 
     open class ParentViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v)
@@ -126,7 +122,7 @@ class ESP_LIB_ListApplicationCategoryAndDefinationAdapter(private val mApplicati
             } else {
 
                 val bundle = Bundle()
-                bundle.putSerializable(ESP_LIB_CategoryAndDefinationsDAO.BUNDLE_KEY, getmApplications)
+                bundle.putSerializable(ESP_LIB_DefinationsDAO.BUNDLE_KEY, getmApplications)
                 ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_AddApplicationsFromScreenActivity::class.java, context, bundle, 2)
 
             }
@@ -135,23 +131,6 @@ class ESP_LIB_ListApplicationCategoryAndDefinationAdapter(private val mApplicati
 
     }//End Holder Class
 
-    fun loadJSONFromAsset(): String? {
-        var json: String? = null
-        try {
-            val `is` = context.assets.open("definition_icons_info.json")
-            val size = `is`.available()
-            val buffer = ByteArray(size)
-            `is`.read(buffer)
-            `is`.close()
-            val charset: Charset = Charsets.UTF_8
-            json = String(buffer, charset)
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            return null
-        }
-
-        return json
-    }
 
     override fun getItemCount(): Int {
         return mApplicationsFiltered?.size ?: 0
@@ -181,7 +160,7 @@ class ESP_LIB_ListApplicationCategoryAndDefinationAdapter(private val mApplicati
                 if (charString.isEmpty()) {
                     mApplicationsFiltered = mApplications
                 } else {
-                    val filteredList = ArrayList<ESP_LIB_CategoryAndDefinationsDAO>()
+                    val filteredList = ArrayList<ESP_LIB_DefinationsDAO>()
                     for (row in mApplications!!) {
 
                         // name match condition. this might differ depending on your requirement
@@ -202,7 +181,7 @@ class ESP_LIB_ListApplicationCategoryAndDefinationAdapter(private val mApplicati
             }
 
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                mApplicationsFiltered = filterResults.values as ArrayList<ESP_LIB_CategoryAndDefinationsDAO>
+                mApplicationsFiltered = filterResults.values as ArrayList<ESP_LIB_DefinationsDAO>
                 notifyDataSetChanged()
             }
         }

@@ -2,7 +2,6 @@ package com.esp.library.exceedersesp.controllers.submissions
 
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +9,13 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.esp.library.R
-import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_UsersApplicationsFragment
-import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.customcontrols.ESP_LIB_CustomViewPager
-import com.esp.library.utilities.customcontrols.ESP_LIB_DisplayUtils
 import com.esp.library.utilities.customcontrols.ESP_LIB_myBadgeView
 import com.esp.library.utilities.setup.ViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.esp_lib_activity_main_applications_tabs.*
-import kotlinx.android.synthetic.main.esp_lib_activity_main_applications_tabs.view.*
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
-import java.util.*
+import kotlinx.android.synthetic.main.esp_lib_custom_tab_count.*
 
 
 class ESP_LIB_SubmissionActivityTabs : androidx.fragment.app.Fragment() {

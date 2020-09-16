@@ -18,7 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import utilities.adapters.setup.applications.ESP_LIB_ListApplicationCategoryAdapter
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.interfaces.ESP_LIB_CheckFilterSelection
 
 class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelection {
@@ -91,15 +91,15 @@ class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelect
         /* APIs Mapping respective Object*/
         val apis = CompRoot().getService(bContext)
         val cat_call = apis?.AllCategories()
-        cat_call?.enqueue(object : Callback<List<ESP_LIB_CategoryAndDefinationsDAO>> {
-            override fun onResponse(call: Call<List<ESP_LIB_CategoryAndDefinationsDAO>>, response: Response<List<ESP_LIB_CategoryAndDefinationsDAO>>) {
+        cat_call?.enqueue(object : Callback<List<ESP_LIB_DefinationsDAO>> {
+            override fun onResponse(call: Call<List<ESP_LIB_DefinationsDAO>>, response: Response<List<ESP_LIB_DefinationsDAO>>) {
                 if (response.body() != null && response.body().isNotEmpty()) {
                     val body = response.body()
                     for (i in 0 until body.size) {
                         val categoryAndDefinationsDAO = body[i]
 
                         for (j in 0 until getCategoryAndDefinationsDAOFilteredList.size) {
-                            val df = getCategoryAndDefinationsDAOFilteredList.get(j) as ESP_LIB_CategoryAndDefinationsDAO
+                            val df = getCategoryAndDefinationsDAOFilteredList.get(j) as ESP_LIB_DefinationsDAO
                             if (categoryAndDefinationsDAO.id == df.id)
                                 categoryAndDefinationsDAO.isChecked = true
                         }
@@ -119,7 +119,7 @@ class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelect
                 stop_loading_animation()
             }
 
-            override fun onFailure(call: Call<List<ESP_LIB_CategoryAndDefinationsDAO>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ESP_LIB_DefinationsDAO>>, t: Throwable) {
                 ESP_LIB_Shared.getInstance().messageBox(t.message, bContext)
                 stop_loading_animation()
 
@@ -133,17 +133,17 @@ class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelect
         start_loading_animation()
         val apis = CompRoot().getService(bContext)
         val def_call = apis?.getSubDefinitionList()
-        def_call?.enqueue(object : Callback<List<ESP_LIB_CategoryAndDefinationsDAO>> {
-            override fun onResponse(call: Call<List<ESP_LIB_CategoryAndDefinationsDAO>>, response: Response<List<ESP_LIB_CategoryAndDefinationsDAO>>) {
+        def_call?.enqueue(object : Callback<List<ESP_LIB_DefinationsDAO>> {
+            override fun onResponse(call: Call<List<ESP_LIB_DefinationsDAO>>, response: Response<List<ESP_LIB_DefinationsDAO>>) {
                 stop_loading_animation()
                 if (response.body() != null && response.body().size > 0) {
                     val body = response.body()
-                    val arrayListBody = ArrayList<ESP_LIB_CategoryAndDefinationsDAO>()//Creating an empty arraylist
+                    val arrayListBody = ArrayList<ESP_LIB_DefinationsDAO>()//Creating an empty arraylist
                     for (i in 0 until body.size) {
                         val categoryAndDefinationsDAO = body[i]
 
                         for (j in 0 until getsubDefinitionDAOFilteredList.size) {
-                            val df = getsubDefinitionDAOFilteredList.get(j) as ESP_LIB_CategoryAndDefinationsDAO
+                            val df = getsubDefinitionDAOFilteredList.get(j) as ESP_LIB_DefinationsDAO
                             if (categoryAndDefinationsDAO.id == df.id)
                                 categoryAndDefinationsDAO.isChecked = true
                         }
@@ -172,7 +172,7 @@ class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelect
                 }
             }
 
-            override fun onFailure(call: Call<List<ESP_LIB_CategoryAndDefinationsDAO>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ESP_LIB_DefinationsDAO>>, t: Throwable) {
                 ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_some_thing_went_wrong), bContext)
                 stop_loading_animation()
 
@@ -192,7 +192,7 @@ class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelect
         vview.visibility = View.VISIBLE
     }
 
-    override fun checkFilterSelection(mApplications: List<ESP_LIB_CategoryAndDefinationsDAO>) {
+    override fun checkFilterSelection(mApplications: List<ESP_LIB_DefinationsDAO>) {
 
         for (i in 0 until mApplications.size) {
             val categoryAndDefinationsDAO = mApplications[i]
@@ -209,7 +209,7 @@ class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelect
     }
 
     companion object {
-        var tempFilterSelectionValues = ArrayList<ESP_LIB_CategoryAndDefinationsDAO>();
+        var tempFilterSelectionValues = ArrayList<ESP_LIB_DefinationsDAO>();
     }
 
     override fun onBackPressed() {

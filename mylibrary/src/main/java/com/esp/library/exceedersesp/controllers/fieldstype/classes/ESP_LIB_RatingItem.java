@@ -96,11 +96,7 @@ public class ESP_LIB_RatingItem {
         if (fieldDAO.getAllowedValuesCriteria() != null) {
             String ratingColor = fieldDAO.getAllowedValuesCriteria();
             Drawable drawable = ratingBar.getProgressDrawable();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                DrawableCompat.setTint(drawable, Color.parseColor(ratingColor));
-            } else {
-                drawable.setColorFilter(Color.parseColor(ratingColor), PorterDuff.Mode.SRC_IN);
-            }
+            DrawableCompat.setTint(drawable, Color.parseColor(ratingColor));
             //drawable.setColorFilter(Color.parseColor(ratingColor), PorterDuff.Mode.SRC_ATOP);
         }
 

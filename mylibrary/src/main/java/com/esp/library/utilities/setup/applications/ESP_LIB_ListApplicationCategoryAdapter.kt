@@ -10,16 +10,16 @@ import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.controllers.applications.filters.ESP_LIB_FilterActivity
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.interfaces.ESP_LIB_CheckFilterSelection
 
-class ESP_LIB_ListApplicationCategoryAdapter(private val mApplications: List<ESP_LIB_CategoryAndDefinationsDAO>?, con: ESP_LIB_BaseActivity) : androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_ListApplicationCategoryAdapter.ParentViewHolder>() {
+class ESP_LIB_ListApplicationCategoryAdapter(private val mApplications: List<ESP_LIB_DefinationsDAO>?, con: ESP_LIB_BaseActivity) : androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_ListApplicationCategoryAdapter.ParentViewHolder>() {
 
 
     private var context: ESP_LIB_BaseActivity
     var filterSelectionListenerESPLIB: ESP_LIB_CheckFilterSelection? = null
     var previousPosition: Int = 0
-    var categoryAndDefinationsDAOFilteredList = ArrayList<ESP_LIB_CategoryAndDefinationsDAO>()
+    var categoryAndDefinationsDAOFilteredList = ArrayList<ESP_LIB_DefinationsDAO>()
 
     open class ParentViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v)
 
@@ -81,7 +81,7 @@ class ESP_LIB_ListApplicationCategoryAdapter(private val mApplications: List<ESP
 
 
     private fun defualtButton(holder: ActivitiesList, checked: Boolean,
-                              ESPLIBCategoryAndDefinationsDAO: ESP_LIB_CategoryAndDefinationsDAO) {
+                              ESPLIBCategoryAndDefinationsDAO: ESP_LIB_DefinationsDAO) {
 
         if(checked)
         {

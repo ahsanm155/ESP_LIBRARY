@@ -15,15 +15,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.text.Spannable;
@@ -44,6 +41,7 @@ import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -57,25 +55,18 @@ import androidx.fragment.app.FragmentManager;
 import com.esp.library.R;
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity;
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication;
-import com.esp.library.exceedersesp.SingleController.CompRoot;
 import com.esp.library.exceedersesp.controllers.ESP_LIB_SplashScreenActivity;
 import com.esp.library.exceedersesp.controllers.Profile.ESP_LIB_ProfileMainActivity;
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationsActivityDrawer;
-import com.esp.library.utilities.customevents.EventOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.microsoft.projectoxford.face.FaceServiceClient;
-import com.microsoft.projectoxford.face.contract.Face;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -96,12 +87,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.reactivex.disposables.CompositeDisposable;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -1639,7 +1628,7 @@ public class ESP_LIB_Shared {
 
             //File file = new File(Shared.getInstance().getPathFromUri(bContext,fileUri));
             RequestBody requestFile = RequestBody.create(MediaType.parse(bContext.getContentResolver().getType(fileUri)), file);
-            return MultipartBody.Part.createFormData("File", ESP_LIB_Shared.getInstance().ReplaceSpeicalChars(file.getName(), ""), requestFile);
+            return MultipartBody.Part.createFormData("File", ReplaceSpeicalChars(file.getName(), ""), requestFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2263,120 +2252,29 @@ public class ESP_LIB_Shared {
         return lookUpItemHashMap.get(id);
     }
 
-    public void detectAndFrame(final Bitmap imageBitmap, FaceServiceClient faceServiceClient, Activity context, boolean isProfile) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-        ByteArrayInputStream inputStream =
-                new ByteArrayInputStream(outputStream.toByteArray());
+    public AlertDialog popUpDialog(View v, Context context,String title,String description) {
 
 
-        AsyncTask<InputStream, String, Face[]> detectTask =
-                new AsyncTask<InputStream, String, Face[]>() {
-                    String exceptionMessage = "";
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        ViewGroup viewGroup = v.findViewById(android.R.id.content);
+        View dialogView = LayoutInflater.from(v.getContext()).inflate(R.layout.esp_lib_activity_stop_submission_popup, viewGroup, false);
+        builder.setView(dialogView);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setCancelable(false);
+        TextView txttitle = dialogView.findViewById(R.id.txttitle);
+        TextView txtdescription = dialogView.findViewById(R.id.txtdescription);
+        txttitle.setText(title);
+        txtdescription.setText(description);
 
-                    @Override
-                    protected Face[] doInBackground(InputStream... params) {
-                        try {
-                            publishProgress("Detecting...");
-                            Face[] result = faceServiceClient.detect(
-                                    params[0],
-                                    true,         // returnFaceId
-                                    false,        // returnFaceLandmarks
-                                    // returnFaceAttributes:
-                                    new FaceServiceClient.FaceAttributeType[]{
-                                            FaceServiceClient.FaceAttributeType.Age,
-                                            FaceServiceClient.FaceAttributeType.Gender,
-                                            FaceServiceClient.FaceAttributeType.Smile,
-                                            FaceServiceClient.FaceAttributeType.Glasses,
-                                            FaceServiceClient.FaceAttributeType.FacialHair,
-                                            FaceServiceClient.FaceAttributeType.Emotion,
-                                            FaceServiceClient.FaceAttributeType.HeadPose,
-                                            FaceServiceClient.FaceAttributeType.Accessories,
-                                            FaceServiceClient.FaceAttributeType.Blur,
-                                            FaceServiceClient.FaceAttributeType.Exposure,
-                                            FaceServiceClient.FaceAttributeType.Hair,
-                                            FaceServiceClient.FaceAttributeType.Makeup,
-                                            FaceServiceClient.FaceAttributeType.Noise,
-                                            FaceServiceClient.FaceAttributeType.Occlusion
-                                    }
+        alertDialog.show();
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(alertDialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+        alertDialog.getWindow().setAttributes(layoutParams);
 
-                            );
-                            if (result == null) {
-                                publishProgress(
-                                        "Detection Finished. Nothing detected");
-
-
-                                return null;
-                            }
-                            publishProgress(String.format(
-                                    "Detection Finished. %d face(s) detected",
-                                    result.length));
-
-
-                            return result;
-                        } catch (Exception e) {
-                            exceptionMessage = String.format(
-                                    "Detection failed: %s", e.getMessage());
-                            return null;
-                        }
-                    }
-
-                    @Override
-                    protected void onPreExecute() {
-                        //TODO: show progress dialog
-
-                    }
-
-                    @Override
-                    protected void onProgressUpdate(String... progress) {
-                        //TODO: update progress
-
-                    }
-
-                    @Override
-                    protected void onPostExecute(Face[] result) {
-                        //TODO: update face frames
-
-                        ESP_LIB_SharedPreference pref = new ESP_LIB_SharedPreference(context);
-                        if (!exceptionMessage.equals("")) {
-                            messageBox(exceptionMessage, context);
-                        }
-                        if (result == null || result.length == 0) {
-                            if (isProfile)
-                                pref.saveProfileFaceId(null);
-                            else
-                                pref.savefaceId2(null);
-                            EventBus.getDefault().post(new EventOptions.EventFaceIdVerification());
-                            return;
-                        }
-
-                        double age = result[0].faceAttributes.age;
-                        UUID faceId = result[0].faceId;
-
-                        ESP_LIB_CustomLogs.displayLogs("FaceDetection age: " + age);
-
-
-                        if (isProfile) {
-                            EventBus.getDefault().post(new EventOptions.EventFaceIdVerification());
-                            //ESP_LIB_CustomLogs.displayLogs("getfaceId: "+faceId);
-                            pref.saveProfileFaceId(String.valueOf(faceId));
-                        } else {
-                            pref.savefaceId2(String.valueOf(faceId));
-                            ESP_LIB_CustomLogs.displayLogs("getfaceId 1: " + pref.getProfileFaceId1());
-                            ESP_LIB_CustomLogs.displayLogs("getfaceId 2: " + pref.getfaceId2());
-
-                            EventBus.getDefault().post(new EventOptions.EventFaceIdVerification());
-
-                        }
-
-                    }
-                };
-
-        detectTask.execute(inputStream);
-
+        return alertDialog;
 
     }
-
 
 
 }

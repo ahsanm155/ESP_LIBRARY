@@ -46,8 +46,8 @@ import retrofit2.Response;
 import utilities.adapters.setup.ESP_LIB_FilterItemsAdapter;
 import utilities.adapters.setup.applications.ESP_LIB_ListApplicationCategoryAndDefinationAdapter;
 import utilities.data.apis.ESP_LIB_APIs;
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO;
-import utilities.data.applicants.addapplication.ESP_LIB_DefinationsCategoriesDAO;
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO;
+import utilities.data.applicants.addapplication.ESP_LIB_CategoriesDAO;
 import utilities.interfaces.ESP_LIB_DeleteFilterListener;
 
 public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragment implements ESP_LIB_DeleteFilterListener {
@@ -56,8 +56,8 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
     private ESP_LIB_ListApplicationCategoryAndDefinationAdapter mDefAdapter;
 
 
-    Call<List<ESP_LIB_CategoryAndDefinationsDAO>> cat_call = null;
-    Call<List<ESP_LIB_DefinationsCategoriesDAO>> def_call = null;
+    Call<List<ESP_LIB_DefinationsDAO>> cat_call = null;
+    Call<List<ESP_LIB_CategoriesDAO>> def_call = null;
     InputMethodManager imm = null;
     LinearLayout no_application_available_div;
     RecyclerView defination_list;
@@ -75,11 +75,11 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
     private static final int HIDE_THRESHOLD = 20;
     ESP_LIB_FilterItemsAdapter filter_adapter;
     ESP_LIB_SharedPreference pref;
-    List<ESP_LIB_CategoryAndDefinationsDAO> cat_list = new ArrayList<>();
-    List<ESP_LIB_CategoryAndDefinationsDAO> cat_list_filtered = new ArrayList<>();
+    List<ESP_LIB_DefinationsDAO> cat_list = new ArrayList<>();
+    List<ESP_LIB_DefinationsDAO> cat_list_filtered = new ArrayList<>();
     RecyclerView.LayoutManager mDefLayoutManager;
-    List<ESP_LIB_DefinationsCategoriesDAO> actualResponse;
-    public static ArrayList categoryAndDefinationsDAOFilteredList = new ArrayList<ESP_LIB_CategoryAndDefinationsDAO>();
+    List<ESP_LIB_CategoriesDAO> actualResponse;
+    public static ArrayList categoryAndDefinationsDAOFilteredList = new ArrayList<ESP_LIB_DefinationsDAO>();
 
     public ESP_LIB_AddApplicationCategoryAndDefinationsFragment() {
         // Required empty public constructor
@@ -252,7 +252,7 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
 
         ArrayList<Integer> categoriesIds = new ArrayList<>();
         for (int i = 0; i < categoryAndDefinationsDAOFilteredList.size(); i++) {
-            ESP_LIB_CategoryAndDefinationsDAO df = (ESP_LIB_CategoryAndDefinationsDAO) categoryAndDefinationsDAOFilteredList.get(i);
+            ESP_LIB_DefinationsDAO df = (ESP_LIB_DefinationsDAO) categoryAndDefinationsDAOFilteredList.get(i);
             categoriesIds.add(df.getId());
 
             for (int h = 0; h < cat_list.size(); h++) {
@@ -289,20 +289,20 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
         ESP_LIB_APIs apis = ESP_LIB_Shared.getInstance().retroFitObject(bContext);
         //  def_call = apis.AllDefincations(categoryId);
         def_call = apis.AllWithQuery();
-        def_call.enqueue(new Callback<List<ESP_LIB_DefinationsCategoriesDAO>>() {
+        def_call.enqueue(new Callback<List<ESP_LIB_CategoriesDAO>>() {
             @Override
-            public void onResponse(Call<List<ESP_LIB_DefinationsCategoriesDAO>> call, Response<List<ESP_LIB_DefinationsCategoriesDAO>> response) {
+            public void onResponse(Call<List<ESP_LIB_CategoriesDAO>> call, Response<List<ESP_LIB_CategoriesDAO>> response) {
                 stop_loading_animation();
 
                 if (response.body() != null && response.body().size() > 0) {
                     actualResponse = response.body();
                     cat_list.clear();
-                    List<ESP_LIB_DefinationsCategoriesDAO> body = response.body();
+                    List<ESP_LIB_CategoriesDAO> body = response.body();
                     for (int i = 0; i < body.size(); i++) {
-                        List<ESP_LIB_CategoryAndDefinationsDAO> category = body.get(i).getDefinitions();
+                        List<ESP_LIB_DefinationsDAO> category = body.get(i).getDefinitions();
                         if (category != null) {
                             for (int k = 0; k < category.size(); k++) {
-                                ESP_LIB_CategoryAndDefinationsDAO ESPLIBCategoryAndDefinationsDAO = category.get(k);
+                                ESP_LIB_DefinationsDAO ESPLIBCategoryAndDefinationsDAO = category.get(k);
                                 if (ESPLIBCategoryAndDefinationsDAO != null) {
                                     if (ESPLIBCategoryAndDefinationsDAO.isActive()) {
                                         cat_list.add(ESPLIBCategoryAndDefinationsDAO);
@@ -333,14 +333,17 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
             }
 
             @Override
-            public void onFailure(Call<List<ESP_LIB_DefinationsCategoriesDAO>> call, Throwable t) {
+            public void onFailure(Call<List<ESP_LIB_CategoriesDAO>> call, Throwable t) {
                 ESP_LIB_Shared.getInstance().messageBox(t.getMessage(), bContext);
                 stop_loading_animation();
                 UnSuccessResponse();
             }
         });
 
-    }//
+    }
+
+
+
 
     @Override
     public void onDestroyView() {
@@ -372,20 +375,20 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
 
     private void UnSuccessResponse() {
         swipeRefreshLayout.setRefreshing(false);
-        message_error.setText(bContext.getResources().getString(R.string.esp_lib_text_no_defination_error));
-        message_error_detail.setText(bContext.getResources().getString(R.string.esp_lib_text_no_defination_error));
+        message_error.setText(bContext.getResources().getString(R.string.esp_lib_text_no_applications));
+        //message_error_detail.setText(bContext.getResources().getString(R.string.esp_lib_text_no_defination_error));
         defination_list.setVisibility(View.GONE);
         no_application_available_div.setVisibility(View.VISIBLE);
     }
 
-    public void UpdateDefincation(ESP_LIB_CategoryAndDefinationsDAO cat) {
+    public void UpdateDefincation(ESP_LIB_DefinationsDAO cat) {
         if (cat != null) {
             LoadDefinations(cat.getId());
         }
     }
 
     @Override
-    public void deleteFilters(@NotNull ESP_LIB_CategoryAndDefinationsDAO filtersList) {
+    public void deleteFilters(@NotNull ESP_LIB_DefinationsDAO filtersList) {
 
         if (ESP_LIB_Shared.getInstance().isWifiConnected(bContext)) {
             if (filter_adapter != null) {

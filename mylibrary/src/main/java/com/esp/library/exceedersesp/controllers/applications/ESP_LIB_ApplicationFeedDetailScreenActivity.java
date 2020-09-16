@@ -60,7 +60,7 @@ import utilities.adapters.setup.applications.ESP_LIB_ListSubmissionApplicationsA
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO;
 import utilities.data.applicants.ESP_LIB_SubmittalApplicationsDAO;
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO;
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_CurrencyDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DyanmicFormSectionFieldDetailsDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormDAO;
@@ -283,7 +283,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
     }
 
     private void SubmitRequest() {
-        ESP_LIB_CategoryAndDefinationsDAO categoryAndDefinationsDAO = new ESP_LIB_CategoryAndDefinationsDAO();
+        ESP_LIB_DefinationsDAO categoryAndDefinationsDAO = new ESP_LIB_DefinationsDAO();
         if (categoryAndDefinationsDAO.getParentApplicationInfo() != null) {
             categoryAndDefinationsDAO.getParentApplicationInfo().setApplicationId(mApplication.getParentApplicationId());
             categoryAndDefinationsDAO.getParentApplicationInfo().setTitleFieldValue(mApplication.getDefinitionName());
@@ -293,7 +293,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
         categoryAndDefinationsDAO.setId(mApplication.getId());
         categoryAndDefinationsDAO.setName(mApplication.getDefinitionName());
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ESP_LIB_CategoryAndDefinationsDAO.Companion.getBUNDLE_KEY(), categoryAndDefinationsDAO);
+        bundle.putSerializable(ESP_LIB_DefinationsDAO.Companion.getBUNDLE_KEY(), categoryAndDefinationsDAO);
         ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_AddApplicationsFromScreenActivity.class, this, bundle, 2);
     }
 

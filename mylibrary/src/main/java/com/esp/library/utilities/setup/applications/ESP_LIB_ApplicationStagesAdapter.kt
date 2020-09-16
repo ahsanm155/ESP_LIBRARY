@@ -215,17 +215,17 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             // if (!dynamicStagesDAO.status.equals(context.getString(R.string.locked), ignoreCase = true)) {
             //  if (dynamicStagesDAO.criteriaList!!.size > 0) {
 
-            if ((!dynamicStagesDAO.status.equals(ESP_LIB_Enums.locked.toString(), ignoreCase = true))) {
+           // if ((!dynamicStagesDAO.status.equals(ESP_LIB_Enums.locked.toString(), ignoreCase = true))) {
                 if (!dynamicStagesDAO.type.equals(ESP_LIB_Enums.link.toString(), ignoreCase = true)) {
-                    if (holder.txtstatus.text != ESP_LIB_Enums.locked.toString()) {
+                  //  if (holder.txtstatus.text != ESP_LIB_Enums.locked.toString()) {
                         val intent = Intent(context, ESP_LIB_ActivityStageDetails::class.java)
                         intent.putExtra("dynamicStagesDAO", dynamicStagesDAO)
                         intent.putExtra("actualResponseJson", actualResponseJson)
                         intent.putExtra("status", holder.txtstatus.text)
                         context.startActivity(intent)
-                    }
+                 //   }
                 }
-            }
+            //}
         }
 
 
@@ -257,8 +257,8 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
         return stagesListESPLIB.size
     }
 
-    fun notifyChangeIfAny(criteriaId: Int) {
-        criteriaAdapterESPLIB?.notifyChangeIfAny(criteriaId)
+    fun notifyChangeIfAny(criteriaId: Int, esp_lib_dynamicStagesCriteriaListDAO: ESP_LIB_DynamicStagesCriteriaListDAO) {
+        criteriaAdapterESPLIB?.notifyChangeIfAny(criteriaId, esp_lib_dynamicStagesCriteriaListDAO)
     }
 
     private fun setStatusColor(holder: ActivitiesList, ESPLIBDynamicStagesDAO: ESP_LIB_DynamicStagesDAO, position: Int) {

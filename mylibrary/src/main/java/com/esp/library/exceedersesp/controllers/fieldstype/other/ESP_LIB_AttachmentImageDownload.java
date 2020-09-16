@@ -1,5 +1,6 @@
 package com.esp.library.exceedersesp.controllers.fieldstype.other;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -7,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.Toast;
 
 import com.esp.library.exceedersesp.controllers.Profile.adapters.ESP_LIB_ListofSectionsFieldsAdapter;
 import com.esp.library.exceedersesp.controllers.fieldstype.viewholders.ESP_LIB_AttachmentTypeViewHolder;

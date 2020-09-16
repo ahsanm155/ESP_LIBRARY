@@ -29,6 +29,7 @@ import com.esp.library.utilities.common.GoogleFontsLibrary
 import com.esp.library.utilities.data.applicants.signature.ESP_LIB_SignatureDAO
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
+import org.greenrobot.eventbus.EventBus
 import utilities.adapters.setup.applications.ESP_LIB_ListAddApplicationSectionsAdapter
 import utilities.data.applicants.dynamics.*
 import utilities.interfaces.ESP_LIB_FeedbackSubmissionClick
@@ -304,6 +305,24 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
 
 
                 }
+            }
+        }
+
+        criteriaListDAO?.form?.sections?.forEach { section ->
+            if (section.fields!!.isNotEmpty()) {
+                section.fields?.forEach { field ->
+                    if (field.isVisible) {
+                        if (criteriaListDAO.isValidate) {
+                            holder.btapprove.isEnabled = true
+                            holder.btapprove.alpha = 1f
+                        } else {
+                            holder.btapprove.isEnabled = false
+                            holder.btapprove.alpha = 0.5f
+                        }
+                    }
+                }
+
+
             }
         }
 
@@ -703,16 +722,15 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         if (response.type.equals(context?.getString(R.string.esp_lib_text_font), ignoreCase = true)) {
             holder.rlincludesignatue.visibility = View.VISIBLE
             holder.llsignature.visibility = View.GONE
-
             holder.etxtsign.setText(response.signatoryName)
 
 
             val indexOf = rawStylesNames.indexOf(response.fontFamily)
             if (indexOf == -1) {
                 val typeface = Typeface.createFromAsset(context?.assets, "font/greatvibes_regular.otf")
-                holder.etxtsign.setTypeface(typeface)
+                holder.etxtsign.typeface = typeface
             } else {
-                holder.etxtsign.setTypeface(GoogleFontsLibrary.setGoogleFont(context, rawStyles[indexOf]))
+                holder.etxtsign.typeface = GoogleFontsLibrary.setGoogleFont(context, rawStyles[indexOf])
             }
 
         } else {
@@ -753,21 +771,27 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         return criteriaListESPLIB!!.size
     }
 
-    fun notifyChangeIfAny(criteriaId: Int) {
-        for (i in criteriaListESPLIB!!.indices) {
-            if (criteriaId == criteriaListESPLIB?.get(i)?.id) {
-                val isValidate = criteriaListESPLIB?.get(i)?.isValidate
-                val tempBtApprove = rvCrietrias?.layoutManager?.findViewByPosition(i)?.findViewById<Button>(R.id.btapprove)
-                val tempBtReject = rvCrietrias?.layoutManager?.findViewByPosition(i)?.findViewById<Button>(R.id.btreject)
-                checkButtonStatus(tempBtApprove, tempBtReject, isValidate)
+    fun notifyChangeIfAny(criteriaId: Int, criteriaobj: ESP_LIB_DynamicStagesCriteriaListDAO?) {
+        /*  for (i in criteriaListESPLIB!!.indices) {
+              if (criteriaId == criteriaListESPLIB?.get(i)?.id) {
+                  val isValidate = criteriaListESPLIB?.get(i)?.isValidate
+                  val tempBtApprove = rvCrietrias?.layoutManager?.findViewByPosition(i)?.findViewById<Button>(R.id.btapprove)
+                  val tempBtReject = rvCrietrias?.layoutManager?.findViewByPosition(i)?.findViewById<Button>(R.id.btreject)
+                  checkButtonStatus(tempBtApprove, tempBtReject, isValidate)
 
+              }
+          }*/
+        criteriaListESPLIB?.forEachIndexed { index, citeria ->
+            if (citeria?.id == criteriaobj?.id) {
+                val tempBtApprove = rvCrietrias?.layoutManager?.findViewByPosition(index)?.findViewById<Button>(R.id.btapprove)
+                val tempBtReject = rvCrietrias?.layoutManager?.findViewByPosition(index)?.findViewById<Button>(R.id.btreject)
+                checkButtonStatus(tempBtApprove, tempBtReject, criteriaobj?.isValidate, index)
             }
         }
 
-
     }
 
-    private fun checkButtonStatus(tempBtApprove: Button?, tempBtReject: Button?, isEnable: Boolean?) {
+    private fun checkButtonStatus(tempBtApprove: Button?, tempBtReject: Button?, isEnable: Boolean?, index: Int) {
         when (isEnable) {
             true -> {
                 tempBtApprove?.isEnabled = true
@@ -780,6 +804,8 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
             }
 
         }
+        //notifyItemChanged(index)
+
         tempBtReject?.isEnabled = true
         tempBtReject?.alpha = 1f
 
@@ -839,6 +865,16 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         }
 
         return fields
+    }
+
+    private fun registerReciever() {
+        if (!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this)
+    }
+
+    private fun unRegisterReciever() {
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver)
+        EventBus.getDefault().unregister(this)
     }
 
 

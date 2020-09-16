@@ -2,6 +2,7 @@ package com.esp.library.exceedersesp.controllers.fieldstype.classes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -234,7 +235,14 @@ public class ESP_LIB_LookupItem {
         }
 
         setDrawable(holder, pref);
-
+      /*  new Handler().postDelayed(() -> {
+            try {
+                if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
+                    holder.etValue.setText("");
+                    validateForm(fieldDAO);
+                }
+            }catch (Exception e){}
+        }, 2000);*/
 
     }
 

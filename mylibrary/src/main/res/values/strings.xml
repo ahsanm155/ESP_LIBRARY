@@ -155,7 +155,7 @@
     <string name="esp_lib_text_save_draft">Save Draft</string>
     <string name="esp_lib_text_your">Your</string>
     <string name="esp_lib_text_wasnotsubmitted">was not submitted yet.</string>
-    <string name="esp_lib_text_save_draft_ok">SAVE AS DRAFT</string>
+    <string name="esp_lib_text_save_draft_ok">Save as draft</string>
     <string name="esp_lib_text_discard">Discard</string>
     <string name="esp_lib_text_assessor">Assessor</string>
     <string name="esp_lib_text_applicant">Applicant</string>
@@ -234,6 +234,7 @@
     <string name="esp_lib_text_submitrequest">Submit Request</string>
     <string name="esp_lib_text_addsub" translatable="false">Add a Submission</string>
     <string name="esp_lib_text_submit">Submit</string>
+    <string name="esp_lib_text_explore_services" translatable="false">Explore the Services</string>
     <string name="esp_lib_text_addperiod">Add Period</string>
     <string name="esp_lib_text_nolookuphere">No lookup here!</string>
     <string name="esp_lib_text_nofeedbackavailable">No feedback available!</string>
@@ -274,6 +275,7 @@
     <string name="esp_lib_text_draw_here" translatable="false">Draw Here</string>
     <string name="esp_lib_text_applyfilter">Apply Filter</string>
     <string name="esp_lib_text_reject">Reject</string>
+    <string name="esp_lib_text_access_features" translatable="false">You have access to the great features:</string>
     <string name="esp_lib_text_dismiss" translatable="false">Dismiss</string>
     <string name="esp_lib_text_view_details" translatable="false">View Details</string>
     <string name="esp_lib_text_pleasewait">Please wait...</string>
@@ -396,6 +398,7 @@
     <string name="esp_lib_text_subapplications">Sub Applications</string>
     <string name="esp_lib_text_subdefinition">Sub Definition:</string>
     <string name="esp_lib_text_norecord">No record found!</string>
+    <string name="esp_lib_text_no_applications" translatable="false">No Applications</string>
     <string name="esp_lib_text_requestnumber">Request #:</string>
     <string name="esp_lib_text_confirmfeedback">Confirm feedback</string>
     <string name="esp_lib_text_rejectfeedback">Confirm Rejection</string>
@@ -424,7 +427,7 @@
     <string name="esp_lib_text_submissionsstopped">Submissions Stopped</string>
     <string name="esp_lib_text_viewapplications">View Applications</string>
     <string name="esp_lib_text_stopsubmission">Stop Submission</string>
-    <string name="esp_lib_text_requesttoaction">Requests to action</string>
+    <string name="esp_lib_text_requesttoaction">Requests to Screen</string>
     <string name="esp_lib_text_seeall">See All</string>
     <string name="esp_lib_text_allowsubmission">Allow Submission</string>
     <string name="esp_lib_text_allow" translatable="false">Allow</string>

@@ -14,7 +14,7 @@ import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import utilities.adapters.setup.applications.ESP_LIB_ListApplicationCategoryAndDefinationAdapter
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 
 
 class ESP_LIB_AddApplicationsActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListApplicationCategoryAndDefinationAdapter.CategorySelection {
@@ -27,7 +27,7 @@ class ESP_LIB_AddApplicationsActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListAppl
     internal var pref: ESP_LIB_SharedPreference? = null
 
 
-    override fun StatusChange(update: ESP_LIB_CategoryAndDefinationsDAO) {
+    override fun StatusChange(update: ESP_LIB_DefinationsDAO) {
         if (submit_request != null) {
             submit_request!!.UpdateDefincation(update)
         }

@@ -1124,6 +1124,19 @@ public class ESP_LIB_EditSectionDetails extends ESP_LIB_BaseActivity implements 
                                                 int targetFieldType = ESPLIBCalculatedMappedFieldsDAO.getTargetFieldType();
 
                                                 if (targetFieldType == 13) {
+
+                                                    if (!ESPLIBCalculatedMappedFieldsDAO.getValue().isEmpty()) {
+                                                        String[] split = ESPLIBCalculatedMappedFieldsDAO.getValue().split(":");
+                                                        String lookupId = split[0];
+                                                        if (!lookupId.isEmpty() && ESP_LIB_Shared.getInstance().isNumeric(lookupId))
+                                                            ESPLIBDynamicFormSectionFieldDAO.setId(Integer.parseInt(lookupId));
+
+                                                        if (split.length >= 1) {
+                                                            String lookupText = split[1];
+                                                            ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
+                                                        }
+                                                    }
+
                                                     List<ESP_LIB_LookUpDAO> servicelookupItems = ESPLIBCalculatedMappedFieldsDAO.getLookupItems();
                                                     if (ESPLIBDynamicFormSectionFieldDAO.getLookupValue() != null && !ESPLIBDynamicFormSectionFieldDAO.getLookupValue().isEmpty()) {
 

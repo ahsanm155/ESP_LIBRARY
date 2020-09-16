@@ -58,12 +58,7 @@
 
 
 
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_30dp"
-            android:layout_below="@+id/rlsearchbar"
-            layout="@layout/esp_lib_activity_no_record"/>
+
 
 
 <LinearLayout
@@ -156,6 +151,14 @@
 
         </RelativeLayout>
 
+
+    <include
+        android:id="@+id/no_record_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        layout="@layout/esp_lib_activity_no_record"/>
+
         <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
             android:id="@+id/txtrequestcount"
             android:layout_width="wrap_content"
@@ -169,8 +172,7 @@
         <RelativeLayout
             android:id="@+id/rlapplist"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtrequestcount">
+            android:layout_height="wrap_content">
 
 
             <com.facebook.shimmer.ShimmerFrameLayout

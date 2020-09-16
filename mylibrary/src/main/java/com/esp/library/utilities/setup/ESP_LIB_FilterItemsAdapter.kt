@@ -10,11 +10,11 @@ import android.widget.TextView
 import com.esp.library.R
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ActivitySubmissionRequests
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AddApplicationCategoryAndDefinationsFragment
-import utilities.data.applicants.addapplication.ESP_LIB_CategoryAndDefinationsDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.interfaces.ESP_LIB_DeleteFilterListener
 
 
-class ESP_LIB_FilterItemsAdapter(internal var filtersList: MutableList<ESP_LIB_CategoryAndDefinationsDAO>, bContext: Context) : androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_FilterItemsAdapter.ParentViewHolder>() {
+class ESP_LIB_FilterItemsAdapter(internal var filtersList: MutableList<ESP_LIB_DefinationsDAO>, bContext: Context) : androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_FilterItemsAdapter.ParentViewHolder>() {
 
     private val TAG = javaClass.simpleName
     private val context: Context

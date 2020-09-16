@@ -16,6 +16,7 @@ import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_Application
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
+import com.esp.library.utilities.data.applicants.ESP_LIB_CardValuesDAO
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationItemsAdapter
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2.Companion.isSubApplications
 import utilities.data.applicants.ESP_LIB_ApplicationSingleton
@@ -126,6 +127,7 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
         holder.viewline.visibility = View.VISIBLE
         holder.items_list.setPadding(0, 0, 0, 30)
         holder.definitionName.setPadding(0, 20, 0, 0)
+        holder.definitionName.isSingleLine = true
         holder.rlfeedminerow.setPadding(0, 30, 0, 0)
 
         holder.txtfeedminevalue.text = applicationsDAO?.summary?.title
@@ -149,6 +151,7 @@ class ESP_LIB_ListCardsApplicationsAdapter(private var mApplications: ArrayList<
 
         if (isComingFromSeeAll) {
             holder.llcardButtons.visibility = View.GONE
+            holder.definitionName.isSingleLine = false
             holder.viewline.visibility = View.GONE
             holder.buttonsviewline.visibility = View.GONE
             holder.txtfeedminelabel.visibility = View.GONE

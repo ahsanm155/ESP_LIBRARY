@@ -24,42 +24,45 @@
                 android:layout_height="match_parent"
                 android:background="@color/esp_lib_color_view_bg">
 
+
+                <RelativeLayout
+                    android:id="@+id/rlsearchbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ivfilter"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/_7sdp"
+                        android:contentDescription="@string/esp_lib_text_filter"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/esp_lib_drawable_ic_filter_gray"
+                        android:tint="@color/esp_lib_color_grey" />
+
+
+                    <include
+                        android:id="@+id/searchlayout"
+                        layout="@layout/esp_lib_activity_search_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:layout_marginEnd="@dimen/_7sdp"
+                        android:layout_toStartOf="@+id/ivfilter" />
+
+                </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/llcontentlayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/searchlayout"
+                    android:layout_below="@+id/rlsearchbar"
                     android:orientation="vertical"
                     android:weightSum="2">
 
-                    <RelativeLayout
-                        android:id="@+id/rlsearchbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/ivfilter"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginEnd="@dimen/_7sdp"
-                            android:contentDescription="@string/esp_lib_text_filter"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/esp_lib_drawable_ic_filter_gray"
-                            android:tint="@color/esp_lib_color_grey" />
-
-
-                        <include
-                            android:id="@+id/searchlayout"
-                            layout="@layout/esp_lib_activity_search_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_7sdp"
-                            android:layout_marginEnd="@dimen/_7sdp"
-                            android:layout_toStartOf="@+id/ivfilter" />
-
-                    </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/rlapplist"

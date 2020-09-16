@@ -13,7 +13,10 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -79,6 +82,7 @@ public class ESP_LIB_EdittextItem {
     public void getProfileAdapter(ESP_LIB_ListofSectionsFieldsAdapter listofsectionsFieldsAdapter) {
         listofSectionsFieldsAdapter = listofsectionsFieldsAdapter;
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     public void showEditTextItemView(final ESP_LIB_EditTextTypeViewHolder holder, final int position,

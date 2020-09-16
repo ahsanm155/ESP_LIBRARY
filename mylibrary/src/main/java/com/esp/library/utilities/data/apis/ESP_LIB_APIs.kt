@@ -146,13 +146,13 @@ interface ESP_LIB_APIs {
     fun GetLinkApplicationInfo(@Path("id") applicationId: String): Call<ESP_LIB_LinkApplicationsDAO>
 
     @GET("category/AllWithQuery")
-    fun AllCategories(): Call<List<ESP_LIB_CategoryAndDefinationsDAO>>
+    fun AllCategories(): Call<List<ESP_LIB_DefinationsDAO>>
 
     @GET("category/AllWithQuery")
-    fun AllWithQuery(): Call<List<ESP_LIB_DefinationsCategoriesDAO>>
+    fun AllWithQuery(): Call<List<ESP_LIB_CategoriesDAO>>
 
     @GET("submittalRequest")
-    fun getSubDefinitionList(): Call<List<ESP_LIB_CategoryAndDefinationsDAO>>
+    fun getSubDefinitionList(): Call<List<ESP_LIB_DefinationsDAO>>
 
     @GET("submittalRequest/feeds")
     fun getfeedsList(): Call<List<ESP_LIB_ApplicationsDAO>>
