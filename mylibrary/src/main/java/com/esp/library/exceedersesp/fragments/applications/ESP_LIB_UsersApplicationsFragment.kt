@@ -47,8 +47,8 @@ import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_FirebaseTokenDAO
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO
-import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.data.applicants.addapplication.ESP_LIB_CategoriesDAO
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.data.filters.ESP_LIB_FilterDAO
 import utilities.interfaces.ESP_LIB_AnyClick
 import utilities.interfaces.ESP_LIB_DeleteDraftListener
@@ -814,6 +814,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
     }
 
     private fun SuccessResponse() {
+        view?.rlsearchbar?.visibility = View.VISIBLE
         view?.llcontentlayout?.visibility = View.VISIBLE
         view?.no_application_available_div?.visibility = View.GONE
         view?.no_record_view?.visibility = View.GONE
@@ -829,7 +830,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
 
 
-        view?.rlsearchbar?.visibility = View.GONE
+
         view?.no_application_available_div?.visibility = View.VISIBLE
         view?.no_record_view?.visibility = View.VISIBLE
         if (arguments?.getString("title").equals(getString(R.string.esp_lib_text_closed), ignoreCase = true)) {
@@ -837,9 +838,10 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
             view?.ivnorecordinside?.visibility = View.VISIBLE
             view?.no_record_view?.setPadding(0, 300, 0, 0)
         } else {
-            var textView = view?.detail_text
+            val textView = view?.detail_text
 
             if (rlcardstack?.visibility == View.GONE && app_actual_list?.size == 0) {
+                view?.rlsearchbar?.visibility = View.GONE
                 view?.no_record_view?.setPadding(0, 300, 0, 0)
                 //view?.llcontentlayout?.visibility = View.GONE
                 view?.ivnorecordoutside?.visibility = View.GONE
@@ -847,6 +849,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                 TextViewCompat.setTextAppearance(view?.txtnoapplicationadded!!, R.style.Esp_Lib_Style_TextHeading5Gray);
                 TextViewCompat.setTextAppearance(view?.detail_text!!, R.style.Esp_Lib_Style_TextHeading5Gray);
             } else {
+
                 view?.ivnorecordoutside?.visibility = View.VISIBLE
                 view?.ivnorecordinside?.visibility = View.GONE
                 TextViewCompat.setTextAppearance(view?.txtnoapplicationadded!!, R.style.Esp_Lib_Style_TextHeading6Gray);
@@ -877,7 +880,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
             }
         }
-        if (!searchText.isNullOrEmpty()) {
+        if (!searchText.isNullOrEmpty() && rlcardstack?.visibility == View.GONE) {
             view?.txtnoapplicationadded?.text = getString(R.string.esp_lib_text_norecord)
             view?.detail_text?.visibility = View.GONE
             view?.no_record_view?.setPadding(0, 300, 0, 0)
