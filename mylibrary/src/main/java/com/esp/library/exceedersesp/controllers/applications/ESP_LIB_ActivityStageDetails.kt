@@ -718,8 +718,12 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
                                                             val lookupId = split[0]
                                                             if (!lookupId.isEmpty() && ESP_LIB_Shared.getInstance().isNumeric(lookupId)) dynamicFormSectionFieldDAO.id = lookupId.toInt()
                                                             if (split.size >= 1) {
-                                                                val lookupText = split[1]
-                                                                dynamicFormSectionFieldDAO.lookupValue = lookupText
+                                                                try {
+                                                                    val lookupText = split[1]
+                                                                    dynamicFormSectionFieldDAO.lookupValue = lookupText
+                                                                } catch (e: java.lang.Exception) {
+                                                                    e.printStackTrace()
+                                                                }
                                                             }
                                                         }
 

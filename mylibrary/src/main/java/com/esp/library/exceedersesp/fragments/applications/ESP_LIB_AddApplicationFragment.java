@@ -1146,8 +1146,10 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
                                                                         ESPLIBDynamicFormSectionFieldDAO.setId(Integer.parseInt(lookupId));
 
                                                                     if (split.length >= 1) {
-                                                                        String lookupText = split[1];
-                                                                        ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
+                                                                        try {
+                                                                            String lookupText = split[1];
+                                                                            ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
+                                                                        }catch (Exception e){e.printStackTrace();}
                                                                     }
                                                                 }
 

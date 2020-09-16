@@ -1132,8 +1132,10 @@ public class ESP_LIB_EditSectionDetails extends ESP_LIB_BaseActivity implements 
                                                             ESPLIBDynamicFormSectionFieldDAO.setId(Integer.parseInt(lookupId));
 
                                                         if (split.length >= 1) {
-                                                            String lookupText = split[1];
-                                                            ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
+                                                            try {
+                                                                String lookupText = split[1];
+                                                                ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
+                                                            }catch (Exception e){e.printStackTrace();}
                                                         }
                                                     }
 
