@@ -30,7 +30,7 @@
             android:id="@+id/attachicon"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_15sdp"
-            android:tint="@color/colorPrimaryDark"
+            android:tint="?attr/colorPrimaryDark"
             android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/_2sdp"
             android:src="@drawable/esp_lib_drawable_ic_icons_inputs_attach_black"/>

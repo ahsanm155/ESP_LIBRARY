@@ -4,11 +4,12 @@ package com.esp.library.exceedersesp.controllers.applications.filters
 import android.os.Bundle
 import android.view.View
 import com.esp.library.R
-import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AddApplicationCategoryAndDefinationsFragment
-import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.SingleController.CompRoot
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ActivitySubmissionRequests
+import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AddApplicationCategoryAndDefinationsFragment
+import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.esp_lib_gradientcurvetoolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import utilities.adapters.setup.applications.ESP_LIB_ListApplicationCategoryAdapter
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListApplicationCategoryAdapter
 import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.interfaces.ESP_LIB_CheckFilterSelection
 
@@ -29,6 +30,7 @@ class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelect
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_filter)
@@ -69,7 +71,7 @@ class ESP_LIB_FilterActivity : ESP_LIB_BaseActivity(), ESP_LIB_CheckFilterSelect
     private fun initailize() {
         context = this@ESP_LIB_FilterActivity
         setSupportActionBar(gradientcurvetoolbar)
-        supportActionBar?.setTitle("")
+        supportActionBar?.title = ""
         headingtext.text = getString(R.string.esp_lib_text_filter)
         ibToolbarBack.setOnClickListener { finish() }
 

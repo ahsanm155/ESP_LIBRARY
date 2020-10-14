@@ -70,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginEnd="@dimen/_10sdp"
+            android:textCursorDrawable="@null"
             android:textAlignment="viewStart"
             android:layout_toStartOf="@+id/ivfilter"
             android:drawableStart="@drawable/esp_lib_drawable_search_icon"

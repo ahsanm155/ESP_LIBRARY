@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,15 +35,15 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import utilities.adapters.setup.ESP_LIB_FilterItemsAdapter;
+import com.esp.library.utilities.setup.ESP_LIB_FilterItemsAdapter;
 import utilities.adapters.setup.applications.ESP_LIB_ListApplicationCategoryAndDefinationAdapter;
+import utilities.common.ESP_LIB_CommonMethodsKotlin;
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_CategoriesDAO;
@@ -78,7 +77,6 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
     List<ESP_LIB_DefinationsDAO> cat_list = new ArrayList<>();
     List<ESP_LIB_DefinationsDAO> cat_list_filtered = new ArrayList<>();
     RecyclerView.LayoutManager mDefLayoutManager;
-    List<ESP_LIB_CategoriesDAO> actualResponse;
     public static ArrayList categoryAndDefinationsDAOFilteredList = new ArrayList<ESP_LIB_DefinationsDAO>();
 
     public ESP_LIB_AddApplicationCategoryAndDefinationsFragment() {
@@ -110,7 +108,6 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
         ivfilter.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), ESP_LIB_FilterActivity.class);
             i.putExtra("categoryAndDefinationsDAOFilteredList", categoryAndDefinationsDAOFilteredList);
-            i.putExtra("actualResponse", (Serializable) actualResponse);
             startActivity(i);
         });
 
@@ -201,7 +198,8 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
         defination_list.setLayoutManager(mDefLayoutManager);
         defination_list.setItemAnimator(new DefaultItemAnimator());
         defination_list.setNestedScrollingEnabled(true);
-        int themeColor = ContextCompat.getColor(requireContext(),R.color.colorPrimaryDark);
+
+        int themeColor = ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor(bContext);
         swipeRefreshLayout.setColorSchemeColors(themeColor, themeColor, themeColor);
 
     }
@@ -223,20 +221,20 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        filter_adapter = new ESP_LIB_FilterItemsAdapter(categoryAndDefinationsDAOFilteredList, requireContext());
-        filter_adapter.setActivitContext(this);
-        filter_horizontal_list.setAdapter(filter_adapter);
-        populateFilters();
-        etxtsearch.setText("");
-        if (ESP_LIB_ESPApplication.getInstance().isGoToMainScreen()) {
-            ESP_LIB_ESPApplication.getInstance().setGoToMainScreen(false);
-            bContext.finish();
-        }
+        @Override
+        public void onResume() {
+            super.onResume();
+            filter_adapter = new ESP_LIB_FilterItemsAdapter(categoryAndDefinationsDAOFilteredList, requireContext());
+            filter_adapter.setActivitContext(this);
+            filter_horizontal_list.setAdapter(filter_adapter);
+            populateFilters();
+            etxtsearch.setText("");
+            if (ESP_LIB_ESPApplication.getInstance().isGoToMainScreen()) {
+                ESP_LIB_ESPApplication.getInstance().setGoToMainScreen(false);
+                bContext.finish();
+            }
 
-    }
+        }
 
     private void populateFilters() {
         cat_list_filtered.clear();
@@ -256,7 +254,7 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
             categoriesIds.add(df.getId());
 
             for (int h = 0; h < cat_list.size(); h++) {
-                if (cat_list.get(h).getTypeId() == df.getId()) {
+                if (cat_list.get(h).getCategoryId() == df.getId()) {
                     cat_list_filtered.add(cat_list.get(h));
                 }
             }
@@ -295,7 +293,6 @@ public class ESP_LIB_AddApplicationCategoryAndDefinationsFragment extends Fragme
                 stop_loading_animation();
 
                 if (response.body() != null && response.body().size() > 0) {
-                    actualResponse = response.body();
                     cat_list.clear();
                     List<ESP_LIB_CategoriesDAO> body = response.body();
                     for (int i = 0; i < body.size(); i++) {

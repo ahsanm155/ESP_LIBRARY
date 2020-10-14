@@ -7,13 +7,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.SingleController.CompRoot
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.customevents.EventOptions.EventRefreshData
 import com.esp.library.utilities.data.applicants.ESP_LIB_CancelApplicationDAO
 import kotlinx.android.synthetic.main.esp_lib_activity_close_request.*
-import kotlinx.android.synthetic.main.esp_lib_activity_select_style_fragment.view.*
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
@@ -33,6 +33,7 @@ class ESP_LIB_CloseRequest : ESP_LIB_BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         setContentView(R.layout.esp_lib_activity_close_request)
         initialize()
@@ -151,7 +152,7 @@ class ESP_LIB_CloseRequest : ESP_LIB_BaseActivity() {
         try {
 
             val apis = CompRoot().getService(context);
-            val call = apis?.getCancelUser(intent.getIntExtra("applicationId", 0))
+            val call = apis?.getUsersList(intent.getIntExtra("applicationId", 0))
             call?.enqueue(object : Callback<List<ESP_LIB_UsersListDAO>> {
                 override fun onResponse(call: Call<List<ESP_LIB_UsersListDAO>>, response: Response<List<ESP_LIB_UsersListDAO>>) {
 

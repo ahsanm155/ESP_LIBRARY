@@ -57,7 +57,7 @@
                             android:layout_marginStart="@dimen/_14sdp"
                             android:layout_marginEnd="@dimen/_14sdp"
                             android:src="@drawable/ic_tab_applicantions_sel"
-                            android:tint="@color/colorPrimaryDark" />
+                            android:tint="?attr/colorPrimaryDark" />
 
 
 
@@ -77,7 +77,7 @@
                             android:gravity="center_vertical"
                             android:hint=""
                             android:singleLine="true"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="?attr/colorPrimary"
                             android:textSize="@dimen/text_14"
                             custom:customfont="regular"
 
@@ -104,7 +104,7 @@
                             android:layout_marginStart="@dimen/_12sdp"
                             android:layout_marginEnd="@dimen/_11sdp"
                             android:src="@drawable/ic_tab_profile_sel"
-                            android:tint="@color/colorPrimary" />
+                            android:tint="?attr/colorPrimary" />
 
 
 
@@ -155,7 +155,7 @@
                         android:layout_marginStart="@dimen/_15sdp"
                         android:layout_marginEnd="@dimen/_11sdp"
                         android:src="@drawable/esp_lib_drawable_ic_settings"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="?attr/colorPrimary" />
 
 
 
@@ -207,7 +207,7 @@
                         android:layout_marginStart="@dimen/_12sdp"
                         android:layout_marginEnd="@dimen/_11sdp"
                         android:src="@drawable/ic_tab_profile_sel"
-                        android:tint="@color/colorPrimary" />
+                        android:tint="?attr/colorPrimary" />
 
 
 

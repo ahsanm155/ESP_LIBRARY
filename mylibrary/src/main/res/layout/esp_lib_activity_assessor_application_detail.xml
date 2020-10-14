@@ -53,7 +53,7 @@
             app:tabMode="fixed"
             android:background="@color/esp_lib_color_white"
             app:tabTextColor="@color/esp_lib_color_light_grey"
-            app:tabSelectedTextColor="@color/colorPrimaryDark"
+            app:tabSelectedTextColor="?attr/colorPrimaryDark"
             app:tabGravity="fill"/>
     </com.google.android.material.appbar.AppBarLayout>
 

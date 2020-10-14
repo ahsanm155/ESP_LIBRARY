@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 
 class ESP_LIB_Settings : ESP_LIB_BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().getApplicationTheme())
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_settings)

@@ -81,7 +81,7 @@
                android:layout_width="wrap_content"
                android:layout_height="@dimen/margin_40dp"
                android:background="@drawable/esp_lib_drawable_draw_alert_button"
-               android:textColor="@color/colorPrimaryDark"
+               android:textColor="?attr/colorPrimaryDark"
                android:textSize="@dimen/text_14"
                android:text=""
                style="?android:attr/borderlessButtonStyle"

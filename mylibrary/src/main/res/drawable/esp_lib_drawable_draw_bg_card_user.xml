@@ -3,7 +3,7 @@
 
     <item><shape>
         <gradient android:angle="270" android:endColor="@color/esp_lib_color_white" android:startColor="@color/esp_lib_color_white" />
-        <stroke android:width="1dp" android:color="@color/colorPrimaryDark" />
+        <stroke android:width="1dp" android:color="?attr/colorPrimaryDark" />
         <corners android:radius="5dp" />
         <padding android:bottom="4dp" android:left="15dp" android:right="15dp" android:top="4dp" />
     </shape></item>

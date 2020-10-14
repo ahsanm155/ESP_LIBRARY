@@ -11,6 +11,7 @@ class ESP_LIB_DefinationsDAO : ESP_LIB_Base(), Serializable {
     var name: String? = null
     var isActive: Boolean = false
     var typeId: Int = 0
+    var categoryId: Int = 0
     var parentApplicationId: Int = 0
     var description: String? = null
     var category: String? = null

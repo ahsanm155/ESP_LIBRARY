@@ -37,6 +37,7 @@ class ESP_LIB_SectionDetailScreen : ESP_LIB_BaseActivity() {
     var mApplicationLayoutManager: androidx.recyclerview.widget.RecyclerView.LayoutManager?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_section_detail_screen)

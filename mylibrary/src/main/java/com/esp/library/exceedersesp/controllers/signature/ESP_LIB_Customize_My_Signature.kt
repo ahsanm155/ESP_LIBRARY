@@ -2,7 +2,6 @@ package com.esp.library.exceedersesp.controllers.signature
 
 import android.content.Context
 import android.graphics.Rect
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -13,8 +12,6 @@ import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.utilities.data.applicants.signature.ESP_LIB_SignatureDAO
-import kotlinx.android.synthetic.main.esp_lib_activity_select_style_fragment.*
-import kotlinx.android.synthetic.main.esp_lib_criteriasignature.*
 import kotlinx.android.synthetic.main.esp_lib_gradientcurvetoolbar.*
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.ibToolbarBack
 
@@ -23,6 +20,7 @@ class ESP_LIB_Customize_My_Signature : ESP_LIB_BaseActivity() {
     var fragmentManager: FragmentManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_customize_my_signature)

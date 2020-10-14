@@ -5,24 +5,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/tools">
 
+
+
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_above="@+id/rlcancelrequestbt"
     android:orientation="vertical">
     <include
         android:id="@+id/curvetoolbar"
         layout="@layout/esp_lib_gradienttoolbar" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedscrollview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +58,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tilFieldLabel"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        style="@style/Esp_Lib_Style_RequestTextInputLayoutStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -73,8 +71,9 @@
                             android:layout_height="wrap_content"
                             android:textAlignment="viewStart"
                             android:hint="@string/esp_lib_text_reason_cancelling"
-                            android:inputType="textMultiLine|textCapWords"
+                            android:inputType="textMultiLine|textCapSentences"
                             android:maxLines="5"
+                            android:textCursorDrawable="@null"
                             android:minLines="3"
                             android:gravity="start"
                             android:maxLength="1000"
@@ -110,7 +109,6 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </LinearLayout>

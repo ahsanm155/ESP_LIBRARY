@@ -39,6 +39,7 @@
         android:layout_height="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_5sdp"
+         android:textCursorDrawable="@null"
         android:layout_marginEnd="@dimen/_5sdp"
         android:drawableLeft="@drawable/esp_lib_drawable_search_icon"
         android:drawableStart="@drawable/esp_lib_drawable_search_icon"

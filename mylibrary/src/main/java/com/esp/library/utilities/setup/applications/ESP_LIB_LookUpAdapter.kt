@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.addapplication.ESP_LIB_LookUpDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO
 
@@ -69,7 +70,7 @@ class ESP_LIB_LookUpAdapter(val allFields: List<ESP_LIB_LookUpDAO>, con: ESP_LIB
                 if (fieldDAOESPLIB!!.id == allFields[position].id) {
                   //  holder.cross_icon.visibility = View.VISIBLE
                     holder.cross_icon.setImageResource(R.drawable.esp_lib_drawable_ic_icons_controls_radio_checked)
-                    holder.lookup_name.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    holder.lookup_name.setTextColor(ESP_LIB_CommonMethodsKotlin.getthemeColor(context))
                 } else {
                   //  holder.cross_icon.visibility = View.GONE
                     holder.cross_icon.setImageResource(R.drawable.esp_lib_drawable_ic_icons_controls_radio_unchecked)

@@ -12,9 +12,10 @@ import com.esp.library.utilities.customevents.EventOptions
 import com.esp.library.utilities.customevents.EventOptions.EventRefreshData
 import kotlinx.android.synthetic.main.esp_lib_activity_fullscreen_popup.*
 import org.greenrobot.eventbus.EventBus
+import utilities.common.ESP_LIB_CommonMethodsKotlin
 
 
-class FullScreenDialogExample() : DialogFragment() {
+class ESP_LIB_FullScreenDialog() : DialogFragment() {
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -37,6 +38,10 @@ class FullScreenDialogExample() : DialogFragment() {
         btok.setOnClickListener {
             dismiss()
         }
+
+        rllayout.setBackgroundColor(ESP_LIB_CommonMethodsKotlin.getthemeColor(requireContext()))
+        btok.setTextColor(ESP_LIB_CommonMethodsKotlin.getthemeColor(requireContext()))
+
         EventBus.getDefault().post(EventOptions.RefreshDataOnBack())
 
         val handler = Handler()

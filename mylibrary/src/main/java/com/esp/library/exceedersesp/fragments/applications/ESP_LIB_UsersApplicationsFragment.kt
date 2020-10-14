@@ -15,13 +15,13 @@ import android.view.animation.LinearInterpolator
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.TextViewCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.SingleController.CompRoot
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_AddApplicationsActivity
+import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationActivityTabs
 import com.esp.library.exceedersesp.controllers.applications.filters.ESP_LIB_FilterScreenActivity
 import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_FeedbackForm
 import com.esp.library.exceedersesp.controllers.tindercard.*
@@ -33,6 +33,7 @@ import com.esp.library.utilities.customcontrols.ESP_LIB_BodyText
 import com.esp.library.utilities.customevents.EventOptions
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.esp_lib_activity_no_record.view.*
 import kotlinx.android.synthetic.main.esp_lib_activity_search_layout.view.*
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.*
@@ -44,6 +45,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import utilities.adapters.setup.applications.ESP_LIB_ListCardsApplicationsAdapter
 import utilities.common.ESP_LIB_CommonMethodsKotlin
+import utilities.common.ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_FirebaseTokenDAO
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO
@@ -137,7 +139,9 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
 
         v.txtseeall.setOnClickListener {
-
+            ESP_LIB_FilterScreenActivity.isOpenFilterApplied = false
+            ESP_LIB_FilterScreenActivity.isCloseFilterApplied = false
+            ESP_LIB_ESPApplication.getInstance()?.filter = null
             val intent = Intent(activity, ESP_LIB_UsersCardApplications::class.java);
             intent.putExtra("searchText", searchText)
             startActivity(intent)
@@ -211,6 +215,21 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         })
 
 
+        ESP_LIB_ApplicationActivityTabs.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                var checkFilter = ESP_LIB_FilterScreenActivity.isOpenFilterApplied
+                if (tab.isSelected && tab.position == 1) {
+                    checkFilter = ESP_LIB_FilterScreenActivity.isCloseFilterApplied
+                }
+                if (checkFilter) view?.ivfilter?.setImageResource(R.drawable.esp_lib_drawable_ic_filter_green)
+                else view?.ivfilter?.setImageResource(R.drawable.esp_lib_drawable_ic_filter_gray)
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
         return v
     }
 
@@ -242,7 +261,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
         rlcardstack = v.findViewById(R.id.rlcardstack)
         cardManager = CardStackLayoutManager(activity, this)
 
-        val themeColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
+        val themeColor = getthemeColor(requireContext());
         v.swipeRefreshLayout?.setColorSchemeColors(themeColor, themeColor, themeColor)
 
 
@@ -437,20 +456,19 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
             daoESPLIB.isMySpace = false
             daoESPLIB.myApplications = true
-
+            daoESPLIB.sortBy = ESP_LIB_ESPApplication.getInstance()?.filter?.sortBy!!
             if (title.equals(getString(R.string.esp_lib_text_open), ignoreCase = true)) {
                 list.add("1")
                 list.add("2")
 
                 daoESPLIB.type = 1
-
                 daoESPLIB.statuses = list
                 if (!isLoadMore)
                     loadCardApplications(false, search_text)
             } else {
 
                 daoESPLIB.type = 2
-                daoESPLIB.sortBy = 1
+                //daoESPLIB.sortBy = ESP_LIB_ESPApplication.getInstance()?.filter?.sortBy!!
                 if (ESP_LIB_ESPApplication.getInstance()?.filter?.statuses != null && ESP_LIB_ESPApplication.getInstance()?.filter?.statuses!!.size < 5) {
                     if (!daoESPLIB.statuses.isNullOrEmpty())
                         daoESPLIB.statuses = ArrayList<String>()
@@ -506,7 +524,6 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                         }
 
                         loadDefinitionCall = null
-
                         if (ESPLIBResponse?.body() != null && ESPLIBResponse.body().totalRecords > 0) {
                             if (ESPLIBResponse.body().applications != null && ESPLIBResponse.body().applications!!.size > 0) {
 
@@ -670,6 +687,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
                         } else
                             app_actual_card_list?.clear()
 
+
                         if (ESPLIBResponse?.body() != null && ESPLIBResponse.body().totalRecords > 0) {
                             if (ESPLIBResponse.body().applications != null && ESPLIBResponse.body().applications!!.size > 0) {
 
@@ -827,22 +845,19 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
         /* if(rlcardstack?.visibility==View.VISIBLE)
              return*/
-
-
-
-
-        view?.no_application_available_div?.visibility = View.VISIBLE
-        view?.no_record_view?.visibility = View.VISIBLE
-        if (arguments?.getString("title").equals(getString(R.string.esp_lib_text_closed), ignoreCase = true)) {
-            view?.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_no_applications)
-            view?.ivnorecordinside?.visibility = View.VISIBLE
-            view?.no_record_view?.setPadding(0, 300, 0, 0)
-        } else {
+        try {
+            view?.no_application_available_div?.visibility = View.VISIBLE
+            view?.no_record_view?.visibility = View.VISIBLE
+            /* if (arguments?.getString("title").equals(getString(R.string.esp_lib_text_closed), ignoreCase = true)) {
+                 view?.txtnoapplicationadded?.text = context?.getString(R.string.esp_lib_text_no_applications)
+                 view?.ivnorecordinside?.visibility = View.VISIBLE
+                 view?.no_record_view?.setPadding(0, 300, 0, 0)
+             } else {*/
             val textView = view?.detail_text
 
-            if (rlcardstack?.visibility == View.GONE && app_actual_list?.size == 0) {
+            if (rlcardstack?.visibility == View.GONE && (app_actual_list == null || app_actual_list?.size == 0)) {
                 view?.rlsearchbar?.visibility = View.GONE
-                view?.no_record_view?.setPadding(0, 300, 0, 0)
+
                 //view?.llcontentlayout?.visibility = View.GONE
                 view?.ivnorecordoutside?.visibility = View.GONE
                 view?.ivnorecordinside?.visibility = View.VISIBLE
@@ -879,16 +894,17 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
             } catch (e: java.lang.Exception) {
 
             }
-        }
-        if (!searchText.isNullOrEmpty() && rlcardstack?.visibility == View.GONE) {
-            view?.txtnoapplicationadded?.text = getString(R.string.esp_lib_text_norecord)
-            view?.detail_text?.visibility = View.GONE
-            view?.no_record_view?.setPadding(0, 300, 0, 0)
-            view?.rlsearchbar?.visibility = View.VISIBLE
-            view?.add_btn?.visibility = View.GONE
-        }
+            //  }
+            if (!searchText.isNullOrEmpty() && rlcardstack?.visibility == View.GONE) {
+                view?.txtnoapplicationadded?.text = getString(R.string.esp_lib_text_norecord)
+                view?.detail_text?.visibility = View.GONE
+                view?.no_record_view?.setPadding(0, 300, 0, 0)
+                view?.rlsearchbar?.visibility = View.VISIBLE
+                view?.add_btn?.visibility = View.GONE
+            }
 
-
+        } catch (e: java.lang.Exception) {
+        }
     }
 
     private fun loadDefinitionsList(textView: ESP_LIB_BodyText?) {
@@ -1120,7 +1136,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
 
     fun popUpDialog(v: View?, applicationDAOESPLIB: ESP_LIB_ApplicationsDAO) {
         val title = activity?.applicationContext?.getString(R.string.esp_lib_text_delete) + " " + pref?.getlabels()?.application
-        val description = getString(R.string.esp_lib_text_areyousure) + " \"" + applicationDAOESPLIB.definitionName + " " + pref?.getlabels()?.application + "\" ?"
+        val description = getString(R.string.esp_lib_text_areyousure) + " \"" + applicationDAOESPLIB.definitionName + "\" " + pref?.getlabels()?.application + "?"
         val dailog = ESP_LIB_Shared.getInstance().popUpDialog(v, context, title, description)
         val btcancel = dailog.findViewById<Button>(R.id.btcancel)
         btcancel.text = getString(R.string.esp_lib_text_yesdelete)
@@ -1165,6 +1181,15 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
     fun dataRefreshEvent(eventRefreshData: EventOptions.EventRefreshData) {
         isEventRefreshData = true
         reLoadApplications()
+
+        val tabLayout: TabLayout? = ESP_LIB_ApplicationActivityTabs.tabLayout
+        val tab_position = tabLayout?.selectedTabPosition
+
+        var checkFilter = ESP_LIB_FilterScreenActivity.isOpenFilterApplied
+        if (tab_position == 1) checkFilter = ESP_LIB_FilterScreenActivity.isCloseFilterApplied
+
+        if (checkFilter) view?.ivfilter?.setImageResource(R.drawable.esp_lib_drawable_ic_filter_green)
+        else view?.ivfilter?.setImageResource(R.drawable.esp_lib_drawable_ic_filter_gray)
 
     }
 

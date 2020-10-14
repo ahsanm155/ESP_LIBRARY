@@ -1,4 +1,4 @@
-package utilities.adapters.setup.applications
+package com.esp.library.utilities.setup.applications
 
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +19,7 @@ import utilities.interfaces.ESP_LIB_UserListClickListener
 
 class ESP_LIB_ListUsersAdapter(private val userslist: List<ESP_LIB_UsersListDAO>?, con: ESP_LIB_BaseActivity,
                                internal var searched_text: String, private val rvUsersList: RecyclerView)
-    : androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_ListUsersAdapter.ParentViewHolder>(), Filterable {
+    : RecyclerView.Adapter<ESP_LIB_ListUsersAdapter.ParentViewHolder>(), Filterable {
 
 
     private var context: ESP_LIB_BaseActivity
@@ -119,11 +119,7 @@ class ESP_LIB_ListUsersAdapter(private val userslist: List<ESP_LIB_UsersListDAO>
         holder.ivuser.setImageInfo(imageInfo)
 
 
-        if (previousPosition == position) {
-            holder.userselection.isChecked = true;
-        } else {
-            holder.userselection.isChecked = false;
-        }
+        holder.userselection.isChecked = previousPosition == position
 
         holder.rlitem.setOnClickListener {
 

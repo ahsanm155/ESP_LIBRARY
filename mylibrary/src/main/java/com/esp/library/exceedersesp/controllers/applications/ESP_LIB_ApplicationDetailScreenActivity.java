@@ -10,13 +10,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -260,6 +257,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().getApplicationTheme());
         changeStatusBarColor(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.esp_lib_activity_application_detail);
@@ -421,7 +419,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     public void popUpDialog(View v) {
 
 
-        AlertDialog dailog=ESP_LIB_Shared.getInstance().popUpDialog(v,bContext,getString(R.string.esp_lib_text_stopsubmissiontext),
+        AlertDialog dailog = ESP_LIB_Shared.getInstance().popUpDialog(v, bContext, getString(R.string.esp_lib_text_stopsubmissiontext),
                 getString(R.string.esp_lib_text_stopsubmissiondescription));
         Button btcancel = dailog.findViewById(R.id.btcancel);
         Button btaction = dailog.findViewById(R.id.btaction);
@@ -549,7 +547,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
         setupToolbar(toolbar);
 
-        int themeColor = ContextCompat.getColor(bContext, R.color.colorPrimaryDark);
+           int themeColor = ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor(bContext);
         swipeRefreshLayout.setColorSchemeColors(themeColor, themeColor, themeColor);
 
 
@@ -1253,9 +1251,8 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                             {
                                 if (sectionDAO.getFields() != null) {
                                     finalFields.clear();
-                                    for(int ip=0;ip<sectionDAO.getFields().size();ip++)
-                                    {
-                                        if(sectionDAO.getFields().get(ip).isVisible())
+                                    for (int ip = 0; ip < sectionDAO.getFields().size(); ip++) {
+                                        if (sectionDAO.getFields().get(ip).isVisible())
                                             finalFields.add(sectionDAO.getFields().get(ip));
                                     }
                                     sectionDAO.setFields(finalFields);
@@ -1443,7 +1440,6 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                                 ESP_LIB_CustomLogs.displayLogs(TAG + " value.getValue(): " + value.getValue());
 
                                 valuesList.add(value);
-
                             }
                         }
                         // Adding Instances
@@ -1988,6 +1984,8 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     @Override
     public void validateCriteriaFields(ESP_LIB_DynamicStagesCriteriaListDAO dynamicStagesCriteriaList) {
 
+
+
         List<ESP_LIB_DynamicFormSectionFieldDAO> adapter_list = null;
         if (ESPLIBApplicationStagesAdapter != null) {
             adapter_list = ESPLIBApplicationStagesAdapter.getAllCriteriaFields();
@@ -2033,7 +2031,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                     if (criteriaId == id) {
                         ESPLIBApplicationStagesAdapter.getStagesListESPLIB().get(p).getCriteriaList().get(q).setValidate(isAllFieldsValidateTrue);
                         try {
-                            ESPLIBApplicationStagesAdapter.notifyChangeIfAny(criteriaId,ESPLIBApplicationStagesAdapter.getStagesListESPLIB().get(p).getCriteriaList().get(q));
+                            ESPLIBApplicationStagesAdapter.notifyChangeIfAny(criteriaId, ESPLIBApplicationStagesAdapter.getStagesListESPLIB().get(p).getCriteriaList().get(q));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -2125,7 +2123,7 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
     public void draftDialog(View v) {
 
         String description = getString(R.string.esp_lib_text_your) + " " + pref.getlabels().getApplication() + " " + getString(R.string.esp_lib_text_wasnotsubmitted);
-        AlertDialog dailog=ESP_LIB_Shared.getInstance().popUpDialog(v,bContext,getString(R.string.esp_lib_text_save_draft),description);
+        AlertDialog dailog = ESP_LIB_Shared.getInstance().popUpDialog(v, bContext, getString(R.string.esp_lib_text_save_draft), description);
         Button btcancel = dailog.findViewById(R.id.btcancel);
         btcancel.setText(getString(R.string.esp_lib_text_discard) + " " + pref.getlabels().getApplication());
         TextViewCompat.setTextAppearance(btcancel, R.style.Esp_Lib_Style_TextHeading5Green);
@@ -2247,7 +2245,9 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
                                                                             try {
                                                                                 String lookupText = split[1];
                                                                                 ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
-                                                                            }catch (Exception e){e.printStackTrace();}
+                                                                            } catch (Exception e) {
+                                                                                e.printStackTrace();
+                                                                            }
                                                                         }
                                                                     }
 

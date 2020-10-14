@@ -34,7 +34,15 @@ public class ESP_LIB_ESPApplication extends MultiDexApplication {
     boolean isSetFont = false; // used for library
     String applicationTextFont = null; // used for library
     String access_token = null;
+    int applicationTheme=R.style.ESP_LIB_Styles_AppTheme;
 
+    public int getApplicationTheme() {
+        return applicationTheme;
+    }
+
+    public void setApplicationTheme(int applicationTheme) {
+        this.applicationTheme = applicationTheme;
+    }
 
     public boolean isSpecificApplication() {
         return isSpecificApplication;

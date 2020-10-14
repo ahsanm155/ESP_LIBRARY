@@ -23,7 +23,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_40sdp"
         android:text="@string/esp_lib_text_completeprofile"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?attr/colorPrimaryDark"
         android:textSize="@dimen/_18ssp"
         custom:customfont="regular" />
 

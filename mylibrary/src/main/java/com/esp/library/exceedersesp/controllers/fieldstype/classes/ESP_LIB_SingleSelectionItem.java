@@ -172,7 +172,7 @@ public class ESP_LIB_SingleSelectionItem {
                                 ESP_LIB_CalculatedMappedRequestTrigger.submitCalculatedMappedRequest(mContext, isViewOnly, fieldDAO);
 
 
-                            validateForm(fieldDAO);
+                            validateForm(fieldDAO,ESPLIBDynamicStagesCriteriaListDAO);
                         }
                     });
                 }
@@ -203,7 +203,7 @@ public class ESP_LIB_SingleSelectionItem {
 
                     setRadioButtonValues(lookupLabelsList, lookupValue, holder, true, mContext);
                     fieldDAO.setValidate(true);
-                    validateForm(fieldDAO);
+                    validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
                 }
             } else {
                 if (!isViewOnly) {
@@ -213,7 +213,7 @@ public class ESP_LIB_SingleSelectionItem {
                     else
                         fieldDAO.setValidate(true);
 
-                    validateForm(fieldDAO);
+                    validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
                 } else
                     setRadioButtonValues(lookupLabelsList, lookupValue, holder, false, mContext);
             }
@@ -221,7 +221,7 @@ public class ESP_LIB_SingleSelectionItem {
 
         }
 
-        validateForm(fieldDAO);
+        validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
 
     }
 
@@ -254,9 +254,9 @@ public class ESP_LIB_SingleSelectionItem {
     }
 
 
-    private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO) {
+    private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO, ESP_LIB_DynamicStagesCriteriaListDAO dynamicStagesCriteriaListDAO) {
         ESP_LIB_Validation validation = new ESP_LIB_Validation(mApplicationFieldsAdapterListener, ESPLIBCriteriaFieldsListener,
-                criteriaListDAO, fieldDAO);
+                dynamicStagesCriteriaListDAO, fieldDAO);
         validation.setSectionListener(edisectionDetailslistener);
         validation.validateForm();
     }

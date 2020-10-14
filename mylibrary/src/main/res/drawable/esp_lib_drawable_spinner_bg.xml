@@ -11,7 +11,7 @@
                     android:toDegrees="45">
                     <shape android:shape="rectangle">
 
-                        <stroke android:color="@color/colorPrimaryDark"
+                        <stroke android:color="?attr/colorPrimaryDark"
                             android:width="2dp"/>
                     </shape>
                 </rotate>

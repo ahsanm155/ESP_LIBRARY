@@ -154,7 +154,8 @@ class ESP_LIB_FragmentProfileImage : androidx.fragment.app.Fragment(), ESP_LIB_I
 
             //    bn.putString("url", "https://app.idenedi.com/app_permission/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri=https://isp.exceedgulf.com/login")
          //   bn.putString("url", "https://app.idenedi.com/app_permission/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri=" + ESP_LIB_Constants.base_url.replace("webapi/", "") + "login")
-            bn.putString("url", "https://idenedi-prod-stag.azurewebsites.net/app_permission/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri=https://qaesp.azurewebsites.net/login")
+          //  bn.putString("url", "https://idenedi-prod-stag.azurewebsites.net/app_permission/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri=https://qaesp.azurewebsites.net/login")
+            bn.putString("url", pref?.getidenediLoginUri()+"/authorization/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri=https://qaesp.azurewebsites.net/login")
             bn.putBoolean("isIdenedi", true)
             ESP_LIB_Shared.getInstance().callIntent(ESP_LIB_WebViewScreenActivity::class.java, context as Activity?, bn)
         }

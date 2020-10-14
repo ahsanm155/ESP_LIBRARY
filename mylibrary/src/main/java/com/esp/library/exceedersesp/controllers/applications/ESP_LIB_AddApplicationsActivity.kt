@@ -9,9 +9,10 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.esp.library.R
+import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AddApplicationCategoryAndDefinationsFragment
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
-import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import utilities.adapters.setup.applications.ESP_LIB_ListApplicationCategoryAndDefinationAdapter
 import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
@@ -34,6 +35,7 @@ class ESP_LIB_AddApplicationsActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListAppl
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_add_applications)

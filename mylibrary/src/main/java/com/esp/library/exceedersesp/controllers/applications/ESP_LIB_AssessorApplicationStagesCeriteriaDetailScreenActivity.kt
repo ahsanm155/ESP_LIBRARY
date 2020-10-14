@@ -5,8 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -15,19 +13,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import com.esp.library.R
-import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
-import com.esp.library.utilities.common.*
-
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AssesscorStagesCriteriaDetailFragment
+import com.esp.library.utilities.common.*
 import com.google.gson.GsonBuilder
-
-import java.util.concurrent.TimeUnit
-
 import kotlinx.android.synthetic.main.esp_lib_activity_assessor_application_stages__criteria_detail.*
-import kotlinx.android.synthetic.main.esp_lib_activity_assessor_application_stages__criteria_detail.definitionName
-import kotlinx.android.synthetic.main.esp_lib_activity_assessor_application_stages__criteria_detail.toolbar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -42,6 +36,7 @@ import utilities.data.applicants.addapplication.ESP_LIB_PostApplicationsStatusDA
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicResponseDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesCriteriaListDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicStagesDAO
+import java.util.concurrent.TimeUnit
 
 class ESP_LIB_AssessorApplicationStagesCeriteriaDetailScreenActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListStagesCriteriaDetailAdapter.CriteriaStatusChange {
     internal var context: ESP_LIB_BaseActivity? = null
@@ -80,6 +75,7 @@ class ESP_LIB_AssessorApplicationStagesCeriteriaDetailScreenActivity : ESP_LIB_B
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_assessor_application_stages__criteria_detail)
         initailize()

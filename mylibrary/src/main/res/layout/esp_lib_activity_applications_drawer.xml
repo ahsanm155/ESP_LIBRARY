@@ -88,7 +88,7 @@
             android:src="@drawable/ic_plus"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             app:tint="@color/esp_lib_color_white"
-            app:backgroundTint="@color/colorPrimaryDark"
+            app:backgroundTint="?attr/colorPrimaryDark"
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:fabSize="normal"

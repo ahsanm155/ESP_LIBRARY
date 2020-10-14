@@ -190,6 +190,7 @@
                         android:layout_marginEnd="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_12sdp"
                         android:background="@drawable/esp_lib_drawable_draw_bg_white">
+
                 <RelativeLayout
                     android:id="@+id/rlsubmissionrow"
                     android:layout_width="match_parent"
@@ -249,8 +250,8 @@
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_8sdp"
                         android:background="@drawable/esp_lib_drawable_shadow">
-                    <LinearLayout
 
+                        <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/esp_lib_drawable_draw_bg_white"

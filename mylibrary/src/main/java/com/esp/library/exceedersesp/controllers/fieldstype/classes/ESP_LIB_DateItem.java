@@ -173,7 +173,7 @@ public class ESP_LIB_DateItem {
                 holder.etValue.setText(displayDate);
                 fieldDAO.setValidate(true);
                 holder.ivclear.setVisibility(View.VISIBLE);
-                validateForm(fieldDAO);
+                validateForm(fieldDAO,ESPLIBDynamicStagesCriteriaListDAO);
             }
 
             /*if (fieldDAO.isReadOnly()) {
@@ -193,7 +193,7 @@ public class ESP_LIB_DateItem {
                 else
                     fieldDAO.setValidate(true);
 
-                validateForm(fieldDAO);
+                validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
             }
         }
 
@@ -226,7 +226,7 @@ public class ESP_LIB_DateItem {
                         fieldDAO.setValue("");
                         fieldDAO.setValidate(false);
                         holder.ivclear.setVisibility(View.GONE);
-                        validateForm(fieldDAO);
+                        validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
                     }
                 });
 
@@ -259,7 +259,7 @@ public class ESP_LIB_DateItem {
                                 if (fieldDAO.isTigger())
                                     ESP_LIB_CalculatedMappedRequestTrigger.submitCalculatedMappedRequest(mContext, isViewOnly, fieldDAO);
 
-                                validateForm(fieldDAO);
+                                validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
 
                             }
                         }, year, month, day);
@@ -294,7 +294,7 @@ public class ESP_LIB_DateItem {
                 holder.etValue.setEnabled(false);
                 holder.ivclear.setVisibility(View.GONE);
                 fieldDAO.setValidate(true);
-                validateForm(fieldDAO);
+                validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
 
                 holder.etValue.setTextColor(ContextCompat.getColor(mContext, R.color.esp_lib_color_coolgrey));
                 if (pref.getLanguage().equalsIgnoreCase("en"))
@@ -311,15 +311,15 @@ public class ESP_LIB_DateItem {
             if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
                 try {
                     holder.etValue.setText("");
-                    validateForm(fieldDAO);
+                    validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
                 }catch (Exception e){}
             }
         }, 2000);
     }
 
-    private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO) {
+    private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO, ESP_LIB_DynamicStagesCriteriaListDAO dynamicStagesCriteriaListDAO) {
         ESP_LIB_Validation validation = new ESP_LIB_Validation(mApplicationFieldsAdapterListener, ESPLIBCriteriaFieldsListener,
-                criteriaListDAO, fieldDAO);
+                dynamicStagesCriteriaListDAO, fieldDAO);
         validation.setSectionListener(edisectionDetailslistener);
         validation.validateForm();
     }

@@ -39,8 +39,7 @@
                         android:contentDescription="@string/esp_lib_text_filter"
                         android:foreground="?attr/selectableItemBackground"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/esp_lib_drawable_ic_filter_gray"
-                        android:tint="@color/esp_lib_color_grey" />
+                        android:src="@drawable/esp_lib_drawable_ic_filter_gray" />
 
 
                     <include

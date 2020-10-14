@@ -7,9 +7,9 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.esp.library.R
+import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.utilities.common.*
-import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import kotlinx.android.synthetic.main.esp_lib_activity_no_record.*
 import kotlinx.android.synthetic.main.esp_lib_fragment_subusers_applications.*
@@ -80,6 +80,7 @@ class ESP_LIB_UserSubApplicationsActivity : ESP_LIB_BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_fragment_subusers_applications)

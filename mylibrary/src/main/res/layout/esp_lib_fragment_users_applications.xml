@@ -41,8 +41,7 @@
                 android:contentDescription="@string/esp_lib_text_filter"
                 android:foreground="?attr/selectableItemBackground"
                 android:layout_centerVertical="true"
-                android:src="@drawable/esp_lib_drawable_ic_filter_gray"
-                android:tint="@color/esp_lib_color_grey" />
+                android:src="@drawable/esp_lib_drawable_ic_filter_gray" />
 
 
             <include
@@ -116,7 +115,7 @@
                 android:id="@+id/txtseeall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="?attr/colorPrimaryDark"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:text="@string/esp_lib_text_seeall"
                 android:background="?attr/selectableItemBackground"
@@ -128,7 +127,7 @@
                 android:id="@+id/txtloadmorecards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="?attr/colorPrimaryDark"
                 android:text="@string/esp_lib_text_loadingmore"
                 android:visibility="gone"
                 android:layout_centerHorizontal="true"

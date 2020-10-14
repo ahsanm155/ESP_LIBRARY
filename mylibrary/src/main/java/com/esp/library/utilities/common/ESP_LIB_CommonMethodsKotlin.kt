@@ -19,6 +19,7 @@ import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.TypedValue
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.ImageView
@@ -33,6 +34,7 @@ import com.esp.library.utilities.common.ESP_LIB_Constants
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.google.gson.Gson
 import com.microsoft.projectoxford.face.FaceServiceRestClient
+import kotlinx.android.synthetic.main.esp_lib_activity_feedback_form.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -88,7 +90,7 @@ class ESP_LIB_CommonMethodsKotlin {
                     val spannableStringBuilder = SpannableStringBuilder(subStringText);
                     spannableStringBuilder.setSpan(
                             ForegroundColorSpan(
-                                    ContextCompat.getColor(context, R.color.colorPrimary)
+                                    getthemeColor(context)
                             ), spannableStringBuilder.length - 7, spannableStringBuilder.length, 0
                     )
                     spannableStringBuilder.setSpan(
@@ -324,7 +326,7 @@ class ESP_LIB_CommonMethodsKotlin {
             return bmpUri
         }
 
-        public fun verificationPopUpPopulation(actualResponseJson: String?, context: ESP_LIB_BaseActivity?)
+        fun verificationPopUpPopulation(actualResponseJson: String?, context: ESP_LIB_BaseActivity?)
         {
             val actualResponseJson = Gson().fromJson(actualResponseJson, ESP_LIB_DynamicResponseDAO::class.java)
             if (actualResponseJson.applicantPictureStatus.equals(context?.getString(R.string.esp_lib_text_unverified), ignoreCase = true) ||
@@ -365,6 +367,12 @@ class ESP_LIB_CommonMethodsKotlin {
             }
             ivclose.setOnClickListener { dialog.dismiss() }
             dialog.show()
+        }
+
+        fun getthemeColor(context:Context): Int {
+            val value = TypedValue()
+            context.theme.resolveAttribute(R.attr.colorPrimaryDark, value, true)
+            return value.data
         }
 
 

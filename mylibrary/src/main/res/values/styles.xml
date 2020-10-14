@@ -1,16 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-
-    <style name="Esp_Lib_Style_RequestTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="errorTextAppearance">@style/Esp_Lib_Style_EditTextErrorTextAppearance</item>
-    </style>
-
-    <style name="Esp_Lib_Style_EditTextErrorTextAppearance">
-        <item name="android:textColor">@color/esp_lib_color_status_rejected</item>
-
-    </style>
-
-
     <!-- Base application theme. -->
     <style name="ESP_LIB_Styles_AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -20,7 +9,7 @@
     </style>
 
 
-    <style name="Esp_Lib_Style_Transparent" parent="ESP_LIB_Styles_AppTheme">
+    <style name="Esp_Lib_Style_Transparent" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -29,7 +18,6 @@
         <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowMinWidthMajor">95%</item>
         <item name="android:windowMinWidthMinor">95%</item>
-        <item name="colorAccent">@color/colorPrimaryDark</item>
     </style>
 
 
@@ -52,7 +40,6 @@
         <item name="android:layout_height">@dimen/_65sdp</item>
         <item name="android:layout_width">match_parent</item>
     </style>
-
 
 
     <style name="Esp_Lib_Style_MyTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -87,7 +74,9 @@
 
 
     <style name="Esp_Lib_Style_MyProgressBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
-        <item name="android:progressBackgroundTint" tools:ignore="NewApi">@color/esp_lib_color_white</item>
+        <item name="android:progressBackgroundTint" tools:ignore="NewApi">
+            @color/esp_lib_color_white
+        </item>
         <item name="android:progressTint" tools:ignore="NewApi">@color/esp_lib_color_black</item>
     </style>
 
@@ -120,6 +109,16 @@
         <item name="android:textColor">@color/esp_lib_color_idenedicolor</item>
     </style>
 
+    <style name="Esp_Lib_Style_RequestTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="errorTextAppearance">@style/Esp_Lib_Style_EditTextErrorTextAppearance</item>
+        <item name="boxStrokeColor">?attr/colorPrimaryDark</item>
+        <item name="boxStrokeWidth">1dp</item>
+    </style>
+
+    <style name="Esp_Lib_Style_EditTextErrorTextAppearance">
+        <item name="android:textColor">@color/esp_lib_color_status_rejected</item>
+
+    </style>
 
     <style name="Esp_Lib_Style_AddApplicationEditTextError" parent="TextAppearance.AppCompat">
         <!-- Hint color and label color in FALSE state -->
@@ -168,9 +167,9 @@
 
 
     <!-- Set parent theme as app theme. -->
-    <style name="ESP_LIB_DialogTheme" parent="ESP_LIB_Styles_AppTheme">
+    <style name="ESP_LIB_DialogTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsFloating">false</item>
     </style>
 
@@ -198,6 +197,7 @@
         <item name="android:textSize">@dimen/_14ssp</item>
 
     </style>
+
     <style name="Esp_Lib_Style_BaseTextHeadingSemiBold">
         <item name="android:fontFamily">@font/lato_semibold</item>
         <item name="android:textSize">@dimen/_12ssp</item>
@@ -233,7 +233,7 @@
     </style>
 
     <style name="Esp_Lib_Style_TextHeading3GreenHeavy" parent="Esp_Lib_Style_BaseTextHeading3Heavy">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextHeading3GreyHeavy" parent="Esp_Lib_Style_BaseTextHeading3Heavy">
@@ -249,8 +249,6 @@
     </style>
 
 
-
-
     <style name="Esp_Lib_Style_TextHeading3Black" parent="Esp_Lib_Style_BaseTextHeading3">
         <item name="android:textColor">@android:color/black</item>
     </style>
@@ -260,11 +258,11 @@
     </style>
 
     <style name="Esp_Lib_Style_TextHeading3Green" parent="Esp_Lib_Style_BaseTextHeading3">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextHeadingSemiGreen" parent="Esp_Lib_Style_BaseTextHeadingSemiBold">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextHeading3White" parent="Esp_Lib_Style_BaseTextHeading3">
@@ -281,7 +279,7 @@
     </style>
 
     <style name="Esp_Lib_Style_TextHeading5Green" parent="Esp_Lib_Style_BaseTextHeading5">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextHeading5Red" parent="Esp_Lib_Style_BaseTextHeading5">
@@ -305,7 +303,7 @@
     </style>
 
     <style name="Esp_Lib_Style_TextHeading6Green" parent="Esp_Lib_Style_BaseTextHeading6">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextHeading6Red" parent="Esp_Lib_Style_BaseTextHeading6">
@@ -313,7 +311,6 @@
     </style>
 
     /////// Paragraphs /////
-
 
 
     <style name="Esp_Lib_Style_BaseTextParagraph">
@@ -343,11 +340,11 @@
     </style>
 
     <style name="Esp_Lib_Style_TextParagraph1Green" parent="Esp_Lib_Style_BaseTextParagraph1">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextParagraphGreen" parent="Esp_Lib_Style_BaseTextParagraph">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextParagraphWhite" parent="Esp_Lib_Style_BaseTextParagraph">
@@ -365,7 +362,7 @@
     </style>
 
     <style name="Esp_Lib_Style_TextLinkGreen" parent="Esp_Lib_Style_BaseTextLink">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextLinkGray" parent="Esp_Lib_Style_BaseTextLink">
@@ -404,7 +401,7 @@
     </style>
 
     <style name="Esp_Lib_Style_TextSmallGreen" parent="Esp_Lib_Style_BaseTextSmall">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">?attr/colorPrimaryDark</item>
     </style>
 
     <style name="Esp_Lib_Style_TextSmallWhite" parent="Esp_Lib_Style_BaseTextSmall">

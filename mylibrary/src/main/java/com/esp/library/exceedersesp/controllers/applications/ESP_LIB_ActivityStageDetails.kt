@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -19,8 +20,10 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.SingleController.CompRoot
 import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_FeedbackForm
+import com.esp.library.ipaulpro.afilechooser.utils.FileUtils
 import com.esp.library.utilities.common.*
 import com.esp.library.utilities.customevents.EventOptions
 import com.esp.library.utilities.setup.applications.ESP_LIB_ApplicationCriteriaAdapter
@@ -29,6 +32,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.esp_lib_activity_stage_detail.*
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import kotlinx.android.synthetic.main.esp_lib_statuswithicon.*
+import okhttp3.MultipartBody
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -39,6 +43,7 @@ import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.ESP_LIB_CalculatedMappedFieldsDAO
 import utilities.data.applicants.addapplication.ESP_LIB_LookUpDAO
 import utilities.data.applicants.addapplication.ESP_LIB_PostApplicationsStatusDAO
+import utilities.data.applicants.addapplication.ESP_LIB_ResponseFileUploadDAO
 import utilities.data.applicants.dynamics.*
 import utilities.interfaces.ESP_LIB_CriteriaFieldsListener
 import utilities.interfaces.ESP_LIB_FeedbackSubmissionClick
@@ -71,8 +76,9 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_stage_detail)
         initailize()
         updateTopView()
@@ -170,42 +176,80 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
     override fun validateCriteriaFields(ESPLIBDynamicStagesCriteriaList: ESP_LIB_DynamicStagesCriteriaListDAO) {
 
-        var adapter_list: List<ESP_LIB_DynamicFormSectionFieldDAO>? = null
+      /*  var adapter_list: List<ESP_LIB_DynamicFormSectionFieldDAO>? = null
+
+
         if (criteriaAdapterESPLIB != null) {
             adapter_list = criteriaAdapterESPLIB?.getAllCriteriaFields()
-        }
-        var isAllFieldsValidateTrue = true
+        }*/
 
         val criteriaId = ESPLIBDynamicStagesCriteriaList.id
-
-        for (i in 0 until ESPLIBDynamicStagesCriteriaList.form.sections!!.size) {
-            val dynamicFormSectionDAO = ESPLIBDynamicStagesCriteriaList.form.sections!![i]
-
-            for (k in 0 until dynamicFormSectionDAO.fields!!.size) {
-                val id = dynamicFormSectionDAO.fields!![k].id
-
-                if (adapter_list != null && adapter_list.size > 0) {
-
-                    for (dynamicFormSectionFieldDAO in adapter_list) {
-
-                        if (dynamicFormSectionFieldDAO.id == id) {
-
-                            if (dynamicFormSectionFieldDAO.isRequired) {
-                                if (!dynamicFormSectionFieldDAO.isValidate) {
+        var isAllFieldsValidateTrue = true
+        criteriaAdapterESPLIB?.criteriaListESPLIB?.forEach { criteria->
+            if(criteria?.id==criteriaId)
+            {
+                criteria.form.sections?.forEach { section->
+                    section.fieldsCardsList?.forEach { fieldCard->
+                        fieldCard.fields?.forEach { field->
+                            if (field.isRequired) {
+                                if (!field.isValidate) {
                                     isAllFieldsValidateTrue = false
-                                    break
                                 }
 
                             }
-
-
                         }
                     }
                 }
             }
-
-
         }
+
+       /* adapter_list?.forEach { citeriaList->
+            if(citeriaList.id==ESPLIBDynamicStagesCriteriaList.id)
+            {
+                citeriaList.isValidate=ESPLIBDynamicStagesCriteriaList.isValidate
+            }
+
+        }*/
+
+
+       /* var isAllFieldsValidateTrue = true
+
+        val criteriaId = ESPLIBDynamicStagesCriteriaList.id
+        ESPLIBDynamicStagesCriteriaList.form.sections?.forEach { dynamicFormSectionDAO->
+            for(i in dynamicFormSectionDAO.fields!!.indices){
+                val dynamicFormSectionFieldDAO= dynamicFormSectionDAO.fields!!.get(i)
+                val id = dynamicFormSectionFieldDAO.id
+
+                if (dynamicFormSectionFieldDAO.isRequired) {
+                    if (!dynamicFormSectionFieldDAO.isValidate) {
+                        isAllFieldsValidateTrue = false
+                        break
+                    }
+
+                }
+
+                *//* if (adapter_list != null && adapter_list.isNotEmpty()) {
+
+                     for (dynamicFormSectionFieldDAO in adapter_list) {
+
+                         if (dynamicFormSectionFieldDAO.id == id) {
+
+                             if (dynamicFormSectionFieldDAO.isRequired) {
+                                 if (!dynamicFormSectionFieldDAO.isValidate) {
+                                     isAllFieldsValidateTrue = false
+                                     break
+                                 }
+
+                             }
+
+
+                         }
+                     }
+                 }*//*
+            }
+
+
+        }*/
 
         for (q in criteriaAdapterESPLIB?.criteriaListESPLIB!!.indices) {
             val id = criteriaAdapterESPLIB?.criteriaListESPLIB?.get(q)?.id
@@ -219,6 +263,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
             }
 
         }
+
 
     }
 
@@ -305,6 +350,29 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
                 if (resultCode == Activity.RESULT_OK) {
                     startFeebform()
                 }
+
+            REQUEST_CHOOSER->{
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val uri = data.data
+                    if (uri != null) {
+                        val getMaxVal: Int = fieldToBeUpdatedESPLIB!!.maxVal
+                        var isFileSizeValid = true
+                        if (getMaxVal > 0) isFileSizeValid = ESP_LIB_Shared.getInstance().getFileSize(ESP_LIB_RealPathUtil.getPath(bContext, uri), getMaxVal)
+                        ESP_LIB_CustomLogs.displayLogs(ESP_LIB_ApplicationDetailScreenActivity.TAG + " getMaxVal: " + getMaxVal + " isFileSizeValid: " +
+                                isFileSizeValid + " getRealPathFromURI: " + ESP_LIB_RealPathUtil.getPath(bContext, uri))
+                        if (isFileSizeValid) {
+                            try {
+                                UpdateLoadImageForField(fieldToBeUpdatedESPLIB, uri)
+                            } catch (e: java.lang.Exception) {
+                                ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_pleasetryagain), bContext)
+                            }
+                        } else {
+                            ESP_LIB_Shared.getInstance().showAlertMessage("", getString(R.string.esp_lib_text_sizeshouldbelessthen) + " " + getMaxVal + " " + getString(R.string.esp_lib_text_mb), bContext)
+                        }
+                    }
+                }
+            }
+
             REQUEST_LOOKUP->
                 if (resultCode == Activity.RESULT_OK) {
                    // val dfs = data?.extras!!.getSerializable(ESP_LIB_DynamicFormSectionFieldDAO.BUNDLE_KEY) as ESP_LIB_DynamicFormSectionFieldDAO?
@@ -318,6 +386,76 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
 
     }
+
+    fun UpdateLoadImageForField(field: ESP_LIB_DynamicFormSectionFieldDAO?, uri: Uri?) {
+        if (field != null) {
+            var body: MultipartBody.Part? = null
+            try {
+                body = ESP_LIB_Shared.getInstance().prepareFilePart(uri, bContext)
+                if (uri != null) {
+                    UpLoadFile(field, body, uri)
+                }
+            } catch (e: java.lang.Exception) {
+                ESP_LIB_Shared.getInstance().errorLogWrite("FILE", e.message)
+            }
+        }
+    }
+
+    private fun UpLoadFile(field: ESP_LIB_DynamicFormSectionFieldDAO?,
+                           body: MultipartBody.Part, uri: Uri) {
+        start_loading_animation()
+        try {
+            /* APIs Mapping respective Object*/
+            val apis = CompRoot().getService(bContext)
+            var uploadFile_call = apis.upload(body)
+            uploadFile_call.enqueue(object : Callback<ESP_LIB_ResponseFileUploadDAO?> {
+                override fun onResponse(call: Call<ESP_LIB_ResponseFileUploadDAO?>, response: Response<ESP_LIB_ResponseFileUploadDAO?>) {
+                    stop_loading_animation()
+                    if (response != null && response.body() != null) {
+                        if (field != null) {
+                            try {
+
+                                //File file = FileUtils.getFile(bContext, uri);
+                                var file: File? = null
+                                val path = ESP_LIB_RealPathUtil.getPath(bContext, uri)
+                                file = File(path)
+                                val attachmentFileSize = ESP_LIB_Shared.getInstance().getAttachmentFileSize(file)
+                                val detail = ESP_LIB_DyanmicFormSectionFieldDetailsDAO()
+                                detail.name = file.name
+                                detail.downloadUrl = response.body()!!.downloadUrl
+                                detail.mimeType = FileUtils.getMimeType(file)
+                                detail.createdOn = ESP_LIB_Shared.getInstance().GetCurrentDateTime()
+                                detail.fileSize = attachmentFileSize
+                                field.details = detail
+                                field.value = response.body()!!.fileId
+
+                                if (criteriaAdapterESPLIB != null)
+                                    criteriaAdapterESPLIB?.notifyDataSetChanged()
+                                    //criteriaAdapterESPLIB?.notifyOnly(fieldToBeUpdatedESPLIB!!.updatePositionAttachment)
+
+                            } catch (e: java.lang.Exception) {
+                            }
+                        }
+                    } else {
+                        ESP_LIB_Shared.getInstance().messageBox(getString(R.string.esp_lib_text_some_thing_went_wrong), bContext)
+                    }
+                }
+
+                override fun onFailure(call: Call<ESP_LIB_ResponseFileUploadDAO?>, t: Throwable) {
+                    stop_loading_animation()
+                    ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_error), getString(R.string.esp_lib_text_some_thing_went_wrong), bContext)
+                    // UploadFileInformation(fileDAO);
+                }
+            })
+        } catch (ex: java.lang.Exception) {
+            stop_loading_animation()
+            if (ex != null) {
+                ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_error), getString(R.string.esp_lib_text_some_thing_went_wrong), bContext)
+                //UploadFileInformation(fileDAO);
+            }
+        }
+    } //LoggedInUser end
+
 
     private fun startFeebform()
     {
@@ -547,7 +685,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
         // The MIME data type filter
 
         getContentIntent.type = "*/*"
-        if (getAllowedValuesCriteria!!.length > 0)
+        if (getAllowedValuesCriteria.isNotEmpty())
             getContentIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
         // Only return URIs that can be opened with ContentResolver
         getContentIntent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -684,7 +822,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
         try {
             // start_loading_animation()
             val valuesForCalculatedValues = getValuesForCalculatedValues()
-            val apis = CompRoot()?.getService(bContext)
+            val apis = CompRoot().getService(bContext)
             val calculatedSubmitCall = apis?.getCalculatedValues(valuesForCalculatedValues!!)
             calculatedSubmitCall?.enqueue(object : Callback<List<ESP_LIB_CalculatedMappedFieldsDAO>> {
                 override fun onResponse(call: Call<List<ESP_LIB_CalculatedMappedFieldsDAO>>, response: Response<List<ESP_LIB_CalculatedMappedFieldsDAO>>?) {
@@ -971,7 +1109,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
     private fun completeStage(ESPLIBDynamicStagesDAO: ESP_LIB_DynamicStagesDAO,
                               actualResponseJsonESPLIB: ESP_LIB_DynamicResponseDAO,
                               drawable: GradientDrawable) {
-        txtstatus.setText(context?.getString(R.string.esp_lib_text_completedcaps))
+        txtstatus.text = context?.getString(R.string.esp_lib_text_completedcaps)
 
         var getAssessmentStatus = "";
         for (i in 0 until ESPLIBDynamicStagesDAO.criteriaList!!.size) {

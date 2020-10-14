@@ -3,14 +3,13 @@ package com.esp.library.exceedersesp.controllers.lookupinfo
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
-import androidx.core.content.ContextCompat
 import com.esp.library.R
+import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
+import com.esp.library.exceedersesp.controllers.lookupinfo.adapter.ESP_LIB_ListLookupInfoItemsDetailAdapter
 import com.esp.library.utilities.common.ESP_LIB_Constants
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
-import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
-import com.esp.library.exceedersesp.controllers.lookupinfo.adapter.ESP_LIB_ListLookupInfoItemsDetailAdapter
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import kotlinx.android.synthetic.main.esp_lib_lookup_item_detail.*
@@ -23,6 +22,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import utilities.common.ESP_LIB_CommonMethodsKotlin
+import utilities.common.ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor
 import utilities.data.apis.ESP_LIB_APIs
 import utilities.data.applicants.dynamics.ESP_LIB_DyanmicFormSectionFieldDetailsDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO
@@ -41,6 +42,7 @@ class ESP_LIB_LookupItemDetail : ESP_LIB_BaseActivity() {
     internal var lookupInfoDetailItemArray = ArrayList<ESP_LIB_DynamicFormSectionFieldDAO>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_lookup_item_detail)
@@ -87,7 +89,8 @@ class ESP_LIB_LookupItemDetail : ESP_LIB_BaseActivity() {
         lookup_item_detail_list.layoutManager = lookupItemDetailLayoutManager
         lookup_item_detail_list.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
 
-        val themeColor = ContextCompat.getColor(context!!,R.color.colorPrimaryDark)
+
+        val themeColor = getthemeColor(context!!);
         swipeRefreshLayout?.setColorSchemeColors(themeColor, themeColor, themeColor)
 
     }

@@ -14,10 +14,10 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
+import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationActivityTabs
 import com.esp.library.exceedersesp.controllers.applications.filters.ESP_LIB_FilterScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_Enums
 import com.esp.library.utilities.common.ESP_LIB_Shared
@@ -25,8 +25,18 @@ import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.customevents.EventOptions
 import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersApplicationsAdapterV2
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.esp_lib_activity_no_record.view.*
 import kotlinx.android.synthetic.main.esp_lib_activity_search_layout.view.*
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.*
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.app_list
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.ivfilter
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.llcontentlayout
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.load_more_div
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.nestedscrollview
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.rlsearchbar
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.swipeRefreshLayout
+import kotlinx.android.synthetic.main.esp_lib_fragment_seeall_applications.view.txtrequestcount
 import kotlinx.android.synthetic.main.esp_lib_fragment_users_applications.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -36,6 +46,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import utilities.adapters.setup.applications.ESP_LIB_ListCardsApplicationsAdapter
 import utilities.common.ESP_LIB_CommonMethodsKotlin
+import utilities.common.ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO
 import utilities.data.applicants.ESP_LIB_ResponseApplicationsDAO
 import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
@@ -124,7 +135,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
             ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_FilterScreenActivity::class.java, requireActivity(),null, 2)
         }
 
-        reLoadApplications()
+
 
 
 
@@ -184,6 +195,21 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
             }
         })
 
+        ESP_LIB_ApplicationActivityTabs.tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                var checkFilter = ESP_LIB_FilterScreenActivity.isOpenFilterApplied
+                if (tab.isSelected && tab.position == 1) {
+                    checkFilter = ESP_LIB_FilterScreenActivity.isCloseFilterApplied
+                }
+                if (checkFilter) view?.ivfilter?.setImageResource(R.drawable.esp_lib_drawable_ic_filter_green)
+                else view?.ivfilter?.setImageResource(R.drawable.esp_lib_drawable_ic_filter_gray)
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
 
         return v
     }
@@ -208,7 +234,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
         shimmer_view_container_cards = v.findViewById(R.id.shimmer_view_container_cards)
 
 
-        val themeColor = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
+        val themeColor = getthemeColor(requireContext());
         v.swipeRefreshLayout?.setColorSchemeColors(themeColor, themeColor, themeColor)
     }
 
@@ -375,6 +401,16 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun dataRefreshEvent(eventRefreshData: EventOptions.EventRefreshData) {
+
+        val tabLayout: TabLayout? = ESP_LIB_ApplicationActivityTabs.tabLayout
+        val tab_position = tabLayout?.selectedTabPosition
+
+        var checkFilter = ESP_LIB_FilterScreenActivity.isOpenFilterApplied
+        if (tab_position == 1) checkFilter = ESP_LIB_FilterScreenActivity.isCloseFilterApplied
+
+        if (checkFilter) view?.ivfilter?.setImageResource(R.drawable.esp_lib_drawable_ic_filter_green)
+        else view?.ivfilter?.setImageResource(R.drawable.esp_lib_drawable_ic_filter_gray)
+
         isEventRefreshData = true
         reLoadApplications()
 
@@ -540,7 +576,6 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
 
     private fun SuccessResponse() {
         view?.llcontentlayout?.visibility = View.VISIBLE
-        view?.no_record_view?.visibility = View.GONE
         view?.no_application_available_div?.visibility = View.GONE
         if (mHSListener != null) {
             mHSListener?.mAction(false)
@@ -550,11 +585,9 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
     private fun UnSuccessResponse() {
         view?.rlsearchbar?.visibility = View.GONE
         view?.llcontentlayout?.visibility = View.GONE
-        view?.no_record_view?.visibility = View.VISIBLE
         view?.no_application_available_div?.visibility = View.VISIBLE
         try {
             view?.ivnorecordinside?.visibility = View.VISIBLE
-            view?.no_record_view?.setPadding(0,300,0,0)
             if (ESP_LIB_ESPApplication.getInstance()?.user?.loginResponse?.role?.toLowerCase(Locale.getDefault()).equals(ESP_LIB_Enums.applicant.toString(), ignoreCase = true)) {
                 view?.txtnoapplicationadded?.text=getString(R.string.esp_lib_text_no_applications)
                 view?.detail_text?.visibility = View.GONE
@@ -572,7 +605,6 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
         if (!searchText.isNullOrEmpty()) {
             view?.txtnoapplicationadded?.text = getString(R.string.esp_lib_text_norecord)
             view?.detail_text?.visibility = View.GONE
-            view?.no_record_view?.setPadding(0,300,0,0)
             view?.rlsearchbar?.visibility = View.VISIBLE
         }
 
@@ -599,6 +631,9 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
     }
 
 
-
+    override fun onResume() {
+        super.onResume()
+        reLoadApplications()
+    }
 
 }

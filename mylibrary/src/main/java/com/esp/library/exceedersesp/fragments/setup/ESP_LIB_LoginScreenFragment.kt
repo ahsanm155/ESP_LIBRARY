@@ -143,8 +143,9 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
             bn.putString("heading", getString(R.string.esp_lib_text_logineithidenedi))
 
             //   bn.putString("url", "https://app.idenedi.com/app_permission/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri=https://isp.exceedgulf.com/login")
-                 bn.putString("url", "https://app.idenedi.com/app_permission/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri="+ESP_LIB_Constants.base_url.replace("webapi/", "")+"login")
+              //   bn.putString("url", "https://app.idenedi.com/app_permission/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri="+ESP_LIB_Constants.base_url.replace("webapi/", "")+"login")
            // bn.putString("url", "https://idenedi-prod-stag.azurewebsites.net/app_permission/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri=https://qaesp.azurewebsites.net/login")
+            bn.putString("url", pref?.getidenediLoginUri()+"/authorization/?response_type=code&client_id=" + pref?.getidenediClientId() + "&redirect_uri=https://qaesp.azurewebsites.net/login")
             bn.putBoolean("isIdenedi", true)
             ESP_LIB_Shared.getInstance().callIntent(ESP_LIB_WebViewScreenActivity::class.java, context, bn)
         }
@@ -395,15 +396,12 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
 
             ESP_LIB_Shared.getInstance().showAlertMessage(context.getString(R.string.esp_lib_text_login_password_label), context.getString(R.string.esp_lib_text_login_valid_password_error), context)
             return
-
         }
 
         if (password!!.length < 6) {
             ESP_LIB_Shared.getInstance().showAlertMessage(context.getString(R.string.esp_lib_text_login_password_label), context.getString(R.string.esp_lib_text_length_password_error), context)
             return
-
         }
-
 
         if (ESP_LIB_Shared.getInstance().isWifiConnected(context)) {
             val pt = ESP_LIB_PostTokenDAO()
@@ -429,7 +427,6 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
         }
 
         if (ESP_LIB_Shared.getInstance().isWifiConnected(context)) {
-
             val pt = ESP_LIB_PostTokenDAO()
             pt.client_id = "ESPMobile"
             pt.grant_type = "refresh_token"
@@ -437,28 +434,20 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
             pt.username = email
             pt.scope = ESPLIBPersonaDAO.id
             pt.refresh_token = ESPLIBPersonaDAO.refresh_token
-
             ESP_LIB_Shared.getInstance().WritePref("scropId", ESPLIBPersonaDAO.id, "login_info", context)
-
             GetRefreshToken(pt)
 
         } else {
-
             ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_internet_error_heading), getString(R.string.esp_lib_text_internet_connection_error), context)
-
-
         }
     }
 
     private fun linkIdendiUser(isSentToProfile: Boolean) {
-
         start_loading_animation()
-
         try {
 
-            val apis = CompRoot()?.getService(context);
-            var call_idenediToken = apis?.linkIdenediUser(pref?.getidenediAuthDAO())
-
+            val apis = CompRoot().getService(context);
+            val call_idenediToken = apis?.linkIdenediUser(pref?.getidenediAuthDAO())
 
             call_idenediToken?.enqueue(object : Callback<ESP_LIB_IdenediAuthDAO> {
                 override fun onResponse(call: Call<ESP_LIB_IdenediAuthDAO>?, response: Response<ESP_LIB_IdenediAuthDAO>?) {
@@ -483,12 +472,10 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
                     }
                 }
 
-
                 override fun onFailure(call: Call<ESP_LIB_IdenediAuthDAO>, t: Throwable) {
                     ESP_LIB_CustomLogs.displayLogs("$TAG there")
                     stop_loading_animation()
                     ESP_LIB_Shared.getInstance().showAlertMessage(getString(R.string.esp_lib_text_login_label), getString(R.string.esp_lib_text_some_thing_went_wrong), context)
-
                 }
             })
 
@@ -573,9 +560,7 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
             var list: List<ESP_LIB_PersonaDAO>? = null
             val personas = response.body().personas
             val gson = Gson()
-            list = gson.fromJson<List<ESP_LIB_PersonaDAO>>(personas, object : TypeToken<List<ESP_LIB_PersonaDAO>>() {
-
-            }.type)
+            list = gson.fromJson<List<ESP_LIB_PersonaDAO>>(personas, object : TypeToken<List<ESP_LIB_PersonaDAO>>() {}.type)
 
             if (list != null && list.size > 0) {
                 val app_list = ESP_LIB_Shared.getInstance().GetApplicantOrganization(list, context)
@@ -802,8 +787,6 @@ class ESP_LIB_LoginScreenFragment : androidx.fragment.app.Fragment() {
                 override fun onResponse(call: Call<ESP_LIB_TokenDAO>?, response: Response<ESP_LIB_TokenDAO>?) {
 
                     stop_loading_animation()
-
-                    //   CustomLogs.displayLogs("$TAG Full_Response: "+Gson().toJson(response))
 
                     pref?.saveIdenediCode(null)
                     if (response != null && response.body() != null) {

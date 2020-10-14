@@ -1,5 +1,6 @@
 package com.esp.library.exceedersesp.controllers.lookupinfo.adapter
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -9,24 +10,24 @@ import android.os.StrictMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.FileProvider
 import com.esp.library.R
+import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
-
-import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
-
-import java.io.IOException
-import java.util.ArrayList
-
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import utilities.data.applicants.dynamics.ESP_LIB_DyanmicFormSectionFieldDetailsDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionFieldDAO
+import java.io.File
+import java.io.IOException
+import java.util.*
 
 class ESP_LIB_ListLookupInfoItemsDetailAdapter(lookupInfoList: List<ESP_LIB_DynamicFormSectionFieldDAO>, context: ESP_LIB_BaseActivity) : androidx.recyclerview.widget.RecyclerView.Adapter<ESP_LIB_ListLookupInfoItemsDetailAdapter.ViewHolder>() {
 
@@ -190,6 +191,7 @@ class ESP_LIB_ListLookupInfoItemsDetailAdapter(lookupInfoList: List<ESP_LIB_Dyna
     }
 
     private fun OpenImage(filePath: String?) {
+        val file = File(filePath)
         var filePath = filePath
         try {
             filePath = "file://" + filePath!!
@@ -199,11 +201,24 @@ class ESP_LIB_ListLookupInfoItemsDetailAdapter(lookupInfoList: List<ESP_LIB_Dyna
                 val builder = StrictMode.VmPolicy.Builder()
                 StrictMode.setVmPolicy(builder.build())
 
-                val intent = Intent()
-                intent.action = Intent.ACTION_VIEW
-                intent.setDataAndType(Uri.parse(filePath), "image/*")
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(intent)
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    val apkURI = FileProvider.getUriForFile(Objects.requireNonNull(context),
+                            "com.exceedersesp.provider", file)
+                    val myMime = MimeTypeMap.getSingleton()
+                    val mimeType = myMime.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(apkURI.toString())) //It will return the mimetype
+                    intent.setDataAndType(apkURI, mimeType)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    context.startActivity(intent)
+                } catch (e: java.lang.Exception) {
+                    ESP_LIB_Shared.getInstance().messageBox(context.getString(R.string.esp_lib_text_noapp_open_attachmet), context as Activity?)
+                    val intent = Intent()
+                    intent.action = Intent.ACTION_VIEW
+                    intent.setDataAndType(Uri.parse(filePath), "*/*")
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
+                }
             }
 
 

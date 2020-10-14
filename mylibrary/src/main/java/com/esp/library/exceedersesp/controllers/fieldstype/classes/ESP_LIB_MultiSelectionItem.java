@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
-import android.os.Build;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -161,7 +160,7 @@ public class ESP_LIB_MultiSelectionItem {
                                     fieldDAO.setValidate(true);
 
 
-                                    validateForm(fieldDAO);
+                                    validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
 
                                // if (isCalculatedMappedField)
                                 if (fieldDAO.isTigger())
@@ -200,7 +199,7 @@ public class ESP_LIB_MultiSelectionItem {
                     setCheckBoxValues(lookupLabelsList, lookupValue, holder, true, mContext);
 
                     fieldDAO.setValidate(true);
-                    validateForm(fieldDAO);
+                    validateForm(fieldDAO,ESPLIBDynamicStagesCriteriaListDAO);
                 }
             } else {
                 if (!isViewOnly) {
@@ -210,14 +209,14 @@ public class ESP_LIB_MultiSelectionItem {
                     else
                         fieldDAO.setValidate(true);
 
-                    validateForm(fieldDAO);
+                    validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
                 } else
                     setCheckBoxValues(lookupLabelsList, lookupValue, holder, false, mContext);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        validateForm(fieldDAO);
+        validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
     }
 
     private void setCheckBoxValues(List<String> lookupLabelsList, String lookupValue,
@@ -248,9 +247,9 @@ public class ESP_LIB_MultiSelectionItem {
     }
 
 
-    private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO) {
+    private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO, ESP_LIB_DynamicStagesCriteriaListDAO dynamicStagesCriteriaListDAO) {
         ESP_LIB_Validation validation = new ESP_LIB_Validation(mApplicationFieldsAdapterListener, ESPLIBCriteriaFieldsListener,
-                criteriaListDAO, fieldDAO);
+                dynamicStagesCriteriaListDAO, fieldDAO);
         validation.setSectionListener(edisectionDetailslistener);
         validation.validateForm();
     }

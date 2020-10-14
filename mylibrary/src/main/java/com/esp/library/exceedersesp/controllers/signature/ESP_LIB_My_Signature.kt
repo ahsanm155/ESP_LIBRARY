@@ -10,7 +10,7 @@ import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.utilities.common.ESP_LIB_Shared
-import com.esp.library.utilities.common.GoogleFontsLibrary
+import com.esp.library.utilities.common.ESP_LIB_GoogleFontsLibrary
 import com.esp.library.utilities.data.applicants.signature.ESP_LIB_SignatureDAO
 import kotlinx.android.synthetic.main.esp_lib_activity_my_signature.*
 import kotlinx.android.synthetic.main.esp_lib_criteriasignature.*
@@ -33,6 +33,7 @@ class ESP_LIB_My_Signature : ESP_LIB_BaseActivity() {
             "sacramento_regular")
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_my_signature)
@@ -124,7 +125,7 @@ class ESP_LIB_My_Signature : ESP_LIB_BaseActivity() {
             val typeface = Typeface.createFromAsset(assets, "font/greatvibes_regular.otf")
             etxtsign.setTypeface(typeface)
         } else {
-            etxtsign.setTypeface(GoogleFontsLibrary.setGoogleFont(this, rawStyles[indexOf]))
+            etxtsign.setTypeface(ESP_LIB_GoogleFontsLibrary.setGoogleFont(this, rawStyles[indexOf]))
         }
     }
 

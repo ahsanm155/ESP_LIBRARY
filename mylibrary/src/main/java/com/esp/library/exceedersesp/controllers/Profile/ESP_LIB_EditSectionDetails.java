@@ -104,6 +104,7 @@ public class ESP_LIB_EditSectionDetails extends ESP_LIB_BaseActivity implements 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().getApplicationTheme());
         changeStatusBarColor(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.esp_lib_sectiondetail);

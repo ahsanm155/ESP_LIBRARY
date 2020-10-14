@@ -2,7 +2,6 @@ package com.esp.library.exceedersesp.controllers.applications.filters;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,17 +34,16 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.filters.ESP_LIB_FilterDAO;
-import utilities.data.filters.ESP_LIB_FilterDefinitionSortDAO;
-import utilities.interfaces.ApplicationsFilterListener;
+import com.esp.library.utilities.data.filters.ESP_LIB_FilterDefinitionSortDAO;
+import com.esp.library.utilities.interfaces.ESP_LIB_FilterListener;
 
-public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implements ApplicationsFilterListener {
+public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implements ESP_LIB_FilterListener {
 
     public static String ACTIVITY_NAME = "controllers.applications.filters.FilterScreenActivity";
     ESP_LIB_BaseActivity bContext;
@@ -75,7 +72,8 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
     TextView txtsortbystatuses;
     List<String> statusesList = new ArrayList<>();
     public ESP_LIB_FilterDAO ESPLIBFilterDao = null;
-
+    public static boolean isOpenFilterApplied = false;
+    public static boolean isCloseFilterApplied = false;
     ESP_LIB_FilterDefinitionAdapter ESPLIBFilterDefinitionAdapter;
     ESP_LIB_FilterSortByAdapter ESPLIBFilterSortByAdapter;
     public static ESP_LIB_FilterScreenActivity filterScreenActivity = null;
@@ -91,6 +89,7 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().getApplicationTheme());
         changeStatusBarColor(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.esp_lib_activity_application_filter);
@@ -237,15 +236,15 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
 
     }
 
-    private void preSelectedSortBy(List<ESP_LIB_FilterDefinitionSortDAO> ESPLIBFilterDefinitionSortDAOSList) {
-        for (int i = 0; i < ESPLIBFilterDefinitionSortDAOSList.size(); i++) {
-            if (ESPLIBFilterDao != null && ESPLIBFilterDao.getSortBy() == ESPLIBFilterDefinitionSortDAOSList.get(i).getId()) {
-                ESPLIBFilterDefinitionSortDAOSList.get(i).setCheck(true);
-                txtsortbystatuses.setText(ESPLIBFilterDefinitionSortDAOSList.get(i).getName());
+    private void preSelectedSortBy(List<ESP_LIB_FilterDefinitionSortDAO> filterDefinitionSortDAOSList) {
+        for (int i = 0; i < filterDefinitionSortDAOSList.size(); i++) {
+            if (ESPLIBFilterDao != null && ESPLIBFilterDao.getSortBy() == filterDefinitionSortDAOSList.get(i).getId()) {
+                filterDefinitionSortDAOSList.get(i).setCheck(true);
+                txtsortbystatuses.setText(filterDefinitionSortDAOSList.get(i).getName());
             } else
-                ESPLIBFilterDefinitionSortDAOSList.get(i).setCheck(false);
+                filterDefinitionSortDAOSList.get(i).setCheck(false);
         }
-        ESPLIBFilterSortByAdapter = new ESP_LIB_FilterSortByAdapter(ESPLIBFilterDefinitionSortDAOSList, bContext);
+        ESPLIBFilterSortByAdapter = new ESP_LIB_FilterSortByAdapter(filterDefinitionSortDAOSList, bContext);
         rvsortbyList.setAdapter(ESPLIBFilterSortByAdapter);
 
     }
@@ -534,6 +533,17 @@ public class ESP_LIB_FilterScreenActivity extends ESP_LIB_BaseActivity implement
             ESPLIBFilterDao.setFilterApplied(true);
         } else {
             ESPLIBFilterDao.setFilterApplied(false);
+        }
+
+
+        if (txtdefinitionstatuses.getText().toString().contains(getString(R.string.esp_lib_text_all))) isOpenFilterApplied = false;
+        else if (!txtdefinitionstatuses.getText().toString().contains(getString(R.string.esp_lib_text_all))) isOpenFilterApplied = true;
+
+        if (txtdefinitionstatuses.getText().toString().contains(getString(R.string.esp_lib_text_all)) && (status_row.getVisibility() == View.VISIBLE && statuses.getText().toString().contains(getString(R.string.esp_lib_text_all)))) {
+            isCloseFilterApplied = false;
+        }
+        else if (!txtdefinitionstatuses.getText().toString().contains(getString(R.string.esp_lib_text_all)) || (status_row.getVisibility() == View.VISIBLE && !statuses.getText().toString().contains(getString(R.string.esp_lib_text_all)))) {
+            isCloseFilterApplied = true;
         }
 
         EventBus.getDefault().post(new EventOptions.EventRefreshData());

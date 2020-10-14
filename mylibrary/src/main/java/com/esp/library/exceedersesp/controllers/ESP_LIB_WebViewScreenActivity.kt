@@ -5,10 +5,11 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.webkit.*
 import com.esp.library.R
+import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
-import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import kotlinx.android.synthetic.main.esp_lib_activity_web_view.*
 import kotlinx.android.synthetic.main.esp_lib_gradientcurvetoolbar.*
 
@@ -24,6 +25,7 @@ class ESP_LIB_WebViewScreenActivity : ESP_LIB_BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_web_view)
@@ -34,8 +36,6 @@ class ESP_LIB_WebViewScreenActivity : ESP_LIB_BaseActivity() {
             heading = bnd.getString("heading")
             headingtext.text = heading
              url = bnd.getString("url")
-         //   url = "https://idenedi-prod-stag.azurewebsites.net/app_permission/?response_type=code&client_id=XSP1980031200&redirect_uri=https://qaesp.azurewebsites.net/login"
-
         }
 
         web_view.webViewClient = MyWebViewClient()

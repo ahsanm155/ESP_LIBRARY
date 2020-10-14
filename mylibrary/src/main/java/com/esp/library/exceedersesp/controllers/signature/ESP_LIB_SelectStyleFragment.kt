@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.utilities.common.ESP_LIB_Shared
-import com.esp.library.utilities.common.GoogleFontsLibrary
+import com.esp.library.utilities.common.ESP_LIB_GoogleFontsLibrary
 import com.esp.library.utilities.data.applicants.ESP_LIB_StylesDAO
 import com.esp.library.utilities.data.applicants.signature.ESP_LIB_SignatureDAO
 import com.esp.library.utilities.setup.ESP_LIB_CustomStyleSpinnerAdapter
@@ -133,10 +133,10 @@ class ESP_LIB_SelectStyleFragment : Fragment() {
                     stylesList.removeAt(0)
                 }
 
-                v.etxtsign?.typeface = GoogleFontsLibrary.setGoogleFont(context, stylesDAO.fontStyle)
+                v.etxtsign?.typeface = ESP_LIB_GoogleFontsLibrary.setGoogleFont(context, stylesDAO.fontStyle)
                 v.etxtfontValue?.setText(stylesDAO.signatureTitle)
                 v.etxtfontValue?.tag = rawStylesNames[position]
-                v.etxtfontValue?.typeface = GoogleFontsLibrary.setGoogleFont(context, stylesDAO.fontStyle)
+                v.etxtfontValue?.typeface = ESP_LIB_GoogleFontsLibrary.setGoogleFont(context, stylesDAO.fontStyle)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {}
@@ -245,7 +245,7 @@ class ESP_LIB_SelectStyleFragment : Fragment() {
             setFont = R.raw.greatvibes_regular
         }
 
-        view.etxtsign?.typeface = GoogleFontsLibrary.setGoogleFont(context, setFont)
+        view.etxtsign?.typeface = ESP_LIB_GoogleFontsLibrary.setGoogleFont(context, setFont)
     }
 
 }

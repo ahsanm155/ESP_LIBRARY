@@ -8,8 +8,8 @@
         <shape android:shape="oval">
             <gradient
                 android:angle="180"
-                android:endColor="@color/colorPrimary"
-                android:startColor="@color/colorPrimaryDark" />
+                android:endColor="?attr/colorPrimary"
+                android:startColor="?attr/colorPrimaryDark" />
         </shape>
     </item>
 </layer-list>

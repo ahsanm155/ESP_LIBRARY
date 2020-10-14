@@ -415,6 +415,7 @@
     <string name="esp_lib_text_pendingfor">Pending For:</string>
     <string name="esp_lib_text_submitted">Submitted</string>
     <string name="esp_lib_text_submissions">Submissions</string>
+    <string name="esp_lib_text_noapp_open_attachmet" translatable="false">You don\'t have an app to open this file, Try from following apps</string>
     <string name="esp_lib_text_submissionscolon" translatable="false">Submissions:</string>
     <string name="esp_lib_text_submissionszero">Submissions (0)</string>
     <string name="esp_lib_text_approvalstages">Approval Stages</string>

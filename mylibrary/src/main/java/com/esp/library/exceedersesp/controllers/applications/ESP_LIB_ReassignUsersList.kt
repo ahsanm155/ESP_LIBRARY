@@ -21,7 +21,7 @@ import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.utilities.common.ESP_LIB_Constants
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
-import com.esp.library.utilities.common.FullScreenDialogExample
+import com.esp.library.utilities.common.ESP_LIB_FullScreenDialog
 import com.esp.library.utilities.customevents.EventOptions
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
@@ -39,7 +39,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import utilities.adapters.setup.applications.ESP_LIB_ListUsersAdapter
+import com.esp.library.utilities.setup.applications.ESP_LIB_ListUsersAdapter
 import utilities.data.apis.ESP_LIB_APIs
 import utilities.data.applicants.ESP_LIB_ApplicationSingleton
 import utilities.data.applicants.ESP_LIB_UsersListDAO
@@ -61,6 +61,7 @@ class ESP_LIB_ReassignUsersList : ESP_LIB_BaseActivity(), ESP_LIB_UserListClickL
     internal var myActionMenuItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_reassign_users_list)
@@ -304,7 +305,7 @@ class ESP_LIB_ReassignUsersList : ESP_LIB_BaseActivity(), ESP_LIB_UserListClickL
                     stop_loading_animation()
 
 
-                    val dialogFragment = FullScreenDialogExample()
+                    val dialogFragment = ESP_LIB_FullScreenDialog()
                     val args = Bundle()
                     args.putString("message", getString(R.string.esp_lib_text_reassign_criteria_success))
                     dialogFragment.arguments = args

@@ -25,7 +25,7 @@ import com.esp.library.exceedersesp.controllers.feedback.ESP_LIB_FeedbackForm
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
 import com.esp.library.utilities.common.ESP_LIB_ViewAnimationUtils
-import com.esp.library.utilities.common.GoogleFontsLibrary
+import com.esp.library.utilities.common.ESP_LIB_GoogleFontsLibrary
 import com.esp.library.utilities.data.applicants.signature.ESP_LIB_SignatureDAO
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
@@ -585,6 +585,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
         if (actualResponseJson.applicationStatusId == 5) // cancalled
         {
             val status = context?.getString(R.string.esp_lib_text_cancelled)
+            holder.ibReassignCard.isEnabled=false
             holder.txtstatus.text = status
             holder.ivainforrow.visibility = View.GONE
             holder.rlacceptapprove.visibility = View.GONE
@@ -730,7 +731,7 @@ class ESP_LIB_ApplicationCriteriaAdapter(val criterialist: List<ESP_LIB_DynamicS
                 val typeface = Typeface.createFromAsset(context?.assets, "font/greatvibes_regular.otf")
                 holder.etxtsign.typeface = typeface
             } else {
-                holder.etxtsign.typeface = GoogleFontsLibrary.setGoogleFont(context, rawStyles[indexOf])
+                holder.etxtsign.typeface = ESP_LIB_GoogleFontsLibrary.setGoogleFont(context, rawStyles[indexOf])
             }
 
         } else {

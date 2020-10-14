@@ -1,6 +1,6 @@
 package com.esp.library.exceedersesp.controllers.fieldstype.other;
 
-import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,8 +8,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.view.View;
-import android.widget.Toast;
+import android.webkit.MimeTypeMap;
 
+import androidx.core.content.FileProvider;
+
+import com.esp.library.R;
 import com.esp.library.exceedersesp.controllers.Profile.adapters.ESP_LIB_ListofSectionsFieldsAdapter;
 import com.esp.library.exceedersesp.controllers.fieldstype.viewholders.ESP_LIB_AttachmentTypeViewHolder;
 import com.esp.library.utilities.common.ESP_LIB_CustomLogs;
@@ -21,6 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -154,19 +158,33 @@ public class ESP_LIB_AttachmentImageDownload {
 
     public void OpenImage(String filePath, Context mContext) {
         try {
+            File file = new File(filePath);
             filePath = "file://" + filePath;
             ESP_LIB_CustomLogs.displayLogs(TAG + " OpenFile filePath: " + filePath);
-            if (filePath != null) {
 
                 StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
                 StrictMode.setVmPolicy(builder.build());
 
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse(filePath), "*/*");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
-            }
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    Uri apkURI = FileProvider.getUriForFile(Objects.requireNonNull(mContext),
+                            "com.exceedersesp.provider", file);
+
+                    MimeTypeMap myMime = MimeTypeMap.getSingleton();
+                    String mimeType = myMime.getMimeTypeFromExtension(MimeTypeMap.getFileExtensionFromUrl(apkURI.toString()));//It will return the mimetype
+                    intent.setDataAndType(apkURI, mimeType);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                    mContext.startActivity(intent);
+                } catch (Exception e) {
+                    ESP_LIB_Shared.getInstance().messageBox(mContext.getString(R.string.esp_lib_text_noapp_open_attachmet), (Activity) mContext);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.parse(filePath), "*/*");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+
 
 
         } catch (Exception e) {
@@ -276,7 +294,6 @@ public class ESP_LIB_AttachmentImageDownload {
         attachmentsDAO.setFileDownling(false);
         return null;
     }
-
 
 
 }

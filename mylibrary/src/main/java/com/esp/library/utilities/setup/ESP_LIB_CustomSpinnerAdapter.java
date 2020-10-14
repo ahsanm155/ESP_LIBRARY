@@ -18,6 +18,8 @@ import com.esp.library.R;
 
 import java.util.List;
 
+import utilities.common.ESP_LIB_CommonMethodsKotlin;
+
 public class ESP_LIB_CustomSpinnerAdapter extends ArrayAdapter<String> {
 
     private final LayoutInflater mInflater;
@@ -67,7 +69,7 @@ public class ESP_LIB_CustomSpinnerAdapter extends ArrayAdapter<String> {
         textView.setText(data);
 
         if (selectedIndex == position) {
-            textView.setTextColor(ContextCompat.getColor(mContext,R.color.colorPrimaryDark));
+            textView.setTextColor(ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor(mContext));
         }
 
         return view;

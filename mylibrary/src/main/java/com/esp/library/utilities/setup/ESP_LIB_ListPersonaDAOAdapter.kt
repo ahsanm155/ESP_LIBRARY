@@ -114,12 +114,6 @@ class ESP_LIB_ListPersonaDAOAdapter(persoans: List<ESP_LIB_OrganizationPersonaDa
 
             postFirebaseToken(personaDAO1.id)
 
-            /*  when (pref.firebaseId == 0) {
-                  true -> postFirebaseToken(personaDAO1.id, section.id)
-                  false -> mUser.StatusChange(personaDAO1)
-              }*/
-
-
         }
 
 

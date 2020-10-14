@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/margin_20dp"
         android:gravity="center"
         android:text="@string/esp_lib_text_nousersfound"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?attr/colorPrimaryDark"
         android:textSize="@dimen/_12ssp"
         custom:customfont="bold" />
 
@@ -120,7 +120,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilFieldLabel"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Esp_Lib_Style_RequestTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
@@ -132,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="viewStart"
+                android:textCursorDrawable="@null"
                 android:maxLines="5"
                 android:hint="@string/esp_lib_text_reassign_comment_hint"
                 style="@style/Esp_Lib_Style_TextHeading5Gray"

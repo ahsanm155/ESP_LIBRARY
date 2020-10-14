@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             app:tabTextColor="@color/esp_lib_color_mid_grey"
             app:tabSelectedTextColor="@color/esp_lib_color_black"
-            app:tabIndicatorColor="@color/colorPrimaryDark"
+            app:tabIndicatorColor="?attr/colorPrimaryDark"
             app:tabIndicatorHeight="@dimen/_3sdp"
             app:tabGravity="fill"
             app:tabMode="fixed" />
@@ -37,7 +37,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_plus"
-        app:backgroundTint="@color/colorPrimaryDark"
+        app:backgroundTint="?attr/colorPrimaryDark"
         app:tint="@color/esp_lib_color_white"
         app:borderWidth="0dp"
         app:elevation="6dp"

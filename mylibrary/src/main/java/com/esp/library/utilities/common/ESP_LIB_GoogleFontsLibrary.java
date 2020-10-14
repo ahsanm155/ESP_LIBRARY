@@ -14,7 +14,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GoogleFontsLibrary {
+public class ESP_LIB_GoogleFontsLibrary {
 
 
     public static int getFontStyle(int fontName)

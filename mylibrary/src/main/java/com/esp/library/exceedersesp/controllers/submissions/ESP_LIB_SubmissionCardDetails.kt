@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import kotlinx.android.synthetic.main.esp_lib_link_definition_card.*
 import utilities.data.applicants.ESP_LIB_LinkApplicationsDAO
@@ -14,6 +15,7 @@ internal class ESP_LIB_SubmissionCardDetails : ESP_LIB_BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_submissions_card_details)

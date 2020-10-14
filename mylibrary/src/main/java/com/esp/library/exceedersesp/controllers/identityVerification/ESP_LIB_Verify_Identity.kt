@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.utilities.common.ESP_LIB_Constants
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.customevents.EventOptions
@@ -60,8 +61,9 @@ class ESP_LIB_Verify_Identity : ESP_LIB_BaseActivity() {
     private var getBitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_verify_identity)
         initialize()
 

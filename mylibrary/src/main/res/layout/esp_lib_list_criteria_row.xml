@@ -18,7 +18,7 @@
             android:id="@+id/txtline"
             android:layout_width="@dimen/_3sdp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark" />
+            android:background="?attr/colorPrimaryDark" />
 
 
         <RelativeLayout
@@ -137,7 +137,7 @@
                     android:layout_height="@dimen/_20sdp"
                     android:visibility="gone"
                     android:layout_marginStart="@dimen/_5sdp"
-                    android:tint="@color/colorPrimaryDark"
+                    android:tint="?attr/colorPrimaryDark"
                     android:background="?attr/selectableItemBackground"
                     android:src="@drawable/ic_card_not_commented"
                     />
@@ -246,7 +246,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_toEndOf="@id/txtmoreinfo"
-                    android:tint="@color/colorPrimaryDark"
+                    android:tint="?attr/colorPrimaryDark"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:src="@drawable/ic_more_info_down">

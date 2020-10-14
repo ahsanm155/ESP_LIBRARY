@@ -860,7 +860,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
 
                         //Adding Instances To SectionValue
                         sectionValuesDAO.setInstances(instancesList);
-                        sectionValuesListToPost.add(sectionValuesDAO);
+                            sectionValuesListToPost.add(sectionValuesDAO);
                     }
 
 

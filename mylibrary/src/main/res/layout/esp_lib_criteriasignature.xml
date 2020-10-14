@@ -17,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/_50sdp"
-        android:textColorHint="@color/colorPrimaryDark"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:textColorHint="?attr/colorPrimaryDark"
+        style="@style/Esp_Lib_Style_RequestTextInputLayoutStyle">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etxtsign"

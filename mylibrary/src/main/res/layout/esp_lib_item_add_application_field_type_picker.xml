@@ -11,7 +11,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFieldDisableLabel"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Esp_Lib_Style_RequestTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
+            android:textCursorDrawable="@null"
             android:enabled="false"
             android:textAlignment="viewStart"
             android:paddingTop="@dimen/_6sdp"
@@ -66,13 +67,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Esp_Lib_Style_RequestTextInputLayoutStyle"
             app:hintTextAppearance="@style/Esp_Lib_Style_AddApplicationTextLabel">
 
             <com.esp.library.utilities.customcontrols.ESP_LIB_BodyEditText
                 android:id="@+id/etValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textCursorDrawable="@null"
                 android:inputType="textMultiLine"
                 android:textAlignment="viewStart"
                 android:enabled="false"

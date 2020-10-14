@@ -14,6 +14,7 @@ import android.widget.ImageView
 import androidx.core.widget.TextViewCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AddApplicationFragment
 import com.esp.library.ipaulpro.afilechooser.utils.FileUtils
 import com.esp.library.utilities.common.*
@@ -75,6 +76,7 @@ class ESP_LIB_AddApplicationsFromScreenActivity : ESP_LIB_BaseActivity(), ESP_LI
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_add_applications_form)

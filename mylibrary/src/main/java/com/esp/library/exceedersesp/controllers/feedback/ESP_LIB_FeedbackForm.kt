@@ -11,10 +11,13 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ActivityStageDetails
 import com.esp.library.exceedersesp.controllers.fieldstype.classes.ESP_LIB_AttachmentItem
 import com.esp.library.exceedersesp.controllers.fieldstype.other.ESP_LIB_AttachmentImageDownload
@@ -32,6 +35,7 @@ import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.CriteriaRejectionfeedback.ESP_LIB_FeedbackDAO
 import utilities.data.applicants.addapplication.ESP_LIB_PostApplicationsStatusDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DyanmicFormSectionFieldDetailsDAO
@@ -56,6 +60,13 @@ class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmatio
     var isVisibleToApplicant: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.requestFeature(Window.FEATURE_NO_TITLE);
+        window.setBackgroundDrawableResource(android.R.color.transparent);
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_feedback_form)
         initialize()
@@ -167,7 +178,7 @@ class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmatio
             btconfirm.setBackgroundResource(R.drawable.esp_lib_drawable_draw_bg_green_stroke)
             btcancel.text = getString(R.string.esp_lib_text_reject)
             btconfirm.text = getString(R.string.esp_lib_text_cancel)
-            btconfirm.setTextColor(ContextCompat.getColor(context!!, R.color.colorPrimaryDark))
+            btconfirm.setTextColor(ESP_LIB_CommonMethodsKotlin.getthemeColor(context!!))
             btcancel.setTextColor(ContextCompat.getColor(context!!, R.color.esp_lib_color_white))
         } else if (intent.getBooleanExtra("isAddCriteria", false)) {
             txtheading.text = getString(R.string.esp_lib_text_add_comment)
@@ -217,12 +228,6 @@ class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmatio
 
     private fun actionOnCancel() {
         onBackPressed()
-        /*ESPLIBDyanmicFormSectionFieldDetailsDAO = null
-        rlattachmentdetails.visibility = View.GONE
-        txtcomment.setText("")
-        rvCommentsList.visibility = View.VISIBLE
-        btaddcomment.text = getString(R.string.esp_lib_text_addcomment)
-        txtheading.text = getString(R.string.esp_lib_text_confirmfeedback)*/
     }
 
     private fun getCriteriaFormValues(criteriaListDAOESPLIB: ESP_LIB_DynamicStagesCriteriaListDAO): List<ESP_LIB_DynamicFormValuesDAO> {
@@ -429,7 +434,7 @@ class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmatio
                     stop_loading_animation()
 
 
-                    val dialogFragment = FullScreenDialogExample() // my custom FargmentDialog
+                    val dialogFragment = ESP_LIB_FullScreenDialog() // my custom FargmentDialog
                     val args = Bundle()
 
                     if (isApproveClick)
@@ -493,16 +498,6 @@ class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmatio
         txtcomment.setText(ESPLIBFeedbackDAO.comment)
         txtheading.text = getString(R.string.esp_lib_text_edit_feedback)
 
-
-        /*val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        btconfirm.setPadding(30,0,30,0)
-        btconfirm.layoutParams = params;*/
-
-
         val fileName = ESPLIBFeedbackDAO.attachemntDetails?.name
         txtacctehmentname.text = fileName
         val extension = fileName?.substring(fileName.lastIndexOf("."))
@@ -534,6 +529,8 @@ class ESP_LIB_FeedbackForm : ESP_LIB_BaseActivity(), ESP_LIB_FeedbackConfirmatio
             }
         }
     }
+
+
 
     override fun onStart() {
         super.onStart()

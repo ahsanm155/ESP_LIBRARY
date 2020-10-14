@@ -1,13 +1,12 @@
 package com.esp.library.exceedersesp.controllers.Profile
 
+
 import android.os.Bundle
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
-import com.esp.library.utilities.common.ESP_LIB_Shared
-
-
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationsActivityDrawer
-
+import com.esp.library.utilities.common.ESP_LIB_Shared
 import utilities.data.applicants.profile.ESP_LIB_ApplicationProfileDAO
 
 class ESP_LIB_ProfileMainActivity : ESP_LIB_BaseActivity() {
@@ -15,13 +14,14 @@ class ESP_LIB_ProfileMainActivity : ESP_LIB_BaseActivity() {
     internal var ischeckerror: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_profile_main_activity)
 
 
         val dataapplicant = intent.getSerializableExtra("dataapplicant") as ESP_LIB_ApplicationProfileDAO
-        dataapplicant.applicant.isProfileSubmitted
+
 
         ischeckerror = intent.getBooleanExtra("ischeckerror", false)
         val bundle = Bundle()

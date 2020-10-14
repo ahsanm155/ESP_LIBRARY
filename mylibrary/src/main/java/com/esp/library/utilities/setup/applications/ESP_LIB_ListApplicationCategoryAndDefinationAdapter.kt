@@ -14,6 +14,7 @@ import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_AddApplicationsFromScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_Shared
+import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import java.io.IOException
 import java.nio.charset.Charset
@@ -107,7 +108,7 @@ class ESP_LIB_ListApplicationCategoryAndDefinationAdapter(private val mApplicati
 
 
         if (list_type.equals(context.getString(R.string.esp_lib_text_categorysmall), ignoreCase = true)) {
-            holder.name.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary))
+            holder.name.setTextColor(ESP_LIB_CommonMethodsKotlin.getthemeColor(context))
         } else {
             holder.name.setTextColor(ContextCompat.getColor(context,R.color.esp_lib_color_dark_grey))
         }

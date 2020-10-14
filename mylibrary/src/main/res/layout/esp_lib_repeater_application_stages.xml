@@ -155,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="?attr/colorPrimaryDark"
                         android:textSize="@dimen/text_12"
                         custom:customfont="regular"
                         android:gravity="end"

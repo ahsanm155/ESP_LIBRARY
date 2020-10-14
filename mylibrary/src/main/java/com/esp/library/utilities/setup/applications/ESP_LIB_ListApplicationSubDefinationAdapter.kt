@@ -122,6 +122,7 @@ class ESP_LIB_ListApplicationSubDefinationAdapter(private val mApplications: Lis
         val bundle = Bundle()
         bundle.putSerializable(ESP_LIB_DefinationsDAO.BUNDLE_KEY, getmApplications)
         ESP_LIB_Shared.getInstance().callIntentWithResult(ESP_LIB_AddApplicationsFromScreenActivity::class.java, context as Activity, bundle, 2)
+
     }
 
     override fun getItemCount(): Int {

@@ -27,6 +27,7 @@ public class ESP_LIB_SharedPreference {
     String organizationid = "organizationid";
     String selectedUserRole = "selectedUserRole";
     String idenediClientId = "idenediClientId";
+    String idenediLoginUri = "idenediLoginUri";
     String idenediCode = "idenediCode";
     SharedPreferences pref;
     SharedPreferences.Editor editor;
@@ -79,7 +80,7 @@ public class ESP_LIB_SharedPreference {
     }
 
     public String getLanguage() {
-        return pref.getString(language, "");
+        return pref.getString(language, "en");
     }
 
 
@@ -135,6 +136,15 @@ public class ESP_LIB_SharedPreference {
 
     public String getidenediClientId() {
         return pref.getString(idenediClientId, null);
+    }
+
+    public void saveidenediLoginUri(String idenediLoginUrl) {
+        editor.putString(idenediLoginUri, idenediLoginUrl);
+        editor.commit();
+    }
+
+    public String getidenediLoginUri() {
+        return pref.getString(idenediLoginUri, null);
     }
 
 

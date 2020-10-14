@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.esp.library.R
-import com.esp.library.utilities.common.GoogleFontsLibrary
+import com.esp.library.utilities.common.ESP_LIB_GoogleFontsLibrary
 import com.esp.library.utilities.data.applicants.ESP_LIB_StylesDAO
 
 class ESP_LIB_CustomStyleSpinnerAdapter(private val mContext: Context, resource: Int, rawStyles: List<ESP_LIB_StylesDAO>) :
@@ -32,7 +32,7 @@ class ESP_LIB_CustomStyleSpinnerAdapter(private val mContext: Context, resource:
         val data = items[position]
         signatureTitle.text = data.signatureTitle
         if (data.fontStyle != 1122) {
-            signatureTitle?.typeface = GoogleFontsLibrary.setGoogleFont(context, data.fontStyle);
+            signatureTitle?.typeface = ESP_LIB_GoogleFontsLibrary.setGoogleFont(context, data.fontStyle);
         }
         return view
     }

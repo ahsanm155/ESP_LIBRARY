@@ -103,6 +103,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import utilities.common.ESP_LIB_CommonMethodsKotlin;
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.applicants.ESP_LIB_ApplicationSingleton;
 import utilities.data.applicants.addapplication.ESP_LIB_CurrencyDAO;
@@ -2043,7 +2044,7 @@ public class ESP_LIB_Shared {
             while (matcher.find()) {
                 try {
 
-                    ColorStateList orangeColor = new ColorStateList(new int[][]{new int[]{}}, new int[]{ContextCompat.getColor(context, R.color.colorPrimary)});
+                    ColorStateList orangeColor = new ColorStateList(new int[][]{new int[]{}}, new int[]{ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor(context)});
                     TextAppearanceSpan highlightSpan = new TextAppearanceSpan(null, Typeface.NORMAL, -1, orangeColor, null);
                     spanText.setSpan(highlightSpan, matcher.start(), matcher.start() + searchItem.length(), Spannable.SPAN_MARK_MARK);
 

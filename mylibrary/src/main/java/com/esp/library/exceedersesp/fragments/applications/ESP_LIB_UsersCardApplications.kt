@@ -13,11 +13,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.esp.library.R
-import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.controllers.applications.ESP_LIB_ApplicationSeeAllActivityTabs
+import com.esp.library.exceedersesp.controllers.applications.filters.ESP_LIB_FilterScreenActivity
 import com.esp.library.utilities.common.ESP_LIB_Shared
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
+import com.esp.library.utilities.customevents.EventOptions.EventRefreshData
 import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
+import org.greenrobot.eventbus.EventBus
 
 
 class ESP_LIB_UsersCardApplications : AppCompatActivity() {
@@ -29,6 +32,7 @@ class ESP_LIB_UsersCardApplications : AppCompatActivity() {
     var pDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
        changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_card_users_applications)
@@ -59,7 +63,7 @@ class ESP_LIB_UsersCardApplications : AppCompatActivity() {
         pDialog = ESP_LIB_Shared.getInstance().setProgressDialog(context)
         setSupportActionBar(gradienttoolbar)
         ibToolbarBack.setOnClickListener { onBackPressed() }
-        pDialog = ESP_LIB_Shared.getInstance().setProgressDialog(this)
+
         toolbarheading.text = getString(R.string.esp_lib_text_requesttoaction)
 
 
@@ -82,5 +86,13 @@ class ESP_LIB_UsersCardApplications : AppCompatActivity() {
         return super.dispatchTouchEvent(event)
     }
 
+    override fun onBackPressed() {
+        ESP_LIB_ESPApplication.getInstance()?.filter=null
+        ESP_LIB_FilterScreenActivity.isOpenFilterApplied=false
+        ESP_LIB_FilterScreenActivity.isCloseFilterApplied=false
+        EventBus.getDefault().post(EventRefreshData())
+        super.onBackPressed()
+
+    }
 
 }

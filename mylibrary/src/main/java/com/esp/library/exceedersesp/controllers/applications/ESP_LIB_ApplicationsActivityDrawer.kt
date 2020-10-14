@@ -93,6 +93,7 @@ class ESP_LIB_ApplicationsActivityDrawer : ESP_LIB_BaseActivity(), ESP_LIB_Users
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_applications_drawer)
@@ -114,7 +115,7 @@ class ESP_LIB_ApplicationsActivityDrawer : ESP_LIB_BaseActivity(), ESP_LIB_Users
         toolbar_heading.setText(pref?.getlabels()?.applications)
 
 
-        fm = this.context?.getSupportFragmentManager()
+        fm = this.context?.supportFragmentManager
 
         request_fragment_search.visibility = View.GONE
 

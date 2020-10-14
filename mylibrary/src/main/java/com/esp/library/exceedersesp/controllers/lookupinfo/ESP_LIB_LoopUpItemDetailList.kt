@@ -9,7 +9,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
@@ -22,6 +21,8 @@ import kotlinx.android.synthetic.main.esp_lib_lookup_item_detail_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import utilities.common.ESP_LIB_CommonMethodsKotlin
+import utilities.common.ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormSectionDAO
 import utilities.data.applicants.dynamics.ESP_LIB_DynamicFormValuesDAO
 import utilities.data.lookup.ESP_LIB_LookupInfoListDetailDAO
@@ -43,6 +44,7 @@ class ESP_LIB_LoopUpItemDetailList : ESP_LIB_BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_lookup_item_detail_list)
@@ -144,7 +146,8 @@ class ESP_LIB_LoopUpItemDetailList : ESP_LIB_BaseActivity() {
         lookup_item_list.layoutManager = lookupItemLayoutManager
         lookup_item_list.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
 
-        val themeColor = ContextCompat.getColor(context!!, R.color.colorPrimaryDark)
+
+        val themeColor = getthemeColor(context!!);
         swipeRefreshLayout?.setColorSchemeColors(themeColor, themeColor, themeColor)
 
     }

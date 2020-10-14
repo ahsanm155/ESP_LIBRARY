@@ -178,7 +178,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
                 val isArrayHasValue = criteriaListCollections.any { x -> x?.assessmentId == getList?.assessmentId }
                 if (!isArrayHasValue) {
                     //if (getList?.isEnabled!!)
-                        criteriaListCollections.add(getList)
+                    criteriaListCollections.add(getList)
                 }
             }
 
@@ -215,16 +215,16 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             // if (!dynamicStagesDAO.status.equals(context.getString(R.string.locked), ignoreCase = true)) {
             //  if (dynamicStagesDAO.criteriaList!!.size > 0) {
 
-           // if ((!dynamicStagesDAO.status.equals(ESP_LIB_Enums.locked.toString(), ignoreCase = true))) {
-                if (!dynamicStagesDAO.type.equals(ESP_LIB_Enums.link.toString(), ignoreCase = true)) {
-                  //  if (holder.txtstatus.text != ESP_LIB_Enums.locked.toString()) {
-                        val intent = Intent(context, ESP_LIB_ActivityStageDetails::class.java)
-                        intent.putExtra("dynamicStagesDAO", dynamicStagesDAO)
-                        intent.putExtra("actualResponseJson", actualResponseJson)
-                        intent.putExtra("status", holder.txtstatus.text)
-                        context.startActivity(intent)
-                 //   }
-                }
+            // if ((!dynamicStagesDAO.status.equals(ESP_LIB_Enums.locked.toString(), ignoreCase = true))) {
+            if (!dynamicStagesDAO.type.equals(ESP_LIB_Enums.link.toString(), ignoreCase = true)) {
+                //  if (holder.txtstatus.text != ESP_LIB_Enums.locked.toString()) {
+                val intent = Intent(context, ESP_LIB_ActivityStageDetails::class.java)
+                intent.putExtra("dynamicStagesDAO", dynamicStagesDAO)
+                intent.putExtra("actualResponseJson", actualResponseJson)
+                intent.putExtra("status", holder.txtstatus.text)
+                context.startActivity(intent)
+                //   }
+            }
             //}
         }
 
@@ -238,8 +238,8 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
             val getList = ESPLIBDynamicStagesDAO.criteriaList?.get(i);
             val isArrayHasValue = criteriaListCollections.any { x -> x?.assessmentId == getList?.assessmentId }
             if (!isArrayHasValue) {
-               // if (getList?.isEnabled!!)
-                    criteriaListCollections.add(getList)
+                // if (getList?.isEnabled!!)
+                criteriaListCollections.add(getList)
             }
         }
 
@@ -317,12 +317,7 @@ class ESP_LIB_ApplicationStagesAdapter(iscomingfromAssessor: Boolean, val stages
                 lockedCase(holder, ESPLIBDynamicStagesDAO, position, actualResponseJson, drawable!!)
             }
 
-            ESP_LIB_Enums.completed.toString() // Completed
-            -> {
-                completeStage(ESPLIBDynamicStagesDAO, holder, drawable!!, actualResponseJson)
-            }
-
-            ESP_LIB_Enums.complete.toString() // Complete
+            ESP_LIB_Enums.completed.toString(), ESP_LIB_Enums.complete.toString() // Completed //Complete
             -> {
                 completeStage(ESPLIBDynamicStagesDAO, holder, drawable!!, actualResponseJson)
             }

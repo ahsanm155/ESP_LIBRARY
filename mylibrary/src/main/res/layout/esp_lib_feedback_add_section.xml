@@ -40,7 +40,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilFieldLabel"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Esp_Lib_Style_RequestTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -51,9 +51,10 @@
                 android:id="@+id/txtcomment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textCursorDrawable="@null"
                 android:textAlignment="viewStart"
                 android:hint="@string/esp_lib_text_add_a_comment"
-                android:inputType="textMultiLine|textCapWords"
+                android:inputType="textMultiLine|textCapSentences"
                 android:minLines="3"
                 android:maxLines="5"
                 android:gravity="start"
@@ -86,7 +87,7 @@
                     android:id="@+id/attachicon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tint="@color/colorPrimaryDark"
+                    android:tint="?attr/colorPrimaryDark"
                     android:paddingTop="@dimen/_2sdp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/esp_lib_drawable_ic_icons_inputs_attach_black"/>

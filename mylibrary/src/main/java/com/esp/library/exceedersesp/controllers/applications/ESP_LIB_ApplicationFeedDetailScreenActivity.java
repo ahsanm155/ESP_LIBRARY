@@ -57,6 +57,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import utilities.adapters.setup.applications.ESP_LIB_ListAddApplicationSectionsAdapter;
 import utilities.adapters.setup.applications.ESP_LIB_ListSubmissionApplicationsAdapter;
+import utilities.common.ESP_LIB_CommonMethodsKotlin;
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.applicants.ESP_LIB_ApplicationsDAO;
 import utilities.data.applicants.ESP_LIB_SubmittalApplicationsDAO;
@@ -177,6 +178,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().getApplicationTheme());
         changeStatusBarColor(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.esp_lib_activity_feed_application_detail);
@@ -372,7 +374,7 @@ public class ESP_LIB_ApplicationFeedDetailScreenActivity extends ESP_LIB_BaseAct
 
         setupToolbar(toolbar);
 
-        int themeColor = ContextCompat.getColor(bContext, R.color.colorPrimaryDark);
+        int themeColor = ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor(bContext);
         swipeRefreshLayout.setColorSchemeColors(themeColor, themeColor, themeColor);
 
     }

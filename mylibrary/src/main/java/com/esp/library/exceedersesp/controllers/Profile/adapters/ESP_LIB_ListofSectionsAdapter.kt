@@ -193,7 +193,7 @@ class ESP_LIB_ListofSectionsAdapter(internal var ESPLIBDynamicFormSectionDAO: ES
                 i.putExtra("position", position)
                 context.startActivity(i)
             } else if (item.itemId == R.id.action_delete) {
-                ESP_LIB_Shared.getInstance().messageBox("Delete", context as Activity)
+                ESP_LIB_Shared.getInstance().messageBox(context.getString(R.string.esp_lib_text_delete), context as Activity)
             }
             false
         }

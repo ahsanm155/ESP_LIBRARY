@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_plus"
             app:tint="@color/esp_lib_color_white"
-            app:backgroundTint="@color/colorPrimaryDark"
+            app:backgroundTint="?attr/colorPrimaryDark"
             app:fabSize="normal"
             />
     </LinearLayout>

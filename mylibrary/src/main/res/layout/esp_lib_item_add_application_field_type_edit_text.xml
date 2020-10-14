@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Esp_Lib_Style_RequestTextInputLayoutStyle"
         android:id="@+id/tilFieldDisableLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +29,7 @@
         android:enabled="false"
         android:paddingTop="@dimen/_6sdp"
         android:autoLink="web"
+        android:textCursorDrawable="@null"
         android:textAlignment="viewStart"
         android:inputType="textMultiLine"
         android:textColor="@color/esp_lib_color_black"
@@ -40,7 +41,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilFieldLabel"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Esp_Lib_Style_RequestTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -53,6 +54,7 @@
             android:autoLink="web"
             android:textAlignment="viewStart"
             android:inputType="textMultiLine"
+            android:textCursorDrawable="@null"
             android:maxLength="1000"
             android:textColor="@color/esp_lib_color_black"
             android:textSize="@dimen/_13ssp"

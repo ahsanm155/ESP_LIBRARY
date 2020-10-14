@@ -13,10 +13,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -94,7 +91,7 @@ public class ESP_LIB_EdittextItem {
         pref = new ESP_LIB_SharedPreference(mContext);
         // final DynamicFormSectionFieldDAO fieldDAO = fieldDAO;
 
-        if (fieldDAO.getId() == 5366) // for stemex
+        if (fieldDAO.getId() == 5366 || fieldDAO.getId() == 3614) // for stemex
         {
             fieldDAO.setReadOnly(true);
         }
@@ -218,7 +215,7 @@ public class ESP_LIB_EdittextItem {
             }
 
 
-            validateForm(fieldDAO);
+            validateForm(fieldDAO,ESPLIBDynamicStagesCriteriaListDAO);
 
             return;
         }
@@ -291,7 +288,7 @@ public class ESP_LIB_EdittextItem {
 
 
                 }
-                validateForm(fieldDAO);
+                validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
             }
         });
 
@@ -354,18 +351,15 @@ public class ESP_LIB_EdittextItem {
                 holder.etValue.setMinLines(3);
                 holder.etValue.setMaxLines(5);
 
-                holder.etValue.setOnTouchListener(new View.OnTouchListener() {
-
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (holder.etValue.hasFocus()) {
-                            v.getParent().requestDisallowInterceptTouchEvent(true);
-                            if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_SCROLL) {
-                                v.getParent().requestDisallowInterceptTouchEvent(false);
-                                return true;
-                            }
+                holder.etValue.setOnTouchListener((v, event) -> {
+                    if (holder.etValue.hasFocus()) {
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        if ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_SCROLL) {
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            return true;
                         }
-                        return false;
                     }
+                    return false;
                 });
 
                 break;
@@ -446,23 +440,23 @@ public class ESP_LIB_EdittextItem {
 
         }
 
-        validateForm(fieldDAO);
+        validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
 
 
         new Handler().postDelayed(() -> {
             try {
                 if (criteriaListDAO != null && !criteriaListDAO.isValidate() && criteriaListDAO.form.getSections() != null && criteriaListDAO.form.getSections().size() == 1) {
                     holder.etValue.setText("");
-                    validateForm(fieldDAO);
+                    validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
                 }
             }catch (Exception e){}
         }, 2000);
 
     }
 
-    private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO) {
+    private void validateForm(ESP_LIB_DynamicFormSectionFieldDAO fieldDAO, ESP_LIB_DynamicStagesCriteriaListDAO dynamicStagesCriteriaListDAO) {
         ESP_LIB_Validation validation = new ESP_LIB_Validation(mApplicationFieldsAdapterListener, ESPLIBCriteriaFieldsListener,
-                criteriaListDAO, fieldDAO);
+                dynamicStagesCriteriaListDAO, fieldDAO);
         validation.setSectionListener(edisectionDetailslistener);
         validation.validateForm();
     }

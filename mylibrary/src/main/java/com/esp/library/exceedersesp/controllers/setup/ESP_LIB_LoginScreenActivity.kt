@@ -4,9 +4,9 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
+import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.SingleController.CompRoot
 import com.esp.library.exceedersesp.fragments.setup.ESP_LIB_LoginScreenFragment
 import com.esp.library.utilities.common.ESP_LIB_Constants
@@ -38,27 +38,28 @@ class ESP_LIB_LoginScreenActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListPersonaD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         setContentView(R.layout.esp_lib_activity_login_screen)
         initailize()
 
 
         if (ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) != null) {
             ESP_LIB_Constants.base_url = ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) + ESP_LIB_Constants.base_url_api
-        } else {
+        } /*else {
             ESP_LIB_Shared.getInstance().WritePref("url", "https://esp.exceeders.com", "base_url", context)
             ESP_LIB_Constants.base_url = ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) + ESP_LIB_Constants.base_url_api
-        }
+        }*/
 
        /* else {
             Shared.getInstance().WritePref("url", "https://isp.exceedgulf.com", "base_url", context)
             Constants.base_url = Shared.getInstance().ReadPref("url", "base_url", context) + Constants.base_url_api
         }*/
 
-        /*else {
+        else {
             ESP_LIB_Shared.getInstance().WritePref("url", "https://qaesp.azurewebsites.net", "base_url", context)
             //   Shared.getInstance().WritePref("url", "http://espdemo.azurewebsites.net/", "base_url", context)
             ESP_LIB_Constants.base_url = ESP_LIB_Shared.getInstance().ReadPref("url", "base_url", context) + ESP_LIB_Constants.base_url_api
-        }*/
+        }
        /* inAppUpdateManager = InAppUpdateManager.Builder(this, REQ_CODE_VERSION_UPDATE)
                 .resumeUpdates(true) // Resume the update, if the update was stalled. Default is true
                 .mode(InAppConstants.UpdateMode.IMMEDIATE)
@@ -136,6 +137,7 @@ class ESP_LIB_LoginScreenActivity : ESP_LIB_BaseActivity(), ESP_LIB_ListPersonaD
                     }
 
                     pref?.saveidenediClientId(response.body().idenediClientId);
+                    pref?.saveidenediLoginUri(response.body().idenediLoginUri);
                 } else
                     callFragment()
             }

@@ -16,7 +16,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.esp.library.R
@@ -32,8 +31,9 @@ import kotlinx.android.synthetic.main.esp_lib_gradienttoolbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import utilities.adapters.setup.ESP_LIB_FilterItemsAdapter
+import com.esp.library.utilities.setup.ESP_LIB_FilterItemsAdapter
 import utilities.adapters.setup.applications.ESP_LIB_ListApplicationSubDefinationAdapter
+import utilities.common.ESP_LIB_CommonMethodsKotlin.Companion.getthemeColor
 import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.interfaces.ESP_LIB_DeleteFilterListener
 import java.util.*
@@ -56,6 +56,7 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_submission_requests)
@@ -151,7 +152,7 @@ class ESP_LIB_ActivitySubmissionRequests : ESP_LIB_BaseActivity(), ESP_LIB_Delet
         filter_horizontal_list?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         filter_horizontal_list?.itemAnimator = DefaultItemAnimator()
 
-        val themeColor = ContextCompat.getColor(context!!,R.color.colorPrimaryDark)
+        val themeColor = getthemeColor(context!!);
         swipeRefreshLayout?.setColorSchemeColors(themeColor, themeColor, themeColor)
 
     }

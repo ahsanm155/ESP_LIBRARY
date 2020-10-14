@@ -1,4 +1,4 @@
-package utilities.adapters.setup.applications
+package com.esp.library.utilities.setup.applications
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import com.esp.library.R
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.controllers.applications.filters.ESP_LIB_FilterActivity
+import utilities.common.ESP_LIB_CommonMethodsKotlin
 import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO
 import utilities.interfaces.ESP_LIB_CheckFilterSelection
 
@@ -94,7 +95,7 @@ class ESP_LIB_ListApplicationCategoryAdapter(private val mApplications: List<ESP
             categoryAndDefinationsDAOFilteredList.remove(ESPLIBCategoryAndDefinationsDAO)
             holder.ivChecked.visibility = View.GONE
             holder.llFilterCont.background = ContextCompat.getDrawable(context, R.drawable.esp_lib_drawable_draw_bg_green_stroke)
-            holder.tvMultiSelectionFilter.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+            holder.tvMultiSelectionFilter.setTextColor(ESP_LIB_CommonMethodsKotlin.getthemeColor(context))
         }
 
        // AddApplicationCategoryAndDefinationsFragment.categoryAndDefinationsDAOFilteredList = categoryAndDefinationsDAOFilteredList

@@ -35,7 +35,7 @@
                 app:selectedTab="0"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_15sdp"
-                app:selectedColor="@color/colorPrimaryDark"
+                app:selectedColor="?attr/colorPrimaryDark"
                 app:disableColor="@android:color/black"
                 app:switchTabs="@array/signature_tabs"
                 app:textSize="@dimen/_12ssp"

@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckBox
 import com.esp.library.R
 import com.esp.library.utilities.common.ESP_LIB_SharedPreference
-import utilities.data.filters.ESP_LIB_FilterDefinitionSortDAO
-import utilities.interfaces.ApplicationsFilterListener
+import com.esp.library.utilities.data.filters.ESP_LIB_FilterDefinitionSortDAO
+import com.esp.library.utilities.interfaces.ESP_LIB_FilterListener
 
 
 class ESP_LIB_FilterSortByAdapter(val ESPLIBFilterSortByListSort: List<ESP_LIB_FilterDefinitionSortDAO>, con: Context)
@@ -20,7 +20,7 @@ class ESP_LIB_FilterSortByAdapter(val ESPLIBFilterSortByListSort: List<ESP_LIB_F
     var TAG = "FilterDefinitionAdapter"
     private var context: Context
     var pref: ESP_LIB_SharedPreference? = null
-    var filterListener: ApplicationsFilterListener? = null
+    var filterListener: ESP_LIB_FilterListener? = null
 
 
     open class ParentViewHolder(v: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(v)
@@ -43,7 +43,7 @@ class ESP_LIB_FilterSortByAdapter(val ESPLIBFilterSortByListSort: List<ESP_LIB_F
     init {
         context = con
         pref = ESP_LIB_SharedPreference(context)
-        filterListener = context as ApplicationsFilterListener
+        filterListener = context as ESP_LIB_FilterListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentViewHolder {

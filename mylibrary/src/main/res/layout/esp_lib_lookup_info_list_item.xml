@@ -21,7 +21,7 @@
             android:layout_marginEnd="@dimen/_14sdp"
             android:gravity="center_vertical"
             android:src="@drawable/esp_lib_drawable_ic_lookupadon_link"
-            android:tint="@color/colorPrimaryDark" />
+            android:tint="?attr/colorPrimaryDark" />
 
 
         <com.esp.library.utilities.customcontrols.ESP_LIB_BodyText

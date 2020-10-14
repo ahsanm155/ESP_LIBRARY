@@ -23,7 +23,7 @@
             android:id="@+id/attachicon"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_15sdp"
-            android:tint="@color/colorPrimaryDark"
+            android:tint="?attr/colorPrimaryDark"
             android:layout_toStartOf="@+id/tbtvalue"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"

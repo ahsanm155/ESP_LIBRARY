@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/esp_lib_color_white"
+            android:textCursorDrawable="@null"
             android:hint="@string/esp_lib_text_please_add_comment"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:textAlignment="viewStart"

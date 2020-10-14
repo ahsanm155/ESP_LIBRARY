@@ -11,10 +11,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.esp.library.R
-import com.esp.library.utilities.common.*
 import com.esp.library.exceedersesp.ESP_LIB_BaseActivity
 import com.esp.library.exceedersesp.ESP_LIB_ESPApplication
 import com.esp.library.exceedersesp.fragments.applications.ESP_LIB_AssesscorApplicationStagesCriteriaCommentsFragment
+import com.esp.library.utilities.common.*
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
@@ -50,6 +50,7 @@ class ESP_LIB_AssessorApplicationStagesCeriteriaCommentsScreenActivity : ESP_LIB
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(ESP_LIB_ESPApplication.getInstance().applicationTheme)
         changeStatusBarColor(true)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.esp_lib_activity_assessor_application_stages_criteria_comments)

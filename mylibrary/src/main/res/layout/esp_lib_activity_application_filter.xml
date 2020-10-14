@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/esp_lib_color_view_bg"
-    xmlns:custom="http://schemas.android.com/apk/res-auto">
+    android:background="@color/esp_lib_color_view_bg">
 
 
 
