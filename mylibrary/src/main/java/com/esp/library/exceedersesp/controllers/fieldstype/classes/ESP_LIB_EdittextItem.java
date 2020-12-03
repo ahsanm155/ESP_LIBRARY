@@ -10,11 +10,9 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
@@ -38,7 +36,6 @@ public class ESP_LIB_EdittextItem {
 
     private String TAG = getClass().getSimpleName();
     private static ESP_LIB_EdittextItem edittextItem = null;
-    private int maxLines = 5;
     private ESP_LIB_ApplicationFieldsRecyclerAdapter.ApplicationFieldsAdapterListener mApplicationFieldsAdapterListener;
     private ESP_LIB_CriteriaFieldsListener ESPLIBCriteriaFieldsListener;
     private ESP_LIB_DynamicStagesCriteriaListDAO criteriaListDAO;
@@ -136,9 +133,9 @@ public class ESP_LIB_EdittextItem {
 
         if (ESPLIBDynamicStagesCriteriaListDAO != null &&
                 (!ESPLIBDynamicStagesCriteriaListDAO.isOwner() && ESPLIBDynamicStagesCriteriaListDAO.getAssessmentStatus().equalsIgnoreCase(mContext.getString(R.string.esp_lib_text_active)))) {
-               holder.etValue.setText(fieldDAO.getLabel());
-               holder.etValue.setEnabled(false);
-               holder.etValue.setFocusable(false);
+            holder.etValue.setText(fieldDAO.getLabel());
+            holder.etValue.setEnabled(false);
+            holder.etValue.setFocusable(false);
 
             return;
         }
@@ -161,7 +158,7 @@ public class ESP_LIB_EdittextItem {
             holder.tValue.setText(getValue);
             fieldDAO.setValidate(true);
 
-            if(getValue==null||getValue.isEmpty() || getValue.equalsIgnoreCase("http://-"))
+            if (getValue == null || getValue.isEmpty() || getValue.equalsIgnoreCase("http://-"))
                 holder.tValue.setText("-");
 
             try {
@@ -215,39 +212,39 @@ public class ESP_LIB_EdittextItem {
             }
 
 
-            validateForm(fieldDAO,ESPLIBDynamicStagesCriteriaListDAO);
+            validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
 
             return;
         }
 
 
-        holder.etValue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean isfocusable) {
+        holder.etValue.setOnFocusChangeListener((view, isfocusable) -> {
 
-                if (fieldDAO.getType() == 17 || fieldDAO.getType() == 18 || fieldDAO.getType() == 19) {
+            if (fieldDAO.getType() == 17 || fieldDAO.getType() == 18 || fieldDAO.getType() == 19) {
 
-                    fieldDAO.setValue("");
-                    fieldDAO.setValidate(true);
-                    return;
-                }
-                if (!isfocusable) {
-                    // if (isCalculatedMappedField )
-                    if (fieldDAO.isTigger())
-                        ESP_LIB_CalculatedMappedRequestTrigger.submitCalculatedMappedRequest(mContext, isViewOnly, fieldDAO);
-                }
+                fieldDAO.setValue("");
+                fieldDAO.setValidate(true);
+                return;
+            }
+            if (!isfocusable) {
+                // if (isCalculatedMappedField )
+                if (fieldDAO.isTigger())
+                    ESP_LIB_CalculatedMappedRequestTrigger.submitCalculatedMappedRequest(mContext, isViewOnly, fieldDAO);
+            } else {
+                new Handler().postDelayed(() -> {
+                    String text=holder.etValue.getText().toString();
+                    holder.etValue.setText(text);
+                    holder.etValue.setSelection(text.length());
+                    }, 500);
             }
         });
 
-        holder.etValue.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    //Clear focus here from edittext
-                    holder.etValue.clearFocus();
-                }
-                return false;
+        holder.etValue.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                //Clear focus here from edittext
+                holder.etValue.clearFocus();
             }
+            return false;
         });
 
         holder.etValue.addTextChangedListener(new TextWatcher() {
@@ -339,8 +336,6 @@ public class ESP_LIB_EdittextItem {
             holder.etValue.setEnabled(true);
 
 
-
-
         int maxLength = 1000;
         switch (fieldDAO.getType()) {
             case 1:// Short EditText
@@ -374,10 +369,10 @@ public class ESP_LIB_EdittextItem {
                 if (!isViewOnly) {
                     if (pref.getLanguage().equalsIgnoreCase("en")) {
 
-                            holder.etValue.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.esp_lib_drawable_ic_icons_message_grey, 0);
+                        holder.etValue.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.esp_lib_drawable_ic_icons_message_grey, 0);
                     } else {
 
-                            holder.etValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.esp_lib_drawable_ic_icons_message_grey, 0, 0, 0);
+                        holder.etValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.esp_lib_drawable_ic_icons_message_grey, 0, 0, 0);
                     }
                 }
                 holder.etValue.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
@@ -387,10 +382,10 @@ public class ESP_LIB_EdittextItem {
                 if (!isViewOnly) {
                     if (pref.getLanguage().equalsIgnoreCase("en")) {
 
-                            holder.etValue.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.esp_lib_drawable_ic_icons_event_link_grey, 0);
+                        holder.etValue.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.esp_lib_drawable_ic_icons_event_link_grey, 0);
                     } else {
 
-                            holder.etValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.esp_lib_drawable_ic_icons_event_link_grey, 0, 0, 0);
+                        holder.etValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.esp_lib_drawable_ic_icons_event_link_grey, 0, 0, 0);
                     }
                 }
                 holder.etValue.setSingleLine(true);
@@ -399,9 +394,9 @@ public class ESP_LIB_EdittextItem {
             case 16:// PhoneNumber EditText
                 if (!isViewOnly) {
                     if (pref.getLanguage().equalsIgnoreCase("en")) {
-                            holder.etValue.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.esp_lib_drawable_ic_icons_phone_grey, 0);
+                        holder.etValue.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.esp_lib_drawable_ic_icons_phone_grey, 0);
                     } else {
-                            holder.etValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.esp_lib_drawable_ic_icons_phone_grey, 0, 0, 0);
+                        holder.etValue.setCompoundDrawablesWithIntrinsicBounds(R.drawable.esp_lib_drawable_ic_icons_phone_grey, 0, 0, 0);
                     }
                 }
                 holder.etValue.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -449,7 +444,8 @@ public class ESP_LIB_EdittextItem {
                     holder.etValue.setText("");
                     validateForm(fieldDAO, ESPLIBDynamicStagesCriteriaListDAO);
                 }
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
         }, 2000);
 
     }

@@ -58,8 +58,8 @@ import retrofit2.Retrofit;
 import utilities.adapters.setup.applications.ESP_LIB_ListAddApplicationSectionsAdapter;
 import utilities.data.apis.ESP_LIB_APIs;
 import utilities.data.applicants.ESP_LIB_CalculatedMappedFieldsDAO;
-import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_CurrencyDAO;
+import utilities.data.applicants.addapplication.ESP_LIB_DefinationsDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_LookUpDAO;
 import utilities.data.applicants.addapplication.ESP_LIB_ResponseFileUploadDAO;
 import utilities.data.applicants.dynamics.ESP_LIB_DyanmicFormSectionFieldDetailsDAO;
@@ -489,6 +489,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
             //Setting Sections With FieldsCards.
             for (ESP_LIB_DynamicFormSectionDAO sectionDAO : response.getSections()) {
 
+
                 if (sectionDAO.getFields() != null && sectionDAO.getFields().size() > 0) {
                     List<ESP_LIB_DynamicFormSectionFieldDAO> fields;
                     if (sectionsValues != null)
@@ -860,7 +861,7 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
 
                         //Adding Instances To SectionValue
                         sectionValuesDAO.setInstances(instancesList);
-                            sectionValuesListToPost.add(sectionValuesDAO);
+                        sectionValuesListToPost.add(sectionValuesDAO);
                     }
 
 
@@ -1139,7 +1140,8 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
 
                                                             if (targetFieldType == 13) {
 
-                                                                if (!ESPLIBCalculatedMappedFieldsDAO.getValue().isEmpty()) {
+                                                                if (ESPLIBCalculatedMappedFieldsDAO != null && ESPLIBCalculatedMappedFieldsDAO.getValue() != null
+                                                                        && !ESPLIBCalculatedMappedFieldsDAO.getValue().isEmpty()) {
                                                                     String[] split = ESPLIBCalculatedMappedFieldsDAO.getValue().split(":");
                                                                     String lookupId = split[0];
                                                                     if (!lookupId.isEmpty() && ESP_LIB_Shared.getInstance().isNumeric(lookupId))
@@ -1149,7 +1151,9 @@ public class ESP_LIB_AddApplicationFragment extends Fragment implements
                                                                         try {
                                                                             String lookupText = split[1];
                                                                             ESPLIBDynamicFormSectionFieldDAO.setLookupValue(lookupText);
-                                                                        }catch (Exception e){e.printStackTrace();}
+                                                                        } catch (Exception e) {
+                                                                            e.printStackTrace();
+                                                                        }
                                                                     }
                                                                 }
 

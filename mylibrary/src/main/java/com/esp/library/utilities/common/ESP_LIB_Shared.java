@@ -130,7 +130,7 @@ public class ESP_LIB_Shared {
 
     private final SimpleDateFormat DATE_TIME_FORMAT_FULL = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a ZZZZZ");
     private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-    private final SimpleDateFormat DATE_TIME_FORMAT_NEW = new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:ss'Z'");
+//    private final SimpleDateFormat DATE_TIME_FORMAT_NEW = new SimpleDateFormat("YYYY-MM-DD'T'HH:mm:ss'Z'");
     private final SimpleDateFormat DATE_TIME_FORMAT_SQL = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
     private final SimpleDateFormat DATE_TIME_FORMAT_DATA_TIME = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSz");
     private final SimpleDateFormat DATE_TIME_FORMAT_FULL_T = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
@@ -1829,13 +1829,15 @@ public class ESP_LIB_Shared {
         List<ESP_LIB_DynamicFormSectionFieldDAO> fields = sectionDAO.getFields();
         List<ESP_LIB_DynamicFormSectionFieldDAO> tempFields = new ArrayList<>();
         for (int h = 0; h < (fields != null ? fields.size() : 0); h++) {
-            if (fields.get(h).isVisible()) {
-                if (isClearMappedCalculatedFields && (fields.get(h).getType() == 18||fields.get(h).getType() == 19))
-                    fields.get(h).setValue("");
+            ESP_LIB_DynamicFormSectionFieldDAO field = fields.get(h);
+            if (field.isVisible()) {
+                if (isClearMappedCalculatedFields && (field.getType() == 18||field.getType() == 19))
+                    field.setValue("");
 
-                if (fields.get(h).getType() == 11 && fields.get(h).getValue() != null && !fields.get(h).getValue().contains(":"))
-                    fields.get(h).setValue("");
 
+                /*if (fields.get(h).getType() == 11 && fields.get(h).getValue() != null && !fields.get(h).getValue().contains(":"))
+                    fields.get(h).setValue("");
+*/
                 tempFields.add(fields.get(h));
             }
         }

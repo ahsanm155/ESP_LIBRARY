@@ -25,7 +25,6 @@ import utilities.common.ESP_LIB_CommonMethodsKotlin
 
 class ESP_LIB_SelectStyleFragment : Fragment() {
 
-    var materialAlertDialogBuilder: AlertDialog? = null
     internal var pDialog: android.app.AlertDialog? = null
 
     var rawStyles = intArrayOf(R.raw.caveat_regular, R.raw.dancingscript, R.raw.gloriagallelujah_regular, R.raw.greatvibes_regular, R.raw.indieflower_regular,

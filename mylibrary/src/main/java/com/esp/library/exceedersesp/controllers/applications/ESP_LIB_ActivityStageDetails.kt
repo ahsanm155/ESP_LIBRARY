@@ -95,7 +95,7 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
 
 
         //  criteriaListCollections.clear()
-        for (i in 0 until dynamicStagesDAO?.criteriaList!!.size) {
+        for (i in dynamicStagesDAO?.criteriaList!!.indices) {
             val getList = dynamicStagesDAO?.criteriaList?.get(i);
             val isArrayHasValue = criteriaListCollections.any { x -> x?.assessmentId == getList?.assessmentId }
             if (!isArrayHasValue) {
@@ -496,7 +496,17 @@ class ESP_LIB_ActivityStageDetails : ESP_LIB_BaseActivity(), ESP_LIB_CriteriaFie
                         value.type = dynamicFormSectionFieldDAO.type
                         value.value = dynamicFormSectionFieldDAO.value
                         value.sectionId = sectionId
-                        value.details = value.details
+
+
+                        if (dynamicFormSectionFieldDAO.type == 7) {
+                            val detailsDAO = ESP_LIB_DynamicFormValuesDetailsDAO()
+                            detailsDAO.downloadUrl = dynamicFormSectionFieldDAO.details?.downloadUrl
+                            detailsDAO.createdOn = dynamicFormSectionFieldDAO.details?.createdOn
+                            detailsDAO.mimeType = dynamicFormSectionFieldDAO.details?.mimeType
+                            detailsDAO.name = dynamicFormSectionFieldDAO.details?.name
+                            value.details = detailsDAO
+                        }
+
                         if (dynamicFormSectionFieldDAO.type == 11) {
                             var finalValue = value.value
                             if (!finalValue.isNullOrEmpty()) {

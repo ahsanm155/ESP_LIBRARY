@@ -856,7 +856,7 @@ class ESP_LIB_UsersApplicationsFragment : androidx.fragment.app.Fragment(), Card
             val textView = view?.detail_text
 
             if (rlcardstack?.visibility == View.GONE && (app_actual_list == null || app_actual_list?.size == 0)) {
-                view?.rlsearchbar?.visibility = View.GONE
+                //view?.rlsearchbar?.visibility = View.GONE
 
                 //view?.llcontentlayout?.visibility = View.GONE
                 view?.ivnorecordoutside?.visibility = View.GONE

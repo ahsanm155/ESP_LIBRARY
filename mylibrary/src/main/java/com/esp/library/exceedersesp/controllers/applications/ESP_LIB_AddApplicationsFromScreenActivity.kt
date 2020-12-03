@@ -128,12 +128,8 @@ class ESP_LIB_AddApplicationsFromScreenActivity : ESP_LIB_BaseActivity(), ESP_LI
             }
         }
 
-        ESP_LIB_KeyboardUtils.addKeyboardToggleListener(this,
-                object : ESP_LIB_KeyboardUtils.SoftKeyboardToggleListener {
-                    override fun onToggleSoftKeyboard(isVisible: Boolean) {
-                        submit_request?.refreshAdapter(isVisible)
-                    }
-                })
+        ESP_LIB_KeyboardUtils.addKeyboardToggleListener(this
+        ) { isVisible -> submit_request?.refreshAdapter(isVisible) }
 
     }
 
@@ -155,13 +151,14 @@ class ESP_LIB_AddApplicationsFromScreenActivity : ESP_LIB_BaseActivity(), ESP_LI
         supportActionBar?.title = ""
         //  ibToolbarBack.setImageResource(R.drawable.ic_nav_close)
         ibToolbarBack.setOnClickListener() {
-            val view = currentFocus
+          /*  val view = currentFocus
             if (view != null) {
                 imm!!.hideSoftInputFromWindow(view.windowToken, 0)
             }
             val action_window = ESP_LIB_AlertActionWindow.newInstance(getString(R.string.esp_lib_text_save_draft), getString(R.string.esp_lib_text_your) + " " + pref?.getlabels()?.application + " " + getString(R.string.esp_lib_text_wasnotsubmitted), getString(R.string.esp_lib_text_save_draft_ok), getString(R.string.esp_lib_text_discard) + " " + pref?.getlabels()?.application, getString(R.string.esp_lib_text_draft))
             action_window.show(supportFragmentManager, "")
-            action_window.isCancelable = true
+            action_window.isCancelable = true*/
+            onBackPressed()
         }
     }
 

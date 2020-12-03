@@ -583,7 +583,7 @@ class ESP_LIB_SeeAllApplicationsFragment : androidx.fragment.app.Fragment() {
     }
 
     private fun UnSuccessResponse() {
-        view?.rlsearchbar?.visibility = View.GONE
+        //view?.rlsearchbar?.visibility = View.GONE
         view?.llcontentlayout?.visibility = View.GONE
         view?.no_application_available_div?.visibility = View.VISIBLE
         try {

@@ -55,7 +55,7 @@ class ESP_LIB_UploadFragment : Fragment() {
             startActivityForResult(intent, REQUEST_CHOOSER)
         }
 
-        view.rlattachmentdetails.setOnClickListener {
+       /* view.rlattachmentdetails.setOnClickListener {
             // AttachmentImageDownload.getInstance().OpenImage(dyanmicFormSectionFieldDetailsDAO?.path, context)
 
             if (ESPLIBDyanmicFormSectionFieldDetailsDAO?.path.isNullOrEmpty()) {
@@ -71,7 +71,7 @@ class ESP_LIB_UploadFragment : Fragment() {
                 ESP_LIB_AttachmentImageDownload.getInstance().OpenImage(ESPLIBDyanmicFormSectionFieldDetailsDAO?.path, context)
 
 
-        }
+        }*/
 
         view.ivdots.setOnClickListener { v -> showRemoveMenu(v) }
 

@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_8sdp"
+        android:foreground="?attr/selectableItemBackground"
         android:layout_marginTop="@dimen/_10sdp"
         android:background="@drawable/esp_lib_drawable_draw_bg_green_stroke">
 

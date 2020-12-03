@@ -26,7 +26,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/esp_lib_drawable_draw_toolbar"></ImageView>
+                    android:src="@drawable/esp_lib_drawable_draw_toolbar"/>
             </LinearLayout>
 
             <include

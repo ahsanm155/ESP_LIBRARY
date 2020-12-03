@@ -2235,7 +2235,8 @@ public class ESP_LIB_ApplicationDetailScreenActivity extends ESP_LIB_BaseActivit
 
                                                                 if (targetFieldType == 13) {
 
-                                                                    if (!ESPLIBCalculatedMappedFieldsDAO.getValue().isEmpty()) {
+                                                                    if (ESPLIBCalculatedMappedFieldsDAO != null && ESPLIBCalculatedMappedFieldsDAO.getValue() != null
+                                                                            && !ESPLIBCalculatedMappedFieldsDAO.getValue().isEmpty()) {
                                                                         String[] split = ESPLIBCalculatedMappedFieldsDAO.getValue().split(":");
                                                                         String lookupId = split[0];
                                                                         if (!lookupId.isEmpty() && ESP_LIB_Shared.getInstance().isNumeric(lookupId))

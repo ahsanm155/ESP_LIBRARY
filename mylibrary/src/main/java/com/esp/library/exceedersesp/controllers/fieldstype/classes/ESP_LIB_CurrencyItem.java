@@ -367,7 +367,6 @@ public class ESP_LIB_CurrencyItem {
                     }
 
 
-
                 });
             }*/
 

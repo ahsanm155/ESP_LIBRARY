@@ -52,28 +52,28 @@ class ESP_LIB_SubmissionActivityTabs : androidx.fragment.app.Fragment() {
 
     private fun intializeTabs()
     {
-        val tab_all = LayoutInflater.from(context).inflate(R.layout.esp_lib_custom_tab_count, null) as RelativeLayout
+        val tab_all = LayoutInflater.from(context).inflate(R.layout.esp_lib_submission_custom_tab, null) as RelativeLayout
         val tab_text_all = tab_all.findViewById<View>(R.id.tab_text) as TextView
         tab_text_all.text = getString(R.string.esp_lib_text_all)
         tabLayout?.getTabAt(0)?.customView = tab_all
         val badge_all = activity?.let { ESP_LIB_myBadgeView(it, tab_all.findViewById(R.id.tab_badge)) }
         badge_all?.updateTabBadge(0)
 
-        val tab_open = LayoutInflater.from(context).inflate(R.layout.esp_lib_custom_tab_count, null) as RelativeLayout
+        val tab_open = LayoutInflater.from(context).inflate(R.layout.esp_lib_submission_custom_tab, null) as RelativeLayout
         val tab_text_open = tab_open.findViewById<View>(R.id.tab_text) as TextView
         tab_text_open.text = getString(R.string.esp_lib_text_opencaps)
         tabLayout?.getTabAt(1)?.customView = tab_text_open
         val badge_open = activity?.let { ESP_LIB_myBadgeView(it, tab_open.findViewById(R.id.tab_badge)) }
         badge_open?.updateTabBadge(0)
 
-        val tab_accepted = LayoutInflater.from(context).inflate(R.layout.esp_lib_custom_tab_count, null) as RelativeLayout
+        val tab_accepted = LayoutInflater.from(context).inflate(R.layout.esp_lib_submission_custom_tab, null) as RelativeLayout
         val tab_text_accepted = tab_accepted.findViewById<View>(R.id.tab_text) as TextView
         tab_text_accepted.text = getString(R.string.esp_lib_text_accepted)
         tabLayout?.getTabAt(2)?.customView = tab_accepted
         val badge_accepted = activity?.let { ESP_LIB_myBadgeView(it, tab_accepted.findViewById(R.id.tab_badge)) }
         badge_accepted?.updateTabBadge(0)
 
-        val tab_rejected = LayoutInflater.from(context).inflate(R.layout.esp_lib_custom_tab_count, null) as RelativeLayout
+        val tab_rejected = LayoutInflater.from(context).inflate(R.layout.esp_lib_submission_custom_tab, null) as RelativeLayout
         val tab_text_rejected = tab_rejected.findViewById<View>(R.id.tab_text) as TextView
         tab_text_rejected.text = getString(R.string.esp_lib_text_rejected)
         tabLayout?.getTabAt(3)?.customView = tab_rejected

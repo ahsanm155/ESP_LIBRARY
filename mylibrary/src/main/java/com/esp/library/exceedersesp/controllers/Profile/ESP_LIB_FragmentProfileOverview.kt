@@ -16,9 +16,6 @@ class ESP_LIB_FragmentProfileOverview : androidx.fragment.app.Fragment() {
     internal var bundle: Bundle? = null
     internal var isprofile: Boolean = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

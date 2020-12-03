@@ -47,7 +47,7 @@
                         android:layout_marginEnd="@dimen/_10sdp"
                         android:text="@string/esp_lib_text_mysignature"
                         android:layout_centerVertical="true"
-                        android:layout_toStartOf="@+id/ivwarning"
+                        android:layout_toStartOf="@+id/ivarrow"
                         style="@style/Esp_Lib_Style_TextHeading3BlackHeavy"/>
 
 
